@@ -1,0 +1,14 @@
+================================================================================
+Changes since v17.06a
+================================================================================
+
+--------------------------------------------------------------------------------
+General framework-wide changes/improvements
+
+This release reflects a transition point for renaming of the project from OpenEaagles
+to MXRP.
+
+Please ignore this release -- we have decided to rename the project to MIXR instead,
+per v17.06c release.
+
+This version is obsolete!

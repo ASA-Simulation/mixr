@@ -1,0 +1,8 @@
+add_subdirectory(base)
+add_subdirectory(interop)
+add_subdirectory(linearsystem)
+add_subdirectory(linkage)
+add_subdirectory(models)
+add_subdirectory(recorder)
+add_subdirectory(simulation)
+add_subdirectory(terrain)
