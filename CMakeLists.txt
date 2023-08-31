@@ -9,7 +9,7 @@ include(GNUInstallDirs)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_DEBUG_POSTFIX "d")
 
 #
@@ -18,7 +18,7 @@ set(CMAKE_DEBUG_POSTFIX "d")
 
 set(CMAKE_FIND_PACKAGE_PREFER_CONFIG "yes" CACHE BOOL "")
 
-find_package(protobuf CONFIG REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
 
 find_package(JSBSim   CONFIG REQUIRED)
 find_package(OpenRTI  CONFIG REQUIRED)
@@ -39,7 +39,6 @@ set(ALL_TARGETS
     mixr_linkage
     mixr_models
     mixr_recorder
-    mixr_recorder_proto
     mixr_simulation
     mixr_terrain
 )

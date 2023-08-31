@@ -1,4 +1,4 @@
-#include "DataRecord.pb.h"
+#include "proto/DataRecord.pb.h"
 
 #include "mixr/recorder/NetOutput.hpp"
 #include "mixr/recorder/DataRecordHandle.hpp"

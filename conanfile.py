@@ -54,8 +54,9 @@ class Recipe(ConanFile):
         lib_name_prefix = ""
         lib_name_suffix = "d" if self.settings.build_type == "Debug" else ""
         libs = [
-            "mixr_base", "mixr_interop_dis", "mixr_interop_hla", "mixr_interop", "mixr_interop_rprfom", "mixr_linearsystem",
-            "mixr_linkage", "mixr_models", "mixr_recorder", "mixr_recorder_proto", "mixr_simulation", "mixr_terrain"
+            "mixr_base", "mixr_interop_dis", "mixr_interop_hla", "mixr_interop",
+            "mixr_interop_rprfom", "mixr_linearsystem", "mixr_linkage", "mixr_models",
+            "mixr_recorder", "mixr_simulation", "mixr_terrain"
         ]
 
         for name in libs:
@@ -83,8 +84,5 @@ class Recipe(ConanFile):
             "jsbsim::jsbsim"
         ]
         self.cpp_info.components["mixr_recorder"].requires = [
-            "protobuf::libprotobuf", "mixr_recorder_proto"
-        ]
-        self.cpp_info.components["mixr_recorder_proto"].requires = [
             "protobuf::libprotobuf"
         ]
