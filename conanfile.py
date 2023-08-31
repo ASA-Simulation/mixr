@@ -5,7 +5,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
 class Recipe(ConanFile):
     name = "mixr"
-    version = "1.0.0"
+    version = "1.0.1"
 
     # Optional metadata
     license = "LGPL-3.0"
@@ -22,11 +22,13 @@ class Recipe(ConanFile):
     exports_sources = "cmake/*", "include/*", "src/*", "CMakeLists.txt", "Config.cmake.in"
 
     def requirements(self):
-        # Conancenter
         self.requires("protobuf/3.21.12")
-        # Gitlab
         self.requires("jsbsim/1.1.11")
         self.requires("openrti/814a210978b7faafd65affbe70a2e25679921b23")
+
+    def build_requirements(self):
+        # require protoc at build time
+        self.tool_requires("protobuf/3.21.12")
 
     def config_options(self):
         if self.settings.os == "Windows":
