@@ -5,7 +5,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
 class Recipe(ConanFile):
     name = "mixr"
-    version = "1.0.0"
+    version = "1.0.1"
 
     # Optional metadata
     license = "LGPL-3.0"
@@ -22,11 +22,13 @@ class Recipe(ConanFile):
     exports_sources = "cmake/*", "include/*", "src/*", "CMakeLists.txt", "Config.cmake.in"
 
     def requirements(self):
-        # Conancenter
         self.requires("protobuf/3.21.12")
-        # Gitlab
         self.requires("jsbsim/1.1.11")
         self.requires("openrti/814a210978b7faafd65affbe70a2e25679921b23")
+
+    def build_requirements(self):
+        # require protoc at build time
+        self.tool_requires("protobuf/3.21.12")
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -52,8 +54,9 @@ class Recipe(ConanFile):
         lib_name_prefix = ""
         lib_name_suffix = "d" if self.settings.build_type == "Debug" else ""
         libs = [
-            "mixr_base", "mixr_interop_dis", "mixr_interop_hla", "mixr_interop", "mixr_interop_rprfom", "mixr_linearsystem",
-            "mixr_linkage", "mixr_models", "mixr_recorder", "mixr_recorder_proto", "mixr_simulation", "mixr_terrain"
+            "mixr_base", "mixr_interop_dis", "mixr_interop_hla", "mixr_interop",
+            "mixr_interop_rprfom", "mixr_linearsystem", "mixr_linkage", "mixr_models",
+            "mixr_recorder", "mixr_simulation", "mixr_terrain"
         ]
 
         for name in libs:
@@ -81,8 +84,5 @@ class Recipe(ConanFile):
             "jsbsim::jsbsim"
         ]
         self.cpp_info.components["mixr_recorder"].requires = [
-            "protobuf::libprotobuf", "mixr_recorder_proto"
-        ]
-        self.cpp_info.components["mixr_recorder_proto"].requires = [
             "protobuf::libprotobuf"
         ]
