@@ -18,28 +18,26 @@ install-rel:
 	conan install ./ --build=missing --settings=build_type=Release
 
 configure-dbg:
-	rm -f ./build/Debug/CMakeCache.txt
-	cmake -S ./ -B ./build/Debug/ -G Ninja \
+	rm -f ./build/CMakeCache.txt
+	cmake -S ./ -B ./build/ -G Ninja \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_TOOLCHAIN_FILE=./generators/conan_toolchain.cmake \
-		-DCMAKE_INSTALL_PREFIX=../../../bin/ \
+		-DCMAKE_TOOLCHAIN_FILE=./Debug/generators/conan_toolchain.cmake \
+		-DCMAKE_INSTALL_PREFIX=../bin/ \
 		-DCMAKE_BUILD_TYPE=Debug
+	cp ./build/compile_commands.json .
 
 configure-rel:
-	rm -f ./build/Release/CMakeCache.txt
-	cmake -S ./ -B ./build/Release/ -G Ninja \
+	rm -f ./build/CMakeCache.txt
+	cmake -S ./ -B ./build/ -G Ninja \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_TOOLCHAIN_FILE=./generators/conan_toolchain.cmake \
-		-DCMAKE_INSTALL_PREFIX=../../../bin/ \
+		-DCMAKE_TOOLCHAIN_FILE=./Release/generators/conan_toolchain.cmake \
+		-DCMAKE_INSTALL_PREFIX=../bin/ \
 		-DCMAKE_BUILD_TYPE=Release
+	cp ./build/compile_commands.json .
 
-build-dbg:
-	cmake --build ./build/Debug/
-	cmake --install ./build/Debug/
-
-build-rel:
-	cmake --build ./build/Release/
-	cmake --install ./build/Release/
+build:
+	cmake --build ./build/
+	cmake --install ./build/
 
 test:
 	rm -rf ./test_pkg/build/
