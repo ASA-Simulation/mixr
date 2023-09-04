@@ -6,6 +6,9 @@ dist
 extern
 out
 
+# Dotted folders
+.cache
+
 # IDE folders
 .idea
 
