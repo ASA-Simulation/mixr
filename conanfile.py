@@ -5,7 +5,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
 class Recipe(ConanFile):
     name = "mixr"
-    version = "1.0.3"
+    version = "1.0.4"
 
     # Optional metadata
     license = "LGPL-3.0"
@@ -55,15 +55,15 @@ class Recipe(ConanFile):
         lib_name_prefix = ""
         lib_name_suffix = "d" if self.settings.build_type == "Debug" else ""
         libs = [
-            "mixr_base", "mixr_interop", "mixr_interop_dis", "mixr_interop_hla",
-            "mixr_interop_rprfom", "mixr_linearsystem", "mixr_linkage", "mixr_models",
-            "mixr_recorder", "mixr_recorder_proto", "mixr_simulation", "mixr_terrain"
+            "MixrBase", "MixrInterop", "MixrInteropDis", "MixrInteropHla",
+            "MixrInteropRprfom", "MixrLinearSystem", "MixrLinkage", "MixrModels",
+            "MixrRecorder", "MixrRecorderProto", "MixrSimulation", "MixrTerrain"
         ]
 
         for name in libs:
-            # changing component name: mixr_base => mixr::base
+            # changing component name: MixrBase => mixr::Base
             self.cpp_info.components[name].set_property(
-                "cmake_target_name", name.replace("mixr_", "mixr::")
+                "cmake_target_name", name.replace("Mixr", "mixr::")
             )
 
             # mounting the name of the binary on disk
@@ -71,22 +71,23 @@ class Recipe(ConanFile):
                 lib_name_prefix + name + lib_name_suffix
             ]
 
-            # adding the requirement for mixr_base: all except itself
-            if name != "mixr_base":
-                self.cpp_info.components[name].requires = ["mixr_base"]
+            # adding the requirement for MixrBase: all except itself
+            if name != "MixrBase":
+                self.cpp_info.components[name].requires = ["MixrBase"]
 
-        self.cpp_info.components["mixr_interop_hla"].requires = [
+        self.cpp_info.components["MixrInteropHla"].requires = [
             "openrti::openrti"
         ]
-        self.cpp_info.components["mixr_interop_rprfom"].requires = [
+        self.cpp_info.components["MixrInteropRprfom"].requires = [
             "openrti::openrti"
         ]
-        self.cpp_info.components["mixr_models"].requires = [
+        self.cpp_info.components["MixrModels"].requires = [
             "jsbsim::jsbsim"
         ]
-        self.cpp_info.components["mixr_recorder"].requires = [
+        self.cpp_info.components["MixrRecorder"].requires = [
+            "MixrRecorderProto",
             "protobuf::libprotobuf"
         ]
-        self.cpp_info.components["mixr_recorder_proto"].requires = [
+        self.cpp_info.components["MixrRecorderProto"].requires = [
             "protobuf::libprotobuf"
         ]

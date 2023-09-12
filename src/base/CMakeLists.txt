@@ -1,5 +1,5 @@
-# Target: libmixr_base[d].so
-add_library(mixr_base SHARED)
+# Target: libMixrBase[d].so
+add_library(MixrBase SHARED)
 
 file(GLOB_RECURSE src_files
     ${CMAKE_CURRENT_SOURCE_DIR}/**.cpp
@@ -33,12 +33,12 @@ else()
     )
 endif()
 
-target_sources(mixr_base
+target_sources(MixrBase
     PRIVATE
         ${src_files}
 )
 
-target_include_directories(mixr_base
+target_include_directories(MixrBase
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>

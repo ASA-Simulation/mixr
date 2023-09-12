@@ -30,18 +30,18 @@ find_package(OpenRTI  CONFIG REQUIRED)
 add_subdirectory(src)
 
 set(ALL_TARGETS
-    mixr_base
-    mixr_interop
-    mixr_interop_dis
-    mixr_interop_hla
-    mixr_interop_rprfom
-    mixr_linearsystem
-    mixr_linkage
-    mixr_models
-    mixr_recorder
-    mixr_recorder_proto
-    mixr_simulation
-    mixr_terrain
+    MixrBase
+    MixrInterop
+    MixrInteropDis
+    MixrInteropHla
+    MixrInteropRprfom
+    MixrLinearSystem
+    MixrLinkage
+    MixrModels
+    MixrRecorder
+    MixrRecorderProto
+    MixrSimulation
+    MixrTerrain
 )
 
 #

@@ -1,93 +1,93 @@
-# Target: libmixr_interop[d].so
-add_library(mixr_interop SHARED)
+# Target: libMixrInterop[d].so
+add_library(MixrInterop SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/common/*.cpp)
 
-target_sources(mixr_interop
+target_sources(MixrInterop
     PRIVATE
         ${src_files}
 )
 
-target_include_directories(mixr_interop
+target_include_directories(MixrInterop
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(mixr_interop
+target_link_libraries(MixrInterop
     PUBLIC
-        mixr_base
+        MixrBase
 )
 
 
 
-# Target: libmixr_interop_dis[d].so
-add_library(mixr_interop_dis SHARED)
+# Target: libMixrInteropDis[d].so
+add_library(MixrInteropDis SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/dis/*.cpp)
 
-target_sources(mixr_interop_dis
+target_sources(MixrInteropDis
     PRIVATE
         ${src_files}
 )
 
-target_include_directories(mixr_interop_dis
+target_include_directories(MixrInteropDis
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(mixr_interop_dis
+target_link_libraries(MixrInteropDis
     PUBLIC
-        mixr_base
+        MixrBase
 )
 
 
 
-# Target: libmixr_interop_hla[d].so
-add_library(mixr_interop_hla SHARED)
+# Target: libMixrInteropHla[d].so
+add_library(MixrInteropHla SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/hla/*.cpp)
 
-target_sources(mixr_interop_hla
+target_sources(MixrInteropHla
     PRIVATE
     ${src_files}
 )
 
-target_include_directories(mixr_interop_hla
+target_include_directories(MixrInteropHla
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-target_link_libraries(mixr_interop_hla
+target_link_libraries(MixrInteropHla
     PUBLIC
-        mixr_base
+        MixrBase
     PRIVATE
         openrti::openrti
 )
 
 
 
-# Target: libmixr_interop_rprfom[d].so
-add_library(mixr_interop_rprfom SHARED)
+# Target: libMixrInteropRprfom[d].so
+add_library(MixrInteropRprfom SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/rprfom/*.cpp)
 
-target_sources(mixr_interop_rprfom
+target_sources(MixrInteropRprfom
     PRIVATE
         ${src_files}
 )
 
-target_include_directories(mixr_interop_rprfom
+target_include_directories(MixrInteropRprfom
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
         $<INSTALL_INTERFACE:${CMAKE_INC_INSTALL_DIR}>
 )
 
-target_link_libraries(mixr_interop_rprfom
+target_link_libraries(MixrInteropRprfom
     PUBLIC
-        mixr_base
+        MixrBase
     PRIVATE
         openrti::openrti
 )
