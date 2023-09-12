@@ -1,5 +1,5 @@
-# Target: libmixr_linearsystem.a
-add_library(mixr_linearsystem STATIC)
+# Target: libmixr_linearsystem[d].so
+add_library(mixr_linearsystem SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 

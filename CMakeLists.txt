@@ -31,14 +31,15 @@ add_subdirectory(src)
 
 set(ALL_TARGETS
     mixr_base
+    mixr_interop
     mixr_interop_dis
     mixr_interop_hla
-    mixr_interop
     mixr_interop_rprfom
     mixr_linearsystem
     mixr_linkage
     mixr_models
     mixr_recorder
+    mixr_recorder_proto
     mixr_simulation
     mixr_terrain
 )
@@ -64,7 +65,7 @@ install(
     FILES
         ${CMAKE_BINARY_DIR}/src/recorder/proto/DataRecord.pb.h
         ${CMAKE_SOURCE_DIR}/src/recorder/proto/DataRecord.proto
-    DESTINATION include/mixr/recorder
+    DESTINATION include/mixr/recorder/proto
 )
 
 install(

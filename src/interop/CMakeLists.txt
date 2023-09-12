@@ -1,5 +1,5 @@
-# Target: libmixr_interop.a
-add_library(mixr_interop STATIC)
+# Target: libmixr_interop[d].so
+add_library(mixr_interop SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/common/*.cpp)
 
@@ -21,8 +21,8 @@ target_link_libraries(mixr_interop
 
 
 
-# Target: libmixr_interop_dis.a
-add_library(mixr_interop_dis STATIC)
+# Target: libmixr_interop_dis[d].so
+add_library(mixr_interop_dis SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/dis/*.cpp)
 
@@ -44,8 +44,8 @@ target_link_libraries(mixr_interop_dis
 
 
 
-# Target: libmixr_interop_hla.a
-add_library(mixr_interop_hla STATIC)
+# Target: libmixr_interop_hla[d].so
+add_library(mixr_interop_hla SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/hla/*.cpp)
 
@@ -69,8 +69,8 @@ target_link_libraries(mixr_interop_hla
 
 
 
-# Target: libmixr_interop_rprfom.a
-add_library(mixr_interop_rprfom STATIC)
+# Target: libmixr_interop_rprfom[d].so
+add_library(mixr_interop_rprfom SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/rprfom/*.cpp)
 

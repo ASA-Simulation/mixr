@@ -8,6 +8,9 @@
 namespace mixr {
 namespace base {
 
+const unsigned short StateMachine::INIT_STATE = 0;         // Standard initial state
+const unsigned short StateMachine::INVALID_STATE = 0xFFFF; // Invalid state number
+
 IMPLEMENT_ABSTRACT_SUBCLASS(StateMachine, "AbstractStateMachine")
 
 BEGIN_SLOTTABLE(StateMachine)

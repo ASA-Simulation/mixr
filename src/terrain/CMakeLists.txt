@@ -1,5 +1,5 @@
-# Target: libmixr_recorder.a
-add_library(mixr_terrain STATIC)
+# Target: libmixr_recorder[d].so
+add_library(mixr_terrain SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/**.cpp)
 

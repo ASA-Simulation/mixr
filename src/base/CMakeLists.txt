@@ -1,8 +1,8 @@
-# Target: libmixr_base.a
-add_library(mixr_base STATIC)
+# Target: libmixr_base[d].so
+add_library(mixr_base SHARED)
 
 file(GLOB_RECURSE src_files
-    ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/**.cpp
 )
 
 # TODO: why this file shouldn't be compiled?

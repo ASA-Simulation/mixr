@@ -1,5 +1,5 @@
-# Target: libmixr_models.a
-add_library(mixr_models STATIC)
+# Target: libmixr_models[d].so
+add_library(mixr_models SHARED)
 
 file(GLOB_RECURSE src_files ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 

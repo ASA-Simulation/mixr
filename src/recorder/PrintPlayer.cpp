@@ -1,5 +1,5 @@
 
-#include "proto/DataRecord.pb.h"
+#include "DataRecord.pb.h"
 
 #include "mixr/recorder/PrintPlayer.hpp"
 #include "mixr/recorder/DataRecordHandle.hpp"

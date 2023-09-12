@@ -202,8 +202,8 @@ class StateMachine : public Component
    DECLARE_SUBCLASS(StateMachine, Component)
 
 public:
-   static const unsigned short INIT_STATE = 0;         // Standard initial state
-   static const unsigned short INVALID_STATE = 0xFFFF; // Invalid state number
+   static const unsigned short INIT_STATE;    // Standard initial state
+   static const unsigned short INVALID_STATE; // Invalid state number
 
 public:
    StateMachine();

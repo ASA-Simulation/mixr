@@ -1,4 +1,4 @@
-.PHONY: clean install-dbg install-rel configure-dbg configure-rel build-dbg build-rel test package
+.PHONY: clean install-dbg install-rel configure-dbg configure-rel build test package
 
 clean:
 	rm -rf ./build/
