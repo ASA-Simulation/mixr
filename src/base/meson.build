@@ -111,6 +111,9 @@ mixr_base = library(
     'mixr_base',
     source_files,
     include_directories : public_headers,
+    dependencies : [
+        thread_dep,
+    ],
     install : true,
 )
 

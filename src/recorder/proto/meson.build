@@ -1,11 +1,9 @@
-protoc = find_program('protoc')
-
 mixr_recorder_proto_cc = custom_target(
   'mixr_recorder_proto_cc',
   input : ['DataRecord.proto'],
   output : ['@BASENAME@.pb.cc'],
   command : [
-    protoc,
+    '@0@/bin/protoc'.format(protobuf_dep.get_variable('prefix')),
     '--proto_path=@CURRENT_SOURCE_DIR@',
     '--cpp_out=@OUTDIR@',
     '@INPUT@',
@@ -17,7 +15,7 @@ mixr_recorder_proto_h = custom_target(
   input : ['DataRecord.proto'],
   output : ['@BASENAME@.pb.h'],
   command : [
-    protoc,
+    '@0@/bin/protoc'.format(protobuf_dep.get_variable('prefix')),
     '--proto_path=@CURRENT_SOURCE_DIR@',
     '--cpp_out=@OUTDIR@',
     '@INPUT@',

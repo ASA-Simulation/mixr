@@ -22,11 +22,6 @@ class Recipe(ConanFile):
         self.requires("openrti/814a210978b7faafd65affbe70a2e25679921b23")
         self.requires("jsbsim/1.1.11", transitive_headers=True)
 
-    def build_requirements(self):
-        self.tool_requires("meson/1.2.1")       # meson
-        self.tool_requires("ninja/1.11.1")      # ninja
-        self.tool_requires("protobuf/3.21.12")  # protoc
-
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC

@@ -1,11 +1,15 @@
 project('mixr', 'cpp',
     default_options : [
         'c_std=c11',
-        'cpp_std=c++11'
-    ]
+        'cpp_std=c++11',
+    ],
 )
 
+add_project_arguments('-fpermissive', language : 'cpp')
+
 pkg = import('pkgconfig')
+
+thread_dep = dependency('threads')
 
 protobuf_dep = dependency('protobuf')
 jsbsim_dep = dependency('jsbsim')
