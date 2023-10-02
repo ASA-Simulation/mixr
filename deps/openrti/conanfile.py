@@ -19,6 +19,9 @@ class Recipe(ConanFile):
 
     generators = "CMakeDeps"
 
+    def requirements(self):
+        self.requires("expat/2.5.0")
+
     def source(self):
         git = Git(self)
         git.clone(url="https://github.com/onox/OpenRTI", target=".")

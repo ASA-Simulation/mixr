@@ -1,50 +1,40 @@
-.PHONY: clean install-dbg install-rel configure-dbg configure-rel build test package
+.PHONY: clean configure build install help
 
-clean:
-	rm -rf ./build/
-	rm -f ./CMakeUserPresets.json
+.DEFAULT_GOAL := help
 
-	rm -rf ./test_pkg/build/
-	rm -f ./test_pkg/CMakeUserPresets.json
 
-install-dbg:
-	rm -rf ./build/Debug/
-	mkdir -p ./build/Debug/
+# Custom variables
+PWD := $(shell pwd)
+
+
+configure: ## Configure the project for building.
+	mkdir -p ./build/
 	conan install ./ --build=missing --settings=build_type=Debug
+	meson setup --reconfigure \
+		--backend ninja \
+		--buildtype debug \
+		--prefix=$(PWD)/../out \
+		-Dpkg_config_path=$(PWD)/../build:$(PWD)/build \
+		./build/ .
 
-install-rel:
-	rm -rf ./build/Debug/
-	mkdir -p ./build/Debug/
-	conan install ./ --build=missing --settings=build_type=Release
 
-configure-dbg:
-	rm -f ./build/CMakeCache.txt
-	cmake -S ./ -B ./build/ -G Ninja \
-		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_TOOLCHAIN_FILE=./Debug/generators/conan_toolchain.cmake \
-		-DCMAKE_INSTALL_PREFIX=../bin/ \
-		-DCMAKE_BUILD_TYPE=Debug
-	cp ./build/compile_commands.json .
+build: ## Build all targets in the project.
+	meson compile -C ./build
 
-configure-rel:
-	rm -f ./build/CMakeCache.txt
-	cmake -S ./ -B ./build/ -G Ninja \
-		-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-		-DCMAKE_TOOLCHAIN_FILE=./Release/generators/conan_toolchain.cmake \
-		-DCMAKE_INSTALL_PREFIX=../bin/ \
-		-DCMAKE_BUILD_TYPE=Release
-	cp ./build/compile_commands.json .
 
-build:
-	cmake --build ./build/
-	cmake --install ./build/
+install: ## Install all targets in the project.
+	meson install -C ./build
 
-test:
-	rm -rf ./test_pkg/build/
-	mkdir -p ./test_pkg/build/
-	conan test ./test_pkg/ mixr/1.0.0 --build=missing --settings=build_type=Debug
-	conan test ./test_pkg/ mixr/1.0.0 --build=missing --settings=build_type=Release
 
-package:
-	conan create ./ --build=missing --settings=build_type=Debug
-	conan create ./ --build=missing --settings=build_type=Release
+package: ## Package the project using conan.
+	conan create ./ --build=missing --settings=compiler.cppstd=gnu11 --settings=build_type=Debug
+	conan create ./ --build=missing --settings=compiler.cppstd=gnu11 --settings=build_type=Release
+
+
+clean: ## Clean all generated build files in the project.
+	rm -rf ./build/
+	rm -rf ./subprojects/packagecache
+
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

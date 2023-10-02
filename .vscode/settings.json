@@ -1,13 +1,6 @@
 {
-    "cmake.useCMakePresets": "always",
-    "cmake.configureOnOpen": true,
-    "cmake.configureSettings": {
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-    },
-    "cmake.exportCompileCommandsFile": true,
-    "cmake.generator": "Ninja",
-    "cmake.parallelJobs": 0,
-    "editor.formatOnSave": true,
+    "C_Cpp.default.compileCommands": "build/compile_commands.json",
+    "editor.formatOnSave": false,
     "files.associations": {
         "chrono": "cpp",
         "array": "cpp",
@@ -84,4 +77,5 @@
         "ranges": "cpp",
         "stop_token": "cpp"
     },
+    "mesonbuild.buildFolder": "build"
 }

@@ -1,25 +1,21 @@
 from conan import ConanFile
-from conan.tools.scm import Git
-from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
+from conan.tools.meson import Meson, MesonToolchain
+from conan.tools.gnu import PkgConfigDeps
 
 
 class Recipe(ConanFile):
     name = "mixr"
-    version = "1.0.4"
+    version = "1.0.5"
 
-    # Optional metadata
     license = "LGPL-3.0"
     url = "https://github.com/ASA-Simulation/mixr"
-    description = "A fork of MIXR focused on CMAKE integration."
+    description = "A fork of MIXR focused on meson/conan integration."
 
-    # Binary configuration
     settings = "arch", "build_type", "compiler", "os"
     options = {"fPIC": [True, False]}
     default_options = {"fPIC": True}
 
-    generators = "CMakeDeps"
-
-    exports_sources = "cmake/*", "include/*", "src/*", "CMakeLists.txt", "Config.cmake.in"
+    exports_sources = "meson.build*", "include/*", "scripts/*", "src/*", "subprojects/*"
 
     def requirements(self):
         self.requires("protobuf/3.21.12")
@@ -27,7 +23,7 @@ class Recipe(ConanFile):
         self.requires("jsbsim/1.1.11", transitive_headers=True)
 
     def build_requirements(self):
-        self.tool_requires("cmake/3.27.4")      # cmake
+        self.tool_requires("meson/1.2.1")       # meson
         self.tool_requires("ninja/1.11.1")      # ninja
         self.tool_requires("protobuf/3.21.12")  # protoc
 
@@ -36,58 +32,33 @@ class Recipe(ConanFile):
             del self.options.fPIC
 
     def layout(self):
-        cmake_layout(self)
+        self.folders.build = "build"
+        self.folders.generators = "build"
 
     def generate(self):
-        tc = CMakeToolchain(self, generator="Ninja")
+        tc = PkgConfigDeps(self)
+        tc.generate()
+
+        tc = MesonToolchain(self)
         tc.generate()
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure()
-        cmake.build()
+        meson = Meson(self)
+        meson.configure()
+        meson.build()
 
     def package(self):
-        cmake = CMake(self)
-        cmake.install()
+        meson = Meson(self)
+        meson.install()
 
     def package_info(self):
-        lib_name_prefix = ""
-        lib_name_suffix = "d" if self.settings.build_type == "Debug" else ""
-        libs = [
-            "MixrBase", "MixrInterop", "MixrInteropDis", "MixrInteropHla",
-            "MixrInteropRprfom", "MixrLinearSystem", "MixrLinkage", "MixrModels",
-            "MixrRecorder", "MixrRecorderProto", "MixrSimulation", "MixrTerrain"
-        ]
-
-        for name in libs:
-            # changing component name: MixrBase => mixr::Base
-            self.cpp_info.components[name].set_property(
-                "cmake_target_name", name.replace("Mixr", "mixr::")
-            )
-
-            # mounting the name of the binary on disk
-            self.cpp_info.components[name].libs = [
-                lib_name_prefix + name + lib_name_suffix
-            ]
-
-            # adding the requirement for MixrBase: all except itself
-            if name != "MixrBase":
-                self.cpp_info.components[name].requires = ["MixrBase"]
-
-        self.cpp_info.components["MixrInteropHla"].requires = [
-            "openrti::openrti"
-        ]
-        self.cpp_info.components["MixrInteropRprfom"].requires = [
-            "openrti::openrti"
-        ]
-        self.cpp_info.components["MixrModels"].requires = [
-            "jsbsim::jsbsim"
-        ]
-        self.cpp_info.components["MixrRecorder"].requires = [
-            "MixrRecorderProto",
-            "protobuf::libprotobuf"
-        ]
-        self.cpp_info.components["MixrRecorderProto"].requires = [
-            "protobuf::libprotobuf"
-        ]
+        self.cpp_info.components["base"].libs = ["mixr_base"]
+        self.cpp_info.components["interop_common"].libs = ["mixr_interop_common"]
+        self.cpp_info.components["interop_dis"].libs = ["mixr_interop_dis"]
+        self.cpp_info.components["linearsystem"].libs = ["mixr_linearsystem"]
+        self.cpp_info.components["linkage"].libs = ["mixr_linkage"]
+        self.cpp_info.components["models"].libs = ["mixr_models"]
+        self.cpp_info.components["recorder"].libs = ["mixr_recorder"]
+        self.cpp_info.components["recorder_proto"].libs = ["mixr_recorder_proto"]
+        self.cpp_info.components["simulation"].libs = ["mixr_simulation"]
+        self.cpp_info.components["terrain"].libs = ["mixr_terrain"]
