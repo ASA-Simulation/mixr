@@ -21,7 +21,7 @@ echo "Building with $1 parallel jobs"
 # set BUILD_TYPE
 #
 
-BUILD_TYPE=$2
+BUILD_TYPE="$2"
 echo "Building in type $BUILD_TYPE"
 
 #
@@ -41,13 +41,14 @@ rm -rf ./build && mkdir ./build
 echo "Installing conan dependencies"
 conan install ./ --build=missing --settings=build_type=$BUILD_TYPE
 
-cmake -B build -S . -G "Unix Makefiles" \
-    -DCMAKE_TOOLCHAIN_FILE=./$BUILD_TYPE/generators/conan_toolchain.cmake \
-    -DCMAKE_INSTALL_PREFIX=./bin \
-    -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+meson setup --reconfigure \
+    --backend ninja \
+    --buildtype "$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')" \
+    --prefix="$(pwd)/bin" \
+    -Dpkg_config_path="$(pwd)/build" \
+    ./build/ .
 
-cmake --build build --parallel $NUM_JOBS
-cmake --install build
+meson install -C ./build
 
 #
 # closing the task
