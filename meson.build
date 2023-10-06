@@ -1,4 +1,6 @@
 project('mixr', 'cpp',
+    version: '1.0.5',
+    license: 'LGPL-3.0',
     default_options : [
         'c_std=c11',
         'cpp_std=c++11',
@@ -16,13 +18,13 @@ jsbsim_dep = dependency('jsbsim')
 openrti_dep = dependency('openrti')
 zlib_dep = dependency('zlib')
 
+protoc = '@0@/bin/protoc'.format(protobuf_dep.get_variable('prefix'))
+
 public_headers = include_directories('include')
 
 subdir('./src')
 
 # Installation
-
-meson.add_install_script('./scripts/install.sh')
 
 mixr_libs = [
     mixr_base,
@@ -41,7 +43,6 @@ install_subdir('include/mixr', install_dir : 'include')
 
 pkg.generate(
     libraries : mixr_libs,
-    version : '1.0.5',
     name : 'mixr',
     filebase: 'mixr',
     description: 'A fork of MIXR focused on meson/conan integration.',
