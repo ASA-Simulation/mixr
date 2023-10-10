@@ -14,6 +14,7 @@ configure: ## Configure the project for building.
 		--backend ninja \
 		--buildtype debug \
 		--prefix=$(PWD)/../dist \
+		--libdir=$(PWD)/../dist/lib \
 		-Dpkg_config_path=$(PWD)/../dist/lib/pkgconfig:$(PWD)/build \
 		./build/ .
 
