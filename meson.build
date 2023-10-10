@@ -26,24 +26,22 @@ subdir('./src')
 
 # Installation
 
-mixr_libs = [
-    mixr_base,
-    mixr_interop_common,
-    mixr_interop_dis,
-    mixr_linearsystem,
-    mixr_linkage,
-    mixr_models,
-    mixr_recorder,
-    mixr_recorder_proto,
-    mixr_simulation,
-    mixr_terrain,
-]
+pkg.generate(
+    description : 'A fork of MIXR focused on meson/conan integration.',
+    filebase : 'mixr',
+    install_dir : get_option('prefix') / 'lib/pkgconfig',
+    libraries : [
+        mixr_base,
+        mixr_interop_common,
+        mixr_interop_dis,
+        mixr_linearsystem,
+        mixr_linkage,
+        mixr_models,
+        mixr_recorder,
+        mixr_simulation,
+        mixr_terrain,
+    ],
+    name : 'mixr',
+)
 
 install_subdir('include/mixr', install_dir : 'include')
-
-pkg.generate(
-    libraries : mixr_libs,
-    name : 'mixr',
-    filebase: 'mixr',
-    description: 'A fork of MIXR focused on meson/conan integration.',
-)

@@ -10,6 +10,7 @@ mixr_interop_hla = library(
     include_directories : [public_headers],
     dependencies : [mixr_base_dep, mixr_interop_common_dep, openrti_dep, zlib_dep],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_interop_hla_dep = declare_dependency(

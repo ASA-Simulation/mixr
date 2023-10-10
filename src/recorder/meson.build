@@ -18,16 +18,16 @@ source_files = [
 
 mixr_recorder = library(
     'mixr_recorder',
-    source_files,
+    [source_files, mixr_recorder_proto_cc, mixr_recorder_proto_h],
     include_directories: public_headers,
     dependencies: [
         mixr_base_dep,
-        mixr_recorder_proto_dep,
         mixr_simulation_dep,
         mixr_models_dep,
         protobuf_dep,
     ],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_recorder_dep = declare_dependency(

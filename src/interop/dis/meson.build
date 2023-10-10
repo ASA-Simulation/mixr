@@ -19,6 +19,7 @@ mixr_interop_dis = library(
     include_directories: [public_headers],
     dependencies: [mixr_base_dep, mixr_simulation_dep, mixr_models_dep, mixr_interop_common_dep],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_interop_dis_dep = declare_dependency(

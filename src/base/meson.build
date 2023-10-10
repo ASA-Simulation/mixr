@@ -115,6 +115,7 @@ mixr_base = library(
         thread_dep,
     ],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_base_dep = declare_dependency(

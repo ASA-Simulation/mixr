@@ -21,6 +21,7 @@ mixr_simulation = library(
     include_directories: public_headers,
     dependencies: [mixr_base_dep],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_simulation_dep = declare_dependency(

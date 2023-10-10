@@ -23,17 +23,3 @@ mixr_recorder_proto_h = custom_target(
   install : true,
   install_dir : get_option('includedir'),
 )
-
-mixr_recorder_proto = library(
-  'mixr_recorder_proto',
-  [mixr_recorder_proto_cc, mixr_recorder_proto_h],
-  dependencies : [protobuf_dep],
-  install : true,
-)
-
-mixr_recorder_proto_dep = declare_dependency(
-  link_with: mixr_recorder_proto,
-  include_directories: include_directories('.'),
-)
-
-pkg.generate(mixr_recorder_proto, name : 'mixr-recorder_proto')

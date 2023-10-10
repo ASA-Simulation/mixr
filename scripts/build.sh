@@ -28,8 +28,8 @@ echo "Building in type $BUILD_TYPE"
 # setting up the task
 #
 
-echo "Cleaning bin folder"
-rm -rf ./bin && mkdir ./bin
+echo "Cleaning dist folder"
+rm -rf ./dist && mkdir ./dist
 
 echo "Cleaning build folder"
 rm -rf ./build && mkdir ./build
@@ -44,7 +44,7 @@ conan install ./ --build=missing --settings=build_type=$BUILD_TYPE
 meson setup --reconfigure \
     --backend ninja \
     --buildtype "$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')" \
-    --prefix="$(pwd)/bin" \
+    --prefix="$(pwd)/dist" \
     -Dpkg_config_path="$(pwd)/build" \
     ./build/ .
 

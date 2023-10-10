@@ -10,6 +10,7 @@ mixr_interop_common = library(
     include_directories: [public_headers],
     dependencies: [mixr_base_dep, mixr_simulation_dep, mixr_models_dep, openrti_dep, zlib_dep],
     install : true,
+    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_interop_common_dep = declare_dependency(

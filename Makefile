@@ -13,8 +13,8 @@ configure: ## Configure the project for building.
 	meson setup --reconfigure \
 		--backend ninja \
 		--buildtype debug \
-		--prefix=$(PWD)/../out \
-		-Dpkg_config_path=$(PWD)/../build:$(PWD)/build \
+		--prefix=$(PWD)/../dist \
+		-Dpkg_config_path=$(PWD)/../dist/lib/pkgconfig:$(PWD)/build \
 		./build/ .
 
 
