@@ -16,7 +16,6 @@ mixr_terrain = library(
         mixr_base_dep
     ],
     install : true,
-    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_terrain_dep = declare_dependency(

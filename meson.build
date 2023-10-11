@@ -29,7 +29,6 @@ subdir('./src')
 pkg.generate(
     description : 'A fork of MIXR focused on meson/conan integration.',
     filebase : 'mixr',
-    install_dir : get_option('prefix') / 'lib/pkgconfig',
     libraries : [
         mixr_base,
         mixr_interop_common,

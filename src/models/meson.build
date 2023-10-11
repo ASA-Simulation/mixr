@@ -119,7 +119,6 @@ mixr_models = library(
         jsbsim_dep
     ],
     install : true,
-    install_dir: get_option('prefix') / 'lib',
 )
 
 mixr_models_dep = declare_dependency(

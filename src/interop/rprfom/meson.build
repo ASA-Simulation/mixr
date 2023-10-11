@@ -27,7 +27,6 @@ mixr_interop_rprfom = library(
         zlib_dep
     ],
     install : true,
-    install_dir: get_option('prefix') / 'lib',
 )
 
 pkg.generate(mixr_interop_rprfom, name : 'mixr-interop_rprfom')
