@@ -77,5 +77,6 @@
         "ranges": "cpp",
         "stop_token": "cpp"
     },
-    "mesonbuild.buildFolder": "build"
+    "mesonbuild.buildFolder": "build",
+    "mesonbuild.configureOnOpen": false
 }
