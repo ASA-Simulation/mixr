@@ -54,6 +54,5 @@ class Recipe(ConanFile):
         self.cpp_info.components["linkage"].libs = ["mixr_linkage"]
         self.cpp_info.components["models"].libs = ["mixr_models"]
         self.cpp_info.components["recorder"].libs = ["mixr_recorder"]
-        self.cpp_info.components["recorder_proto"].libs = ["mixr_recorder_proto"]
         self.cpp_info.components["simulation"].libs = ["mixr_simulation"]
         self.cpp_info.components["terrain"].libs = ["mixr_terrain"]

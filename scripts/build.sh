@@ -41,10 +41,11 @@ rm -rf ./build && mkdir ./build
 echo "Installing conan dependencies"
 conan install ./ --build=missing --settings=build_type=$BUILD_TYPE
 
-meson setup --reconfigure \
+meson setup \
     --backend ninja \
     --buildtype "$(echo "$BUILD_TYPE" | tr '[:upper:]' '[:lower:]')" \
     --prefix="$(pwd)/dist" \
+    --libdir=$(pwd)/dist/lib \
     -Dpkg_config_path="$(pwd)/build" \
     ./build/ .
 
