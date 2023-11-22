@@ -18,7 +18,6 @@ class Recipe(ConanFile):
     exports_sources = "meson.build*", "include/*", "scripts/*", "src/*", "subprojects/*"
 
     def requirements(self):
-        self.requires("protobuf/3.21.12")
         self.requires("openrti/814a210978b7faafd65affbe70a2e25679921b23")
         self.requires("jsbsim/1.1.11", transitive_headers=True)
 
