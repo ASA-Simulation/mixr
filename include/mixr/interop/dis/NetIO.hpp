@@ -225,10 +225,10 @@ public:
    unsigned char getExerciseID() const                     { return exerciseID; }
 
    // Sends a packet (PDU) to the network
-   bool sendData(const char* const packet, const int size);
+   virtual bool sendData(const char *const packet, const int size);
 
    // Receives a packet (PDU) from the network
-   int recvData(char* const packet, const int maxSize);
+   virtual int recvData(char *const packet, const int maxSize);
 
    unsigned int timeStamp();                                                  // Gets the current timestamp
    unsigned int makeTimeStamp(const double ctime, const bool absolute);       // Make a PDU time stamp
@@ -277,7 +277,7 @@ public:
    double getMaxPositionErr(const interop::Nib* const nib) const final;
    double getMaxOrientationErr(const interop::Nib* const nib) const final;
    double getMaxAge(const interop::Nib* const nib) const final;
-   interop::Nib* createNewOutputNib(models::Player* const player) final;
+   virtual interop::Nib* createNewOutputNib(models::Player* const player);
 
    // DIS v7 additions
    virtual double getHbtPduEe() const;
