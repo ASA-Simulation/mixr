@@ -4,6 +4,7 @@
 #include "mixr/models/player/Player.hpp"
 #include "mixr/models/system/Gimbal.hpp"
 #include "mixr/models/WorldModel.hpp"
+#include "mixr/simulation/Station.hpp"
 
 #include "mixr/terrain/Terrain.hpp"
 
@@ -367,7 +368,7 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                         // Terrain occulting check toward the space vehicle
                         occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng);
                      } else { 
-                        if(sim->getStation()->isImprovedTerrainOccultingEnabled()){
+                        if(ownship->getWorldModel()->getStation()->isImprovedTerrainOccultingEnabled()){
                            // Get the true, great-circle bearing to the target
                            double tbrg{}, distNM{};
                            base::nav::vll2bd(osLat, osLon, tgtLat, tgtLon, &tbrg, &distNM);
