@@ -366,10 +366,22 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
 
                         // Terrain occulting check toward the space vehicle
                         occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng);
-                     } else {
-                        // Occulting check between two standard player
-                        occulted = terrain->targetOcculting(osLat, osLon, static_cast<double>(osAlt),
-                                                            tgtLat, tgtLon, static_cast<double>(tgtAlt));
+                     } else { 
+                        if(sim->getStation()->isImprovedTerrainOccultingEnabled()){
+                           // Get the true, great-circle bearing to the target
+                           double tbrg{}, distNM{};
+                           base::nav::vll2bd(osLat, osLon, tgtLat, tgtLon, &tbrg, &distNM);
+
+                           // Set the distance to check to the actual distance of the target
+                           double dist = distNM * base::distance::NM2M;
+                        
+                           // Terrain occulting check toward the target using improved method
+                           occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng);
+                        }
+                        else {
+                           occulted = terrain->targetOcculting(osLat, osLon, static_cast<double>(osAlt),
+                           tgtLat, tgtLon, static_cast<double>(tgtAlt));
+                        }                  
                      }
                   }
 
