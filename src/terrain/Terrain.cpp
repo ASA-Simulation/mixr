@@ -248,7 +248,8 @@ bool Terrain::targetOcculting(
 
 //------------------------------------------------------------------------------
 // Target occulting #2: returns true if any terrain in the 'truBrg' direction
-// for 'dist' meters occults (or masks) a target with a look angle of atan(tanLookAng)
+// for 'dist' meters occults (or masks) a target with a look angle of atan(tanLookAng),
+// applying curvature correction.
 //------------------------------------------------------------------------------
 bool Terrain::targetOcculting2(
       const double refLat,    // Ref latitude (degs)
@@ -256,7 +257,8 @@ bool Terrain::targetOcculting2(
       const double refAlt,    // Ref altitude (meters)
       const double truBrg,    // True direction angle from north to look (degs)
       const double dist,      // Distance to check (meters)
-      const double tanLookAng // Tangent of the look angle
+      const double tanLookAng, // Tangent of the look angle
+      const double earthRadius // Earth radius on target position
    ) const
 {
    // 1200 points gives us 100 meter data up to a distance
@@ -285,6 +287,21 @@ bool Terrain::targetOcculting2(
 
       // And check occulting
       if (num > 0) {
+         // Apply standard atmospheric refraction factor (4/3)
+         // This accounts for downward bending of electromagnetic waves,
+         // effectively extending the line-of-sight (LOS) over the horizon
+         const double effEarthRadius = earthRadius * (4.0 / 3.0);   // Effective radius with refraction
+
+         // Distance between elevation samples
+         const double step = dist / static_cast<double>(numPts);
+
+         for (unsigned int i = 0; i < numPts; i++) {
+            if (validFlags[i]) {
+               double d = static_cast<double>(i + 1) * step;
+               double curvature = effEarthRadius * (1.0 - std::cos(d / effEarthRadius)); // Meters
+               elevations[i] -= curvature;
+            }
+         }
          occulted = occultCheck2(elevations, validFlags, numPts, dist, refAlt, tanLookAng);
       }
    }
