@@ -512,6 +512,8 @@ public:
    virtual double getMach() const;                                  // Player's mach number
    virtual double getCG() const;                                    // Player's Center-of-Gravity (%)
 
+   inline virtual RfSignature* const getRFSignature();              // Player's RF signature (rcs)
+   inline virtual IrSignature* const getIRSignature();              // Player's IR signature
 
    // ---
    // Appearance
