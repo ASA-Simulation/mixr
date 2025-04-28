@@ -366,7 +366,7 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                         double dist{60.0 * base::distance::NM2M};
 
                         // Terrain occulting check toward the space vehicle
-                        occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng, earthRadius);
+                        occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng);
                      } else { 
                         if(ownship->getWorldModel()->getStation()->isImprovedTerrainOccultingEnabled()){
                            // Get the true, great-circle bearing to the target
@@ -377,7 +377,7 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                            double dist = distNM * base::distance::NM2M;
                         
                            // Terrain occulting check toward the target using improved method
-                           occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng, earthRadius);
+                           occulted = terrain->targetOcculting2(osLat, osLon, osAlt, tbrg, dist, -tanTgtAng);
                         }
                         else {
                            occulted = terrain->targetOcculting(osLat, osLon, static_cast<double>(osAlt),

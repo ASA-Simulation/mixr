@@ -91,8 +91,7 @@ public:
       const double refAlt,             // Ref altitude (meters)
       const double truBrg,             // True direction angle from north to look (degs)
       const double dist,               // Distance to check (meters)
-      const double tanLookAng,         // Tangent of the look angle
-      const double earthRadius         // Earth radius on target position
+      const double tanLookAng          // Tangent of the look angle
    ) const;
 
    // Returns true if the target at the altitude 'tgtAlt' and range 'range' is
