@@ -204,7 +204,8 @@ bool Terrain::targetOcculting(
       const double tgtLat,    // Target latitude (degs)
       const double tgtLon,    // Target longitude (degs)
       const double tgtAlt,    // Tangent of the look angle
-      const double earthRadius // Earth radius on target position
+      const double earthRadius, // Earth radius on target position
+      const bool expOccultingEnabled // Whether experimental (improved) terrain occulting is enabled
    ) const
 {
    // 1200 points gives us 100 meter data up to a distance
@@ -213,10 +214,15 @@ bool Terrain::targetOcculting(
 
    bool occulted = false;
 
-   // Compute bearing and distance to target (flat earth)
+   // Compute bearing and distance to target
    double brgDeg = 0.0;
    double distNM = 0.0;
-   base::nav::vll2bd(refLat, refLon, tgtLat, tgtLon, &brgDeg, &distNM);
+   if(expOccultingEnabled){
+      base::nav::vll2bd(refLat, refLon, tgtLat, tgtLon, &brgDeg, &distNM); // Vincenty's formulae
+   }
+   else {
+      base::nav::fll2bd(refLat, refLon, tgtLat, tgtLon, &brgDeg, &distNM); // flat earth
+   }
    double dist = (distNM * base::distance::NM2M);
 
    // Number of points (default: 100M data)
@@ -240,7 +246,7 @@ bool Terrain::targetOcculting(
       // And check occulting
       if (num > 0) {
          occulted = occultCheck(elevations, validFlags, numPts, static_cast<double>(dist),
-                                refAlt, tgtAlt, earthRadius);
+                                refAlt, tgtAlt, earthRadius, expOccultingEnabled);
       }
    }
 
@@ -299,66 +305,77 @@ bool Terrain::targetOcculting2(
 // reference altitude 'refAlt'.
 //------------------------------------------------------------------------------
 bool Terrain::occultCheck(
-   const double* const elevations,  // The elevation array (meters)
-   const bool* const validFlags,    // Valid elevation flag array (true if elevation was found)
-   const unsigned int n,            // Size of the arrays
-   const double range,              // Range (meters)
-   const double refAlt,             // Ref altitude (meters)
-   const double tgtAlt,             // Target altitude (meters)
-   const double earthRadius         // Earth radius on target position
+      const double* const elevations,  // The elevation array (meters)
+      const bool* const validFlags,    // Valid elevation flag array (true if elevation was found)
+      const unsigned int n,            // Size of the arrays
+      const double range,              // Range (meters)
+      const double refAlt,             // Ref altitude (meters)
+      const double tgtAlt,             // Target altitude (meters)
+      const double earthRadius,         // Earth radius on target position
+      const bool expOccultingEnabled    // Whether experimental (improved) terrain occulting is enabled
 )             
 {
-bool occulted = false;
+   bool occulted = false;
 
-// Early out checks
-if (  elevations == nullptr ||    // The elevation array wasn't provided, or
-      n < 2 ||              // there are too few points, or
-      range <= 0            // the range is less than or equal to zero
-      ) return occulted;
+   // Early out checks
+   if (  elevations == nullptr ||    // The elevation array wasn't provided, or
+         n < 2 ||              // there are too few points, or
+         range <= 0            // the range is less than or equal to zero
+         ) return occulted;
 
-const double effEarthRadius = earthRadius * (4.0 / 3.0);  // Refraction factor applied      
-double maxSlopeTerrain = -1000;
+   // Effective Earth Radius and Slope Terrain variables (only used in experimental terrain occulting)
+   constexpr double REFRACTION_FACTOR = 4.0 / 3.0;
+   const double effEarthRadius = earthRadius * REFRACTION_FACTOR; // Refraction factor applied      
+   double maxSlopeTerrain = -1000;
 
-// Tangent of the angle to the target point --
-// If the angle to any terrain point is greater than this
-// angle then the target is occulted by the terrain point
-const double tgtTan = (tgtAlt - refAlt) / range;
+   // Tangent of the angle to the target point --
+   // If the angle to any terrain point is greater than this
+   // angle then the target is occulted by the terrain point
+   const double tgtTan = (tgtAlt - refAlt) / range;
 
-// Loop through all elevation points looking for an angle
-// that's greater than our ref angle
-const double deltaRng = (range / (n - 1));
-double currentRange = 0;
+   // Loop through all elevation points looking for an angle
+   // that's greater than our ref angle
+   const double deltaRng = (range / (n - 1));
+   double currentRange = 0;
 
-// Loop structure: combine logic for both validFlags and non-validFlags cases
-for (unsigned int i = 1; i < (n-1) && !occulted; i++) {
-   currentRange += deltaRng;
+   // Loop structure: combine logic for both validFlags and non-validFlags cases
+   for (unsigned int i = 1; i < (n-1) && !occulted; i++) {
+      currentRange += deltaRng;
 
-   if (validFlags == nullptr || validFlags[i]) {
-      // Calculate the curvature drop for the current distance
-      double curvature = effEarthRadius * (1.0 - std::cos(currentRange / effEarthRadius));
+      if (validFlags == nullptr || validFlags[i]) {
+         if(expOccultingEnabled){
+            // Calculate the curvature drop for the current distance
+            double curvature = effEarthRadius * (1.0 - std::cos(currentRange / effEarthRadius));
 
-      // Adjust elevations for the curvature
-      double adjustedTgtAlt = tgtAlt - curvature;
-      double adjustedGroundElev = elevations[i] - curvature;
+            // Adjust elevations for the curvature
+            double adjustedTgtAlt = tgtAlt - curvature;
+            double adjustedGroundElev = elevations[i] - curvature;
 
-      // Calculate the slope between radar and target
-      double slopeTarget = (adjustedTgtAlt - refAlt) / currentRange;
+            // Calculate the slope between radar and target
+            double slopeTarget = (adjustedTgtAlt - refAlt) / currentRange;
 
-      // Calculate the slope between radar and ground
-      double slopeTerrain = (adjustedGroundElev - refAlt) / currentRange;
+            // Calculate the slope between radar and ground
+            double slopeTerrain = (adjustedGroundElev - refAlt) / currentRange;
 
-      if (slopeTerrain > maxSlopeTerrain) {
-         maxSlopeTerrain = slopeTerrain;
-      }
+            if (slopeTerrain > maxSlopeTerrain) {
+               maxSlopeTerrain = slopeTerrain;
+            }
 
-      // If the terrain slope is greater than the target slope, it's occulted
-      if (maxSlopeTerrain > slopeTarget || adjustedGroundElev > adjustedTgtAlt) {
-         occulted = true;
+            // If the terrain slope is greater than the target slope, it's occulted
+            if (maxSlopeTerrain > slopeTarget || adjustedGroundElev > adjustedTgtAlt) {
+               occulted = true;
+            }
+         }
+         else {
+            const double tstTan = (elevations[i] - refAlt) / currentRange;
+            if (tstTan >= tgtTan) {
+               occulted = true;
+            }
+         }
       }
    }
-}
 
-return occulted;
+   return occulted;
 }
 
 //------------------------------------------------------------------------------

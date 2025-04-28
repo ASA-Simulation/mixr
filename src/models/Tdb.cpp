@@ -14,6 +14,8 @@
 #include "mixr/base/util/nav_utils.hpp"
 #include "mixr/base/util/osg_utils.hpp"
 
+#include "mixr/simulation/Station.hpp"
+
 #include <cmath>
 
 namespace mixr {
@@ -369,7 +371,8 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                      } else {
                         // Occulting check between two standard player
                         occulted = terrain->targetOcculting(osLat, osLon, static_cast<double>(osAlt),
-                                                            tgtLat, tgtLon, static_cast<double>(tgtAlt), earthRadius);
+                                                            tgtLat, tgtLon, static_cast<double>(tgtAlt), earthRadius,
+                                                            ownship->getWorldModel()->getStation()->isExpOccultingEnabled());
                      }
                   }
 
