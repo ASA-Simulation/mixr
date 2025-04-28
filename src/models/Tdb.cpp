@@ -381,7 +381,7 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                         }
                         else {
                            occulted = terrain->targetOcculting(osLat, osLon, static_cast<double>(osAlt),
-                           tgtLat, tgtLon, static_cast<double>(tgtAlt));
+                           tgtLat, tgtLon, static_cast<double>(tgtAlt), earthRadius);
                         }                  
                      }
                   }
