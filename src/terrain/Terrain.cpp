@@ -344,18 +344,23 @@ bool Terrain::occultCheck(
 
       if (validFlags == nullptr || validFlags[i]) {
          if(expOccultingEnabled){
+
+            // Compute the central angle (in radians) subtended by the current range (arc distance) over the effective Earth radius.
+            double cos_alpha = std::cos(currentRange / effEarthRadius);
+            double sin_alpha = std::sin(currentRange / effEarthRadius);
+
             // Calculate the curvature drop for the current distance
-            double curvature = effEarthRadius * (1.0 - std::cos(currentRange / effEarthRadius));
+            double curvature = effEarthRadius * (1.0 - cos_alpha);
 
             // Adjust elevations for the curvature
-            double adjustedTgtAlt = tgtAlt - curvature;
-            double adjustedGroundElev = elevations[i] - curvature;
+            double adjustedTgtAlt = tgtAlt*cos_alpha - curvature;
+            double adjustedGroundElev = elevations[i]*cos_alpha - curvature;
 
             // Calculate the slope between radar and target
-            double slopeTarget = (adjustedTgtAlt - refAlt) / currentRange;
+            double slopeTarget = (adjustedTgtAlt - refAlt) / (effEarthRadius*sin_alpha);
 
             // Calculate the slope between radar and ground
-            double slopeTerrain = (adjustedGroundElev - refAlt) / currentRange;
+            double slopeTerrain = (adjustedGroundElev - refAlt) / (effEarthRadius*sin_alpha);
 
             if (slopeTerrain > maxSlopeTerrain) {
                maxSlopeTerrain = slopeTerrain;
