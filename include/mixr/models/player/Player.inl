@@ -573,4 +573,12 @@ inline const SynchronizedState& Player::getSynchronizedState() const
       return syncState2;
 }
 
+inline RfSignature* const Player::getRFSignature() {
+   return signature;
+}
+
+inline IrSignature* const Player::getIRSignature() {
+   return irSignature;
+}
+
 #endif
