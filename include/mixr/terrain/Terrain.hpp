@@ -79,9 +79,7 @@ public:
          const double refAlt,          // Ref altitude (meters)
          const double tgtLat,          // Target latitude (degs)
          const double tgtLon,          // Target longitude (degs)
-         const double tgtAlt,          // Tangent of the look angle
-         const double earthRadius,     // Earth radius on target position
-         const bool expOccultingEnabled // Whether experimental (improved) terrain occulting is enabled
+         const double tgtAlt           // Target altitude (meters)
       ) const;
 
    // Returns true if any terrain in the 'truBrg' direction for 'dist' meters
@@ -103,9 +101,7 @@ public:
          const unsigned int n,           // Size of elevation and valdFlags arrays
          const double range,             // Range (meters)
          const double refAlt,            // Ref altitude (meters)
-         const double tgtAlt,            // Target altitude (meters)
-         const double earthRadius,       // Earth radius on target position
-         const bool expOccultingEnabled  // Whether experimental (improved) terrain occulting is enabled
+         const double tgtAlt             // Target altitude (meters)
       );
 
    // Returns true if any of the tangents of the angles (from level) to each
