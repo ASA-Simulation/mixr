@@ -183,9 +183,6 @@ public:
    bool isUpdateTimersEnabled() const;
    virtual bool setUpdateTimersEnable(const bool enb);
 
-   // Whether experimental (improved) terrain occulting is enabled
-   virtual bool isExpOccultingEnabled() const { return false; }
-
    // ---
    // Use these functions to process the time-critical, background and network
    // tasks if you're managing your own thread(s) from your main application
