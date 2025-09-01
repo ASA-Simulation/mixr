@@ -15,6 +15,9 @@ mixr_terrain = library(
     dependencies: [
         mixr_base_dep
     ],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

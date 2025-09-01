@@ -2,12 +2,28 @@ project('mixr', 'cpp',
     version: '1.0.5',
     license: 'LGPL-3.0',
     default_options : [
+        'default_library=shared',
         'c_std=c11',
         'cpp_std=c++11',
+        'c_args=-fPIC',
+        'cpp_args=-fPIC',
     ],
 )
 
 add_project_arguments('-fpermissive', language : 'cpp')
+
+#
+# Linker flags for mostly static builds
+#
+
+static_flags = [
+    '-static-libstdc++',   # embed libstdc++.a
+    '-static-libgcc',      # embed libgcc.a
+]
+
+#
+# Dependencies: system and 3rd party
+#
 
 pkg = import('pkgconfig')
 
@@ -22,9 +38,15 @@ protoc = '@0@/bin/protoc'.format(protobuf_dep.get_variable('prefix'))
 
 public_headers = include_directories('include')
 
+#
+# Libraries
+#
+
 subdir('./src')
 
+#
 # Installation
+#
 
 pkg.generate(
     description : 'A fork of MIXR focused on meson/conan integration.',

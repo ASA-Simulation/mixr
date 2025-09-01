@@ -26,6 +26,9 @@ mixr_recorder = library(
         mixr_models_dep,
         protobuf_dep,
     ],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

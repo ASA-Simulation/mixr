@@ -19,6 +19,9 @@ mixr_linearsystem = library(
     source_files,
     include_directories: public_headers,
     dependencies: [mixr_base_dep],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

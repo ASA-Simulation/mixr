@@ -26,6 +26,9 @@ mixr_interop_rprfom = library(
         openrti_dep,
         zlib_dep
     ],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

@@ -9,6 +9,9 @@ mixr_interop_hla = library(
     source_files,
     include_directories : [public_headers],
     dependencies : [mixr_base_dep, mixr_interop_common_dep, openrti_dep, zlib_dep],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

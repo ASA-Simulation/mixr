@@ -18,6 +18,9 @@ mixr_interop_dis = library(
     source_files,
     include_directories: [public_headers],
     dependencies: [mixr_base_dep, mixr_simulation_dep, mixr_models_dep, mixr_interop_common_dep],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

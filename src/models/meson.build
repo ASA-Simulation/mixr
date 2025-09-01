@@ -118,6 +118,9 @@ mixr_models = library(
         mixr_terrain_dep,
         jsbsim_dep
     ],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 

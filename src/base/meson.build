@@ -114,6 +114,9 @@ mixr_base = library(
     dependencies : [
         thread_dep,
     ],
+    link_args : [
+        static_flags
+    ],
     install : true,
 )
 
