@@ -58,7 +58,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotDeviceIndex(const base::Number* const);
+   bool setSlotDeviceIndex(std::shared_ptr<const base::Number>);
 };
 
 }

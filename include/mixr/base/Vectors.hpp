@@ -132,10 +132,7 @@ public:
       return Matrix::getFldWidth();
    }
 
-   friend std::ostream& operator<<(std::ostream& sout, const RVector& V);
-
-   void ref() { BaseClass::ref(); }
-   void unref() { BaseClass::unref(); }
+    friend std::ostream& operator<<(std::ostream& sout, const RVector& V);
 };
 
 
@@ -345,11 +342,8 @@ public:
    }
 
 
-   // overloaded "<<" operator
-   friend std::ostream& operator<<(std::ostream& sout, const CVector& V);
-
-   void ref() { BaseClass::ref(); }
-   void unref() { BaseClass::unref(); }
+    // overloaded "<<" operator
+    friend std::ostream& operator<<(std::ostream& sout, const CVector& V);
 };
 
 // ---

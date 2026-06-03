@@ -104,17 +104,17 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotMode1(const base::Number* const);
-   bool setSlotMode2(const base::Number* const);
-   bool setSlotMode3a(const base::Number* const);
-   bool setSlotMode4a(const base::Number* const);
-   bool setSlotMode4b(const base::Number* const);
-   bool setSlotEnableMode1(const base::Number* const);
-   bool setSlotEnableMode2(const base::Number* const);
-   bool setSlotEnableMode3a(const base::Number* const);
-   bool setSlotWhichMode4(const base::Number* const);
-   bool setSlotEnableMode4(const base::Number* const);
-   bool setSlotEnableModeC(const base::Number* const);
+   bool setSlotMode1(std::shared_ptr<const base::Number>);
+   bool setSlotMode2(std::shared_ptr<const base::Number>);
+   bool setSlotMode3a(std::shared_ptr<const base::Number>);
+   bool setSlotMode4a(std::shared_ptr<const base::Number>);
+   bool setSlotMode4b(std::shared_ptr<const base::Number>);
+   bool setSlotEnableMode1(std::shared_ptr<const base::Number>);
+   bool setSlotEnableMode2(std::shared_ptr<const base::Number>);
+   bool setSlotEnableMode3a(std::shared_ptr<const base::Number>);
+   bool setSlotWhichMode4(std::shared_ptr<const base::Number>);
+   bool setSlotEnableMode4(std::shared_ptr<const base::Number>);
+   bool setSlotEnableModeC(std::shared_ptr<const base::Number>);
 };
 
 }

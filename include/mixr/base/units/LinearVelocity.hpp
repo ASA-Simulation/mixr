@@ -126,8 +126,8 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotDistance(const Distance* const);      //Input as type of distance (Meters, Degrees, ...)
-    bool setSlotTime(const Time* const);              //Input as type of time (Seconds, MilliSeconds, ...)
+    bool setSlotDistance(std::shared_ptr<const Distance>);      //Input as type of distance (Meters, Degrees, ...)
+    bool setSlotTime(std::shared_ptr<const Time>);              //Input as type of time (Seconds, MilliSeconds, ...)
 };
 
 }

@@ -965,7 +965,6 @@ const Player* Autopilot::getLeadPlayer()
             if (pair != nullptr) {
                setLeadPlayer( static_cast<const Player*>( pair->object() ) );
             }
-            players->unref();
             players = nullptr;
          }
       }
@@ -1179,9 +1178,7 @@ bool Autopilot::setLeadFollowingDeltaAltitude(const double above)
 bool Autopilot::setLeadPlayer(const Player* const p)
 {
    // remove old lead information
-   if (lead != nullptr) lead->unref();
    if (leadName != nullptr) {
-      leadName->unref();
       leadName = nullptr;
    }
 
@@ -1189,7 +1186,6 @@ bool Autopilot::setLeadPlayer(const Player* const p)
    lead = p;
 
    if (lead != nullptr) {
-      lead->ref();
       leadHdg = static_cast<double>(lead->getHeadingR());
       // grab our lead name
       if (lead->getName() != nullptr) leadName = lead->getName()->clone();
@@ -1212,7 +1208,6 @@ bool Autopilot::setLeadPlayerName(const base::Identifier* const msg)
             setLeadPlayer( static_cast<const Player*>( pair->object() ) );
             found = true;
          }
-         players->unref();
          players = nullptr;
       }
    }
@@ -1236,7 +1231,6 @@ bool Autopilot::setLeadPlayerName(const char* x)
             setLeadPlayer( static_cast<const Player*>( pair->object() ) );
             found = true;
          }
-         players->unref();
          players = nullptr;
       }
    }
@@ -1315,7 +1309,7 @@ int Autopilot::setThrottles(const double* const positions, const unsigned int nu
 //-----------------------------------------------------------------------------
 
 // Nav (route follow) mode flag
-bool Autopilot::setSlotNavMode(const base::Number* const msg)
+bool Autopilot::setSlotNavMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1325,7 +1319,7 @@ bool Autopilot::setSlotNavMode(const base::Number* const msg)
 }
 
 // Hold altitude (alt hold mode)
-bool Autopilot::setSlotHoldAltitude(const base::Distance* const msg)
+bool Autopilot::setSlotHoldAltitude(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1336,7 +1330,7 @@ bool Autopilot::setSlotHoldAltitude(const base::Distance* const msg)
 }
 
 // Altitude hold mode flag
-bool Autopilot::setSlotAltitudeHoldMode(const base::Number* const msg)
+bool Autopilot::setSlotAltitudeHoldMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1346,7 +1340,7 @@ bool Autopilot::setSlotAltitudeHoldMode(const base::Number* const msg)
 }
 
 // Hold velocity (kts)
-bool Autopilot::setSlotHoldVelocityKts(const base::Number* const msg)
+bool Autopilot::setSlotHoldVelocityKts(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1357,7 +1351,7 @@ bool Autopilot::setSlotHoldVelocityKts(const base::Number* const msg)
 }
 
 // Velocity hold mode flag
-bool Autopilot::setSlotVelocityHoldMode(const base::Number* const msg)
+bool Autopilot::setSlotVelocityHoldMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1368,7 +1362,7 @@ bool Autopilot::setSlotVelocityHoldMode(const base::Number* const msg)
 
 
 // Hold heading
-bool Autopilot::setSlotHoldHeading(const base::Angle* const msg)
+bool Autopilot::setSlotHoldHeading(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1379,7 +1373,7 @@ bool Autopilot::setSlotHoldHeading(const base::Angle* const msg)
 }
 
 // Heading altitude mode flag
-bool Autopilot::setSlotHeadingHoldMode(const base::Number* const msg)
+bool Autopilot::setSlotHeadingHoldMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1389,7 +1383,7 @@ bool Autopilot::setSlotHeadingHoldMode(const base::Number* const msg)
 }
 
 // Loiter mode flag
-bool Autopilot::setSlotLoiterMode(const base::Number* const msg)
+bool Autopilot::setSlotLoiterMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1399,7 +1393,7 @@ bool Autopilot::setSlotLoiterMode(const base::Number* const msg)
 }
 
 // Set slot: Loiter orbit pattern length
-bool Autopilot::setSlotLoiterPatternLength(const base::Distance* const msg)
+bool Autopilot::setSlotLoiterPatternLength(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1410,7 +1404,7 @@ bool Autopilot::setSlotLoiterPatternLength(const base::Distance* const msg)
 }
 
 // Set slot: Loiter orbit pattern length (NM)
-bool Autopilot::setSlotLoiterPatternLength(const base::Number* const msg)
+bool Autopilot::setSlotLoiterPatternLength(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1420,7 +1414,7 @@ bool Autopilot::setSlotLoiterPatternLength(const base::Number* const msg)
 }
 
 // Set slot: Loiter orbit pattern time
-bool Autopilot::setSlotLoiterPatternTime(const base::Time* const msg)
+bool Autopilot::setSlotLoiterPatternTime(std::shared_ptr<const base::Time> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1433,7 +1427,7 @@ bool Autopilot::setSlotLoiterPatternTime(const base::Time* const msg)
 
 
 // Set slot: Loiter orbit pattern counter-clockwise flag
-bool Autopilot::setSlotLoiterPatternCcwFlag(const base::Number* const msg)
+bool Autopilot::setSlotLoiterPatternCcwFlag(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1443,7 +1437,7 @@ bool Autopilot::setSlotLoiterPatternCcwFlag(const base::Number* const msg)
 }
 
 // Set slot: Desired distance behind(+) the lead
-bool Autopilot::setSlotLeadFollowingDistanceTrail(const base::Distance* const msg)
+bool Autopilot::setSlotLeadFollowingDistanceTrail(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1454,7 +1448,7 @@ bool Autopilot::setSlotLeadFollowingDistanceTrail(const base::Distance* const ms
 }
 
 // Set slot: Desired distance (meters) behind(+) the lead
-bool Autopilot::setSlotLeadFollowingDistanceTrail(const base::Number* const msg)
+bool Autopilot::setSlotLeadFollowingDistanceTrail(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1464,7 +1458,7 @@ bool Autopilot::setSlotLeadFollowingDistanceTrail(const base::Number* const msg)
 }
 
 // Set slot: Desired distance right(+) of the lead
-bool Autopilot::setSlotLeadFollowingDistanceRight(const base::Distance* const msg)
+bool Autopilot::setSlotLeadFollowingDistanceRight(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1475,7 +1469,7 @@ bool Autopilot::setSlotLeadFollowingDistanceRight(const base::Distance* const ms
 }
 
 // Set slot: Desired distance (meters) right(+) of the lead
-bool Autopilot::setSlotLeadFollowingDistanceRight(const base::Number* const msg)
+bool Autopilot::setSlotLeadFollowingDistanceRight(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1485,7 +1479,7 @@ bool Autopilot::setSlotLeadFollowingDistanceRight(const base::Number* const msg)
 }
 
 // Set slot: Desired delta altitude above(+) the lead
-bool Autopilot::setSlotLeadFollowingDeltaAltitude(const base::Distance* const msg)
+bool Autopilot::setSlotLeadFollowingDeltaAltitude(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1496,7 +1490,7 @@ bool Autopilot::setSlotLeadFollowingDeltaAltitude(const base::Distance* const ms
 }
 
 // Set slot: Desired delta altitude (meters) above(+) the lead
-bool Autopilot::setSlotLeadFollowingDeltaAltitude(const base::Number* const msg)
+bool Autopilot::setSlotLeadFollowingDeltaAltitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1506,17 +1500,15 @@ bool Autopilot::setSlotLeadFollowingDeltaAltitude(const base::Number* const msg)
 }
 
 // Initial name of our lead player
-bool Autopilot::setSlotLeadPlayerName(const base::Identifier* const p)
+bool Autopilot::setSlotLeadPlayerName(std::shared_ptr<const base::Identifier> p)
 {
-   if (leadName != nullptr) leadName->unref();
    leadName = p;
-   if (leadName != nullptr) leadName->ref();
    return true;
 }
 
 
 // Set slot: "Follow the lead" mode flag
-bool Autopilot::setSlotFollowTheLeadMode(const base::Number* const msg)
+bool Autopilot::setSlotFollowTheLeadMode(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1532,7 +1524,7 @@ bool Autopilot::setSlotFollowTheLeadMode(const base::Number* const msg)
 }
 
 // Set slot: Maximum turn rate - limits how fast (or slow) the pilot turns
-bool Autopilot::setSlotMaxRateOfTurnDps(const base::Number* const msg)
+bool Autopilot::setSlotMaxRateOfTurnDps(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxTurnRateDps(msg->getDouble());
@@ -1540,7 +1532,7 @@ bool Autopilot::setSlotMaxRateOfTurnDps(const base::Number* const msg)
 }
 
 // Set slot: Maximum bank angle - limits how far the pilot can bank
-bool Autopilot::setSlotMaxBankAngle(const base::Number* const msg)
+bool Autopilot::setSlotMaxBankAngle(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxBankAngleDeg(msg->getDouble());
@@ -1548,7 +1540,7 @@ bool Autopilot::setSlotMaxBankAngle(const base::Number* const msg)
 }
 
 // Set slot: Maximum climb / dive rate - limits how fast the pilot can dive/climb
-bool Autopilot::setSlotMaxClimbRateFpm(const base::Number* const msg)
+bool Autopilot::setSlotMaxClimbRateFpm(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxClimbRateMps((msg->getDouble() * base::distance::FT2M / base::time::M2S));
@@ -1556,7 +1548,7 @@ bool Autopilot::setSlotMaxClimbRateFpm(const base::Number* const msg)
 }
 
 // Set slot: Maximum climb / dive rate - limits how fast the pilot can dive/climb
-bool Autopilot::setSlotMaxClimbRateMps(const base::Number* const msg)
+bool Autopilot::setSlotMaxClimbRateMps(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxClimbRateMps(msg->getDouble());
@@ -1564,7 +1556,7 @@ bool Autopilot::setSlotMaxClimbRateMps(const base::Number* const msg)
 }
 
 // Set slot: Maximum pitch angle - limits how much pitch the pilot can climb/dive to
-bool Autopilot::setSlotMaxPitchAngle(const base::Number* const msg)
+bool Autopilot::setSlotMaxPitchAngle(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxPitchAngleDeg(msg->getDouble());
@@ -1572,7 +1564,7 @@ bool Autopilot::setSlotMaxPitchAngle(const base::Number* const msg)
 }
 
 // Set slot: Maximum acceleration - limits how fast the pilot can accelerate
-bool Autopilot::setSlotMaxVelAccNps(const base::Number* const msg)
+bool Autopilot::setSlotMaxVelAccNps(std::shared_ptr<const base::Number> msg)
 {
    bool ok{msg != nullptr};
    if (ok) ok = setMaxVelAccNps(msg->getDouble());

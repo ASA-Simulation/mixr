@@ -162,79 +162,79 @@ bool Iff::setWhichMode4(const bool newM)
 }
 
 // Slot functions
-bool Iff::setSlotEnableMode1(const base::Number* const msg)
+bool Iff::setSlotEnableMode1(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setEnabledMode1(msg->getBoolean());
     // make sure we hold this reset value
     icMode1Flg = enableMode1;
     return true;
 }
-bool Iff::setSlotEnableMode2(const base::Number* const msg)
+bool Iff::setSlotEnableMode2(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setEnabledMode2(msg->getBoolean());
     icMode2Flg = enableMode2;
     return true;
 }
-bool Iff::setSlotEnableMode3a(const base::Number* const msg)
+bool Iff::setSlotEnableMode3a(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setEnabledMode3a(msg->getBoolean());
     icMode3aFlg = enableMode3a;
     return true;
 }
-bool Iff::setSlotEnableMode4(const base::Number* const msg)
+bool Iff::setSlotEnableMode4(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setEnabledMode4(msg->getBoolean());
     icMode4Flg = enableMode4;
     return true;
 }
-bool Iff::setSlotWhichMode4(const base::Number* const msg)
+bool Iff::setSlotWhichMode4(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setWhichMode4(msg->getBoolean());
     icWhichMode4 = whichMode4;
     return true;
 }
-bool Iff::setSlotEnableModeC(const base::Number* const msg)
+bool Iff::setSlotEnableModeC(std::shared_ptr<const base::Number> msg)
 {
     if (msg != nullptr) setEnabledModeC(msg->getBoolean());
     icModeCFlg = enableModeC;
     return true;
 }
-bool Iff::setSlotMode1(const base::Number* const msg)
+bool Iff::setSlotMode1(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) ok = setMode1(static_cast<unsigned short>(msg->getInt()));
     if (ok) icMode1 = mode1;
     return ok;
 }
-bool Iff::setSlotMode2(const base::Number* const msg)
+bool Iff::setSlotMode2(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) ok = setMode2(static_cast<unsigned short>(msg->getInt()));
     if (ok) icMode2 = mode2;
     return ok;
 }
-bool Iff::setSlotMode3a(const base::Number* const msg)
+bool Iff::setSlotMode3a(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) ok = setMode3a(static_cast<unsigned short>(msg->getInt()));
     if (ok) icMode3a = mode3a;
     return ok;
 }
-bool Iff::setSlotMode4a(const base::Number* const msg)
+bool Iff::setSlotMode4a(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) ok = setMode4A(static_cast<unsigned short>(msg->getInt()));
     icMode4a = mode4a;
     return ok;
 }
-bool Iff::setSlotMode4b(const base::Number* const msg)
+bool Iff::setSlotMode4b(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) ok = setMode4B(static_cast<unsigned short>(msg->getInt()));
     icMode4b = mode4b;
     return ok;
 }
-//bool Iff::setSlotPower(const base::String* const msg)
+//bool Iff::setSlotPower(std::shared_ptr<const base::String> msg)
 //{
 //    if (strcmp(msg->getString(), "OFF") == 0) pwr = OFF;
 //    else if (strcmp(msg->getString(), "STANDBY") == 0) pwr = STANDBY;

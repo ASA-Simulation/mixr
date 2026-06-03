@@ -30,7 +30,7 @@ Rgba::Rgba()
    STANDARD_CONSTRUCTOR()
 }
 
-bool Rgba::setSlotAlpha(const Number* const msg)
+bool Rgba::setSlotAlpha(std::shared_ptr<const Number> msg)
 {
     double value{msg->getReal()};
     bool ok{setAlpha( value )};

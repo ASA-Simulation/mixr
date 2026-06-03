@@ -156,14 +156,14 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPolarization(base::String* const x)                  { return setPolarization(x);   }
-   bool setSlotThreshold(base::Power* const x)                      { return setThreshold(x);      }
-   bool setSlotGain(const base::Number* const x)                    { return setGain(x);           }
-   bool setSlotGainPattern(base::Function* const x)                 { return setGainPattern(x);    }
-   bool setSlotGainPatternDeg(const base::Number* const x)          { return setGainPatternDeg(x); }
-   bool setSlotRecycleFlg(const base::Number* const x)              { return setRecycleFlg(x);     }
-   bool setSlotBeamWidth(const base::Angle* const x)                { return setBeamWidth(x);      }
-   bool setSlotBeamWidth(const base::Number* const x)               { return setBeamWidth(x);      }
+   bool setSlotPolarization(std::shared_ptr<base::String> x)                  { return setPolarization(x);   }
+   bool setSlotThreshold(std::shared_ptr<base::Power> x)                      { return setThreshold(x);      }
+   bool setSlotGain(std::shared_ptr<const base::Number> x)                    { return setGain(x);           }
+   bool setSlotGainPattern(std::shared_ptr<base::Function> x)                 { return setGainPattern(x);    }
+   bool setSlotGainPatternDeg(std::shared_ptr<const base::Number> x)          { return setGainPatternDeg(x); }
+   bool setSlotRecycleFlg(std::shared_ptr<const base::Number> x)              { return setRecycleFlg(x);     }
+   bool setSlotBeamWidth(std::shared_ptr<const base::Angle> x)                { return setBeamWidth(x);      }
+   bool setSlotBeamWidth(std::shared_ptr<const base::Number> x)               { return setBeamWidth(x);      }
 };
 
 }

@@ -100,7 +100,6 @@ void Steerpoint::copyData(const Steerpoint& org, const bool)
        base::String* n{};
        if (org.initNextStptName != nullptr) n = org.initNextStptName->clone();
        initNextStptName = n;
-       if (n != nullptr) n->unref();
     }
 
     initNextStptIdx = org.initNextStptIdx;
@@ -109,14 +108,12 @@ void Steerpoint::copyData(const Steerpoint& org, const bool)
        base::String* s{};
        if (org.description != nullptr) s = org.description->clone();
        description = s;
-       if (s != nullptr) s->unref();
     }
 
     {
        Action* aa{};
        if (org.action != nullptr) aa = org.action->clone();
        action = aa;
-       if (aa != nullptr) aa->unref();
     }
 
     latitude = org.latitude;
@@ -321,7 +318,7 @@ bool Steerpoint::setAction(Action* const aa)
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool Steerpoint::setSlotSteerpointType(const base::Identifier* const msg)
+bool Steerpoint::setSlotSteerpointType(std::shared_ptr<const base::Identifier> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -341,7 +338,7 @@ bool Steerpoint::setSlotSteerpointType(const base::Identifier* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotLatitude(const base::LatLon* const msg)
+bool Steerpoint::setSlotLatitude(std::shared_ptr<const base::LatLon> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -352,7 +349,7 @@ bool Steerpoint::setSlotLatitude(const base::LatLon* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotLatitude(const base::Number* const msg)
+bool Steerpoint::setSlotLatitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -363,7 +360,7 @@ bool Steerpoint::setSlotLatitude(const base::Number* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotLongitude(const base::LatLon* const msg)
+bool Steerpoint::setSlotLongitude(std::shared_ptr<const base::LatLon> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -374,7 +371,7 @@ bool Steerpoint::setSlotLongitude(const base::LatLon* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotLongitude(const base::Number* const msg)
+bool Steerpoint::setSlotLongitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -387,7 +384,7 @@ bool Steerpoint::setSlotLongitude(const base::Number* const msg)
 }
 
 /*
-bool Steerpoint::setSlotPosition(const base::List* const msg)
+bool Steerpoint::setSlotPosition(std::shared_ptr<const base::List> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -406,7 +403,7 @@ bool Steerpoint::setSlotPosition(const base::List* const msg)
 }
 */
 
-bool Steerpoint::setSlotXPos(const base::Distance* const msg)
+bool Steerpoint::setSlotXPos(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -418,7 +415,7 @@ bool Steerpoint::setSlotXPos(const base::Distance* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotYPos(const base::Distance* const msg)
+bool Steerpoint::setSlotYPos(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -430,7 +427,7 @@ bool Steerpoint::setSlotYPos(const base::Distance* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotElevation(const base::Distance* const msg)
+bool Steerpoint::setSlotElevation(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -443,7 +440,7 @@ bool Steerpoint::setSlotElevation(const base::Distance* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotElevation(const base::Number* const msg)
+bool Steerpoint::setSlotElevation(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -457,7 +454,7 @@ bool Steerpoint::setSlotElevation(const base::Number* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotPTA(const base::Time* const msg)
+bool Steerpoint::setSlotPTA(std::shared_ptr<const base::Time> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -466,7 +463,7 @@ bool Steerpoint::setSlotPTA(const base::Time* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotPTA(const base::Number* const msg)
+bool Steerpoint::setSlotPTA(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -476,7 +473,7 @@ bool Steerpoint::setSlotPTA(const base::Number* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotSCA(const base::Distance* const msg)
+bool Steerpoint::setSlotSCA(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -485,7 +482,7 @@ bool Steerpoint::setSlotSCA(const base::Distance* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotSCA(const base::Number* const msg)
+bool Steerpoint::setSlotSCA(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -496,7 +493,7 @@ bool Steerpoint::setSlotSCA(const base::Number* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotDescription(const base::String* const msg)
+bool Steerpoint::setSlotDescription(std::shared_ptr<const base::String> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -506,7 +503,7 @@ bool Steerpoint::setSlotDescription(const base::String* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotMagVar(const base::Angle* const msg)
+bool Steerpoint::setSlotMagVar(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -516,7 +513,7 @@ bool Steerpoint::setSlotMagVar(const base::Angle* const msg)
     }
     return ok;
 }
-bool Steerpoint::setSlotMagVar(const base::Number* const msg)
+bool Steerpoint::setSlotMagVar(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -528,7 +525,7 @@ bool Steerpoint::setSlotMagVar(const base::Number* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotCmdAltitude(const base::Distance* const msg)
+bool Steerpoint::setSlotCmdAltitude(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -540,7 +537,7 @@ bool Steerpoint::setSlotCmdAltitude(const base::Distance* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotCmdAltitude(const base::Number* const msg)
+bool Steerpoint::setSlotCmdAltitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -552,7 +549,7 @@ bool Steerpoint::setSlotCmdAltitude(const base::Number* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotCmdAirspeed(const base::Number* const msg)
+bool Steerpoint::setSlotCmdAirspeed(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -564,7 +561,7 @@ bool Steerpoint::setSlotCmdAirspeed(const base::Number* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotNext(const base::Identifier* const msg)
+bool Steerpoint::setSlotNext(std::shared_ptr<const base::Identifier> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -574,7 +571,7 @@ bool Steerpoint::setSlotNext(const base::Identifier* const msg)
     return ok;
 }
 
-bool Steerpoint::setSlotNext(const base::Number* const msg)
+bool Steerpoint::setSlotNext(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -714,7 +711,6 @@ bool Steerpoint::compute(const Navigation* const nav, const Steerpoint* const fr
                     p->compute(nav);
                     item = item->getNext();
                 }
-                steerpoints->unref();
                 steerpoints = nullptr;
             }
 

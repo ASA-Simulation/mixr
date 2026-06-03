@@ -232,30 +232,30 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSteerpointType(const base::Identifier* const);
-   bool setSlotLatitude(const base::LatLon* const);
-   bool setSlotLatitude(const base::Number* const);
-   bool setSlotLongitude(const base::LatLon* const);
-   bool setSlotLongitude(const base::Number* const);
-   bool setSlotXPos(const base::Distance* const);
-   bool setSlotYPos(const base::Distance* const);
-   bool setSlotElevation(const base::Distance* const);
-   bool setSlotElevation(const base::Number* const);
-   bool setSlotCmdAltitude(const base::Distance* const);
-   bool setSlotCmdAltitude(const base::Number* const);
-   bool setSlotCmdAirspeed(const base::Number* const);
-   bool setSlotPTA(const base::Time* const);
-   bool setSlotPTA(const base::Number* const);
-   bool setSlotSCA(const base::Distance* const);
-   bool setSlotSCA(const base::Number* const);
-   bool setSlotDescription(const base::String* const);
-   bool setSlotMagVar(const base::Angle* const);
-   bool setSlotMagVar(const base::Number* const);
-   bool setSlotNext(const base::Identifier* const);
-   bool setSlotNext(const base::Number* const);
-   bool setSlotAction(Action* const x)                   { return setAction(x); }
+   bool setSlotSteerpointType(std::shared_ptr<const base::Identifier>);
+   bool setSlotLatitude(std::shared_ptr<const base::LatLon>);
+   bool setSlotLatitude(std::shared_ptr<const base::Number>);
+   bool setSlotLongitude(std::shared_ptr<const base::LatLon>);
+   bool setSlotLongitude(std::shared_ptr<const base::Number>);
+   bool setSlotXPos(std::shared_ptr<const base::Distance>);
+   bool setSlotYPos(std::shared_ptr<const base::Distance>);
+   bool setSlotElevation(std::shared_ptr<const base::Distance>);
+   bool setSlotElevation(std::shared_ptr<const base::Number>);
+   bool setSlotCmdAltitude(std::shared_ptr<const base::Distance>);
+   bool setSlotCmdAltitude(std::shared_ptr<const base::Number>);
+   bool setSlotCmdAirspeed(std::shared_ptr<const base::Number>);
+   bool setSlotPTA(std::shared_ptr<const base::Time>);
+   bool setSlotPTA(std::shared_ptr<const base::Number>);
+   bool setSlotSCA(std::shared_ptr<const base::Distance>);
+   bool setSlotSCA(std::shared_ptr<const base::Number>);
+   bool setSlotDescription(std::shared_ptr<const base::String>);
+   bool setSlotMagVar(std::shared_ptr<const base::Angle>);
+   bool setSlotMagVar(std::shared_ptr<const base::Number>);
+   bool setSlotNext(std::shared_ptr<const base::Identifier>);
+   bool setSlotNext(std::shared_ptr<const base::Number>);
+   bool setSlotAction(std::shared_ptr<Action> x)                   { return setAction(x); }
 
-   //bool setSlotPosition(const base::List* const);
+   //bool setSlotPosition(std::shared_ptr<const base::List>);
 };
 
 }

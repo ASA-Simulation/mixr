@@ -113,7 +113,6 @@ void Nib::copyData(const Nib& org, const bool cc)
    // Need to clear attached missiles -- after clone these need to be found again
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMsl[i] != nullptr) {
-         apartMsl[i]->unref();
          apartMsl[i] = nullptr;
          apartMslCnt[i] = 0;
          apartMslAttached[i] = false;
@@ -134,7 +133,6 @@ void Nib::deleteData()
    // Clear attached missiles
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMsl[i] != nullptr) {
-         apartMsl[i]->unref();
          apartMsl[i] = nullptr;
          apartMslCnt[i] = 0;
          apartMslAttached[i] = false;
@@ -155,7 +153,6 @@ bool Nib::shutdownNotification()
     // Clear attached missiles
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMsl[i] != nullptr) {
-         apartMsl[i]->unref();
          apartMsl[i] = nullptr;
          apartMslCnt[i] = 0;
          apartMslAttached[i] = false;
@@ -553,7 +550,6 @@ bool Nib::isPlayerStateUpdateRequired(const double curExecTime)
                         if (msl != nullptr) {
                            // Save the pointer to the missile, set the missile's change count to 1,
                            // and up the missile count
-                           msl->ref();
                            apartMsl[apartNumMissiles] = msl;
                            apartMslAttached[apartNumMissiles] = !(msl->isMode(models::Player::LAUNCHED));
                            apartMslCnt[apartNumMissiles] = 1;
@@ -562,7 +558,6 @@ bool Nib::isPlayerStateUpdateRequired(const double curExecTime)
                      }
                      item = item->getNext();
                   }
-                  stores->unref();
                   stores = nullptr;
                }
 

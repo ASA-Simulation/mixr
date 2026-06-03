@@ -56,8 +56,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotEnabledList(const base::List* const);
-   bool setSlotDisabledList(const base::List* const);
+   bool setSlotEnabledList(std::shared_ptr<const base::List>);
+   bool setSlotDisabledList(std::shared_ptr<const base::List>);
 };
 
 

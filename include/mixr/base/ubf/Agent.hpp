@@ -54,21 +54,21 @@ protected:
    virtual void initActor();
 
    base::Component* getActor();
-   void setActor(base::Component* const myActor);
+   void setActor(std::shared_ptr<base::Component> myActor);
 
 private:
    AbstractBehavior* behavior{};
    AbstractState* state{};
-   safe_ptr<base::Component> myActor;
+   std::shared_ptr<base::Component> myActor;
 
 private:
    // slot table helper methods
-   bool setSlotBehavior(AbstractBehavior* const);
-   bool setSlotState(AbstractState* const);
+   bool setSlotBehavior(std::shared_ptr<AbstractBehavior>);
+   bool setSlotState(std::shared_ptr<AbstractState>);
 };
 
-inline void Agent::setActor(base::Component* const actor)      { myActor = actor; return; }
-inline base::Component* Agent::getActor()                      { return myActor; }
+inline void Agent::setActor(std::shared_ptr<base::Component> actor)      { myActor = actor; return; }
+inline base::Component* Agent::getActor()                      { return myActor.get(); }
 
 
 //------------------------------------------------------------------------------

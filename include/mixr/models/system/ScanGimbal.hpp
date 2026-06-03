@@ -256,17 +256,17 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotScanMode(base::String* const);
-   bool setSlotLeftToRightScan(const base::Number* const);
-   bool setSlotScanWidth(const base::Number* const);
-   bool setSlotSearchVolume(base::List* const);
-   bool setSlotRefPosition(const base::List* const);
-   bool setSlotBarSpacing(const base::Number* const);
-   bool setSlotNumBars(const base::Number* const);
-   bool setSlotRevPerSec(const base::Number* const);
-   bool setSlotScanRadius(const base::Number* const);
-   bool setSlotPRVertices(const base::PairStream* const);
-   bool setSlotMaxRevs(const base::Number* const);
+   bool setSlotScanMode(std::shared_ptr<base::String>);
+   bool setSlotLeftToRightScan(std::shared_ptr<const base::Number>);
+   bool setSlotScanWidth(std::shared_ptr<const base::Number>);
+   bool setSlotSearchVolume(std::shared_ptr<base::List>);
+   bool setSlotRefPosition(std::shared_ptr<const base::List>);
+   bool setSlotBarSpacing(std::shared_ptr<const base::Number>);
+   bool setSlotNumBars(std::shared_ptr<const base::Number>);
+   bool setSlotRevPerSec(std::shared_ptr<const base::Number>);
+   bool setSlotScanRadius(std::shared_ptr<const base::Number>);
+   bool setSlotPRVertices(std::shared_ptr<const base::PairStream>);
+   bool setSlotMaxRevs(std::shared_ptr<const base::Number>);
 };
 
 }

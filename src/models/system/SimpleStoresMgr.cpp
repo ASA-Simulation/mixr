@@ -91,12 +91,10 @@ void SimpleStoresMgr::updateData(const double dt)
                }
                item = item->getNext();
             }
-            list->unref();
             list = nullptr;
          }
          nCurWpn = count;
 
-         wpn->unref();
          wpn = nullptr;
       }
       else {
@@ -184,7 +182,6 @@ Missile* SimpleStoresMgr::getNextMissileImp()
          }
          item = item->getNext();
       }
-      list->unref();
    }
 
    return msl;
@@ -223,7 +220,6 @@ Sam* SimpleStoresMgr::getNextSamImp()
          item = item->getNext();
       }
 
-      list->unref();
    }
 
    return msl;
@@ -262,7 +258,6 @@ Bomb* SimpleStoresMgr::getNextBombImp()
          item = item->getNext();
       }
 
-      list->unref();
    }
 
    return bomb;
@@ -301,7 +296,6 @@ Chaff* SimpleStoresMgr::getNextChaffImp()
          item = item->getNext();
       }
 
-      list->unref();
    }
 
    return chaff;
@@ -340,7 +334,6 @@ Flare* SimpleStoresMgr::getNextFlareImp()
          item = item->getNext();
       }
 
-      list->unref();
    }
 
    return flare;
@@ -379,7 +372,6 @@ Decoy* SimpleStoresMgr::getNextDecoyImp()
          item = item->getNext();
       }
 
-      list->unref();
    }
 
    return decoy;
@@ -402,14 +394,12 @@ Missile* SimpleStoresMgr::getSpecificMissile(const base::String* const missileTy
             if (p != nullptr && p->isInactive()) {
                // Ok, we have a missile, but is it the type we want?
                if (*p->getType() == *missileType) {
-                  p->ref();
                   msl = p;
                }
             }
             item = item->getNext();
          }
 
-         list->unref();
       }
 
    }
@@ -433,14 +423,12 @@ Bomb* SimpleStoresMgr::getSpecificBomb(const base::String* const bombType)
             if (p != nullptr && p->isInactive()) {
                // Ok, we have a bomb, but is it the type we want?
                if (*p->getType() == *bombType) {
-                  p->ref();
                   bomb = p;
                }
             }
             item = item->getNext();
          }
 
-         list->unref();
       }
 
    }
@@ -459,12 +447,10 @@ AbstractWeapon* SimpleStoresMgr::getSpecificWeapon(const std::type_info& type)
          const auto pair = static_cast<base::Pair*>(item->getValue());
          const auto p = dynamic_cast<AbstractWeapon*>(pair->object());
          if (p != nullptr && p->isInactive() && p->isClassType(type)) {
-            p->ref();
             wpn = p;
          }
          item = item->getNext();
       }
-      list->unref();
    }
    return wpn;
 }
@@ -639,9 +625,7 @@ bool SimpleStoresMgr::onWpnRelEvent(const base::Boolean* const sw)
             setWeaponReleaseTimer(1.0);
          }
 
-         if (flyout != nullptr) flyout->unref(); // unref() the flyout
 
-         wpn->unref();
          wpn = nullptr;
       }
 

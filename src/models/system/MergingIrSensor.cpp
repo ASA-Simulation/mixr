@@ -250,7 +250,7 @@ bool MergingIrSensor::setElevationBin(const double w)
    return true;
 }
 
-bool MergingIrSensor::setSlotAzimuthBin(const base::Number* const msg)
+bool MergingIrSensor::setSlotAzimuthBin(std::shared_ptr<const base::Number> msg)
 {
    double value{};
 
@@ -265,7 +265,7 @@ bool MergingIrSensor::setSlotAzimuthBin(const base::Number* const msg)
    return true;
 }
 
-bool MergingIrSensor::setSlotElevationBin(const base::Number* const msg)
+bool MergingIrSensor::setSlotElevationBin(std::shared_ptr<const base::Number> msg)
 {
    double value{};
 

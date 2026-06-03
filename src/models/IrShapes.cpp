@@ -45,7 +45,7 @@ void IrShape::copyData(const IrShape& org, const bool)
    area = org.area;
 }
 
-bool IrShape::setSlotIrShapeArea(const mixr::base::Number* const num)
+bool IrShape::setSlotIrShapeArea(std::shared_ptr<const mixr::base::Number> num)
 {
    double value{};
    const auto a = dynamic_cast<const base::Area*>(num);
@@ -101,7 +101,7 @@ void IrSphere::copyData(const IrSphere& org, const bool)
    radius = org.radius;
 }
 
-bool IrSphere::setSlotIrSphereRadius(const mixr::base::Number* const s)
+bool IrSphere::setSlotIrSphereRadius(std::shared_ptr<const mixr::base::Number> s)
 {
    double value{};
 
@@ -158,7 +158,7 @@ void IrBox::deleteData()
 {
 }
 
-bool IrBox::setSlotIrBoxX(const mixr::base::Number* const s)
+bool IrBox::setSlotIrBoxX(std::shared_ptr<const mixr::base::Number> s)
 {
    double value{};
 
@@ -173,7 +173,7 @@ bool IrBox::setSlotIrBoxX(const mixr::base::Number* const s)
    return true;
 }
 
-bool IrBox::setSlotIrBoxY(const mixr::base::Number* const s)
+bool IrBox::setSlotIrBoxY(std::shared_ptr<const mixr::base::Number> s)
 {
    double value{};
 
@@ -188,7 +188,7 @@ bool IrBox::setSlotIrBoxY(const mixr::base::Number* const s)
    return true;
 }
 
-bool IrBox::setSlotIrBoxZ(const mixr::base::Number* const s)
+bool IrBox::setSlotIrBoxZ(std::shared_ptr<const mixr::base::Number> s)
 {
    double value{};
 

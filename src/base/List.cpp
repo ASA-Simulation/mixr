@@ -26,7 +26,6 @@ List::List(const double values[], const unsigned int nv)
     for (unsigned int i = 0; i < nv; i++) {
         const auto p = new Float(values[i]);
         put(p);
-        p->unref(); // ref() by put(), so we can unref().
     }
 }
 
@@ -38,7 +37,6 @@ List::List(const int values[], const unsigned int nv)
     for (unsigned int i = 0; i < nv; i++) {
         const auto p = new Integer(values[i]);
         put(p);
-        p->unref(); // ref() by put(), so we can unref().
     }
 }
 
@@ -54,8 +52,7 @@ void List::copyData(const List& org, const bool)
     for ( ; d != nullptr; d = d->getNext() ) {
         Object* p{d->getValue()->clone()};
         if (p != nullptr) {
-            addTail(p);
-            p->unref();     // p is ref() by addTail(), so we can unref();
+            addTail(p);   // p is ref() by addTail(), so we can unref();
         }
     }
 }
@@ -90,9 +87,6 @@ void List::clear()
     // Empty out the list ...
     while (!isEmpty()) {
         Object* p{removeHead()}; // First remove them
-        if (p != nullptr) {
-            p->unref();     // and unref() them
-        }
     }
     headP = nullptr;
     tailP = nullptr;
@@ -125,7 +119,6 @@ void List::addHead(Object* const obj)
     if (obj == nullptr) return;
     const auto d = new Item;
     d->value = obj;
-    obj->ref();
     addHead(d);
 }
 
@@ -137,7 +130,6 @@ void List::addTail(Object* const obj)
     if (obj == nullptr) return;
     const auto d = new Item;
     d->value = obj;
-    obj->ref();
     addTail(d);
 }
 
@@ -157,7 +149,6 @@ bool List::remove(const Object* const obj)
            ok = true;
         }
     }
-    if (ok) obj->unref();
     return ok;
 }
 

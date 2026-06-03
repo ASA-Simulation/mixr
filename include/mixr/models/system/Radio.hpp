@@ -135,11 +135,11 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotNumChannels(base::Number* const);
-   bool setSlotChannels(const base::PairStream* const);
-   bool setSlotChannel(base::Number* const);
-   bool setSlotMaxDetectRange(base::Number* const);
-   bool setSlotRadioId(base::Number* const);
+   bool setSlotNumChannels(std::shared_ptr<base::Number>);
+   bool setSlotChannels(std::shared_ptr<const base::PairStream>);
+   bool setSlotChannel(std::shared_ptr<base::Number>);
+   bool setSlotMaxDetectRange(std::shared_ptr<base::Number>);
+   bool setSlotRadioId(std::shared_ptr<base::Number>);
 };
 
 }

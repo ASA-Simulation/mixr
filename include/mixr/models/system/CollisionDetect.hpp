@@ -123,14 +123,14 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotCollisionRange(const base::Distance* const);
-   bool setSlotMaxPlayers(const base::Number* const);
-   bool setSlotPlayerTypes(const base::PairStream* const);
-   bool setSlotMaxRange2Players(const base::Distance* const);
-   bool setSlotMaxAngle2Players(const base::Angle* const);
-   bool setSlotUseWorldCoordinates(const base::Number* const);
-   bool setSlotLocalOnly(const base::Number* const);
-   bool setSlotSendCrashEvents(const base::Number* const);
+   bool setSlotCollisionRange(std::shared_ptr<const base::Distance>);
+   bool setSlotMaxPlayers(std::shared_ptr<const base::Number>);
+   bool setSlotPlayerTypes(std::shared_ptr<const base::PairStream>);
+   bool setSlotMaxRange2Players(std::shared_ptr<const base::Distance>);
+   bool setSlotMaxAngle2Players(std::shared_ptr<const base::Angle>);
+   bool setSlotUseWorldCoordinates(std::shared_ptr<const base::Number>);
+   bool setSlotLocalOnly(std::shared_ptr<const base::Number>);
+   bool setSlotSendCrashEvents(std::shared_ptr<const base::Number>);
 };
 
 inline double CollisionDetect::getCollisionRange() const       { return collisionRange; }

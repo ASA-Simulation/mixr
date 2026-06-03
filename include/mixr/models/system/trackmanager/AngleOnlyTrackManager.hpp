@@ -50,10 +50,10 @@ private:
                                               //   TrackManager::queueLock semaphore)
 private:
    // slot table helper methods
-   bool setSlotAzimuthBin(const base::Number* const);
-   bool setSlotElevationBin(const base::Number* const);
-   bool setSlotAlpha(const base::Number* const) override;
-   bool setSlotBeta(const base::Number* const) override;
+   bool setSlotAzimuthBin(std::shared_ptr<const base::Number>);
+   bool setSlotElevationBin(std::shared_ptr<const base::Number>);
+   bool setSlotAlpha(std::shared_ptr<const base::Number>) override;
+   bool setSlotBeta(std::shared_ptr<const base::Number>) override;
 };
 
 }

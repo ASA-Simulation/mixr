@@ -22,7 +22,7 @@ void Number::copyData(const Number& org, const bool)
    val = org.val;
 }
 
-bool Number::setSlotValue(const Number* const svobj)
+bool Number::setSlotValue(std::shared_ptr<const Number> svobj)
 {
    bool ok {};
    if (svobj != nullptr) {

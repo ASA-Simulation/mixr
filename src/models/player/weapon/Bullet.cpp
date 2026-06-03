@@ -239,7 +239,6 @@ bool Bullet::checkForTargetHit()
                     }
                     item = item->getNext();
                 }
-                players->unref();
                 players = nullptr;
             }
         }

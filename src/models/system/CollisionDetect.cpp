@@ -268,7 +268,6 @@ void CollisionDetect::updateData(const double dt)
       }
 
       // Unref the player list
-      plist->unref();
    }
 
    // ---
@@ -423,7 +422,6 @@ void CollisionDetect::process(const double dt)
    //   for (unsigned int i = 0; i < n; i++) {
    //      std::cout << "collision: " << *(list[i]->getName());
    //      std::cout << "; dist = " << distances[i] << std::endl;
-   //      list[i]->unref();
    //   }
    //}
 }
@@ -523,7 +521,7 @@ void CollisionDetect::clearPoiList()
 //------------------------------------------------------------------------------
 // Slot Functions
 //------------------------------------------------------------------------------
-bool CollisionDetect::setSlotCollisionRange(const base::Distance* const msg)
+bool CollisionDetect::setSlotCollisionRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -535,7 +533,7 @@ bool CollisionDetect::setSlotCollisionRange(const base::Distance* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotMaxPlayers(const base::Number* const msg)
+bool CollisionDetect::setSlotMaxPlayers(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -547,7 +545,7 @@ bool CollisionDetect::setSlotMaxPlayers(const base::Number* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotPlayerTypes(const base::PairStream* const msg)
+bool CollisionDetect::setSlotPlayerTypes(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -580,7 +578,7 @@ bool CollisionDetect::setSlotPlayerTypes(const base::PairStream* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotMaxRange2Players(const base::Distance* const msg)
+bool CollisionDetect::setSlotMaxRange2Players(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -592,7 +590,7 @@ bool CollisionDetect::setSlotMaxRange2Players(const base::Distance* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotMaxAngle2Players(const base::Angle* const msg)
+bool CollisionDetect::setSlotMaxAngle2Players(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -604,7 +602,7 @@ bool CollisionDetect::setSlotMaxAngle2Players(const base::Angle* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotUseWorldCoordinates(const base::Number* const msg)
+bool CollisionDetect::setSlotUseWorldCoordinates(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -613,7 +611,7 @@ bool CollisionDetect::setSlotUseWorldCoordinates(const base::Number* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotLocalOnly(const base::Number* const msg)
+bool CollisionDetect::setSlotLocalOnly(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -622,7 +620,7 @@ bool CollisionDetect::setSlotLocalOnly(const base::Number* const msg)
    return ok;
 }
 
-bool CollisionDetect::setSlotSendCrashEvents(const base::Number* const msg)
+bool CollisionDetect::setSlotSendCrashEvents(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

@@ -138,12 +138,10 @@ void GmtiTrkMgr::processTrackList(const double dt)
          nReports++;
       } else {
          // Free up emissions from other types of players
-         em->unref();
       }
    }
       else {
          // ignore -- too many reports
-      em->unref();
    }
    }
 
@@ -270,7 +268,6 @@ void GmtiTrkMgr::processTrackList(const double dt)
          END_RECORD_DATA_SAMPLE()
 
          // Track has timed out -- delete the track and ...
-         tracks[it]->unref();
          nTrks--;
          // move all other tracks down in the list.
          for (unsigned int it2 = it; it2 < nTrks; it2++) {
@@ -312,7 +309,6 @@ void GmtiTrkMgr::processTrackList(const double dt)
          tracks[nTrks++] = newTrk;
       }
       // Free the emission report
-      emissions[i]->unref();
    }
    base::unlock(trkListLock);
 }

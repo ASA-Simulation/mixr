@@ -73,7 +73,6 @@ void Gun::copyData(const Gun& org, const bool)
    if (org.getBulletType() != nullptr) {
       Bullet* b{org.getBulletType()->clone()};
       setBulletType( b );
-      b->unref();
    } else {
       setBulletType(nullptr);
    }
@@ -105,7 +104,6 @@ bool Gun::shutdownNotification()
 {
    if (bullet != nullptr) {
       bullet->event(SHUTDOWN_EVENT);
-      bullet->unref();
       bullet = nullptr;
    }
 
@@ -241,11 +239,9 @@ bool Gun::setGunArmed(const bool flg)
 bool Gun::setBulletType(Bullet* const b)
 {
    if (bullet != nullptr) {
-      bullet->unref();
    }
    bullet = b;
    if (bullet != nullptr) {
-      bullet->ref();
       bullet->container(this);
    }
    return true;
@@ -318,7 +314,6 @@ void Gun::burstFrame()
          }
 
          // Cleanup
-         if (flyout != nullptr) { flyout->unref(); flyout = nullptr; }
 
       }
    }
@@ -389,7 +384,7 @@ bool Gun::setAngles(const double r, const double p, const double y)
 //------------------------------------------------------------------------------
 
 // Number of rounds
-bool Gun::setSlotNumRounds(const base::Number* const num)
+bool Gun::setSlotNumRounds(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -399,7 +394,7 @@ bool Gun::setSlotNumRounds(const base::Number* const num)
 }
 
 // Unlimited rounds flag
-bool Gun::setSlotUnlimited(const base::Number* const num)
+bool Gun::setSlotUnlimited(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -409,7 +404,7 @@ bool Gun::setSlotUnlimited(const base::Number* const num)
 }
 
 // Rate of fire (rds per min)
-bool Gun::setSlotRate(const base::Number* const num)
+bool Gun::setSlotRate(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -419,7 +414,7 @@ bool Gun::setSlotRate(const base::Number* const num)
 }
 
 // Burst rate
-bool Gun::setSlotBurstRate(const base::Number* const num)
+bool Gun::setSlotBurstRate(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -437,7 +432,7 @@ bool Gun::setSlotBurstRate(const base::Number* const num)
 }
 
 // Gun position relative to ownship
-bool Gun::setSlotPosition(base::List* const numList)
+bool Gun::setSlotPosition(std::shared_ptr<base::List> numList)
 {
    bool ok{};
    double values[3]{};
@@ -450,7 +445,7 @@ bool Gun::setSlotPosition(base::List* const numList)
 }
 
 // Gun roll angle to ownship
-bool Gun::setSlotRoll(const base::Number* const num)
+bool Gun::setSlotRoll(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    double value{-1000.0};
@@ -475,7 +470,7 @@ bool Gun::setSlotRoll(const base::Number* const num)
 }
 
 // Gun pitch angle to ownship
-bool Gun::setSlotPitch(const base::Number* const num)
+bool Gun::setSlotPitch(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    double value{-1000.0};
@@ -500,7 +495,7 @@ bool Gun::setSlotPitch(const base::Number* const num)
 }
 
 // Gun heading angle to ownship
-bool Gun::setSlotYaw(const base::Number* const num)
+bool Gun::setSlotYaw(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    double value{-1000.0};

@@ -752,13 +752,13 @@ bool NetIO::doTick()
 //------------------------------------------------------------------------------
 // Set slot routines
 //------------------------------------------------------------------------------
-bool NetIO::setSlotFedFile(base::String* const msg)
+bool NetIO::setSlotFedFile(std::shared_ptr<base::String> msg)
 {
    fedFileName = msg;
    return true;
 }
 
-bool NetIO::setSlotRegulatingTime(base::Number* const msg)
+bool NetIO::setSlotRegulatingTime(std::shared_ptr<base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -769,7 +769,7 @@ bool NetIO::setSlotRegulatingTime(base::Number* const msg)
    return ok;
 }
 
-bool NetIO::setSlotConstrainedTime(base::Number* const msg)
+bool NetIO::setSlotConstrainedTime(std::shared_ptr<base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -805,7 +805,6 @@ void NetIO::addNibToObjectTables(interop::Nib* const nib, const IoType ioType)
 void NetIO::addNibToNameTable(Nib* const nib, Nib** tbl, const unsigned int n)
 {
    // Put the NIB on the top of the table
-   nib->ref();
    tbl[n] = nib;
 
    if (n > 0) {
@@ -824,7 +823,6 @@ void NetIO::addNibToNameTable(Nib* const nib, Nib** tbl, const unsigned int n)
 void NetIO::addNibToHandleTable(Nib* const nib, Nib** tbl, const unsigned int n)
 {
    // Put the NIB on the top of the table
-   nib->ref();
    tbl[n] = nib;
 
    if (n > 0) {
@@ -873,7 +871,6 @@ void NetIO::removeNibFromTable(Nib* const nib, Nib** tbl, const unsigned int n)
 
    // Shift down all items above this NIB one position
    if (found >= 0) {
-      tbl[found]->unref();
       unsigned int n1 = (n - 1);
       for (unsigned int i = found; i < n1; i++) {
          tbl[i] = tbl[i+1];

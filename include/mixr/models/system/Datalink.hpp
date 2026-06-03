@@ -114,10 +114,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotRadioId(const base::Number* const);
-   bool setSlotMaxRange(const base::Distance* const);
-   bool setSlotRadioName(const base::String* const x)                { return setRadioName(x); }
-   bool setSlotTrackManagerName(const base::String* const x)         { return setTrackManagerName(x); }
+   bool setSlotRadioId(std::shared_ptr<const base::Number>);
+   bool setSlotMaxRange(std::shared_ptr<const base::Distance>);
+   bool setSlotRadioName(std::shared_ptr<const base::String> x)                { return setRadioName(x); }
+   bool setSlotTrackManagerName(std::shared_ptr<const base::String> x)         { return setTrackManagerName(x); }
 };
 
 }

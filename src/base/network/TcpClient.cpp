@@ -179,7 +179,7 @@ bool TcpClient::connectToServer()
 //------------------------------------------------------------------------------
 
 // ipAddress: String containing the IP address
-bool TcpClient::setSlotIpAddress(const String* const msg)
+bool TcpClient::setSlotIpAddress(std::shared_ptr<const String> msg)
 {
     bool ok{};
     if (msg != nullptr) {

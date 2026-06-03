@@ -123,7 +123,7 @@ bool Table::setExtrapolationEnabled(const bool flg)
    return true;
 }
 
-bool Table::setSlotExtrapolationEnabled(const Number* const msg)
+bool Table::setSlotExtrapolationEnabled(std::shared_ptr<const Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -176,7 +176,7 @@ bool Table::loadVector(const List& list, double** table, unsigned int* nn)
 //------------------------------------------------------------------------------
 //  setDataTable() -- for Table
 //------------------------------------------------------------------------------
-bool Table::setDataTable(const List* const sdtobj)
+bool Table::setDataTable(const std::shared_ptr<const List>& sdtobj)
 {
     bool ok {true};
     if (sdtobj != nullptr) {

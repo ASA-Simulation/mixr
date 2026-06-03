@@ -47,7 +47,7 @@ private:
     
 private:
     // slot table helper methods
-    bool setSlotNetworkMask(const String* const);
+    bool setSlotNetworkMask(std::shared_ptr<const String>);
 };
 
 }

@@ -276,7 +276,6 @@ const DataRecordHandle* FileReader::readRecordImp()
 bool FileReader::setFilename(const base::String* const msg)
 {
    if (filename != nullptr) {
-      filename->unref();
       filename = nullptr;
    }
    if (msg != nullptr)
@@ -288,7 +287,6 @@ bool FileReader::setFilename(const base::String* const msg)
 bool FileReader::setPathName(const base::String* const msg)
 {
    if (pathname != nullptr) {
-      pathname->unref();
       pathname = nullptr;
    }
    if (msg != nullptr)

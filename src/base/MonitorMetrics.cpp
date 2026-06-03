@@ -30,8 +30,13 @@ BEGIN_SLOT_MAP(MonitorMetrics)
     ON_SLOT(6, setSlotWhiteCIE,  List)
 END_SLOT_MAP()
 
-MonitorMetrics::MonitorMetrics(const Table1* redLumTbl, const Table1* greenLumTbl, const Table1* blueLumTbl,
-                               const Matrixd& phosphorCoordMatrix, const Vec3d& whiteRGB, const Vec3d& whiteCIE)
+MonitorMetrics::MonitorMetrics(
+    std::shared_ptr<const Table1> redLumTbl, 
+    std::shared_ptr<const Table1> greenLumTbl, 
+    std::shared_ptr<const Table1> blueLumTbl,
+    const Matrixd& phosphorCoordMatrix,
+    const Vec3d& whiteRGB,
+    const Vec3d& whiteCIE)
 {
     STANDARD_CONSTRUCTOR()
 
@@ -64,9 +69,9 @@ MonitorMetrics::MonitorMetrics()
 
     STANDARD_CONSTRUCTOR()
 
-    redLuminance = new Table1(luminanceRed, npoints, luminanceLevels, npoints);
-    greenLuminance = new Table1(luminanceGreen, npoints, luminanceLevels, npoints);
-    blueLuminance = new Table1(luminanceBlue, npoints, luminanceLevels, npoints);
+    redLuminance = std::make_shared<Table1>(luminanceRed, npoints, luminanceLevels, npoints);
+    greenLuminance = std::make_shared<Table1>(luminanceGreen, npoints, luminanceLevels, npoints);
+    blueLuminance = std::make_shared<Table1>(luminanceBlue, npoints, luminanceLevels, npoints);
     phosphorCoordinates.set( 0.628f, 0.346f, 0.026f, 0.0f,
                              0.347f, 0.556f, 0.097f, 0.0f,
                              0.147f, 0.065f, 0.788f, 0.0f,
@@ -103,28 +108,28 @@ void MonitorMetrics::deleteData()
     blueLuminance = nullptr;
 }
 
-bool MonitorMetrics::setSlotRed(const Table1* const red)
+bool MonitorMetrics::setSlotRed(std::shared_ptr<const Table1> red)
 {
     if ( red == nullptr ) return false;
     redLuminance = red;
     return computeMatrix();
 }
 
-bool MonitorMetrics::setSlotGreen(const Table1* const green)
+bool MonitorMetrics::setSlotGreen(std::shared_ptr<const Table1> green)
 {
     if ( green == nullptr ) return false;
     greenLuminance = green;
     return computeMatrix();
 }
 
-bool MonitorMetrics::setSlotBlue(const Table1* const blue)
+bool MonitorMetrics::setSlotBlue(std::shared_ptr<const Table1> blue)
 {
     if ( blue == nullptr ) return false;
     blueLuminance = blue;
     return computeMatrix();
 }
 
-bool MonitorMetrics::setSlotPhosphors(const List* const phosphors)
+bool MonitorMetrics::setSlotPhosphors(std::shared_ptr<const List> phosphors)
 {
     double listItems[6] {};
 
@@ -140,7 +145,7 @@ bool MonitorMetrics::setSlotPhosphors(const List* const phosphors)
     return computeMatrix();
 }
 
-bool MonitorMetrics::setSlotWhiteRGB(const List* const whiteRGB)
+bool MonitorMetrics::setSlotWhiteRGB(std::shared_ptr<const List> whiteRGB)
 {
     double listItems[3] {};
 
@@ -152,7 +157,7 @@ bool MonitorMetrics::setSlotWhiteRGB(const List* const whiteRGB)
     return computeMatrix();
 }
 
-bool MonitorMetrics::setSlotWhiteCIE(const List* const whiteCIE)
+bool MonitorMetrics::setSlotWhiteCIE(std::shared_ptr<const List> whiteCIE)
 {
     double listItems[3] {};
 

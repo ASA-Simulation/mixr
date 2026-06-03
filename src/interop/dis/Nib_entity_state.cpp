@@ -287,9 +287,7 @@ void Nib::processArticulationParameters(const EntityStatePDU* const pdu)
                if (sms == nullptr) {
                   sms = new models::StoresMgr();
                   const auto pair = new base::Pair("storesMgr", sms);
-                  sms->unref();   // pair owns it
                   p->addComponent(pair);
-                  pair->unref(); // player owns it
                }
 
                // We need to make sure we have the attached weapon and that it's
@@ -312,7 +310,6 @@ void Nib::processArticulationParameters(const EntityStatePDU* const pdu)
                         }
                         item = item->getNext();
                      }
-                     stores->unref();
                   }
 
                   // There's a weapon attached?
@@ -343,9 +340,7 @@ void Nib::processArticulationParameters(const EntityStatePDU* const pdu)
                               char cbuf[20] {};
                               std::sprintf(cbuf,"%i",sta);
                               const auto pair = new base::Pair(cbuf, wpn);
-                              wpn->unref();   // pair owns it
                               sms->addComponent(pair);
-                              pair->unref(); // sms owns it
                            }
                         }
                      }
@@ -821,7 +816,6 @@ unsigned char Nib::manageArticulationParameters(EntityStatePDU* const pdu)
 
                // found the NTM for the missile -- and it must be a DIS NTM
                apartMslTypes[i] = dynamic_cast<const Ntm*>(ntm);
-               if (apartMslTypes[i] != nullptr) apartMslTypes[i]->ref();
             }
 
          }

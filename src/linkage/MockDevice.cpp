@@ -36,7 +36,6 @@ void MockDevice::copyData(const MockDevice& org, const bool)
    if (org.generators != nullptr) {
       const auto copy = static_cast<base::PairStream*>(org.generators->clone());
       setSlotGenerators(copy);
-      copy->unref();
    }
 
 }
@@ -57,7 +56,7 @@ void MockDevice::processInputsImpl(const double dt, base::AbstractIoData* const 
 }
 
 // read in list of generators
-bool MockDevice::setSlotGenerators(base::PairStream* const list)
+bool MockDevice::setSlotGenerators(std::shared_ptr<base::PairStream> list)
 {
    bool ok{true};
 

@@ -145,7 +145,7 @@ void Effect::weaponDynamics(const double dt)
 //------------------------------------------------------------------------------
 
 // dragIndex: drag index used by default dynamics
-bool Effect::setSlotDragIndex(base::Number* const p)
+bool Effect::setSlotDragIndex(std::shared_ptr<base::Number> p)
 {
     setDragIndex( p->getReal() );
     return true;

@@ -932,7 +932,7 @@ protected:
       base::Component* const remove = nullptr   // Optional subcomponent to remove
       ) override;
 
-   bool setSlotSignature(RfSignature *const);
+   bool setSlotSignature(std::shared_ptr<RfSignature>);
 
 private:
    void initData();
@@ -1081,64 +1081,64 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotInitXPos(const base::Distance* const);
-   bool setSlotInitXPos(const base::Number* const);
-   bool setSlotInitYPos(const base::Distance* const);
-   bool setSlotInitYPos(const base::Number* const);
-   bool setSlotInitAlt(const base::Distance* const);
-   bool setSlotInitAlt(const base::Number* const);
-   bool setSlotInitPosition(const base::List* const);
+   bool setSlotInitXPos(std::shared_ptr<const base::Distance>);
+   bool setSlotInitXPos(std::shared_ptr<const base::Number>);
+   bool setSlotInitYPos(std::shared_ptr<const base::Distance>);
+   bool setSlotInitYPos(std::shared_ptr<const base::Number>);
+   bool setSlotInitAlt(std::shared_ptr<const base::Distance>);
+   bool setSlotInitAlt(std::shared_ptr<const base::Number>);
+   bool setSlotInitPosition(std::shared_ptr<const base::List>);
 
-   bool setSlotInitLat(const base::LatLon* const);
-   bool setSlotInitLat(const base::Angle* const);
-   bool setSlotInitLat(const base::Number* const);
-   bool setSlotInitLon(const base::LatLon* const);
-   bool setSlotInitLon(const base::Angle* const);
-   bool setSlotInitLon(const base::Number* const);
+   bool setSlotInitLat(std::shared_ptr<const base::LatLon>);
+   bool setSlotInitLat(std::shared_ptr<const base::Angle>);
+   bool setSlotInitLat(std::shared_ptr<const base::Number>);
+   bool setSlotInitLon(std::shared_ptr<const base::LatLon>);
+   bool setSlotInitLon(std::shared_ptr<const base::Angle>);
+   bool setSlotInitLon(std::shared_ptr<const base::Number>);
 
-   bool setSlotInitGeocentric(const base::List* const);
+   bool setSlotInitGeocentric(std::shared_ptr<const base::List>);
 
-   bool setSlotInitRoll(const base::Angle* const);
-   bool setSlotInitRoll(const base::Number* const);
-   bool setSlotInitPitch(const base::Angle* const x)         { return setInitPitch(x);   }
-   bool setSlotInitPitch(const base::Number* const x)        { return setInitPitch(x);   }
-   bool setSlotInitHeading(const base::Angle* const x)       { return setInitHeading(x); }
-   bool setSlotInitHeading(const base::Number* const x)      { return setInitHeading(x); }
+   bool setSlotInitRoll(std::shared_ptr<const base::Angle>);
+   bool setSlotInitRoll(std::shared_ptr<const base::Number>);
+   bool setSlotInitPitch(std::shared_ptr<const base::Angle> x)         { return setInitPitch(x);   }
+   bool setSlotInitPitch(std::shared_ptr<const base::Number> x)        { return setInitPitch(x);   }
+   bool setSlotInitHeading(std::shared_ptr<const base::Angle> x)       { return setInitHeading(x); }
+   bool setSlotInitHeading(std::shared_ptr<const base::Number> x)      { return setInitHeading(x); }
 
-   bool setSlotInitEulerAngles(const base::List* const);
-   bool setSlotInitVelocity(const base::Number* const);
-   bool setSlotInitVelocityKts(const base::Number* const);
+   bool setSlotInitEulerAngles(std::shared_ptr<const base::List>);
+   bool setSlotInitVelocity(std::shared_ptr<const base::Number>);
+   bool setSlotInitVelocityKts(std::shared_ptr<const base::Number>);
 
-   bool setSlotType(const base::String* const x)             { return setType(x); }
-   bool setSlotSide(base::String* const);
+   bool setSlotType(std::shared_ptr<const base::String> x)             { return setType(x); }
+   bool setSlotSide(std::shared_ptr<base::String>);
 
-   //bool setSlotSignature(RfSignature* const);
-   bool setSlotIrSignature(IrSignature* const);
-   bool setSlotCamouflageType(const base::Number* const);
+   //bool setSlotSignature(std::shared_ptr<RfSignature>);
+   bool setSlotIrSignature(std::shared_ptr<IrSignature>);
+   bool setSlotCamouflageType(std::shared_ptr<const base::Number>);
 
-   bool setSlotTerrainElevReq(const base::Number* const);
-   bool setSlotInterpolateTerrain(const base::Number* const);
-   bool setSlotTerrainOffset(const base::Distance* const);
+   bool setSlotTerrainElevReq(std::shared_ptr<const base::Number>);
+   bool setSlotInterpolateTerrain(std::shared_ptr<const base::Number>);
+   bool setSlotTerrainOffset(std::shared_ptr<const base::Distance>);
 
-   bool setSlotPositionFreeze(const base::Number* const);
-   bool setSlotAltitudeFreeze(const base::Number* const);
-   bool setSlotAttitudeFreeze(const base::Number* const);
-   bool setSlotFuelFreeze(const base::Number* const);
-   bool setSlotCrashOverride(const base::Number* const);
-   bool setSlotKillOverride(const base::Number* const);
-   bool setSlotKillRemoval(const base::Number* const);
-   bool setSlotEnableNetOutput(const base::Number* const);
-   bool setSlotDataLogTime(const base::Time* const);
+   bool setSlotPositionFreeze(std::shared_ptr<const base::Number>);
+   bool setSlotAltitudeFreeze(std::shared_ptr<const base::Number>);
+   bool setSlotAttitudeFreeze(std::shared_ptr<const base::Number>);
+   bool setSlotFuelFreeze(std::shared_ptr<const base::Number>);
+   bool setSlotCrashOverride(std::shared_ptr<const base::Number>);
+   bool setSlotKillOverride(std::shared_ptr<const base::Number>);
+   bool setSlotKillRemoval(std::shared_ptr<const base::Number>);
+   bool setSlotEnableNetOutput(std::shared_ptr<const base::Number>);
+   bool setSlotDataLogTime(std::shared_ptr<const base::Time>);
 
-   bool setSlotTestRollRate(const base::Angle* const);
-   bool setSlotTestPitchRate(const base::Angle* const);
-   bool setSlotTestYawRate(const base::Angle* const);
-   bool setSlotTestBodyAxis(const base::Number* const);
+   bool setSlotTestRollRate(std::shared_ptr<const base::Angle>);
+   bool setSlotTestPitchRate(std::shared_ptr<const base::Angle>);
+   bool setSlotTestYawRate(std::shared_ptr<const base::Angle>);
+   bool setSlotTestBodyAxis(std::shared_ptr<const base::Number>);
 
-   bool setSlotUseCoordSys(base::String* const);
+   bool setSlotUseCoordSys(std::shared_ptr<base::String>);
 
-//   bool setSlotID(const base::Number* const);
-//   bool setSlotInitMode(base::String* const);
+//   bool setSlotID(std::shared_ptr<const base::Number>);
+//   bool setSlotInitMode(std::shared_ptr<base::String>);
 };
 
 #include "mixr/models/player/Player.inl"

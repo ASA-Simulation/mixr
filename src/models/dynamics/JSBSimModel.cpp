@@ -875,10 +875,9 @@ void JSBSimModel::reset()
 //------------------------------------------------------------------------------
 
 // Sets root directory for JSBSim models
-bool JSBSimModel::setSlotRootDir(const base::String* const dir)
+bool JSBSimModel::setSlotRootDir(std::shared_ptr<const base::String> dir)
 {
     if (rootDir != nullptr) {
-       rootDir->unref();
        rootDir = nullptr;
     }
     if (dir != nullptr) {
@@ -888,10 +887,9 @@ bool JSBSimModel::setSlotRootDir(const base::String* const dir)
 }
 
 // Sets JSBSim model
-bool JSBSimModel::setSlotModel(const base::String* const mdl)
+bool JSBSimModel::setSlotModel(std::shared_ptr<const base::String> mdl)
 {
     if (model != nullptr) {
-       model->unref();
        model = nullptr;
     }
     if (mdl != nullptr) {
@@ -901,7 +899,7 @@ bool JSBSimModel::setSlotModel(const base::String* const mdl)
 }
 
 // Sets JSBSim debug level
-bool JSBSimModel::setSlotDebugLevel(const base::Integer* const level)
+bool JSBSimModel::setSlotDebugLevel(std::shared_ptr<const base::Integer> level)
 {
    if (level != nullptr) {
       debugLevel = level->getInt();

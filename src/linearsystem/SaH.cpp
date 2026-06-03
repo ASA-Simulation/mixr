@@ -129,7 +129,7 @@ bool SaH::setSampleRate(const unsigned int v)
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool SaH::setSlotSampleRate(const base::Frequency* const msg)
+bool SaH::setSlotSampleRate(std::shared_ptr<const base::Frequency> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -142,7 +142,7 @@ bool SaH::setSlotSampleRate(const base::Frequency* const msg)
    return ok;
 }
 
-bool SaH::setSlotSampleRate(const base::Number* const msg)
+bool SaH::setSlotSampleRate(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

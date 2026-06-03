@@ -197,8 +197,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotFilename(const base::String* const x)             { return setFilename(x); }
-   bool setSlotPathname(const base::String* const x)             { return setPathname(x); }
+   bool setSlotFilename(std::shared_ptr<const base::String> x)             { return setFilename(x); }
+   bool setSlotPathname(std::shared_ptr<const base::String> x)             { return setPathname(x); }
 };
 
 }

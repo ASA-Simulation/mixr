@@ -135,9 +135,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPathname(String* const);
-   bool setSlotFilename(String* const);
-   bool setSlotRecordLength(const Number* const);
+   bool setSlotPathname(std::shared_ptr<String>);
+   bool setSlotFilename(std::shared_ptr<String>);
+   bool setSlotRecordLength(std::shared_ptr<Number>);
 };
 
 inline bool FileReader::setRecordNumber(const int num)

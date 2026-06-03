@@ -130,8 +130,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotMsgHdr(const base::String* const);
-   bool setSlotDivider(const base::String* const);
+   bool setSlotMsgHdr(std::shared_ptr<const base::String>);
+   bool setSlotDivider(std::shared_ptr<const base::String>);
 
 };
 

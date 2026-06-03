@@ -31,7 +31,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPoi(base::List* const);
+   bool setSlotPoi(std::shared_ptr<base::List>);
 };
 
 }

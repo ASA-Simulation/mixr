@@ -149,19 +149,19 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotRefLatitude(const base::LatLon* const);
-   bool setSlotRefLatitude(const base::Number* const);
-   bool setSlotRefLongitude(const base::LatLon* const);
-   bool setSlotRefLongitude(const base::Number* const);
+   bool setSlotRefLatitude(std::shared_ptr<const base::LatLon>);
+   bool setSlotRefLatitude(std::shared_ptr<const base::Number>);
+   bool setSlotRefLongitude(std::shared_ptr<const base::LatLon>);
+   bool setSlotRefLongitude(std::shared_ptr<const base::Number>);
 
-   bool setSlotGamingAreaRange(const base::Distance* const);
-   bool setSlotEarthModel(const base::EarthModel* const);
-   bool setSlotEarthModel(const base::String* const);
-   bool setSlotGamingAreaEarthModel(const base::Number* const);
+   bool setSlotGamingAreaRange(std::shared_ptr<const base::Distance>);
+   bool setSlotEarthModel(std::shared_ptr<const base::EarthModel>);
+   bool setSlotEarthModel(std::shared_ptr<const base::String>);
+   bool setSlotGamingAreaEarthModel(std::shared_ptr<const base::Number>);
 
    // environmental interface
-   bool setSlotTerrain(terrain::Terrain* const);
-   bool setSlotAtmosphere(AbstractAtmosphere* const);
+   bool setSlotTerrain(std::shared_ptr<terrain::Terrain>);
+   bool setSlotAtmosphere(std::shared_ptr<AbstractAtmosphere>);
 };
 
 }

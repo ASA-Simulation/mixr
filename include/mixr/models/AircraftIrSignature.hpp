@@ -124,12 +124,12 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotAirframeSignatureTable(const base::Table4* const);
-   bool setSlotAirframeWavebandFactorTable(const base::Table2* const);
-   bool setSlotPlumeSignatureTable(const base::Table5* const);
-   bool setSlotPlumeWavebandFactorTable(const base::Table2* const);
-   bool setSlotHotPartsSignatureTable(const base::Table5* const);
-   bool setSlotHotPartsWavebandFactorTable(const base::Table2* const);
+   bool setSlotAirframeSignatureTable(std::shared_ptr<const base::Table4>);
+   bool setSlotAirframeWavebandFactorTable(std::shared_ptr<const base::Table2>);
+   bool setSlotPlumeSignatureTable(std::shared_ptr<const base::Table5>);
+   bool setSlotPlumeWavebandFactorTable(std::shared_ptr<const base::Table2>);
+   bool setSlotHotPartsSignatureTable(std::shared_ptr<const base::Table5>);
+   bool setSlotHotPartsWavebandFactorTable(std::shared_ptr<const base::Table2>);
 };
 
 }

@@ -33,7 +33,6 @@ const DataRecordHandle* InputHandler::readRecord()
          bool enabled{isDataEnabled(id)};
 
          if (enabled) finished = true;    // If it is then we're done
-         else { p->unref(); p = nullptr; }      // If itis disabled then we'll try again
       }
 
       // When we didn't receive a record then we're done for now and they

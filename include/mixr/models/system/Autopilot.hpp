@@ -303,32 +303,32 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotNavMode(const base::Number* const);                       // Nav (route follow) mode flag
-   bool setSlotHoldAltitude(const base::Distance* const);                // Hold altitude
-   bool setSlotAltitudeHoldMode(const base::Number* const);              // Altitude hold mode flag
-   bool setSlotHoldVelocityKts(const base::Number* const);               // Hold velocity (kts)
-   bool setSlotVelocityHoldMode(const base::Number* const);              // Velocity hold mode flag
-   bool setSlotHoldHeading(const base::Angle* const);                    // Hold heading
-   bool setSlotHeadingHoldMode(const base::Number* const);               // Heading altitude mode flag
-   bool setSlotLoiterMode(const base::Number* const);                    // Loiter mode flag
-   bool setSlotLoiterPatternLength(const base::Distance* const);         // Loiter orbit pattern length
-   bool setSlotLoiterPatternLength(const base::Number* const);           // Loiter orbit pattern length (NM)
-   bool setSlotLoiterPatternTime(const base::Time* const);               // Loiter orbit pattern length (seconds)
-   bool setSlotLoiterPatternCcwFlag(const base::Number* const);          // Loiter orbit pattern counter-clockwise flag
-   bool setSlotLeadFollowingDistanceTrail(const base::Distance* const);  // Desired distance behind(+) the lead
-   bool setSlotLeadFollowingDistanceTrail(const base::Number* const);    // Desired distance (meters) behind(+) the lead
-   bool setSlotLeadFollowingDistanceRight(const base::Distance* const);  // Desired distance right(+) of the lead
-   bool setSlotLeadFollowingDistanceRight(const base::Number* const);    // Desired distance (meters) right(+) of the lead
-   bool setSlotLeadFollowingDeltaAltitude(const base::Distance* const);  // Desired delta altitude above(+) the lead
-   bool setSlotLeadFollowingDeltaAltitude(const base::Number* const);    // Desired delta altitude (meters) above(+) the lead
-   bool setSlotLeadPlayerName(const base::Identifier* const);            // Name of the player we are following
-   bool setSlotFollowTheLeadMode(const base::Number* const);             // "Follow the lead" mode flag
-   bool setSlotMaxRateOfTurnDps(const base::Number* const);              // Maximum turn rate - degrees per second
-   bool setSlotMaxBankAngle(const base::Number* const);                  // Maximum bank angle - degrees
-   bool setSlotMaxClimbRateMps(const base::Number* const);               // Max climb/dive rate - meters per second
-   bool setSlotMaxClimbRateFpm(const base::Number* const);               // Max climb/dive rate - feet per minute
-   bool setSlotMaxPitchAngle(const base::Number* const);                 // Max pitch angle - degrees
-   bool setSlotMaxVelAccNps(const base::Number* const);                  // Maximum velocity acceleration (Nps)
+   bool setSlotNavMode(std::shared_ptr<const base::Number>);                       // Nav (route follow) mode flag
+   bool setSlotHoldAltitude(std::shared_ptr<const base::Distance>);                // Hold altitude
+   bool setSlotAltitudeHoldMode(std::shared_ptr<const base::Number>);              // Altitude hold mode flag
+   bool setSlotHoldVelocityKts(std::shared_ptr<const base::Number>);               // Hold velocity (kts)
+   bool setSlotVelocityHoldMode(std::shared_ptr<const base::Number>);              // Velocity hold mode flag
+   bool setSlotHoldHeading(std::shared_ptr<const base::Angle>);                    // Hold heading
+   bool setSlotHeadingHoldMode(std::shared_ptr<const base::Number>);               // Heading altitude mode flag
+   bool setSlotLoiterMode(std::shared_ptr<const base::Number>);                    // Loiter mode flag
+   bool setSlotLoiterPatternLength(std::shared_ptr<const base::Distance>);         // Loiter orbit pattern length
+   bool setSlotLoiterPatternLength(std::shared_ptr<const base::Number>);           // Loiter orbit pattern length (NM)
+   bool setSlotLoiterPatternTime(std::shared_ptr<const base::Time>);               // Loiter orbit pattern length (seconds)
+   bool setSlotLoiterPatternCcwFlag(std::shared_ptr<const base::Number>);          // Loiter orbit pattern counter-clockwise flag
+   bool setSlotLeadFollowingDistanceTrail(std::shared_ptr<const base::Distance>);  // Desired distance behind(+) the lead
+   bool setSlotLeadFollowingDistanceTrail(std::shared_ptr<const base::Number>);    // Desired distance (meters) behind(+) the lead
+   bool setSlotLeadFollowingDistanceRight(std::shared_ptr<const base::Distance>);  // Desired distance right(+) of the lead
+   bool setSlotLeadFollowingDistanceRight(std::shared_ptr<const base::Number>);    // Desired distance (meters) right(+) of the lead
+   bool setSlotLeadFollowingDeltaAltitude(std::shared_ptr<const base::Distance>);  // Desired delta altitude above(+) the lead
+   bool setSlotLeadFollowingDeltaAltitude(std::shared_ptr<const base::Number>);    // Desired delta altitude (meters) above(+) the lead
+   bool setSlotLeadPlayerName(std::shared_ptr<const base::Identifier>);            // Name of the player we are following
+   bool setSlotFollowTheLeadMode(std::shared_ptr<const base::Number>);             // "Follow the lead" mode flag
+   bool setSlotMaxRateOfTurnDps(std::shared_ptr<const base::Number>);              // Maximum turn rate - degrees per second
+   bool setSlotMaxBankAngle(std::shared_ptr<const base::Number>);                  // Maximum bank angle - degrees
+   bool setSlotMaxClimbRateMps(std::shared_ptr<const base::Number>);               // Max climb/dive rate - meters per second
+   bool setSlotMaxClimbRateFpm(std::shared_ptr<const base::Number>);               // Max climb/dive rate - feet per minute
+   bool setSlotMaxPitchAngle(std::shared_ptr<const base::Number>);                 // Max pitch angle - degrees
+   bool setSlotMaxVelAccNps(std::shared_ptr<const base::Number>);                  // Maximum velocity acceleration (Nps)
 };
 
 inline bool Autopilot::setMaxTurnRateDps(const double x)    { maxTurnRateDps = x; return true; }

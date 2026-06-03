@@ -219,12 +219,12 @@ private:
    }
 
 protected:
-   virtual bool setSlotStores(const base::PairStream* const);   // (clones the 'msg' list)
+   virtual bool setSlotStores(std::shared_ptr<const base::PairStream>);   // (clones the 'msg' list)
 
 private:
    // slot table helper methods
-   bool setSlotNumStations(base::Number* const);                // Number of stations
-   bool setSlotSelected(base::Number* const);                   // Selected station
+   bool setSlotNumStations(std::shared_ptr<base::Number>);                // Number of stations
+   bool setSlotSelected(std::shared_ptr<base::Number>);                   // Selected station
 };
 
 }

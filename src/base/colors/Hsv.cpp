@@ -86,7 +86,7 @@ void Hsv::getHSVA(Vec4d& hhh) const
 //------------------------------------------------------------------------------
 // setSlotHue() -- set the HSV hue
 //------------------------------------------------------------------------------
-bool Hsv::setSlotHue(const Number* const msg)
+bool Hsv::setSlotHue(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     double value{msg->getReal()};
@@ -103,7 +103,7 @@ bool Hsv::setSlotHue(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotSaturation() -- set the HSV saturation
 //------------------------------------------------------------------------------
-bool Hsv::setSlotSaturation(const Number* const msg)
+bool Hsv::setSlotSaturation(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     double value{msg->getReal()};
@@ -120,7 +120,7 @@ bool Hsv::setSlotSaturation(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotValue() -- set the HSV value
 //------------------------------------------------------------------------------
-bool Hsv::setSlotValue(const Number* const msg)
+bool Hsv::setSlotValue(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     double value{msg->getReal()};

@@ -374,29 +374,29 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotReleased(const base::Number* const);
-   bool setSlotFailed(const base::Number* const);
-   bool setSlotPower(const base::Number* const);
-   bool setSlotWillHang(const base::Number* const);
-   bool setSlotHung(const base::Number* const);
-   bool setSlotMaxTOF(const base::Time* const);
-   bool setSlotMaxTOF(const base::Number* const);
-   bool setSlotTSG(const base::Time* const);
-   bool setSlotTSG(const base::Number* const);
-   bool setSlotMaxBurstRng(const base::Distance* const);
-   bool setSlotMaxBurstRng(const base::Number* const);
-   bool setSlotLethalRange(const base::Distance* const);
-   bool setSlotLethalRange(const base::Number* const);
-   bool setSlotSOBT(const base::Time* const);
-   bool setSlotSOBT(const base::Number* const);
-   bool setSlotEOBT(const base::Time* const);
-   bool setSlotEOBT(const base::Number* const);
-   bool setSlotMaxGimbal(const base::Angle* const);
-   bool setSlotTgtPos(const base::List* const);
-   bool setSlotWeaponID(const base::Number* const);
-   bool setSlotDummy(const base::Number* const);
-   bool setSlotJettisonable(const base::Number* const);
-   bool setSlotTestTgtName(const base::String* const);
+   bool setSlotReleased(std::shared_ptr<const base::Number>);
+   bool setSlotFailed(std::shared_ptr<const base::Number>);
+   bool setSlotPower(std::shared_ptr<const base::Number>);
+   bool setSlotWillHang(std::shared_ptr<const base::Number>);
+   bool setSlotHung(std::shared_ptr<const base::Number>);
+   bool setSlotMaxTOF(std::shared_ptr<const base::Time>);
+   bool setSlotMaxTOF(std::shared_ptr<const base::Number>);
+   bool setSlotTSG(std::shared_ptr<const base::Time>);
+   bool setSlotTSG(std::shared_ptr<const base::Number>);
+   bool setSlotMaxBurstRng(std::shared_ptr<const base::Distance>);
+   bool setSlotMaxBurstRng(std::shared_ptr<const base::Number>);
+   bool setSlotLethalRange(std::shared_ptr<const base::Distance>);
+   bool setSlotLethalRange(std::shared_ptr<const base::Number>);
+   bool setSlotSOBT(std::shared_ptr<const base::Time>);
+   bool setSlotSOBT(std::shared_ptr<const base::Number>);
+   bool setSlotEOBT(std::shared_ptr<const base::Time>);
+   bool setSlotEOBT(std::shared_ptr<const base::Number>);
+   bool setSlotMaxGimbal(std::shared_ptr<const base::Angle>);
+   bool setSlotTgtPos(std::shared_ptr<const base::List>);
+   bool setSlotWeaponID(std::shared_ptr<const base::Number>);
+   bool setSlotDummy(std::shared_ptr<const base::Number>);
+   bool setSlotJettisonable(std::shared_ptr<const base::Number>);
+   bool setSlotTestTgtName(std::shared_ptr<const base::String>);
 };
 
 }

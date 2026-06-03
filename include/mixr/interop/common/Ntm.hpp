@@ -77,7 +77,7 @@ private:
 
 private:
    // slot table helper methods
-   virtual bool setSlotTemplatePlayer(const models::Player* const);     // Sets the template player
+   virtual bool setSlotTemplatePlayer(std::shared_ptr<const models::Player>);     // Sets the template player
 };
 
 }

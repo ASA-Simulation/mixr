@@ -38,7 +38,7 @@ void Ntm::deleteData()
 //------------------------------------------------------------------------------
 
 // Sets the template player
-bool Ntm::setSlotTemplatePlayer(const models::Player* const msg)
+bool Ntm::setSlotTemplatePlayer(std::shared_ptr<const models::Player> msg)
 {
    tPlayer = msg;
    return true;

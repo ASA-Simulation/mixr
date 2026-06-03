@@ -49,7 +49,6 @@ void Jammer::transmit(const double)
         em->setReturnRequest(false);
         em->setECM(Emission::ECM_NOISE);
         getAntenna()->rfTransmit(em);
-        em->unref();
     }
 }
 

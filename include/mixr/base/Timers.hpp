@@ -107,9 +107,9 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotTimerValue(const Time* const);      // Sets the timer value
-    bool setSlotAlarmTime(const Time* const);       // Sets the alarm value
-    bool setSlotTimerActive(const Number* const);   // Sets the timer active (running) flag
+    bool setSlotTimerValue(std::shared_ptr<const Time>);      // Sets the timer value
+    bool setSlotAlarmTime(std::shared_ptr<const Time>);       // Sets the alarm value
+    bool setSlotTimerActive(std::shared_ptr<const Number>);   // Sets the timer active (running) flag
 };
 
 //

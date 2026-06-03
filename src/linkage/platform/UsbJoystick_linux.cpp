@@ -187,7 +187,7 @@ void UsbJoystick::readInputs()
    }
 }
 
-bool UsbJoystick::setSlotDeviceIndex(const base::Number* const msg)
+bool UsbJoystick::setSlotDeviceIndex(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

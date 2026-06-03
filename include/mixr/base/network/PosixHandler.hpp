@@ -140,13 +140,13 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotLocalIpAddress(const String* const);
-   bool setSlotPort(const Number* const);
-   bool setSlotLocalPort(const Number* const);
-   bool setSlotShared(const Number* const);
-   bool setSlotSendBuffSize(const Number* const);
-   bool setSlotRecvBuffSize(const Number* const);
-   bool setSlotIgnoreSourcePort(const Number* const);
+   bool setSlotLocalIpAddress(std::shared_ptr<const String>);
+   bool setSlotPort(std::shared_ptr<const Number>);
+   bool setSlotLocalPort(std::shared_ptr<const Number>);
+   bool setSlotShared(std::shared_ptr<const Number>);
+   bool setSlotSendBuffSize(std::shared_ptr<const Number>);
+   bool setSlotRecvBuffSize(std::shared_ptr<const Number>);
+   bool setSlotIgnoreSourcePort(std::shared_ptr<const Number>);
 };
 
 // Port#

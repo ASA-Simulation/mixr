@@ -142,12 +142,12 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotTo(const base::Identifier* const);
-   bool setSlotTo(const base::Number* const);
-   bool setSlotAutoSequence(const base::Number* const);
-   bool setSlotAutoSeqDistance(const base::Distance* const);
-   bool setSlotAutoSeqDistance(const base::Number* const);
-   bool setSlotWrap(const base::Number* const);
+   bool setSlotTo(std::shared_ptr<const base::Identifier>);
+   bool setSlotTo(std::shared_ptr<const base::Number>);
+   bool setSlotAutoSequence(std::shared_ptr<const base::Number>);
+   bool setSlotAutoSeqDistance(std::shared_ptr<const base::Distance>);
+   bool setSlotAutoSeqDistance(std::shared_ptr<const base::Number>);
+   bool setSlotWrap(std::shared_ptr<const base::Number>);
 };
 
 inline Steerpoint* Route::getSteerpoint()

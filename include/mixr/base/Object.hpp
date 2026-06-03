@@ -2,14 +2,13 @@
 #ifndef __mixr_base_Object_H__
 #define __mixr_base_Object_H__
 
-#include "mixr/base/Referenced.hpp"
-
 // platform configuration file
 #include "mixr/config.hpp"
 // keep this include to correct a bug in vs2012 compiler intrinsics
 #include "mixr/base/util/platform_api.hpp"
 
 #include <typeinfo>
+#include <memory>
 
 #include "mixr/base/macros.hpp"
 #include "mixr/base/SlotTable.hpp"
@@ -268,7 +267,7 @@ namespace base {
 //    to spot potential memory leaks.
 //
 //------------------------------------------------------------------------------
-class Object : public Referenced
+class Object
 {
    // -------------------------------------------------------------------------
    // Standard object stuff --
@@ -295,10 +294,10 @@ class Object : public Referenced
 
    // slot table functions
    public: static const SlotTable& getSlotTable();
-   protected: virtual bool setSlotByIndex(const int slotindex, Object* const obj);
-   public: bool setSlotByName(const char* const slotname, Object* const obj);
+   protected: virtual bool setSlotByIndex(const int slotindex, std::shared_ptr<Object> obj);
+   public: bool setSlotByName(std::string slotname, std::shared_ptr<Object> obj);
    public: const char* slotIndex2Name(const int slotindex) const;
-   public: int slotName2Index(const char* const slotname) const;
+   public: int slotName2Index(const std::string& slotname) const;
 
 public:
    // standard message types

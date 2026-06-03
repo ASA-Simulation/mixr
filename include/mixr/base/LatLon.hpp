@@ -95,10 +95,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotDirection(const String* const);
-   bool setSlotDegrees(const Number* const);
-   bool setSlotMinutes(const Number* const);
-   bool setSlotSeconds(const Number* const);
+   bool setSlotDirection(std::shared_ptr<const String>);
+   bool setSlotDegrees(std::shared_ptr<const Number>);
+   bool setSlotMinutes(std::shared_ptr<const Number>);
+   bool setSlotSeconds(std::shared_ptr<const Number>);
 };
 
 }

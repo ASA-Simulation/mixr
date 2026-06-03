@@ -75,7 +75,7 @@ void Hls::getHLS(Vec3d& hhh) const
 //------------------------------------------------------------------------------
 // setSlotHue() -- set the hue value
 //------------------------------------------------------------------------------
-bool Hls::setSlotHue(const Number* const msg)
+bool Hls::setSlotHue(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value{msg->getReal()};
@@ -92,7 +92,7 @@ bool Hls::setSlotHue(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotSaturation() -- set the saturation value
 //------------------------------------------------------------------------------
-bool Hls::setSlotSaturation(const Number* const msg)
+bool Hls::setSlotSaturation(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value{msg->getReal()};
@@ -109,7 +109,7 @@ bool Hls::setSlotSaturation(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotLightness() -- set the lightness value
 //------------------------------------------------------------------------------
-bool Hls::setSlotLightness(const Number* const msg)
+bool Hls::setSlotLightness(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value{msg->getReal()};

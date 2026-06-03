@@ -139,7 +139,7 @@ private:
 
 protected:
    // slot table helper methods
-   bool setSlotStores(const base::PairStream* const) override;
+   bool setSlotStores(std::shared_ptr<const base::PairStream>) override;
 };
 
 }

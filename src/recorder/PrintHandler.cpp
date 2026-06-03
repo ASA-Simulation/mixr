@@ -252,7 +252,6 @@ void PrintHandler::setFullFilename(const char* const name)
 
 bool PrintHandler::setFilename(const base::String* const msg)
 {
-   if (filename != nullptr) { filename->unref(); filename = nullptr; }
    if (msg != nullptr) filename = new base::String(*msg);
 
     return true;
@@ -260,7 +259,6 @@ bool PrintHandler::setFilename(const base::String* const msg)
 
 bool PrintHandler::setPathName(const base::String* const msg)
 {
-   if (pathname != nullptr) { pathname->unref(); pathname = nullptr; }
    if (msg != nullptr) pathname = new base::String(*msg);
 
    return true;

@@ -264,9 +264,9 @@ namespace mixr
 
         private:
             // slot table helper methods
-            bool setSlotFedFile(base::String *const);
-            bool setSlotRegulatingTime(base::Number *const);
-            bool setSlotConstrainedTime(base::Number *const);
+            bool setSlotFedFile(std::shared_ptr<base::String>);
+            bool setSlotRegulatingTime(std::shared_ptr<base::Number>);
+            bool setSlotConstrainedTime(std::shared_ptr<base::Number>);
         };
 
     }

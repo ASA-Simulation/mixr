@@ -64,7 +64,6 @@ void Sar::copyData(const Sar& org, const bool cc)
 
    // Copy the images
    if (imgList != nullptr) {
-      imgList->unref();
       imgList = nullptr;
    }
    if (org.imgList != nullptr) {
@@ -76,7 +75,6 @@ void Sar::deleteData()
 {
     // Clear the images
     if (imgList != nullptr) {
-        imgList->unref();
         imgList = nullptr;
     }
 }
@@ -101,7 +99,6 @@ bool Sar::isSystemReady() const
 base::PairStream* Sar::getImages()
 {
     base::PairStream* p{imgList};
-    if (p != nullptr) p->ref();
     return p;
 }
 
@@ -112,7 +109,6 @@ const Image* Sar::getImage() const
     if (imgList != nullptr) {
         const base::Pair* pair{imgList->getPosition( imgList->entries() )};    // Last item
         p = dynamic_cast<const Image*>(pair->object());
-        if (p != nullptr) p->ref();
     }
     return p;
 }
@@ -133,7 +129,7 @@ bool Sar::setStarePoint(const double lat, const double lon, const double elev)
 // Set functions
 //-----------------------------------------------------------------------------
 
-bool Sar::setSlotChipSize(const base::Number* const msg)
+bool Sar::setSlotChipSize(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

@@ -40,8 +40,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotWc(const base::Frequency* const);
-   bool setSlotWc(const base::Number* const);
+   bool setSlotWc(std::shared_ptr<const base::Frequency>);
+   bool setSlotWc(std::shared_ptr<const base::Number>);
 };
 
 }

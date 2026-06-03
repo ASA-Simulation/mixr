@@ -82,7 +82,7 @@ bool Ntm::setEntityType(
 //------------------------------------------------------------------------------
 // Set entity type enumerations
 //------------------------------------------------------------------------------
-bool Ntm::setSlotEntityType(const base::List* const msg)
+bool Ntm::setSlotEntityType(std::shared_ptr<const base::List> msg)
 {
    bool ok {};
    if (msg != nullptr) {

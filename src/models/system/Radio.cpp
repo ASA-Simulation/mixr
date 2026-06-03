@@ -244,7 +244,6 @@ void Radio::receive(const double dt)
          receivedEmissionReport(em);
       }
 
-      em->unref();
       em = nullptr;
 
       // Get another emission from the queue
@@ -270,7 +269,7 @@ void Radio::receivedEmissionReport(Emission* const)
 // Slot Functions  (return 'true' if the slot was set, else 'false')
 //------------------------------------------------------------------------------
 
-bool Radio::setSlotNumChannels(base::Number* const msg)
+bool Radio::setSlotNumChannels(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -282,7 +281,7 @@ bool Radio::setSlotNumChannels(base::Number* const msg)
    return ok;
 }
 
-bool Radio::setSlotChannels(const base::PairStream* const msg)
+bool Radio::setSlotChannels(std::shared_ptr<const base::PairStream> msg)
 {
    // ---
    // Quick out if the number of channels hasn't been set.
@@ -319,7 +318,7 @@ bool Radio::setSlotChannels(const base::PairStream* const msg)
 }
 
 // channel: Channel the radio is set to
-bool Radio::setSlotChannel(base::Number* const msg)
+bool Radio::setSlotChannel(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -332,7 +331,7 @@ bool Radio::setSlotChannel(base::Number* const msg)
 }
 
 // maxDetectRange: maximum detection capability (NM)
-bool Radio::setSlotMaxDetectRange(base::Number* const num)
+bool Radio::setSlotMaxDetectRange(std::shared_ptr<base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -343,7 +342,7 @@ bool Radio::setSlotMaxDetectRange(base::Number* const num)
 }
 
 // radio ID: the radio id used for DIS
-bool Radio::setSlotRadioId(base::Number* const num)
+bool Radio::setSlotRadioId(std::shared_ptr<base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {

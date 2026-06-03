@@ -189,7 +189,7 @@ void StateMachine::step(const double dt)
 // Transition functions -- these control movement between our states
 // -----------------------------------------------------------------
 
-bool StateMachine::next(Object* const arg)
+bool StateMachine::next(std::shared_ptr<Object> arg)
 {
    bool ok = false;
    unsigned short newState = stateTable(state, StateTableCode::FIND_NEXT_STATE);
@@ -203,7 +203,7 @@ bool StateMachine::next(Object* const arg)
    return ok;
 }
 
-bool StateMachine::goTo(const unsigned short newState, Object* const arg)
+bool StateMachine::goTo(const unsigned short newState, std::shared_ptr<Object> arg)
 {
    bool ok = false;
    unsigned short test = stateTable(newState, StateTableCode::TEST_STATE);
@@ -217,7 +217,7 @@ bool StateMachine::goTo(const unsigned short newState, Object* const arg)
    return ok;
 }
 
-bool StateMachine::call(const unsigned short newState, Object* const arg)
+bool StateMachine::call(const unsigned short newState, std::shared_ptr<Object> arg)
 {
    bool ok = false;
    if (sp > 0) {
@@ -235,7 +235,7 @@ bool StateMachine::call(const unsigned short newState, Object* const arg)
    return ok;
 }
 
-bool StateMachine::rtn(Object* const arg)
+bool StateMachine::rtn(std::shared_ptr<Object> arg)
 {
    bool ok = false;
    if (sp < STACK_SIZE) {
@@ -271,7 +271,7 @@ bool StateMachine::goToSubstate(const unsigned short newSubstate)
 // between our parent state machine's states.
 // -----------------------------------------------------------------
 
-bool StateMachine::nextState(Object* const arg)
+bool StateMachine::nextState(std::shared_ptr<Object> arg)
 {
    bool ok = false;
    const auto parent = dynamic_cast<StateMachine*>( container() );
@@ -281,7 +281,7 @@ bool StateMachine::nextState(Object* const arg)
    return ok;
 }
 
-bool StateMachine::goToState(const unsigned short newState, Object* const arg)
+bool StateMachine::goToState(const unsigned short newState, std::shared_ptr<Object> arg)
 {
    bool ok = false;
    const auto parent = dynamic_cast<StateMachine*>( container() );
@@ -291,7 +291,7 @@ bool StateMachine::goToState(const unsigned short newState, Object* const arg)
    return ok;
 }
 
-bool StateMachine::callState(const unsigned short newState, Object* const arg)
+bool StateMachine::callState(const unsigned short newState, std::shared_ptr<Object> arg)
 {
    bool ok = false;
    const auto parent = dynamic_cast<StateMachine*>( container() );
@@ -305,7 +305,7 @@ bool StateMachine::callState(const unsigned short newState, Object* const arg)
    return ok;
 }
 
-bool StateMachine::rtnState(Object* const arg)
+bool StateMachine::rtnState(std::shared_ptr<Object> arg)
 {
    bool ok = false;
    const auto parent = dynamic_cast<StateMachine*>( container() );
@@ -319,7 +319,7 @@ bool StateMachine::rtnState(Object* const arg)
 // -----------------------------------------------------------------
 // Default event handlers
 // -----------------------------------------------------------------
-bool StateMachine::onEntry(Object* const msg)
+bool StateMachine::onEntry(std::shared_ptr<Object> msg)
 {
    nState = INIT_STATE;
    nArg = msg;
@@ -341,7 +341,7 @@ bool StateMachine::onExit()
    return true;
 }
 
-bool StateMachine::onReturn(Object* const msg)
+bool StateMachine::onReturn(std::shared_ptr<Object> msg)
 {
    // Try to return to our calling state
    bool ok = rtn(msg);
@@ -447,7 +447,7 @@ bool StateMachine::setStMach(const char* const name, const StateTableCode code)
 // Slot functions
 //------------------------------------------------------------------------------
 
-bool StateMachine::setSlotStateMachines(const PairStream* const msg)
+bool StateMachine::setSlotStateMachines(std::shared_ptr<PairStream> msg)
 {
    // First remove the old list; and make sure we tell the old stMachList
    // that we're no longer their container.
@@ -464,7 +464,7 @@ bool StateMachine::setSlotStateMachines(const PairStream* const msg)
 
    // Build a new list containing only StateMachine class (or derived) objects
    if (msg != nullptr) {
-      const auto newList = new PairStream();
+      const auto newList = std::make_shared<PairStream>();
 
       // For each object in the list; if it's a StateMachine (or derived from) then
       // clone the object and add it to the new list.

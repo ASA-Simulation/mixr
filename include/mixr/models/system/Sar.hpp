@@ -98,7 +98,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotChipSize(const base::Number* const);
+   bool setSlotChipSize(std::shared_ptr<const base::Number>);
 };
 
 }

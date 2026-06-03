@@ -60,7 +60,7 @@ bool Hsva::colorInterpolate(
 //------------------------------------------------------------------------------
 // setSlotAlpha() -- set the ALPHA value
 //------------------------------------------------------------------------------
-bool Hsva::setSlotAlpha(const Number* const msg)
+bool Hsva::setSlotAlpha(std::shared_ptr<const Number> msg)
 {
    if (msg == nullptr) return false;
    double value = msg->getReal();

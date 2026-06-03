@@ -122,7 +122,7 @@ bool FileReader::setRecordLength(const int len)
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool FileReader::setSlotPathname(String* const msg)
+bool FileReader::setSlotPathname(std::shared_ptr<String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -131,7 +131,7 @@ bool FileReader::setSlotPathname(String* const msg)
    return ok;
 }
 
-bool FileReader::setSlotFilename(String* const msg)
+bool FileReader::setSlotFilename(std::shared_ptr<String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -140,7 +140,7 @@ bool FileReader::setSlotFilename(String* const msg)
    return ok;
 }
 
-bool FileReader::setSlotRecordLength(const Number* const msg)
+bool FileReader::setSlotRecordLength(std::shared_ptr<Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

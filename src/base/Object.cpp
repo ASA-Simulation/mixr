@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <string>
 
 namespace mixr {
 namespace base {
@@ -28,12 +29,12 @@ const SlotTable Object::slottable(nullptr, 0);
 // Standard object stuff -- derived classes used macro IMPLEMENT_SUBCLASS, see macros.hpp
 //------------------------------------------------------------------------------
 
-Object::Object():Referenced()
+Object::Object()
 {
    STANDARD_CONSTRUCTOR()
 }
 
-Object::Object(const Object& org):Referenced()
+Object::Object(const Object& org)
 {
    STANDARD_CONSTRUCTOR()
    copyData(org, true);
@@ -90,7 +91,7 @@ void Object::deleteData()
 }
 
 // set slots by index
-bool Object::setSlotByIndex(const int, Object* const)
+bool Object::setSlotByIndex(const int, std::shared_ptr<Object> const)
 {
     // We have no slots, so we shouldn't ever be here!
     return false;
@@ -109,12 +110,12 @@ const SlotTable& Object::getSlotTable()
 //------------------------------------------------------------------------------
 // slotName2Index() -- returns the index of the slot named 'slotname'
 //------------------------------------------------------------------------------
-int Object::slotName2Index(const char* const slotname) const
+int Object::slotName2Index(const std::string& slotname) const
 {
    int slotindex {};
 
    // No 'slotname' then no slot index
-   if (slotname == nullptr) {
+   if (slotname == "") {
       return slotindex;
    }
 
@@ -132,13 +133,13 @@ int Object::slotName2Index(const char* const slotname) const
    // b) convert 'slotname' to a slot index
    if (isNum) {
       // when the slotname is just a number (e.g., "12")
-      int j {std::atoi(slotname)};
+      int j {std::stoi(slotname)};
       if (j > 0 && j <= n) {
          slotindex = j;
       }
    } else {
       // when the 'slotname' is a name (e.g., "some-slot")
-      slotindex = slotTable->index(slotname);
+      slotindex = slotTable->index(slotname.data());
       if (slotindex <= 0)
          std::cerr << "slot not found: " << slotname << std::endl;
    }
@@ -150,7 +151,7 @@ int Object::slotName2Index(const char* const slotname) const
 //                 true if the slot and object were processed; returns
 //                 false if there was an error.
 //------------------------------------------------------------------------------
-bool Object::setSlotByName(const char* const slotname, Object* const obj)
+bool Object::setSlotByName(std::string slotname, std::shared_ptr<Object> obj)
 {
     bool ok {};
     if (obj == nullptr) return ok;

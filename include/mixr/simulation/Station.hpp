@@ -278,33 +278,33 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSimulation(Simulation* const);
+   bool setSlotSimulation(std::shared_ptr<Simulation>);
 
-   bool setSlotNetworks(base::PairStream* const);
+   bool setSlotNetworks(std::shared_ptr<base::PairStream>);
 
-   bool setSlotIgHosts(base::PairStream* const);
+   bool setSlotIgHosts(std::shared_ptr<base::PairStream>);
 
-   bool setSlotIoHandler(base::AbstractIoHandler* const);
+   bool setSlotIoHandler(std::shared_ptr<base::AbstractIoHandler>);
 
-   bool setSlotOwnshipName(const base::String* const);
+   bool setSlotOwnshipName(std::shared_ptr<const base::String>);
 
-   bool setSlotTimeCriticalRate(const base::Number* const hz);
-   bool setSlotTimeCriticalPri(const base::Number* const);
-   bool setSlotTimeCriticalStackSize(const base::Number* const);
-   bool setSlotFastForwardRate(const base::Number* const);
+   bool setSlotTimeCriticalRate(std::shared_ptr<const base::Number> hz);
+   bool setSlotTimeCriticalPri(std::shared_ptr<const base::Number>);
+   bool setSlotTimeCriticalStackSize(std::shared_ptr<const base::Number>);
+   bool setSlotFastForwardRate(std::shared_ptr<const base::Number>);
 
-   bool setSlotNetworkRate(const base::Number* const hz);
-   bool setSlotNetworkPri(const base::Number* const);
-   bool setSlotNetworkStackSize(const base::Number* const);
+   bool setSlotNetworkRate(std::shared_ptr<const base::Number> hz);
+   bool setSlotNetworkPri(std::shared_ptr<const base::Number>);
+   bool setSlotNetworkStackSize(std::shared_ptr<const base::Number>);
 
-   bool setSlotBackgroundRate(const base::Number* const hz);
-   bool setSlotBackgroundPri(const base::Number* const);
-   bool setSlotBackgroundStackSize(const base::Number* const);
+   bool setSlotBackgroundRate(std::shared_ptr<const base::Number> hz);
+   bool setSlotBackgroundPri(std::shared_ptr<const base::Number>);
+   bool setSlotBackgroundStackSize(std::shared_ptr<const base::Number>);
 
-   bool setSlotStartupResetTime(const base::Time* const);
-   bool setSlotEnableUpdateTimers(const base::Number* const);
+   bool setSlotStartupResetTime(std::shared_ptr<const base::Time>);
+   bool setSlotEnableUpdateTimers(std::shared_ptr<const base::Number>);
 
-   bool setSlotDataRecorder(AbstractDataRecorder* const x)              { return setDataRecorder(x); }
+   bool setSlotDataRecorder(std::shared_ptr<AbstractDataRecorder> x)              { return setDataRecorder(x); }
 };
 
 }

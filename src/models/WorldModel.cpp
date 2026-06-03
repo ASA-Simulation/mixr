@@ -87,7 +87,6 @@ void WorldModel::copyData(const WorldModel& org, const bool cc)
    if (org.terrain != nullptr) {
       terrain::Terrain* copy = org.terrain->clone();
       setSlotTerrain( copy );
-      copy->unref();
    }
    else {
       setSlotTerrain(nullptr);
@@ -96,7 +95,6 @@ void WorldModel::copyData(const WorldModel& org, const bool cc)
    if (org.atmosphere != nullptr) {
       AbstractAtmosphere* copy = org.atmosphere->clone();
       setSlotAtmosphere( copy );
-      copy->unref();
    }
    else {
       setSlotAtmosphere(nullptr);
@@ -203,7 +201,6 @@ const base::Matrixd& WorldModel::getWorldMat() const
 bool WorldModel::setEarthModel(const base::EarthModel* const msg)
 {
    if (em != nullptr) {
-      em->unref();
       em = nullptr;
    }
 
@@ -259,7 +256,7 @@ bool WorldModel::setMaxRefRange(const double v)
 // Set Slot routines
 //------------------------------------------------------------------------------
 
-bool WorldModel::setSlotRefLatitude(const base::LatLon* const msg)
+bool WorldModel::setSlotRefLatitude(std::shared_ptr<const base::LatLon> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -268,7 +265,7 @@ bool WorldModel::setSlotRefLatitude(const base::LatLon* const msg)
     return ok;
 }
 
-bool WorldModel::setSlotRefLatitude(const base::Number* const msg)
+bool WorldModel::setSlotRefLatitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -277,7 +274,7 @@ bool WorldModel::setSlotRefLatitude(const base::Number* const msg)
     return ok;
 }
 
-bool WorldModel::setSlotRefLongitude(const base::LatLon* const msg)
+bool WorldModel::setSlotRefLongitude(std::shared_ptr<const base::LatLon> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -286,7 +283,7 @@ bool WorldModel::setSlotRefLongitude(const base::LatLon* const msg)
     return ok;
 }
 
-bool WorldModel::setSlotRefLongitude(const base::Number* const msg)
+bool WorldModel::setSlotRefLongitude(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -295,7 +292,7 @@ bool WorldModel::setSlotRefLongitude(const base::Number* const msg)
     return ok;
 }
 
-bool WorldModel::setSlotGamingAreaRange(const base::Distance* const msg)
+bool WorldModel::setSlotGamingAreaRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -304,12 +301,12 @@ bool WorldModel::setSlotGamingAreaRange(const base::Distance* const msg)
    return ok;
 }
 
-bool WorldModel::setSlotEarthModel(const base::EarthModel* const msg)
+bool WorldModel::setSlotEarthModel(std::shared_ptr<const base::EarthModel> msg)
 {
    return setEarthModel(msg);
 }
 
-bool WorldModel::setSlotEarthModel(const base::String* const msg)
+bool WorldModel::setSlotEarthModel(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr && msg->len() > 0) {
@@ -328,7 +325,7 @@ bool WorldModel::setSlotEarthModel(const base::String* const msg)
    return ok;
 }
 
-bool WorldModel::setSlotGamingAreaEarthModel(const base::Number* const msg)
+bool WorldModel::setSlotGamingAreaEarthModel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -360,19 +357,15 @@ const AbstractAtmosphere* WorldModel::getAtmosphere() const
    return atmosphere;
 }
 
-bool WorldModel::setSlotTerrain(terrain::Terrain* const msg)
+bool WorldModel::setSlotTerrain(std::shared_ptr<terrain::Terrain> msg)
 {
-   if (terrain != nullptr) terrain->unref();
    terrain = msg;
-   if (terrain != nullptr) terrain->ref();
    return true;
 }
 
-bool WorldModel::setSlotAtmosphere(AbstractAtmosphere* const msg)
+bool WorldModel::setSlotAtmosphere(std::shared_ptr<AbstractAtmosphere> msg)
 {
-   if (atmosphere != nullptr) atmosphere->unref();
    atmosphere = msg;
-   if (atmosphere != nullptr) atmosphere->ref();
    return true;
 }
 

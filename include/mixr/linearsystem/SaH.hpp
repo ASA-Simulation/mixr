@@ -54,8 +54,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSampleRate(const base::Frequency* const);
-   bool setSlotSampleRate(const base::Number* const);
+   bool setSlotSampleRate(std::shared_ptr<const base::Frequency>);
+   bool setSlotSampleRate(std::shared_ptr<const base::Number>);
 };
 
 }

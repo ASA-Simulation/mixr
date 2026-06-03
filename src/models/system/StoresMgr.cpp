@@ -85,7 +85,6 @@ bool StoresMgr::shutdownNotification()
          p->event(SHUTDOWN_EVENT);
          item = item->getNext();
       }
-      list->unref();
       list = nullptr;
    }
 
@@ -197,7 +196,6 @@ AbstractWeapon* StoresMgr::getCurrentWeapon()
       if (es != nullptr) {
          const auto ss = dynamic_cast<Stores*>( es );
          if (ss != nullptr) wpn = ss->getWeapon();
-         es->unref();
       }
    }
 
@@ -217,7 +215,6 @@ const AbstractWeapon* StoresMgr::getCurrentWeapon() const
       if (es != nullptr) {
          const auto ss = dynamic_cast<const Stores*>( es );
          if (ss != nullptr) wpn = ss->getWeapon();
-         es->unref();
       }
    }
 
@@ -299,7 +296,6 @@ bool StoresMgr::onWpnReload()
    base::PairStream* list{getWeapons()};
    if (list != nullptr) {
       resetStores(list);
-      list->unref();
       list = nullptr;
    }
    return true;
@@ -329,7 +325,6 @@ void StoresMgr::searchAndAdd(base::PairStream* const mainList, const std::type_i
             const base::PairStream* pstores{sp->getStores()};
             if (pstores != nullptr) {
                searchAndAdd(const_cast<base::PairStream*>(pstores), type, sublist);
-               pstores->unref();
             }
          }
 
@@ -341,7 +336,7 @@ void StoresMgr::searchAndAdd(base::PairStream* const mainList, const std::type_i
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool StoresMgr::setSlotStores(const base::PairStream* const msg)
+bool StoresMgr::setSlotStores(std::shared_ptr<const base::PairStream> msg)
 {
    // First let our base class do everything that it needs to.
    BaseClass::setSlotStores(msg);
@@ -364,7 +359,6 @@ bool StoresMgr::setSlotStores(const base::PairStream* const msg)
          const auto newWeapons = new base::PairStream();
          searchAndAdd(stores, typeid(AbstractWeapon), newWeapons);
          if (newWeapons->entries() > 0) weaponsList = newWeapons;
-         newWeapons->unref();
       }
 
       // Create the new external stores list that contains all
@@ -373,7 +367,6 @@ bool StoresMgr::setSlotStores(const base::PairStream* const msg)
          const auto newExternal = new base::PairStream();
          searchAndAdd(stores, typeid(ExternalStore), newExternal);
          if (newExternal->entries() > 0) externalList = newExternal;
-         newExternal->unref();
       }
 
       // Create the new fuel tank list that contains all fuel tanks
@@ -381,7 +374,6 @@ bool StoresMgr::setSlotStores(const base::PairStream* const msg)
          const auto newFuel = new base::PairStream();
          searchAndAdd(stores, typeid(FuelTank), newFuel);
          if (newFuel->entries() > 0) fuelList = newFuel;
-         newFuel->unref();
       }
 
       // Find the primary gun; i.e., the first gun found on our stores
@@ -393,7 +385,6 @@ bool StoresMgr::setSlotStores(const base::PairStream* const msg)
          item = item->getNext();
       }
 
-      stores->unref();
       stores = nullptr;
    }
 

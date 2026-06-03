@@ -3,7 +3,6 @@
 #define __mixr_base_colors_Cie_H__
 
 #include "mixr/base/colors/Color.hpp"
-#include "mixr/base/safe_ptr.hpp"
 #include "mixr/base/osg/Vec3d"
 
 namespace mixr {
@@ -71,14 +70,14 @@ public:
 
 protected:
     Vec3d cie;
-    safe_ptr<const MonitorMetrics> monitor;
+    std::shared_ptr<const MonitorMetrics> monitor;
 
 private:
    // slot table helper methods
-   bool setSlotMonitor(const MonitorMetrics* const);
-   bool setSlotLuminance(const Number* const);
-   bool setSlotX(const Number* const);
-   bool setSlotY(const Number* const);
+   bool setSlotMonitor(std::shared_ptr<const MonitorMetrics>);
+   bool setSlotLuminance(std::shared_ptr<const Number>);
+   bool setSlotX(std::shared_ptr<const Number>);
+   bool setSlotY(std::shared_ptr<const Number>);
 };
 
 }

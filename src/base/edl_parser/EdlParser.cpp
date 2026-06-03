@@ -1322,7 +1322,6 @@ yyreduce:
 
   case 3:
 #line 140 "edl_parser.y" /* yacc.c:1646  */
-    { if ((yyvsp[0].ovalp) != 0) { result = new mixr::base::Pair((yyvsp[-1].cvalp), (yyvsp[0].ovalp)); delete[] (yyvsp[-1].cvalp); (yyvsp[0].ovalp)->unref(); } }
 #line 1327 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
@@ -1339,9 +1338,7 @@ yyreduce:
                                         char cbuf[20] {};
                                         std::sprintf(cbuf, "%i", i+1);
                                         mixr::base::Pair* p {new mixr::base::Pair(cbuf, (yyvsp[0].ovalp))};
-                                        (yyvsp[0].ovalp)->unref();
                                         (yyvsp[-1].svalp)->put(p);
-                                        p->unref();
                                         (yyval.svalp) = (yyvsp[-1].svalp);
                                       }
                                     }
@@ -1355,9 +1352,7 @@ yyreduce:
                                     char cbuf[20] {};
                                     std::sprintf(cbuf, "%i", i+1);
                                     mixr::base::Pair* p {new mixr::base::Pair(cbuf, (yyvsp[0].ovalp))};
-                                    (yyvsp[0].ovalp)->unref();
                                     (yyvsp[-1].svalp)->put(p);
-                                    p->unref();
                                     (yyval.svalp) = (yyvsp[-1].svalp);
                                     }
 #line 1364 "EdlParser.cpp" /* yacc.c:1646  */
@@ -1365,13 +1360,11 @@ yyreduce:
 
   case 7:
 #line 168 "edl_parser.y" /* yacc.c:1646  */
-    { (yyvsp[-1].svalp)->put((yyvsp[0].pvalp)); (yyvsp[0].pvalp)->unref(); (yyval.svalp) = (yyvsp[-1].svalp); }
 #line 1370 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 172 "edl_parser.y" /* yacc.c:1646  */
-    { (yyval.ovalp) = parse((yyvsp[-2].cvalp), (yyvsp[-1].svalp)); delete[] (yyvsp[-2].cvalp); (yyvsp[-1].svalp)->unref(); }
 #line 1376 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
@@ -1383,13 +1376,11 @@ yyreduce:
 
   case 10:
 #line 178 "edl_parser.y" /* yacc.c:1646  */
-    { (yyval.pvalp) = new mixr::base::Pair((yyvsp[-1].cvalp), (yyvsp[0].ovalp)); delete[] (yyvsp[-1].cvalp); (yyvsp[0].ovalp)->unref(); }
 #line 1388 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 179 "edl_parser.y" /* yacc.c:1646  */
-    { (yyval.pvalp) = new mixr::base::Pair((yyvsp[-1].cvalp), (yyvsp[0].ovalp)); delete[] (yyvsp[-1].cvalp); (yyvsp[0].ovalp)->unref(); }
 #line 1394 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
@@ -1425,13 +1416,11 @@ yyreduce:
 
   case 17:
 #line 189 "edl_parser.y" /* yacc.c:1646  */
-    { (yyval.lvalp) = new mixr::base::List(); (yyval.lvalp)->put((yyvsp[0].nvalp)); (yyvsp[0].nvalp)->unref(); }
 #line 1430 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 190 "edl_parser.y" /* yacc.c:1646  */
-    { (yyval.lvalp) = (yyvsp[-1].lvalp); (yyval.lvalp)->put((yyvsp[0].nvalp)); (yyvsp[0].nvalp)->unref(); }
 #line 1436 "EdlParser.cpp" /* yacc.c:1646  */
     break;
 

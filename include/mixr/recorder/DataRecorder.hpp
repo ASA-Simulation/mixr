@@ -140,16 +140,16 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotOutputHandler(OutputHandler* const x)         { return setOutputHandler(x); }
-   bool setSlotEventName(base::String* const);
-   bool setSlotApplication(base::String* const);
-   bool setSlotCaseNum(base::Number* const);
-   bool setSlotMissionNum(base::Number* const);
-   bool setSlotSubjectNum(base::Number* const);
-   bool setSlotRunNum(base::Number* const);
-   bool setSlotDay(base::Number* const);
-   bool setSlotMonth(base::Number* const);
-   bool setSlotYear(base::Number* const);
+   bool setSlotOutputHandler(std::shared_ptr<OutputHandler> x)         { return setOutputHandler(x); }
+   bool setSlotEventName(std::shared_ptr<base::String>);
+   bool setSlotApplication(std::shared_ptr<base::String>);
+   bool setSlotCaseNum(std::shared_ptr<base::Number>);
+   bool setSlotMissionNum(std::shared_ptr<base::Number>);
+   bool setSlotSubjectNum(std::shared_ptr<base::Number>);
+   bool setSlotRunNum(std::shared_ptr<base::Number>);
+   bool setSlotDay(std::shared_ptr<base::Number>);
+   bool setSlotMonth(std::shared_ptr<base::Number>);
+   bool setSlotYear(std::shared_ptr<base::Number>);
 };
 
 #include "mixr/recorder/DataRecorder.inl"

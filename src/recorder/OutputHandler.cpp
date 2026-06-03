@@ -49,7 +49,6 @@ bool OutputHandler::shutdownNotification()
          OutputHandler* sc{static_cast<OutputHandler*>(pair->object())};
          sc->event(SHUTDOWN_EVENT);
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 
@@ -80,7 +79,6 @@ void OutputHandler::processRecord(const DataRecordHandle* const dataRecord)
 
             sc->processRecord(dataRecord);
          }
-         subcomponents->unref();
          subcomponents = nullptr;
       }
 
@@ -116,7 +114,6 @@ void OutputHandler::processQueue()
    while (dataRecord != nullptr) {
       // process this record,
       processRecord(dataRecord);
-      dataRecord->unref();
 
       // and get the next one from the queue
       base::lock( semaphore );

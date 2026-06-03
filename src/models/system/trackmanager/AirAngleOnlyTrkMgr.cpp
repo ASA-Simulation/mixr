@@ -102,13 +102,11 @@ void AirAngleOnlyTrkMgr::processTrackList(const double dt)
                 nReports++;
         } else {
             // Free up IR query messages from other types of players
-            q->unref();
         }
     }
 
     // Clean out the rest of the queue, if we had more than the maximum IR query messages
     for (IrQueryMsg* q = getQuery(&tmp); q != nullptr; q = getQuery(&tmp)) {
-        q->unref();
     }
 
     // ---
@@ -267,7 +265,6 @@ void AirAngleOnlyTrkMgr::processTrackList(const double dt)
             }
 
             trk->setType(0);
-            trk->unref();
             nTrks--;
             // move all other tracks down in the list.
             for (unsigned int it2 = it; it2 < nTrks; it2++) {
@@ -311,7 +308,6 @@ void AirAngleOnlyTrkMgr::processTrackList(const double dt)
             tracks[nTrks++] = newTrk;
         }
         // Free the IR query message report
-        queryMessages[i]->unref();
     }
     base::unlock(trkListLock);
 

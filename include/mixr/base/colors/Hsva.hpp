@@ -62,7 +62,7 @@ public:
 
 private:
    // slot table helper methods
-   bool setSlotAlpha(const Number* const);
+   bool setSlotAlpha(std::shared_ptr<const Number>);
 };
 
 }

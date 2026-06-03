@@ -91,7 +91,7 @@ const Volume* Density::getVolume() const
 //------------------------------------------------------------------------------
 // setSlotMass() -- sets our mass object.
 //------------------------------------------------------------------------------
-bool Density::setSlotMass(const Mass* newMass)
+bool Density::setSlotMass(std::shared_ptr<const Mass> newMass)
 {
     if (newMass != nullptr) {
         myMass = newMass;
@@ -103,7 +103,7 @@ bool Density::setSlotMass(const Mass* newMass)
 //------------------------------------------------------------------------------
 // setSlotVolume() -- sets our volume object.
 //------------------------------------------------------------------------------
-bool Density::setSlotVolume(const Volume* newVolume)
+bool Density::setSlotVolume(std::shared_ptr<const Volume> newVolume)
 {
     if (newVolume != nullptr) {
         myVolume = newVolume;

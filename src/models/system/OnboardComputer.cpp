@@ -137,7 +137,6 @@ int OnboardComputer::getShootList(Track* tlist[], const int max)
 {
     int n{};
     if (nextToShoot != nullptr && tlist != nullptr && max > 0) {
-        nextToShoot->ref();
         tlist[0] = nextToShoot;
         n = 1;
     }
@@ -148,7 +147,6 @@ int OnboardComputer::getShootList(const Track* tlist[], const int max) const
 {
     int n{};
     if (nextToShoot != nullptr && tlist != nullptr && max > 0) {
-        nextToShoot->ref();
         tlist[0] = nextToShoot;
         n = 1;
     }
@@ -331,12 +329,10 @@ bool OnboardComputer::requestNextToShoot(const Track* const nts)
 void OnboardComputer::setNextToShoot(Track* const p)
 {
    if (nextToShoot != nullptr) {
-      nextToShoot->unref();
       nextToShoot = nullptr;
    }
    nextToShoot = p;
    if (nextToShoot != nullptr) {
-      nextToShoot->ref();
    }
 }
 

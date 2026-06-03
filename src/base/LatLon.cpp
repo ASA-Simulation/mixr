@@ -156,7 +156,7 @@ bool LatLon::setSec(const double s)
 //------------------------------------------------------------------------------
 // setSlotDirection() -- sets the initial direction "n", "s", "e", "w"
 //------------------------------------------------------------------------------
-bool LatLon::setSlotDirection(const String* const sdobj)
+bool LatLon::setSlotDirection(std::shared_ptr<const String> sdobj)
 {
    bool ok{};
    if (sdobj != nullptr) ok = setDir(*sdobj);
@@ -166,7 +166,7 @@ bool LatLon::setSlotDirection(const String* const sdobj)
 //------------------------------------------------------------------------------
 //  setSlotDegrees() -- sets the initial degrees
 //------------------------------------------------------------------------------
-bool LatLon::setSlotDegrees(const Number* const sdeobj)
+bool LatLon::setSlotDegrees(std::shared_ptr<const Number> sdeobj)
 {
    bool ok{};
    if (sdeobj != nullptr) ok = setDeg(sdeobj->getReal());
@@ -176,7 +176,7 @@ bool LatLon::setSlotDegrees(const Number* const sdeobj)
 //------------------------------------------------------------------------------
 // setSlotMinutes() -- sets the minutes
 //------------------------------------------------------------------------------
-bool LatLon::setSlotMinutes(const Number* const smobj)
+bool LatLon::setSlotMinutes(std::shared_ptr<const Number> smobj)
 {
    bool ok{};
    if (smobj != nullptr) ok = setMin(smobj->getReal());
@@ -186,7 +186,7 @@ bool LatLon::setSlotMinutes(const Number* const smobj)
 //------------------------------------------------------------------------------
 // setSlotSeconds() --
 //------------------------------------------------------------------------------
-bool LatLon::setSlotSeconds(const Number* const ssobj)
+bool LatLon::setSlotSeconds(std::shared_ptr<const Number> ssobj)
 {
    bool ok{};
    if (ssobj != nullptr) ok = setSec(ssobj->getReal());

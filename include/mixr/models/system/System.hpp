@@ -103,7 +103,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPowerSwitch(const base::String* const);
+   bool setSlotPowerSwitch(std::shared_ptr<const base::String>);
 };
 
 }

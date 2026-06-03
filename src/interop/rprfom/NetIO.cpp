@@ -161,7 +161,6 @@ interop::Nib* NetIO::createNewOutputNib(models::Player* const player)
            nib->setClassIndex(idx);
            nib->setOutputPlayerType(player);
         }
-        baseEntity->unref();  // the NIB should have it
     }
     return nib;
 }
@@ -256,9 +255,7 @@ void NetIO::discoverObjectInstance(
          nib->setBaseEntity(baseEntity);
          addNib2InputList(nib);
          addNibToObjectTables(nib, INPUT_NIB);
-         nib->unref();
       }
-      baseEntity->unref();  // (NIB has it now)
    }
 }
 
@@ -330,7 +327,6 @@ NtmInputNode::NtmInputNode(const unsigned int l, const unsigned int c, const Ntm
 
    if (ntm != nullptr) {
       ourNtm = ntm;
-      ourNtm->ref();
    }
    subnodeList = new base::List();
 }
@@ -343,7 +339,6 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool)
    code = org.code;
 
    if (ourNtm != nullptr) {
-      ourNtm->unref();
       ourNtm = nullptr;
    }
    if (org.ourNtm != nullptr) {
@@ -351,7 +346,6 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool)
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
    if (org.subnodeList != nullptr) {
@@ -362,12 +356,10 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool)
 void NtmInputNode::deleteData()
 {
    if (ourNtm != nullptr) {
-      ourNtm->unref();
       ourNtm = nullptr;
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
 }
@@ -529,7 +521,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
                // wild card terminal node
                if (ourNtm == nullptr) {
                   ourNtm = disNtm;
-                  ourNtm->ref();
                   ok = true;
                }
                else if (isMessageEnabled(MSG_WARNING)) {
@@ -563,7 +554,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
             if (!alreadyExists) {
                const auto newNode = new NtmInputNode( (level+1), nextLevelCode, disNtm );
                subnodeList->put(newNode);
-               newNode->unref();   // ref()'d when put into the subnode list
                ok = true;
             }
             else if (isMessageEnabled(MSG_WARNING)) {
@@ -600,7 +590,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
             const auto newNode = new NtmInputNode( (level+1), nextLevelCode );
             subnodeList->put(newNode);
             ok = newNode->add2OurLists(disNtm);
-            newNode->unref();   // ref()'d when put into the subnode list
          }
       }
 

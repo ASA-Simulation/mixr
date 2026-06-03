@@ -101,25 +101,25 @@ private:
     bool manualAssign {};
 
 private:
-   bool setSlotEnabled(const base::Number* const);
-   bool setSlotCompleted(const base::Number* const);
-   bool setSlotWpnType(const base::String* const);
-   bool setSlotQuantity(const base::Number* const);
-   bool setSlotManualAssign(const base::Number* const);
-   bool setSlotStickType(const base::Identifier* const);
-   bool setSlotStickDistance(const base::Distance* const);
-   bool setSlotStickDistance(const base::Number* const);
-   bool setSlotInterval(const base::Time* const);
-   bool setSlotInterval(const base::Number* const);
-   bool setSlotMaxMissDistance(const base::Distance* const);
-   bool setSlotMaxMissDistance(const base::Number* const);
-   bool setSlotArmDelay(const base::Time* const);
-   bool setSlotArmDelay(const base::Number* const);
-   bool setSlotAngle(const base::Angle* const);
-   bool setSlotAngle(const base::Number* const);
-   bool setSlotAzimuth(const base::Angle* const);
-   bool setSlotAzimuth(const base::Number* const);
-   bool setSlotVelocity(const base::Number* const);
+   bool setSlotEnabled(std::shared_ptr<const base::Number>);
+   bool setSlotCompleted(std::shared_ptr<const base::Number>);
+   bool setSlotWpnType(std::shared_ptr<const base::String>);
+   bool setSlotQuantity(std::shared_ptr<const base::Number>);
+   bool setSlotManualAssign(std::shared_ptr<const base::Number>);
+   bool setSlotStickType(std::shared_ptr<const base::Identifier>);
+   bool setSlotStickDistance(std::shared_ptr<const base::Distance>);
+   bool setSlotStickDistance(std::shared_ptr<const base::Number>);
+   bool setSlotInterval(std::shared_ptr<const base::Time>);
+   bool setSlotInterval(std::shared_ptr<const base::Number>);
+   bool setSlotMaxMissDistance(std::shared_ptr<const base::Distance>);
+   bool setSlotMaxMissDistance(std::shared_ptr<const base::Number>);
+   bool setSlotArmDelay(std::shared_ptr<const base::Time>);
+   bool setSlotArmDelay(std::shared_ptr<const base::Number>);
+   bool setSlotAngle(std::shared_ptr<const base::Angle>);
+   bool setSlotAngle(std::shared_ptr<const base::Number>);
+   bool setSlotAzimuth(std::shared_ptr<const base::Angle>);
+   bool setSlotAzimuth(std::shared_ptr<const base::Number>);
+   bool setSlotVelocity(std::shared_ptr<const base::Number>);
 };
 
 inline bool TargetData::isEnabled() const                    { return enabled; }

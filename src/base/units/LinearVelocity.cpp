@@ -106,42 +106,34 @@ double LinearVelocity::convert(Distance* newDistanceUnit, Time* newTimeUnit)
         //New distance is in Feet:
         const auto feet = new Feet;
         desiredDistance = feet->convert(*internalMeters);
-        feet->unref();
     } else if (dynamic_cast<Meters*>(newDistanceUnit) != nullptr) {
         //New distance is in Meters:
         const auto meters = new Meters;
         desiredDistance = meters->convert(*internalMeters);
-        meters->unref();
     } else if (dynamic_cast<CentiMeters*>(newDistanceUnit) != nullptr) {
         //New distance is in CentiMeters:
         const auto centimeters = new CentiMeters;
         desiredDistance = centimeters->convert(*internalMeters);
-        centimeters->unref();
     } else if (dynamic_cast<KiloMeters*>(newDistanceUnit) != nullptr) {
         //New distance is in KiloMeters:
         const auto kilometers = new KiloMeters;
         desiredDistance = kilometers->convert(*internalMeters);
-        kilometers->unref();
     } else if (dynamic_cast<Inches*>(newDistanceUnit) != nullptr) {
         //New distance is in Inches:
         const auto inches = new Inches;
         desiredDistance = inches->convert(*internalMeters);
-        inches->unref();
     } else if (dynamic_cast<NauticalMiles*>(newDistanceUnit) != nullptr) {
         //New distance is in NauticalMiles:
         const auto nauticalmiles = new NauticalMiles;
         desiredDistance = nauticalmiles->convert(*internalMeters);
-        nauticalmiles->unref();
     } else if (dynamic_cast<StatuteMiles*>(newDistanceUnit) != nullptr) {
         //New distance is in StatuteMiles:
         const auto statutemiles = new StatuteMiles;
         desiredDistance = statutemiles->convert(*internalMeters);
-        statutemiles->unref();
     } else {
         //Give Error - Not sure what type it is:
         std::cerr << "Distance Conversion Type Not Found." << std::endl;
     }
-    internalMeters->unref();
 
     double desiredTime {-1.0};
 
@@ -181,7 +173,7 @@ bool LinearVelocity::setMetersPerSecond(const double newLinearVelocity)
     return ok1;
 }
 
-bool LinearVelocity::setSlotDistance(const Distance* const msg)
+bool LinearVelocity::setSlotDistance(std::shared_ptr<const Distance> msg)
 {
     bool ok {};
 
@@ -193,7 +185,7 @@ bool LinearVelocity::setSlotDistance(const Distance* const msg)
     return ok;
 }
 
-bool LinearVelocity::setSlotTime(const Time* const msg)
+bool LinearVelocity::setSlotTime(std::shared_ptr<const Time> msg)
 {
     bool ok {};
 

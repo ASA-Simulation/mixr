@@ -252,7 +252,7 @@ bool UdpMulticastHandler::closeConnection()
 //------------------------------------------------------------------------------
 
 // multicastGroup: String containing the multicast IP address
-bool UdpMulticastHandler::setSlotMulticastGroup(const String* const msg)
+bool UdpMulticastHandler::setSlotMulticastGroup(std::shared_ptr<const String> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -263,7 +263,7 @@ bool UdpMulticastHandler::setSlotMulticastGroup(const String* const msg)
 }
 
 // ttl: Time-To-Live value
-bool UdpMulticastHandler::setSlotTTL(const Number* const msg)
+bool UdpMulticastHandler::setSlotTTL(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -274,7 +274,7 @@ bool UdpMulticastHandler::setSlotTTL(const Number* const msg)
 }
 
 // loopback: Loopback flag
-bool UdpMulticastHandler::setSlotLoopback(const Number* const msg)
+bool UdpMulticastHandler::setSlotLoopback(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

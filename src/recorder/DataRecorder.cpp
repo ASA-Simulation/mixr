@@ -86,7 +86,6 @@ void DataRecorder::copyData(const DataRecorder& org, const bool)
       OutputHandler* copy = nullptr;
       if (org.outputHandler != nullptr) copy = org.outputHandler->clone();
       setOutputHandler(copy);
-      if (copy != nullptr) copy->unref();
    }
    eventName = org.eventName;
    application = org.application;
@@ -1029,14 +1028,12 @@ void DataRecorder::sendDataRecord(pb::DataRecord* const msg)
          const auto h = new DataRecordHandle(msg);
 
          outputHandler->processRecord(h);
-         h->unref();
 
       }
 
       // Create a handle and send the message to be processed
       const auto h = new DataRecordHandle(msg);
       outputHandler->addToQueue(h);
-      h->unref();
    }
 }
 
@@ -1074,13 +1071,11 @@ void DataRecorder::setFirstPass(const bool f)
 
 bool DataRecorder::setOutputHandler(OutputHandler* const msg)
 {
-   if (outputHandler != nullptr) outputHandler->unref();
    outputHandler = msg;
-   if (outputHandler != nullptr) outputHandler->ref();
    return true;
 }
 
-bool DataRecorder::setSlotEventName(base::String* const msg)
+bool DataRecorder::setSlotEventName(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1090,7 +1085,7 @@ bool DataRecorder::setSlotEventName(base::String* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotApplication(base::String* const msg)
+bool DataRecorder::setSlotApplication(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1100,7 +1095,7 @@ bool DataRecorder::setSlotApplication(base::String* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotCaseNum(base::Number* const msg)
+bool DataRecorder::setSlotCaseNum(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1110,7 +1105,7 @@ bool DataRecorder::setSlotCaseNum(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotMissionNum(base::Number* const msg)
+bool DataRecorder::setSlotMissionNum(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1120,7 +1115,7 @@ bool DataRecorder::setSlotMissionNum(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotSubjectNum(base::Number* const msg)
+bool DataRecorder::setSlotSubjectNum(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1130,7 +1125,7 @@ bool DataRecorder::setSlotSubjectNum(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotRunNum(base::Number* const msg)
+bool DataRecorder::setSlotRunNum(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1140,7 +1135,7 @@ bool DataRecorder::setSlotRunNum(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotDay(base::Number* const msg)
+bool DataRecorder::setSlotDay(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1150,7 +1145,7 @@ bool DataRecorder::setSlotDay(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotMonth(base::Number* const msg)
+bool DataRecorder::setSlotMonth(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1160,7 +1155,7 @@ bool DataRecorder::setSlotMonth(base::Number* const msg)
    return ok;
 }
 
-bool DataRecorder::setSlotYear(base::Number* const msg)
+bool DataRecorder::setSlotYear(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
 

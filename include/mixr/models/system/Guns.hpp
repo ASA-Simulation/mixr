@@ -118,14 +118,14 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotNumRounds(const base::Number* const);  // Number of rounds
-   bool setSlotUnlimited(const base::Number* const);  // Unlimited rounds flag
-   bool setSlotRate(const base::Number* const);       // Rate of fire (rds per min)
-   bool setSlotBurstRate(const base::Number* const);  // Burst rate
-   bool setSlotPosition(base::List* const);           // Gun position relative to ownship
-   bool setSlotRoll(const base::Number* const);       // Gun roll angle to ownship
-   bool setSlotPitch(const base::Number* const);      // Gun pitch angle to ownship
-   bool setSlotYaw(const base::Number* const);        // Gun heading angle to ownship
+   bool setSlotNumRounds(std::shared_ptr<const base::Number>);  // Number of rounds
+   bool setSlotUnlimited(std::shared_ptr<const base::Number>);  // Unlimited rounds flag
+   bool setSlotRate(std::shared_ptr<const base::Number>);       // Rate of fire (rds per min)
+   bool setSlotBurstRate(std::shared_ptr<const base::Number>);  // Burst rate
+   bool setSlotPosition(std::shared_ptr<base::List>);           // Gun position relative to ownship
+   bool setSlotRoll(std::shared_ptr<const base::Number>);       // Gun roll angle to ownship
+   bool setSlotPitch(std::shared_ptr<const base::Number>);      // Gun pitch angle to ownship
+   bool setSlotYaw(std::shared_ptr<const base::Number>);        // Gun heading angle to ownship
 };
 
 }

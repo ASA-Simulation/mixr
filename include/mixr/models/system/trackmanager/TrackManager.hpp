@@ -119,13 +119,13 @@ private:
    bool   logTrackUpdates {true}; // input slot; if false, updates to tracks are not logged.
 
 private:
-   bool setSlotMaxTracks(const base::Number* const);       // Sets the maximum number of track files
-   bool setSlotMaxTrackAge(const base::Number* const);     // Sets the maximum age of tracks
-   bool setSlotFirstTrackId(const base::Number* const);    // Sets the first (starting) track id number
-   virtual bool setSlotAlpha(const base::Number* const);   // Sets alpha
-   virtual bool setSlotBeta(const base::Number* const);    // Sets beta
-   bool setSlotGamma(const base::Number* const);           // Sets gamma
-   bool setSlotLogTrackUpdates(const base::Number* const); // Sets logTrackUpdates
+   bool setSlotMaxTracks(std::shared_ptr<const base::Number>);       // Sets the maximum number of track files
+   bool setSlotMaxTrackAge(std::shared_ptr<const base::Number>);     // Sets the maximum age of tracks
+   bool setSlotFirstTrackId(std::shared_ptr<const base::Number>);    // Sets the first (starting) track id number
+   virtual bool setSlotAlpha(std::shared_ptr<const base::Number>);   // Sets alpha
+   virtual bool setSlotBeta(std::shared_ptr<const base::Number>);    // Sets beta
+   bool setSlotGamma(std::shared_ptr<const base::Number>);           // Sets gamma
+   bool setSlotLogTrackUpdates(std::shared_ptr<const base::Number>); // Sets logTrackUpdates
 };
 
 }

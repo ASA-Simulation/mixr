@@ -57,7 +57,6 @@ void Route::copyData(const Route& org, const bool)
         base::String* n{};
         if (org.initToStptName != nullptr) n = org.initToStptName->clone();
         initToStptName = n;
-        if (n != nullptr) n->unref();  // safe_ptr<> has it
     }
 
     initToStptIdx = org.initToStptIdx;
@@ -102,7 +101,6 @@ void Route::reset()
          directTo(1);
       }
 
-      steerpoints->unref();
       steerpoints = nullptr;
    }
 }
@@ -154,7 +152,6 @@ void Route::computeSteerpointData(const double, const Navigation* const nav)
             item = item->getNext();
          }
 
-         steerpoints->unref();
          steerpoints = nullptr;
       }
    }
@@ -238,7 +235,6 @@ bool Route::incStpt()
         unsigned int idx{stptIdx + 1};
         if (idx > n) idx = (wrap ? 1 : n);
         ok = directTo(idx);
-        steerpoints->unref();
         steerpoints = nullptr;
     }
     return ok;
@@ -253,7 +249,6 @@ bool Route::decStpt()
         unsigned int idx{stptIdx - 1};
         if (idx < 1) idx = (wrap ? n : 1);
         ok = directTo(idx);
-        steerpoints->unref();
         steerpoints = nullptr;
     }
     return ok;
@@ -304,7 +299,6 @@ bool Route::directTo(const Steerpoint* const stpt)
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -330,7 +324,6 @@ bool Route::directTo(const char* const name)
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -376,7 +369,6 @@ const base::Pair* Route::findSteerpointImp(const Steerpoint* const stpt) const
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -392,7 +384,6 @@ const base::Pair* Route::findSteerpointImp(const char* const name) const
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -405,7 +396,6 @@ const base::Pair* Route::findSteerpointImp(const unsigned int idx) const
     const base::PairStream* steerpoints{getComponents()};
     if (steerpoints != nullptr) {
         sp = steerpoints->getPosition(idx);
-        steerpoints->unref();
         steerpoints = nullptr;
     }
     return sp;
@@ -443,7 +433,6 @@ unsigned int Route::getSteerpoints(base::safe_ptr<Steerpoint>* const stptList, c
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -470,7 +459,6 @@ unsigned int Route::getAllSteerpoints(base::safe_ptr<Steerpoint>* const stptList
     }
 
     if (steerpoints != nullptr) {
-       steerpoints->unref();
        steerpoints = nullptr;
     }
 
@@ -536,7 +524,6 @@ bool Route::insertSteerpoint(Steerpoint* const newStpt, const int pos)
                 if (item != nullptr) {
                     const auto newItem = new base::List::Item;
                     newItem->value = p;
-                    p->ref();
                     // insert 'newItem' just before 'item'
                     ok = tempList->insert(newItem, item);
                 }
@@ -547,7 +534,6 @@ bool Route::insertSteerpoint(Steerpoint* const newStpt, const int pos)
                base::Component::processComponents(tempList,typeid(Steerpoint));
             }
 
-            tempList->unref();
             tempList = nullptr;
 
         }
@@ -560,11 +546,9 @@ bool Route::insertSteerpoint(Steerpoint* const newStpt, const int pos)
 
         // Unref the original steerpoint list
         if (steerpoints != nullptr) {
-            steerpoints->unref();
             steerpoints = nullptr;
         }
 
-        p->unref();  // Our component list has it now.
     }
 
     // ---
@@ -618,7 +602,6 @@ bool Route::deleteSteerpoint(Steerpoint* const sp)
    base::PairStream* steerpoints{getComponents()};
    base::Component::processComponents(steerpoints,typeid(Steerpoint),nullptr,sp);
    if (steerpoints != nullptr) {
-      steerpoints->unref();
       steerpoints = nullptr;
    }
 
@@ -670,7 +653,7 @@ void Route::processComponents(
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool Route::setSlotTo(const base::Identifier* const msg)
+bool Route::setSlotTo(std::shared_ptr<const base::Identifier> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -680,7 +663,7 @@ bool Route::setSlotTo(const base::Identifier* const msg)
     return ok;
 }
 
-bool Route::setSlotTo(const base::Number* const msg)
+bool Route::setSlotTo(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -690,7 +673,7 @@ bool Route::setSlotTo(const base::Number* const msg)
     return ok;
 }
 
-bool Route::setSlotAutoSequence(const base::Number* const msg)
+bool Route::setSlotAutoSequence(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -700,7 +683,7 @@ bool Route::setSlotAutoSequence(const base::Number* const msg)
     return ok;
 }
 
-bool Route::setSlotAutoSeqDistance(const base::Distance* const msg)
+bool Route::setSlotAutoSeqDistance(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -709,7 +692,7 @@ bool Route::setSlotAutoSeqDistance(const base::Distance* const msg)
     }
     return ok;
 }
-bool Route::setSlotAutoSeqDistance(const base::Number* const msg)
+bool Route::setSlotAutoSeqDistance(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -720,7 +703,7 @@ bool Route::setSlotAutoSeqDistance(const base::Number* const msg)
     return ok;
 }
 
-bool Route::setSlotWrap(const base::Number* const msg)
+bool Route::setSlotWrap(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

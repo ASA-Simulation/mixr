@@ -242,7 +242,6 @@ bool Gimbal::onRfEmissionEvent(Emission* const em)
             const auto sc = dynamic_cast<Gimbal*>( pair->object() );
             if (sc != nullptr && sc->getPowerSwitch() != System::PWR_OFF) sc->onRfEmissionEvent(em);
          }
-         subcomponents->unref();
          subcomponents = nullptr;
       }
    }
@@ -749,7 +748,7 @@ bool Gimbal::setLocation(const double x, const double y, const double z)
 //------------------------------------------------------------------------------
 
 // setSlotType() -- calls setType()
-bool Gimbal::setSlotType(const base::String* const msg)
+bool Gimbal::setSlotType(std::shared_ptr<const base::String> msg)
 {
     if (msg == nullptr) return false;
 
@@ -761,7 +760,7 @@ bool Gimbal::setSlotType(const base::String* const msg)
 }
 
 // setSlotLocation() -
-bool Gimbal::setSlotLocation(const base::List* const msg)
+bool Gimbal::setSlotLocation(std::shared_ptr<const base::List> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -773,7 +772,7 @@ bool Gimbal::setSlotLocation(const base::List* const msg)
 }
 
 // setSlotPosition() - Initial positon vector (radians) [ az el roll ]
-bool Gimbal::setSlotPosition(const base::List* const msg)
+bool Gimbal::setSlotPosition(std::shared_ptr<const base::List> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -787,7 +786,7 @@ bool Gimbal::setSlotPosition(const base::List* const msg)
 }
 
 // setSlotPosAzimuth() - Initial azimuth positon
-bool Gimbal::setSlotPosAzimuth(const base::Angle* const msg)
+bool Gimbal::setSlotPosAzimuth(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -799,7 +798,7 @@ bool Gimbal::setSlotPosAzimuth(const base::Angle* const msg)
 }
 
 // setSlotPosElevation() - Initial elevation positon
-bool Gimbal::setSlotPosElevation(const base::Angle* const msg)
+bool Gimbal::setSlotPosElevation(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -811,7 +810,7 @@ bool Gimbal::setSlotPosElevation(const base::Angle* const msg)
 }
 
 // setSlotPosRoll() - Initial roll positon
-bool Gimbal::setSlotPosRoll(const base::Angle* const msg)
+bool Gimbal::setSlotPosRoll(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -823,7 +822,7 @@ bool Gimbal::setSlotPosRoll(const base::Angle* const msg)
 }
 
 // setSlotAzimuthLimits() - Azimuth limit vector (radians) [ left right ]
-bool Gimbal::setSlotAzimuthLimits(const base::List* const msg)
+bool Gimbal::setSlotAzimuthLimits(std::shared_ptr<const base::List> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -835,7 +834,7 @@ bool Gimbal::setSlotAzimuthLimits(const base::List* const msg)
 }
 
 // setSlotAzimuthLimitLeft() - Left azimuth limit
-bool Gimbal::setSlotAzimuthLimitLeft(const base::Angle* const msg)
+bool Gimbal::setSlotAzimuthLimitLeft(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -848,7 +847,7 @@ bool Gimbal::setSlotAzimuthLimitLeft(const base::Angle* const msg)
 }
 
 // setSlotAzimuthLimitRight() - Right azimuth limit
-bool Gimbal::setSlotAzimuthLimitRight(const base::Angle* const msg)
+bool Gimbal::setSlotAzimuthLimitRight(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -861,7 +860,7 @@ bool Gimbal::setSlotAzimuthLimitRight(const base::Angle* const msg)
 }
 
 // setSlotElevationLimits() - calls setElevationLimits()
-bool Gimbal::setSlotElevationLimits(const base::List* const numList)
+bool Gimbal::setSlotElevationLimits(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     if (numList != nullptr) {
@@ -873,7 +872,7 @@ bool Gimbal::setSlotElevationLimits(const base::List* const numList)
 }
 
 // setSlotElevationLower() - Lower elevation limit
-bool Gimbal::setSlotElevationLower(const base::Angle* const msg)
+bool Gimbal::setSlotElevationLower(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -886,7 +885,7 @@ bool Gimbal::setSlotElevationLower(const base::Angle* const msg)
 }
 
 // setSlotElevationUpper() - Upper elevation limit
-bool Gimbal::setSlotElevationUpper(const base::Angle* const msg)
+bool Gimbal::setSlotElevationUpper(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -900,7 +899,7 @@ bool Gimbal::setSlotElevationUpper(const base::Angle* const msg)
 
 
 // setSlotRollLimits() - calls setRollLimits()
-bool Gimbal::setSlotRollLimits(const base::List* const numList)
+bool Gimbal::setSlotRollLimits(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     if (numList != nullptr) {
@@ -912,7 +911,7 @@ bool Gimbal::setSlotRollLimits(const base::List* const numList)
 }
 
 // setSlotRollLimitLower() - Lower roll limit
-bool Gimbal::setSlotRollLimitLower(const base::Angle* const msg)
+bool Gimbal::setSlotRollLimitLower(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -925,7 +924,7 @@ bool Gimbal::setSlotRollLimitLower(const base::Angle* const msg)
 }
 
 // setSlotRollLimitUpper() - Upper roll limit
-bool Gimbal::setSlotRollLimitUpper(const base::Angle* const msg)
+bool Gimbal::setSlotRollLimitUpper(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -938,7 +937,7 @@ bool Gimbal::setSlotRollLimitUpper(const base::Angle* const msg)
 }
 
 // setSlotMaxRates() -- calls setMaxRates()
-bool Gimbal::setSlotMaxRates(const base::List* const numList)
+bool Gimbal::setSlotMaxRates(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     if (numList != nullptr) {
@@ -952,7 +951,7 @@ bool Gimbal::setSlotMaxRates(const base::List* const numList)
 }
 
 // setSlotMaxRateAzimuth() - Max "mechanical" azimuth rate (base::Angle/sec)
-bool Gimbal::setSlotMaxRateAzimuth(const base::Angle* const msg)
+bool Gimbal::setSlotMaxRateAzimuth(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -965,7 +964,7 @@ bool Gimbal::setSlotMaxRateAzimuth(const base::Angle* const msg)
 }
 
 // setSlotMaxRateElevation() - Max "mechanical" elevation rate (base::Angle/sec)
-bool Gimbal::setSlotMaxRateElevation(const base::Angle* const msg)
+bool Gimbal::setSlotMaxRateElevation(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -978,7 +977,7 @@ bool Gimbal::setSlotMaxRateElevation(const base::Angle* const msg)
 }
 
 // setSlotMaxRateRoll() - Max "mechanical" roll rate (base::Angle/sec)
-bool Gimbal::setSlotMaxRateRoll(const base::Angle* const msg)
+bool Gimbal::setSlotMaxRateRoll(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -991,7 +990,7 @@ bool Gimbal::setSlotMaxRateRoll(const base::Angle* const msg)
 }
 
 // setSlotCmdPos() -- calls setCmdPos()
-bool Gimbal::setSlotCmdPos(const base::List* const numList)
+bool Gimbal::setSlotCmdPos(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     if (numList != nullptr) {
@@ -1006,7 +1005,7 @@ bool Gimbal::setSlotCmdPos(const base::List* const numList)
 }
 
 // setSlotCmdPosAzimuth - Commanded azimuth position  (sets POSITION_SERVO)
-bool Gimbal::setSlotCmdPosAzimuth(const base::Angle* const msg)
+bool Gimbal::setSlotCmdPosAzimuth(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1018,7 +1017,7 @@ bool Gimbal::setSlotCmdPosAzimuth(const base::Angle* const msg)
 }
 
 // setSlotCmdPosElevation() - Commanded elevation position (sets POSITION_SERVO)
-bool Gimbal::setSlotCmdPosElevation(const base::Angle* const msg)
+bool Gimbal::setSlotCmdPosElevation(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1030,7 +1029,7 @@ bool Gimbal::setSlotCmdPosElevation(const base::Angle* const msg)
 }
 
 // setSlotCmdPosRoll() - Commanded roll position  (sets POSITION_SERVO)
-bool Gimbal::setSlotCmdPosRoll(const base::Angle* const msg)
+bool Gimbal::setSlotCmdPosRoll(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1042,7 +1041,7 @@ bool Gimbal::setSlotCmdPosRoll(const base::Angle* const msg)
 }
 
 // setSlotCmdRate() -- calls setCmdRate()
-bool Gimbal::setSlotCmdRate(const base::List* const numList)
+bool Gimbal::setSlotCmdRate(std::shared_ptr<const base::List> numList)
 {
    bool ok{};
    if (numList != nullptr) {
@@ -1056,7 +1055,7 @@ bool Gimbal::setSlotCmdRate(const base::List* const numList)
 }
 
 // setSlotCmdRateAzimuth() - Commanded azimuth rate (sets RATE_SERVO)
-bool Gimbal::setSlotCmdRateAzimuth(const base::Angle* const msg)
+bool Gimbal::setSlotCmdRateAzimuth(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1068,7 +1067,7 @@ bool Gimbal::setSlotCmdRateAzimuth(const base::Angle* const msg)
 }
 
 // setSlotCmdRateElevation() - Commanded elevation rate (sets RATE_SERVO)
-bool Gimbal::setSlotCmdRateElevation(const base::Angle* const msg)
+bool Gimbal::setSlotCmdRateElevation(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1080,7 +1079,7 @@ bool Gimbal::setSlotCmdRateElevation(const base::Angle* const msg)
 }
 
 // setSlotCmdRateRoll() - Commanded roll rate (sets RATE_SERVO)
-bool Gimbal::setSlotCmdRateRoll(const base::Angle* const msg)
+bool Gimbal::setSlotCmdRateRoll(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1092,7 +1091,7 @@ bool Gimbal::setSlotCmdRateRoll(const base::Angle* const msg)
 }
 
 // Enable target terrain occulting (default: false)
-bool Gimbal::setSlotTerrainOcculting(const base::Number* const msg)
+bool Gimbal::setSlotTerrainOcculting(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1102,7 +1101,7 @@ bool Gimbal::setSlotTerrainOcculting(const base::Number* const msg)
 }
 
 // Enable horizon masking check (default: true)
-bool Gimbal::setSlotCheckHorizon(const base::Number* const msg)
+bool Gimbal::setSlotCheckHorizon(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1112,7 +1111,7 @@ bool Gimbal::setSlotCheckHorizon(const base::Number* const msg)
 }
 
 // Player of interest types (default: 0 )
-bool Gimbal::setSlotPlayerTypes(const base::PairStream* const msg)
+bool Gimbal::setSlotPlayerTypes(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1152,7 +1151,7 @@ bool Gimbal::setSlotPlayerTypes(const base::PairStream* const msg)
 }
 
 // Max number of players of interest (default: 0)
-bool Gimbal::setSlotMaxPlayers(const base::Number* const msg)
+bool Gimbal::setSlotMaxPlayers(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1162,7 +1161,7 @@ bool Gimbal::setSlotMaxPlayers(const base::Number* const msg)
 }
 
 // Max range to players of interest or zero for all (meters)
-bool Gimbal::setSlotMaxRange2PlayersOfInterest(const base::Distance* const msg)
+bool Gimbal::setSlotMaxRange2PlayersOfInterest(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1173,7 +1172,7 @@ bool Gimbal::setSlotMaxRange2PlayersOfInterest(const base::Distance* const msg)
 }
 
 // Max angle of gimbal boresight to players of interest or zero for all (rad)
-bool Gimbal::setSlotMaxAngle2PlayersOfInterest(const base::Angle* const msg)
+bool Gimbal::setSlotMaxAngle2PlayersOfInterest(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1184,7 +1183,7 @@ bool Gimbal::setSlotMaxAngle2PlayersOfInterest(const base::Angle* const msg)
 }
 
 // Sets the local only players of interest flag
-bool Gimbal::setSlotLocalPlayersOfInterestOnly(const base::Number* const msg)
+bool Gimbal::setSlotLocalPlayersOfInterestOnly(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1194,7 +1193,7 @@ bool Gimbal::setSlotLocalPlayersOfInterestOnly(const base::Number* const msg)
 }
 
 // Using player of interest's world (ECEF) coordinate system
-bool Gimbal::setSlotUseWorldCoordinates(const base::Number* const msg)
+bool Gimbal::setSlotUseWorldCoordinates(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1204,7 +1203,7 @@ bool Gimbal::setSlotUseWorldCoordinates(const base::Number* const msg)
 }
 
 // Sets the own heading only flag
-bool Gimbal::setSlotUseOwnHeadingOnly(const base::Number* const msg)
+bool Gimbal::setSlotUseOwnHeadingOnly(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1321,7 +1320,6 @@ unsigned int Gimbal::processPlayersOfInterest(base::PairStream* const poi)
 
    unsigned int ntgts{tdb0->processPlayers(poi)};
    setCurrentTdb(tdb0);
-   tdb0->unref();
 
    return ntgts;
 }

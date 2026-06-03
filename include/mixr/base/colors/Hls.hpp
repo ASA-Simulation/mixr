@@ -74,9 +74,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotHue(const Number* const);
-   bool setSlotLightness(const Number* const);
-   bool setSlotSaturation(const Number* const);
+   bool setSlotHue(std::shared_ptr<const Number>);
+   bool setSlotLightness(std::shared_ptr<const Number>);
+   bool setSlotSaturation(std::shared_ptr<const Number>);
 };
 
 }

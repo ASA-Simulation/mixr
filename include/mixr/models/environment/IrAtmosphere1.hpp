@@ -148,9 +148,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSolarRadiationTable(const base::Table2* const);
-   bool setSlotBackgroundRadiationTable(const base::Table3* const);
-   bool setSlotTransmissivityTable(const base::Table4* const);
+   bool setSlotSolarRadiationTable(std::shared_ptr<const base::Table2>);
+   bool setSlotBackgroundRadiationTable(std::shared_ptr<const base::Table3>);
+   bool setSlotTransmissivityTable(std::shared_ptr<const base::Table4>);
 };
 
 }

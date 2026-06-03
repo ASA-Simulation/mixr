@@ -50,9 +50,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPositionGate(const base::Number* const);
-   bool setSlotRangeGate(const base::Number* const);
-   bool setSlotVelocityGate(const base::Number* const);
+   bool setSlotPositionGate(std::shared_ptr<const base::Number>);
+   bool setSlotRangeGate(std::shared_ptr<const base::Number>);
+   bool setSlotVelocityGate(std::shared_ptr<const base::Number>);
 };
 
 }

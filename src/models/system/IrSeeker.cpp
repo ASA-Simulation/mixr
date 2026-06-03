@@ -104,7 +104,6 @@ unsigned int IrSeeker::processPlayersOfInterest(base::PairStream* const poi)
 
    unsigned int ntgts = tdb0->processPlayers(poi);
    setCurrentTdb(tdb0);
-   tdb0->unref();
 
    return ntgts;
 }
@@ -132,7 +131,6 @@ void IrSeeker::process(const double dt)
             if (freeQueryStack.isNotFull()) {
                freeQueryStack.push(query);
             } else {
-               query->unref();
             }
             base::unlock(freeQueryLock);
          } else {
@@ -153,7 +151,6 @@ void IrSeeker::clearQueues()
    base::lock(freeQueryLock);
    IrQueryMsg* query{freeQueryStack.pop()};
    while (query != nullptr) {
-      query->unref();
       query = freeQueryStack.pop();
    }
    base::unlock(freeQueryLock);
@@ -161,7 +158,6 @@ void IrSeeker::clearQueues()
    base::lock(inUseQueryLock);
    query = inUseQueryQueue.get();
    while (query != nullptr) {
-      query->unref();
       query = inUseQueryQueue.get();
    }
    base::unlock(inUseQueryLock);
@@ -182,7 +178,6 @@ void IrSeeker::irRequestSignature(IrQueryMsg* const irQuery)
    Player* ownship{getOwnship()};
    if (irQuery == nullptr || tdb0 == nullptr || ownship == nullptr) {
       // Clean up and leave
-      if (tdb0 != nullptr) tdb0->unref();
       return;
    }
 
@@ -268,7 +263,6 @@ void IrSeeker::irRequestSignature(IrQueryMsg* const irQuery)
                if (freeQueryStack.isNotFull()) {
                   freeQueryStack.push(query);
                } else {
-                  query->unref();
                }
                base::unlock(freeQueryLock);
             } else {
@@ -278,7 +272,6 @@ void IrSeeker::irRequestSignature(IrQueryMsg* const irQuery)
                   inUseQueryQueue.put(query);
                } else {
                   // Just forget it
-                  query->unref();
                }
                base::unlock(inUseQueryLock);
             }
@@ -292,7 +285,6 @@ void IrSeeker::irRequestSignature(IrQueryMsg* const irQuery)
    }
 
    // Unref() the TDB
-   tdb0->unref();
 }
 
 //------------------------------------------------------------------------------
@@ -459,7 +451,6 @@ unsigned int TdbIr::processPlayers(base::PairStream* const players)
 
             // Ref() and save the target pointer
             // (## It must be unref()'d by the owner/manager of the Tdb array ##)
-            target->ref();
             targets[numTgts] = target;
 
           // FAB - these seem to be unnecessary - recalc'd by Tdb::computeBoresightData anyway

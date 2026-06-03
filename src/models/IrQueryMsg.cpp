@@ -79,16 +79,12 @@ void IrQueryMsg::setRange(const double r)
 //Set the signature by waveband
 void IrQueryMsg::setSignatureByWaveband(double* const sig)
 {
-//   if (signatureByWaveband != 0) signatureByWaveband->unref();
    signatureByWaveband = sig;
-//   if (signatureByWaveband != 0) signatureByWaveband->ref();
 }
 
 void IrQueryMsg::setSendingSensor(IrSensor* const newSensor)
 {
-   if (sendingSensor != nullptr) sendingSensor->unref();
    sendingSensor = newSensor;
-   if (sendingSensor != nullptr) sendingSensor->ref();
 }
 
 //------------------------------------------------------------------------------

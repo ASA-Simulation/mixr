@@ -49,7 +49,7 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotRCS(const base::Number* const x)     { return setRCS(x); }
+    bool setSlotRCS(std::shared_ptr<const base::Number> x)     { return setRCS(x); }
 };
 
 //------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ private:
 
 private:
    // slot table helper methods
-   virtual bool setSlotRadius(base::Number* const);
+   virtual bool setSlotRadius(std::shared_ptr<base::Number>);
 };
 
 //------------------------------------------------------------------------------
@@ -225,10 +225,10 @@ protected:
 
 private:
    // slot table helper methods
-   bool setSlotTable(const base::Table2* const);
-   bool setSlotSwapOrder(const base::Number* const);
-   bool setSlotInDegrees(const base::Number* const);
-   bool setSlotDecibel(const base::Number* const);
+   bool setSlotTable(std::shared_ptr<const base::Table2>);
+   bool setSlotSwapOrder(std::shared_ptr<const base::Number>);
+   bool setSlotInDegrees(std::shared_ptr<const base::Number>);
+   bool setSlotDecibel(std::shared_ptr<const base::Number>);
 };
 
 }

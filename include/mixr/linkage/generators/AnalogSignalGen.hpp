@@ -73,10 +73,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotChannel(const base::Number* const);
-   bool setSlotSignal(const base::String* const);
-   bool setSlotFrequency(const base::Frequency* const);
-   bool setSlotPhase(const base::Angle* const);
+   bool setSlotChannel(std::shared_ptr<const base::Number>);
+   bool setSlotSignal(std::shared_ptr<const base::String>);
+   bool setSlotFrequency(std::shared_ptr<const base::Frequency>);
+   bool setSlotPhase(std::shared_ptr<const base::Angle>);
 };
 
 }

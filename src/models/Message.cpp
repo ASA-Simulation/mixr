@@ -22,8 +22,8 @@ void Message::initData()
 
 void Message::deleteData()
 {
-   if (senderName != nullptr) { senderName->unref();  senderName = nullptr; }
-   if (destNames  != nullptr) { destNames->unref();   destNames  = nullptr; }
+   if (senderName != nullptr) { senderName = nullptr; }
+   if (destNames  != nullptr) { destNames  = nullptr; }
 }
 
 void Message::copyData(const Message& org, const bool cc)
@@ -36,14 +36,12 @@ void Message::copyData(const Message& org, const bool cc)
    ack = org.ack;
 
    if (senderName != nullptr) {
-      senderName->unref();
       senderName = nullptr;
    }
    if (org.senderName != nullptr)
       senderName = org.senderName->clone();
 
    if (destNames != nullptr) {
-      destNames->unref();
       destNames = nullptr;
    }
    if (org.destNames != nullptr)
@@ -97,7 +95,6 @@ void Message::removeDestName(base::String* const name)
    if (destNames != nullptr) {
       destNames->remove(name);
       if (destNames->entries() == 0) {
-         destNames->unref();
          destNames = nullptr;
       }
    }
@@ -106,7 +103,6 @@ void Message::removeDestName(base::String* const name)
 void Message::clearDestNames()
 {
    if (destNames != nullptr) {
-      destNames->unref();
       destNames = nullptr;
    }
 }

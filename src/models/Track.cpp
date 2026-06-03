@@ -362,9 +362,7 @@ bool Track::setRejected(const bool f)
 // setTarget() -- set the target pointer
 bool Track::setTarget(Player* const p)
 {
-   if (tgt != nullptr) tgt->unref();
    tgt = p;
-   if (tgt != nullptr) tgt->ref();
    return true;
 }
 
@@ -441,9 +439,7 @@ bool RfTrack::setSignal(const double snDbl, const Emission* const em)
 // setLastEmission() -- set the last emission pointer
 bool RfTrack::setLastEmission(const Emission* const em)
 {
-   if (lastEM != nullptr) lastEM->unref();
    lastEM = em;
-   if (lastEM != nullptr) lastEM->ref();
    return true;
 }
 
@@ -566,9 +562,7 @@ bool IrTrack::setPosition(const base::Vec3d& p)
 // setLastQuery() -- set the last emission pointer
 bool IrTrack::setLastQuery(const IrQueryMsg* const q)
 {
-   if (lastQuery != nullptr) lastQuery->unref();
    lastQuery = q;
-   if (lastQuery != nullptr) lastQuery->ref();
    return true;
 }
 

@@ -26,7 +26,7 @@ AbstractBehavior::AbstractBehavior()
 }
 
 // [ 1 .. 65535 ]
-bool AbstractBehavior::setSlotVote(const base::Number* const num)
+bool AbstractBehavior::setSlotVote(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    const int vote{num->getInt()};

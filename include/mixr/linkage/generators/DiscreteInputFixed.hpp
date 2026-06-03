@@ -47,8 +47,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotChannel(const base::Number* const);
-   bool setSlotSignal(const base::String* const);
+   bool setSlotChannel(std::shared_ptr<const base::Number>);
+   bool setSlotSignal(std::shared_ptr<const base::String>);
 };
 
 }

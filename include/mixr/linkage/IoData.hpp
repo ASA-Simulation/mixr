@@ -72,10 +72,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotNumAI(const base::Number* const);
-   bool setSlotNumAO(const base::Number* const);
-   bool setSlotNumDI(const base::Number* const);
-   bool setSlotNumDO(const base::Number* const);
+   bool setSlotNumAI(std::shared_ptr<const base::Number>);
+   bool setSlotNumAO(std::shared_ptr<const base::Number>);
+   bool setSlotNumDI(std::shared_ptr<const base::Number>);
+   bool setSlotNumDO(std::shared_ptr<const base::Number>);
 };
 
 }

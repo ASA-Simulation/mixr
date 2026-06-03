@@ -393,7 +393,7 @@ bool Bomb::weaponImpactPrediction(
 // Set Slot routines --
 //------------------------------------------------------------------------------
 
-bool Bomb::setSlotArmingOption(base::Identifier* const p)
+bool Bomb::setSlotArmingOption(std::shared_ptr<base::Identifier> p)
 {
     bool ok{};
     if (p != nullptr) {
@@ -410,42 +410,42 @@ bool Bomb::setSlotArmingOption(base::Identifier* const p)
 }
 
 // noseFuze: Nose fuze flag
-bool Bomb::setSlotNoseFuze(base::Number* const p)
+bool Bomb::setSlotNoseFuze(std::shared_ptr<base::Number> p)
 {
     setNoseFuze( p->getBoolean() );
     return true;
 }
 
 // midFuze: Middle fuze flag
-bool Bomb::setSlotMidFuze(base::Number* const p)
+bool Bomb::setSlotMidFuze(std::shared_ptr<base::Number> p)
 {
     setMidFuze( p->getBoolean() );
     return true;
 }
 
 // tailFuze: Tail fuze flag
-bool Bomb::setSlotTailFuze(base::Number* const p)
+bool Bomb::setSlotTailFuze(std::shared_ptr<base::Number> p)
 {
     setTailFuze( p->getBoolean() );
     return true;
 }
 
 // fuzeAltitude:  Fuze arming Altitude
-bool Bomb::setSlotFuzeAltitude(base::Number* const p)
+bool Bomb::setSlotFuzeAltitude(std::shared_ptr<base::Number> p)
 {
     setFuzeAltitude( p->getFloat() );
     return true;
 }
 
 // fuzeTime:  Fuze Arming Time
-bool Bomb::setSlotFuzeTime(base::Number* const p)
+bool Bomb::setSlotFuzeTime(std::shared_ptr<base::Number> p)
 {
     setFuzeTime( p->getFloat() );
     return true;
 }
 
 // dragIndex: drag index used by default dynamics
-bool Bomb::setSlotDragIndex(base::Number* const p)
+bool Bomb::setSlotDragIndex(std::shared_ptr<base::Number> p)
 {
     setDragIndex( p->getReal() );
     return true;

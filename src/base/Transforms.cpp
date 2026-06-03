@@ -14,14 +14,17 @@ BEGIN_SLOTTABLE(Transform)
 END_SLOTTABLE(Transform)
 
 BEGIN_SLOT_MAP(Transform)
-    ON_SLOT(1, setSlotComputematrix1, Angle)
-    ON_SLOT(1, setSlotComputematrix1, Number)
-    ON_SLOT(2, setSlotComputematrix2, Angle)
-    ON_SLOT(2, setSlotComputematrix2, Number)
-    ON_SLOT(3, setSlotComputematrix3, Angle)
-    ON_SLOT(3, setSlotComputematrix3, Number)
-    ON_SLOT(4, setSlotComputematrix4, Angle)
-    ON_SLOT(4, setSlotComputematrix4, Number)
+    ON_SLOT(1, [this](std::shared_ptr<const Angle> msg) { return this->setSlotComputematrix1(msg); }, Angle)
+    ON_SLOT(1, [this](std::shared_ptr<const Number> msg) { return this->setSlotComputematrix1(msg); }, Number)
+
+    ON_SLOT(2, [this](std::shared_ptr<const Angle> msg) { return this->setSlotComputematrix2(msg); }, Angle)
+    ON_SLOT(2, [this](std::shared_ptr<const Number> msg) { return this->setSlotComputematrix2(msg); }, Number)
+
+    ON_SLOT(3, [this](std::shared_ptr<const Angle> msg) { return this->setSlotComputematrix3(msg); }, Angle)
+    ON_SLOT(3, [this](std::shared_ptr<const Number> msg) { return this->setSlotComputematrix3(msg); }, Number)
+
+    ON_SLOT(4, [this](std::shared_ptr<const Number> msg) { return this->setSlotComputematrix4(msg); }, Number)
+    ON_SLOT(4, [this](std::shared_ptr<const Number> msg) { return this->setSlotComputematrix4(msg); }, Number)
 END_SLOT_MAP()
 
 Transform::Transform()
@@ -158,7 +161,7 @@ void Scale::computeMatrix()
 //------------------------------------------------------------------------------
 // setSlotComputematrix1 () - for Angle types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix1(const Angle* const sc1obj)
+bool Transform::setSlotComputematrix1(std::shared_ptr<const Angle> sc1obj)
 {
     bool ok = true;
     if (nv == 0 && isClassType(typeid(Rotation))) {
@@ -175,7 +178,7 @@ bool Transform::setSlotComputematrix1(const Angle* const sc1obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix1 () - for Number types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix1(const Number* const sc1obj)
+bool Transform::setSlotComputematrix1(std::shared_ptr<const Number> sc1obj)
 {
     bool ok = true;
     if (sc1obj != nullptr) {
@@ -191,7 +194,7 @@ bool Transform::setSlotComputematrix1(const Number* const sc1obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix2 () - for Angle types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix2(const Angle* const sc2obj)
+bool Transform::setSlotComputematrix2(std::shared_ptr<const Angle> sc2obj)
 {
     bool ok = true;
     if (nv == 0 && isClassType(typeid(Rotation))) {
@@ -208,7 +211,7 @@ bool Transform::setSlotComputematrix2(const Angle* const sc2obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix2 () - for Number types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix2(const Number* const sc2obj)
+bool Transform::setSlotComputematrix2(std::shared_ptr<const Number> sc2obj)
 {
     bool ok = true;
     if (sc2obj != nullptr) {
@@ -224,7 +227,7 @@ bool Transform::setSlotComputematrix2(const Number* const sc2obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix3 () - for Angle types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix3(const Angle* const sc3obj)
+bool Transform::setSlotComputematrix3(std::shared_ptr<const Angle> sc3obj)
 {
     bool ok = true;
     if (nv == 0 && isClassType(typeid(Rotation))) {
@@ -241,7 +244,7 @@ bool Transform::setSlotComputematrix3(const Angle* const sc3obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix3 () - for Number types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix3(const Number* const sc3obj)
+bool Transform::setSlotComputematrix3(std::shared_ptr<const Number> sc3obj)
 {
     bool ok = true;
     if (sc3obj != nullptr) {
@@ -257,7 +260,7 @@ bool Transform::setSlotComputematrix3(const Number* const sc3obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix4 () - for Angle types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix4(const Angle* const sc4obj)
+bool Transform::setSlotComputematrix4(std::shared_ptr<const Angle> sc4obj)
 {
     bool ok = true;
     if (nv == 0 && isClassType(typeid(Rotation))) {
@@ -274,7 +277,7 @@ bool Transform::setSlotComputematrix4(const Angle* const sc4obj)
 //------------------------------------------------------------------------------
 // setSlotComputematrix4 () - for Number types
 //------------------------------------------------------------------------------
-bool Transform::setSlotComputematrix4(const Number* const sc4obj)
+bool Transform::setSlotComputematrix4(std::shared_ptr<const Number> sc4obj)
 {
     bool ok = true;
     if (sc4obj != nullptr) {

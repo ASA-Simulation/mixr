@@ -142,7 +142,7 @@ double SigSphere::getRCS(const Emission* const)
 //------------------------------------------------------------------------------
 // setRadiusFromSlot() -- Set the radius from Slot table
 //------------------------------------------------------------------------------
-bool SigSphere::setSlotRadius(base::Number* const num)
+bool SigSphere::setSlotRadius(std::shared_ptr<base::Number> num)
 {
     bool ok{};
     double r{-1.0};
@@ -428,7 +428,6 @@ void SigAzEl::copyData(const SigAzEl& org, const bool)
 {
    BaseClass::copyData(org);
 
-   if (tbl != nullptr) { tbl->unref(); tbl = nullptr; }
    if (org.tbl != nullptr) {
       tbl = org.tbl->clone();
    }
@@ -440,7 +439,6 @@ void SigAzEl::copyData(const SigAzEl& org, const bool)
 
 void SigAzEl::deleteData()
 {
-    if (tbl != nullptr) { tbl->unref(); tbl = nullptr; }
 }
 
 //------------------------------------------------------------------------------
@@ -516,19 +514,17 @@ bool SigAzEl::setDecibel(const bool flg)
 //------------------------------------------------------------------------------
 
 // Sets the signature table
-bool SigAzEl::setSlotTable(const base::Table2* const msg)
+bool SigAzEl::setSlotTable(std::shared_ptr<const base::Table2> msg)
 {
    bool ok{};
    if (msg != nullptr) {
-      if (tbl != nullptr) tbl->unref();
-      msg->ref();
       tbl = msg;
       ok = true;
    }
    return ok;
 }
 
-bool SigAzEl::setSlotSwapOrder(const base::Number* const msg)
+bool SigAzEl::setSlotSwapOrder(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -537,7 +533,7 @@ bool SigAzEl::setSlotSwapOrder(const base::Number* const msg)
    return ok;
 }
 
-bool SigAzEl::setSlotInDegrees(const base::Number* const msg)
+bool SigAzEl::setSlotInDegrees(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -546,7 +542,7 @@ bool SigAzEl::setSlotInDegrees(const base::Number* const msg)
    return ok;
 }
 
-bool SigAzEl::setSlotDecibel(const base::Number* const msg)
+bool SigAzEl::setSlotDecibel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

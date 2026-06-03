@@ -111,7 +111,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotIGain(base::Number* const);
+   bool setSlotIGain(std::shared_ptr<base::Number>);
 };
 
 }

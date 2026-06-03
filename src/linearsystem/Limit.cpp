@@ -34,7 +34,7 @@ Limit::Limit(const double ll, const double uu) : LimitFunc(ll,uu)
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool Limit::setSlotLowerLimit(const base::Number* const msg)
+bool Limit::setSlotLowerLimit(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -44,7 +44,7 @@ bool Limit::setSlotLowerLimit(const base::Number* const msg)
    return ok;
 }
 
-bool Limit::setSlotUpperLimit(const base::Number* const msg)
+bool Limit::setSlotUpperLimit(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

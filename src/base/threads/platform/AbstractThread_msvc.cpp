@@ -27,16 +27,12 @@ DWORD WINAPI AbstractThread::staticThreadFunc(LPVOID lpParam)
    Component* parent{thread->getParent()};
 
    // Make sure that our Thread class and its parent are not going to go a way.
-   thread->ref();
-   parent->ref();
 
    // The main thread function, which is a Thread class memeber function,
    // will handle the rest.
    DWORD rtn{thread->mainThreadFunc()};
    thread->setTerminated();
 
-   parent->unref();
-   thread->unref();
 
    return rtn;
 }
@@ -197,8 +193,6 @@ bool AbstractThread::terminate()
       // The child thread ref()'s 'this' Thread class and our parent object,
       // but since the child thread is being terminated, the thread won't be
       // able to do the unref()'s, so we need to unref() here.
-      parent->unref();
-      this->unref();
    }
    return killed;
 }

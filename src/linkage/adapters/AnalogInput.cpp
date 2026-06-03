@@ -53,7 +53,6 @@ void AnalogInput::copyData(const AnalogInput& org, const bool)
          copy = org.table->clone();
       }
       setTable(copy);
-      if (copy != nullptr) copy->unref();
    }
 }
 
@@ -69,7 +68,6 @@ bool AnalogInput::setTable(const base::Table1* const msg)
 
     // Unref() the old (if any)
     if (table != nullptr) {
-        table->unref();
     }
 
     // set our pointer to the new
@@ -78,7 +76,6 @@ bool AnalogInput::setTable(const base::Table1* const msg)
     // Check and ref() the new table (if any)
     if (table != nullptr) {
         if (table->isValid()) {
-            table->ref();
         } else {
             if (isMessageEnabled(MSG_ERROR)) {
                 std::cerr << "AnalogInput::setTable(): invalid table!" << std::endl;
@@ -133,7 +130,7 @@ double AnalogInput::convert(const double vin)
 }
 
 // ai: Analog Input location
-bool AnalogInput::setSlotLocation(const base::Number* const msg)
+bool AnalogInput::setSlotLocation(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -146,7 +143,7 @@ bool AnalogInput::setSlotLocation(const base::Number* const msg)
 }
 
 // channel: AI card's channel number
-bool AnalogInput::setSlotChannel(const base::Number* const msg)
+bool AnalogInput::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -159,7 +156,7 @@ bool AnalogInput::setSlotChannel(const base::Number* const msg)
 }
 
 // deadband: Deadband: [ 0 .. 1 ] (default: 0.0)
-bool AnalogInput::setSlotDeadband(const base::Number* const msg)
+bool AnalogInput::setSlotDeadband(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -169,7 +166,7 @@ bool AnalogInput::setSlotDeadband(const base::Number* const msg)
 }
 
 // offset: Offset value
-bool AnalogInput::setSlotOffset(const base::Number* const msg)
+bool AnalogInput::setSlotOffset(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -179,7 +176,7 @@ bool AnalogInput::setSlotOffset(const base::Number* const msg)
 }
 
 // gain: Gain value
-bool AnalogInput::setSlotGain(const base::Number* const msg)
+bool AnalogInput::setSlotGain(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

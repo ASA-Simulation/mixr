@@ -190,7 +190,7 @@ bool GroundVehicle::setLauncherPosition(const double rad)
 //------------------------------------------------------------------------------
 
 // commandedPosition: Launcher's init commanded position [ "up" "down" ] (base::Identifier)
-bool GroundVehicle::setSlotCommandedPosition(const base::Identifier* const msg)
+bool GroundVehicle::setSlotCommandedPosition(std::shared_ptr<const base::Identifier> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -208,7 +208,7 @@ bool GroundVehicle::setSlotCommandedPosition(const base::Identifier* const msg)
 }
 
 // launcherDownAngle: Min (down) Launcher angle (base::Angle)
-bool GroundVehicle::setSlotLauncherDownAngle(const base::Angle* const msg)
+bool GroundVehicle::setSlotLauncherDownAngle(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -219,7 +219,7 @@ bool GroundVehicle::setSlotLauncherDownAngle(const base::Angle* const msg)
 }
 
 // launcherUpAngle: Max (up) Launcher angle (base::Angle)
-bool GroundVehicle::setSlotLauncherUpAngle(const base::Angle* const msg)
+bool GroundVehicle::setSlotLauncherUpAngle(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -230,7 +230,7 @@ bool GroundVehicle::setSlotLauncherUpAngle(const base::Angle* const msg)
 }
 
 // launcherMoveTime: Max time to move between 'down' and 'up' positions (base::Time)
-bool GroundVehicle::setSlotLauncherMoveTime(const base::Time* const msg)
+bool GroundVehicle::setSlotLauncherMoveTime(std::shared_ptr<const base::Time> msg)
 {
    bool ok{};
    if (msg != nullptr) {

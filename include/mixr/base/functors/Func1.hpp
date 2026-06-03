@@ -25,7 +25,7 @@ public:
 
 protected:
    // slot table helper methods
-   bool setSlotLfiTable(const Table* const) override;
+   bool setSlotLfiTable(std::shared_ptr<const Table>) override;
 };
 
 }

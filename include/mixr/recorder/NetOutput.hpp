@@ -39,8 +39,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotNetwork(base::NetHandler* const);
-   bool setSlotNoWait(base::Number* const);
+   bool setSlotNetwork(std::shared_ptr<base::NetHandler>);
+   bool setSlotNoWait(std::shared_ptr<base::Number>);
 };
 
 }

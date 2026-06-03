@@ -300,17 +300,17 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotPlayers(base::PairStream* const);
+   bool setSlotPlayers(std::shared_ptr<base::PairStream>);
 
-   bool setSlotSimulationTime(const base::Time* const);
-   bool setSlotDay(const base::Number* const);
-   bool setSlotMonth(const base::Number* const);
-   bool setSlotYear(const base::Number* const);
+   bool setSlotSimulationTime(std::shared_ptr<const base::Time>);
+   bool setSlotDay(std::shared_ptr<const base::Number>);
+   bool setSlotMonth(std::shared_ptr<const base::Number>);
+   bool setSlotYear(std::shared_ptr<const base::Number>);
 
-   bool setSlotFirstWeaponId(const base::Number* const);
+   bool setSlotFirstWeaponId(std::shared_ptr<const base::Number>);
 
-   bool setSlotNumTcThreads(const base::Number* const);
-   bool setSlotNumBgThreads(const base::Number* const);
+   bool setSlotNumTcThreads(std::shared_ptr<const base::Number>);
+   bool setSlotNumBgThreads(std::shared_ptr<const base::Number>);
 };
 
 }

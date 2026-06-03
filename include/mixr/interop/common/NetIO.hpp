@@ -459,21 +459,21 @@ private:  // Ntm related private
 
 private:
    // slot table helper methods
-   virtual bool setSlotFederateName(const base::String* const);      // Sets our federate name
-   virtual bool setSlotFederationName(const base::String* const);    // Sets our federation name
-   virtual bool setSlotMaxTimeDR(const base::Time* const);           // Sets the mac DR time(s)
-   virtual bool setSlotMaxPositionErr(const base::Distance* const);  // Sets the max positional error(s)
-   virtual bool setSlotMaxOrientationErr(const base::Angle* const);  // Sets the max orientation error(s)
-   virtual bool setSlotMaxEntityRange(const base::Distance* const);  // Sets the max entity range(s)
-   virtual bool setSlotMaxAge(const base::Time* const);              // Sets the max age(s)
+   virtual bool setSlotFederateName(std::shared_ptr<const base::String>);      // Sets our federate name
+   virtual bool setSlotFederationName(std::shared_ptr<const base::String>);    // Sets our federation name
+   virtual bool setSlotMaxTimeDR(std::shared_ptr<const base::Time>);           // Sets the mac DR time(s)
+   virtual bool setSlotMaxPositionErr(std::shared_ptr<const base::Distance>);  // Sets the max positional error(s)
+   virtual bool setSlotMaxOrientationErr(std::shared_ptr<const base::Angle>);  // Sets the max orientation error(s)
+   virtual bool setSlotMaxEntityRange(std::shared_ptr<const base::Distance>);  // Sets the max entity range(s)
+   virtual bool setSlotMaxAge(std::shared_ptr<const base::Time>);              // Sets the max age(s)
 
-   bool setSlotNetworkID(const base::Number* const);                 // Sets the network ID
-   bool setSlotEnableInput(const base::Number* const);               // Sets input enabled flag
-   bool setSlotEnableOutput(const base::Number* const);              // Sets output enabled flag
-   bool setSlotEnableRelay(const base::Number* const);               // Sets relay enabled flag
-   bool setSlotTimeline(const base::Identifier* const);              // Sets the source of the time ( UTC or EXEC )
-   bool setSlotInputEntityTypes(base::PairStream* const);            // Sets the table of input entity to player mapper objects
-   bool setSlotOutputEntityTypes(base::PairStream* const);           // Sets the table of output entity to player mapper objects
+   bool setSlotNetworkID(std::shared_ptr<const base::Number>);                 // Sets the network ID
+   bool setSlotEnableInput(std::shared_ptr<const base::Number>);               // Sets input enabled flag
+   bool setSlotEnableOutput(std::shared_ptr<const base::Number>);              // Sets output enabled flag
+   bool setSlotEnableRelay(std::shared_ptr<const base::Number>);               // Sets relay enabled flag
+   bool setSlotTimeline(std::shared_ptr<const base::Identifier>);              // Sets the source of the time ( UTC or EXEC )
+   bool setSlotInputEntityTypes(std::shared_ptr<base::PairStream>);            // Sets the table of input entity to player mapper objects
+   bool setSlotOutputEntityTypes(std::shared_ptr<base::PairStream>);           // Sets the table of output entity to player mapper objects
 };
 
 }

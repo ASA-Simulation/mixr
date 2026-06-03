@@ -111,7 +111,7 @@ double AnalogSignalGen::calc(const double dt)
 // Slot Functions
 //------------------------------------------------------------------------------
 
-bool AnalogSignalGen::setSlotChannel(const base::Number* const msg)
+bool AnalogSignalGen::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -124,7 +124,7 @@ bool AnalogSignalGen::setSlotChannel(const base::Number* const msg)
 }
 
 // signal: Signal type { SINE, COSINE, SQUARE, SAW }
-bool AnalogSignalGen::setSlotSignal(const base::String* const msg)
+bool AnalogSignalGen::setSlotSignal(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -148,7 +148,7 @@ bool AnalogSignalGen::setSlotSignal(const base::String* const msg)
 }
 
 // frequency: frequency
-bool AnalogSignalGen::setSlotFrequency(const base::Frequency* const msg)
+bool AnalogSignalGen::setSlotFrequency(std::shared_ptr<const base::Frequency> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -158,7 +158,7 @@ bool AnalogSignalGen::setSlotFrequency(const base::Frequency* const msg)
 }
 
 // phase: Phase shift
-bool AnalogSignalGen::setSlotPhase(const base::Angle* const msg)
+bool AnalogSignalGen::setSlotPhase(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {

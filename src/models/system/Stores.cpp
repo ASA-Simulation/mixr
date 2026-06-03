@@ -61,7 +61,6 @@ void Stores::reset()
    base::PairStream* stores{getStores()};
    if (stores != nullptr) {
       resetStores(stores);
-      stores->unref();
       stores = nullptr;
    }
 }
@@ -94,7 +93,6 @@ void Stores::updateTC(const double dt)
             if (p != nullptr) p->updateTC(dt);
             item = item->getNext();
          }
-         list->unref();
          list = nullptr;
       }
    }
@@ -119,7 +117,6 @@ void Stores::updateData(const double dt)
             if (p != nullptr) p->updateData(dt);
             item = item->getNext();
          }
-         list->unref();
          list = nullptr;
       }
    }
@@ -188,7 +185,6 @@ bool Stores::isWeaponAvailable(const unsigned int s) const
       // and it is if it is not not ;-)
       isAvail = !notAvail;
 
-      wpn->unref();
    }
    return isAvail;
 }
@@ -299,7 +295,6 @@ AbstractWeapon* Stores::prereleaseWeapon(const unsigned int s)
    AbstractWeapon* wpn{getWeapon(s)};
    if (wpn != nullptr) {
       flyout = prereleaseWeapon(wpn);
-      wpn->unref();
    }
 
    return flyout;
@@ -334,7 +329,6 @@ AbstractWeapon* Stores::releaseWeapon(const unsigned int s)
    AbstractWeapon* wpn{getWeapon(s)};
    if (wpn != nullptr) {
       flyout = releaseWeapon(wpn);
-      wpn->unref();
    }
 
    return flyout;
@@ -362,7 +356,6 @@ bool Stores::jettisonAll()
          p->event(JETTISON_EVENT);
          item = item->getNext();
       }
-      list->unref();
       list = nullptr;
    }
    return true;
@@ -469,7 +462,6 @@ bool Stores::onJettisonEvent(AbstractWeapon* const wpn)
             ok = wpn->event(JETTISON_EVENT);
          }
 
-         list->unref();
          list = nullptr;
       }
    }
@@ -499,7 +491,6 @@ bool Stores::onJettisonEvent(ExternalStore* const sys)
             ok = sys->event(JETTISON_EVENT);
          }
 
-         list->unref();
          list = nullptr;
       }
    }
@@ -511,7 +502,7 @@ bool Stores::onJettisonEvent(ExternalStore* const sys)
 //------------------------------------------------------------------------------
 
 // Number of station
-bool Stores::setSlotNumStations(base::Number* const msg)
+bool Stores::setSlotNumStations(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -527,7 +518,7 @@ bool Stores::setSlotNumStations(base::Number* const msg)
 }
 
 // Set the stores
-bool Stores::setSlotStores(const base::PairStream* const msg)
+bool Stores::setSlotStores(std::shared_ptr<const base::PairStream> msg)
 {
    // ---
    // Quick out if the number of stations hasn't been set.
@@ -610,7 +601,6 @@ bool Stores::setSlotStores(const base::PairStream* const msg)
 
                // Add to the new stores list
                newStores->put(cpair);
-               cpair->unref(); // the new list has it.
             }
             else {
                std::cerr << "Stores::setSlotStores(): invalid external stores type; use Weapon or Stores classes" << std::endl;
@@ -637,13 +627,12 @@ bool Stores::setSlotStores(const base::PairStream* const msg)
       numWpn = 0;
    }
 
-   newStores->unref();
 
    return ok;
 }
 
 // Set the selected station number
-bool Stores::setSlotSelected(base::Number* const msg)
+bool Stores::setSlotSelected(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

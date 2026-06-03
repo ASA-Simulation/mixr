@@ -120,7 +120,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotImaginary(const Number* const);
+   bool setSlotImaginary(std::shared_ptr<const Number>);
 };
 
 #include "mixr/base/numeric/Complex.inl"

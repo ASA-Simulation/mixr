@@ -301,7 +301,7 @@ void RacModel::updateRAC(const double dt)
 // slot methods
 //------------------------------------------------------------------------------
 
-bool RacModel::setSlotMinSpeed(const base::Number* const msg)
+bool RacModel::setSlotMinSpeed(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -311,7 +311,7 @@ bool RacModel::setSlotMinSpeed(const base::Number* const msg)
     return ok;
 }
 
-bool RacModel::setSlotSpeedMaxG(const base::Number* const msg)
+bool RacModel::setSlotSpeedMaxG(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -321,7 +321,7 @@ bool RacModel::setSlotSpeedMaxG(const base::Number* const msg)
     return ok;
 }
 
-bool RacModel::setSlotMaxG(const base::Number* const msg)
+bool RacModel::setSlotMaxG(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -331,7 +331,7 @@ bool RacModel::setSlotMaxG(const base::Number* const msg)
     return ok;
 }
 
-bool RacModel::setSlotMaxAccel(const base::Number* const msg)
+bool RacModel::setSlotMaxAccel(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -341,7 +341,7 @@ bool RacModel::setSlotMaxAccel(const base::Number* const msg)
     return ok;
 }
 
-bool RacModel::setSlotCmdAltitude(const base::Distance* const msg)
+bool RacModel::setSlotCmdAltitude(std::shared_ptr<const base::Distance> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -352,7 +352,7 @@ bool RacModel::setSlotCmdAltitude(const base::Distance* const msg)
     return ok;
 }
 
-bool RacModel::setSlotCmdHeading(const base::Angle* const msg)
+bool RacModel::setSlotCmdHeading(std::shared_ptr<const base::Angle> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -363,7 +363,7 @@ bool RacModel::setSlotCmdHeading(const base::Angle* const msg)
     return ok;
 }
 
-bool RacModel::setSlotCmdVelocity(const base::Number* const msg)
+bool RacModel::setSlotCmdVelocity(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

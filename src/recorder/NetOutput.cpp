@@ -128,14 +128,14 @@ void NetOutput::processRecordImp(const DataRecordHandle* const handle)
 //------------------------------------------------------------------------------
 
 // Network Handler
-bool NetOutput::setSlotNetwork(mixr::base::NetHandler* const msg)
+bool NetOutput::setSlotNetwork(std::shared_ptr<mixr::base::NetHandler> msg)
 {
    netHandler = msg;
    return true;
 }
 
 // No wait (unblocked) I/O flag
-bool NetOutput::setSlotNoWait(mixr::base::Number* const msg)
+bool NetOutput::setSlotNoWait(std::shared_ptr<mixr::base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

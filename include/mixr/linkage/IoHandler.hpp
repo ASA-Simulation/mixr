@@ -99,12 +99,12 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotIoData(base::AbstractIoData* const);
-   bool setSlotInputData(base::AbstractIoData* const);
-   bool setSlotOutputData(base::AbstractIoData* const);
-   bool setSlotDevices(base::PairStream* const);
-   bool setSlotRate(const base::Frequency* const);
-   bool setSlotPriority(const base::Number* const);
+   bool setSlotIoData(std::shared_ptr<base::AbstractIoData>);
+   bool setSlotInputData(std::shared_ptr<base::AbstractIoData>);
+   bool setSlotOutputData(std::shared_ptr<base::AbstractIoData>);
+   bool setSlotDevices(std::shared_ptr<base::PairStream>);
+   bool setSlotRate(std::shared_ptr<const base::Frequency>);
+   bool setSlotPriority(std::shared_ptr<const base::Number>);
 };
 
 }

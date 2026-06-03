@@ -66,7 +66,7 @@ void PrintSelected::copyData(const PrintSelected& org, const bool)
 
 // Slots
 
-bool PrintSelected::setSlotMsgToken(const base::Number* const msg)
+bool PrintSelected::setSlotMsgToken(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -76,7 +76,7 @@ bool PrintSelected::setSlotMsgToken(const base::Number* const msg)
    return ok;
 }
 
-bool PrintSelected::setSlotFieldName(const base::String* const msg)
+bool PrintSelected::setSlotFieldName(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -87,7 +87,7 @@ bool PrintSelected::setSlotFieldName(const base::String* const msg)
 
 }
 
-bool PrintSelected::setSlotCompareToStr(const base::String* const msg)
+bool PrintSelected::setSlotCompareToStr(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -97,7 +97,7 @@ bool PrintSelected::setSlotCompareToStr(const base::String* const msg)
    return ok;
 }
 
-bool PrintSelected::setSlotCompareToNum(const base::Number* const msg)
+bool PrintSelected::setSlotCompareToNum(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -107,7 +107,7 @@ bool PrintSelected::setSlotCompareToNum(const base::Number* const msg)
    return ok;
 }
 
-bool PrintSelected::setSlotCompareToDbl(const base::Number* const msg)
+bool PrintSelected::setSlotCompareToDbl(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -118,7 +118,7 @@ bool PrintSelected::setSlotCompareToDbl(const base::Number* const msg)
 }
 
 
-bool PrintSelected::setSlotCondition(const base::String* const msg)
+bool PrintSelected::setSlotCondition(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -142,7 +142,7 @@ bool PrintSelected::setSlotCondition(const base::String* const msg)
    return ok;
 }
 
-bool PrintSelected::setSlotTimeOnly(const base::Number* const msg)
+bool PrintSelected::setSlotTimeOnly(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

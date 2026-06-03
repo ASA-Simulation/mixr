@@ -38,7 +38,6 @@ void AbstractState::updateGlobalState()
             item = item->getNext();
          }
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 }
@@ -67,7 +66,6 @@ void AbstractState::updateState(const base::Component* const actor)
             item = item->getNext();
          }
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 }

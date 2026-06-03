@@ -41,20 +41,16 @@ IrAtmosphere::IrAtmosphere()
 
 void IrAtmosphere::deleteData()
 {
-    if (waveBandTable != nullptr)        { waveBandTable->unref();        waveBandTable = nullptr;        }
-    if (transmissivityTable1 != nullptr) { transmissivityTable1->unref(); transmissivityTable1 = nullptr; }
 }
 
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
 
-bool IrAtmosphere::setSlotWaveBands(const base::Table1* const tbl)
+bool IrAtmosphere::setSlotWaveBands(std::shared_ptr<const base::Table1> tbl)
 {
     bool ok{};
     if (tbl != nullptr) {
-        if (waveBandTable != nullptr) waveBandTable->unref();
-        tbl->ref();
         waveBandTable = tbl;
         numWaveBands = tbl->getNumXPoints();
         ok = true;
@@ -62,12 +58,10 @@ bool IrAtmosphere::setSlotWaveBands(const base::Table1* const tbl)
     return ok;
 }
 
-bool IrAtmosphere::setSlotTransmissivityTable1(const base::Table1* const tbl)
+bool IrAtmosphere::setSlotTransmissivityTable1(std::shared_ptr<const base::Table1> tbl)
 {
     bool ok{};
     if (tbl != nullptr) {
-        if (transmissivityTable1 != nullptr) transmissivityTable1->unref();
-        tbl->ref();
         transmissivityTable1 = tbl;
         ok = true;
     }
@@ -77,7 +71,7 @@ bool IrAtmosphere::setSlotTransmissivityTable1(const base::Table1* const tbl)
 //------------------------------------------------------------------------------
 // setSlotSkyRadiance() -- sky radiance
 //------------------------------------------------------------------------------
-bool IrAtmosphere::setSlotSkyRadiance(mixr::base::Number* const num)
+bool IrAtmosphere::setSlotSkyRadiance(std::shared_ptr<mixr::base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -90,7 +84,7 @@ bool IrAtmosphere::setSlotSkyRadiance(mixr::base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotEarthRadiance() -- set background radiance for ground
 //------------------------------------------------------------------------------
-bool IrAtmosphere::setSlotEarthRadiance(mixr::base::Number* const num)
+bool IrAtmosphere::setSlotEarthRadiance(std::shared_ptr<mixr::base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {

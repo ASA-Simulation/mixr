@@ -106,13 +106,7 @@ bool TargetData::setVelocity(const double fps)        { velocity = fps; return t
 
 bool TargetData::setWpnType(const base::String* const s)
 {
-   if (wpnType != nullptr)
-      wpnType->unref();
-
    wpnType = s;
-
-   if (wpnType != nullptr)
-      wpnType->ref();
    return true;
 }
 
@@ -120,7 +114,7 @@ bool TargetData::setWpnType(const base::String* const s)
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool TargetData::setSlotEnabled(const base::Number* const msg)
+bool TargetData::setSlotEnabled(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -130,7 +124,7 @@ bool TargetData::setSlotEnabled(const base::Number* const msg)
 }
 
 
-bool TargetData::setSlotCompleted(const base::Number* const msg)
+bool TargetData::setSlotCompleted(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -140,12 +134,12 @@ bool TargetData::setSlotCompleted(const base::Number* const msg)
 }
 
 
-bool TargetData::setSlotWpnType(const base::String* const msg)
+bool TargetData::setSlotWpnType(std::shared_ptr<const base::String> msg)
 {
    return setWpnType(msg);
 }
 
-bool TargetData::setSlotQuantity(const base::Number* const msg)
+bool TargetData::setSlotQuantity(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -157,7 +151,7 @@ bool TargetData::setSlotQuantity(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotManualAssign(const base::Number* const msg)
+bool TargetData::setSlotManualAssign(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -166,7 +160,7 @@ bool TargetData::setSlotManualAssign(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotStickType(const base::Identifier* const msg)
+bool TargetData::setSlotStickType(std::shared_ptr<const base::Identifier> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -182,7 +176,7 @@ bool TargetData::setSlotStickType(const base::Identifier* const msg)
    return ok;
 }
 
-bool TargetData::setSlotStickDistance(const base::Distance* const msg)
+bool TargetData::setSlotStickDistance(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -191,7 +185,7 @@ bool TargetData::setSlotStickDistance(const base::Distance* const msg)
    return ok;
 }
 
-bool TargetData::setSlotStickDistance(const base::Number* const msg)
+bool TargetData::setSlotStickDistance(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -200,7 +194,7 @@ bool TargetData::setSlotStickDistance(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotInterval(const base::Time* const msg)
+bool TargetData::setSlotInterval(std::shared_ptr<const base::Time> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -209,7 +203,7 @@ bool TargetData::setSlotInterval(const base::Time* const msg)
    return ok;
 }
 
-bool TargetData::setSlotInterval(const base::Number* const msg)
+bool TargetData::setSlotInterval(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -218,7 +212,7 @@ bool TargetData::setSlotInterval(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotMaxMissDistance(const base::Distance* const msg)
+bool TargetData::setSlotMaxMissDistance(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -227,7 +221,7 @@ bool TargetData::setSlotMaxMissDistance(const base::Distance* const msg)
    return ok;
 }
 
-bool TargetData::setSlotMaxMissDistance(const base::Number* const msg)
+bool TargetData::setSlotMaxMissDistance(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -236,7 +230,7 @@ bool TargetData::setSlotMaxMissDistance(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotArmDelay(const base::Time* const msg)
+bool TargetData::setSlotArmDelay(std::shared_ptr<const base::Time> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -245,7 +239,7 @@ bool TargetData::setSlotArmDelay(const base::Time* const msg)
    return ok;
 }
 
-bool TargetData::setSlotArmDelay(const base::Number* const msg)
+bool TargetData::setSlotArmDelay(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -254,7 +248,7 @@ bool TargetData::setSlotArmDelay(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotAngle(const base::Angle* const msg)
+bool TargetData::setSlotAngle(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -263,7 +257,7 @@ bool TargetData::setSlotAngle(const base::Angle* const msg)
    return ok;
 }
 
-bool TargetData::setSlotAngle(const base::Number* const msg)
+bool TargetData::setSlotAngle(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -272,7 +266,7 @@ bool TargetData::setSlotAngle(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotAzimuth(const base::Angle* const msg)
+bool TargetData::setSlotAzimuth(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -281,7 +275,7 @@ bool TargetData::setSlotAzimuth(const base::Angle* const msg)
    return ok;
 }
 
-bool TargetData::setSlotAzimuth(const base::Number* const msg)
+bool TargetData::setSlotAzimuth(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -290,7 +284,7 @@ bool TargetData::setSlotAzimuth(const base::Number* const msg)
    return ok;
 }
 
-bool TargetData::setSlotVelocity(const base::Number* const msg)
+bool TargetData::setSlotVelocity(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

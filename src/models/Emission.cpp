@@ -70,11 +70,9 @@ void Emission::setRange(const double r)
 void Emission::setTransmitter(RfSystem* const t)
 {
    //if (transmitter != nullptr) {
-   //   transmitter->unref();
    //}
    transmitter = t;
    //if (transmitter != nullptr) {
-   //   transmitter->ref();
    //}
 }
 

@@ -46,7 +46,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotName(const base::String* const x)           { return setName(x); }
+   bool setSlotName(std::shared_ptr<const base::String> x)           { return setName(x); }
 };
 
 }

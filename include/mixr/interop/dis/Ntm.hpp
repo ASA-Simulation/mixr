@@ -65,7 +65,7 @@ private:
 
 private:
    // slot table helper methods
-   virtual bool setSlotDisEntityType(const base::List* const);         // Sets DIS entity type enumerations
+   virtual bool setSlotDisEntityType(std::shared_ptr<const base::List>);         // Sets DIS entity type enumerations
 };
 
 }

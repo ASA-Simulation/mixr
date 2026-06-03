@@ -28,8 +28,8 @@ public:
 
 private:
    // slot table helper methods
-   bool setSlotLowerLimit(const base::Number* const);
-   bool setSlotUpperLimit(const base::Number* const);
+   bool setSlotLowerLimit(std::shared_ptr<const base::Number>);
+   bool setSlotUpperLimit(std::shared_ptr<const base::Number>);
 };
 
 }

@@ -62,7 +62,7 @@ void Ai2DiSwitch::processInputsImpl(const base::AbstractIoDevice* const device, 
 }
 
 // location: Input array index (location)
-bool Ai2DiSwitch::setSlotLocation(const base::Number* const msg)
+bool Ai2DiSwitch::setSlotLocation(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -75,7 +75,7 @@ bool Ai2DiSwitch::setSlotLocation(const base::Number* const msg)
 }
 
 // channel: Device's AI channel number
-bool Ai2DiSwitch::setSlotChannel(const base::Number* const msg)
+bool Ai2DiSwitch::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -88,7 +88,7 @@ bool Ai2DiSwitch::setSlotChannel(const base::Number* const msg)
 }
 
 // level: Level to switch DI (default: 0)
-bool Ai2DiSwitch::setSlotLevel(const base::Number* const msg)
+bool Ai2DiSwitch::setSlotLevel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -98,7 +98,7 @@ bool Ai2DiSwitch::setSlotLevel(const base::Number* const msg)
 }
 
 // invert: Inverted bit flag (default: false)
-bool Ai2DiSwitch::setSlotInverted(const base::Number* const msg)
+bool Ai2DiSwitch::setSlotInverted(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

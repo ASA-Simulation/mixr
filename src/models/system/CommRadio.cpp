@@ -79,7 +79,6 @@ bool CommRadio::transmitDataMessage(base::Object* const msg)
       em->setTransmitter(this);
       em->setReturnRequest(false);
       getAntenna()->rfTransmit(em);
-      em->unref();
       sent = true;
    }
    return sent;

@@ -54,18 +54,15 @@ void IoHandler::copyData(const IoHandler& org, const bool)
       // Common input/output buffer
       const auto copy = static_cast<base::AbstractIoData*>(org.inData->clone());
       setSlotIoData(copy);
-      copy->unref();
    } else {
       // Separate input/output buffers
       if (org.inData != nullptr) {
          const auto copy = static_cast<base::AbstractIoData*>(org.inData->clone());
          setSlotInputData(copy);
-         copy->unref();
       }
       if (org.outData != nullptr) {
          const auto copy = static_cast<base::AbstractIoData*>(org.outData->clone());
          setSlotOutputData(copy);
-         copy->unref();
       }
    }
 
@@ -75,7 +72,6 @@ void IoHandler::copyData(const IoHandler& org, const bool)
    if (org.devices != nullptr) {
       const auto copy = static_cast<base::PairStream*>(org.devices->clone());
       setSlotDevices(copy);
-      copy->unref();
    }
 
    rate = 50;
@@ -166,7 +162,6 @@ void IoHandler::startAsyncProcessingImpl()
 {
    if ( periodicThread == nullptr ) {
       periodicThread = new IoPeriodicThread(this, getRate());
-      periodicThread->unref(); // 'periodicTask' is a safe_ptr<>
 
       bool ok{periodicThread->start(getPriority())};
       if (!ok) {
@@ -178,26 +173,26 @@ void IoHandler::startAsyncProcessingImpl()
    }
 }
 
-bool IoHandler::setSlotIoData(base::AbstractIoData* const msg)
+bool IoHandler::setSlotIoData(std::shared_ptr<base::AbstractIoData> msg)
 {
    inData = msg;
    outData = msg;
    return true;
 }
 
-bool IoHandler::setSlotInputData(base::AbstractIoData* const msg)
+bool IoHandler::setSlotInputData(std::shared_ptr<base::AbstractIoData> msg)
 {
    inData = msg;
    return true;
 }
 
-bool IoHandler::setSlotOutputData(base::AbstractIoData* const msg)
+bool IoHandler::setSlotOutputData(std::shared_ptr<base::AbstractIoData> msg)
 {
    outData = msg;
    return true;
 }
 
-bool IoHandler::setSlotDevices(base::PairStream* const list)
+bool IoHandler::setSlotDevices(std::shared_ptr<base::PairStream> list)
 {
    bool ok{true};
 
@@ -224,7 +219,7 @@ bool IoHandler::setSlotDevices(base::PairStream* const list)
    return ok;
 }
 
-bool IoHandler::setSlotRate(const base::Frequency* const msg)
+bool IoHandler::setSlotRate(std::shared_ptr<const base::Frequency> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -239,7 +234,7 @@ bool IoHandler::setSlotRate(const base::Frequency* const msg)
     return ok;
 }
 
-bool IoHandler::setSlotPriority(const base::Number* const num)
+bool IoHandler::setSlotPriority(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {

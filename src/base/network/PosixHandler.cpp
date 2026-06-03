@@ -488,7 +488,7 @@ bool PosixHandler::setLocalAddr(const char* const hostname)
 //------------------------------------------------------------------------------
 
 // localIpAddress: String containing the local IP address
-bool PosixHandler::setSlotLocalIpAddress(const String* const msg)
+bool PosixHandler::setSlotLocalIpAddress(std::shared_ptr<const String> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -500,7 +500,7 @@ bool PosixHandler::setSlotLocalIpAddress(const String* const msg)
 }
 
 // port: Port number
-bool PosixHandler::setSlotPort(const Number* const msg)
+bool PosixHandler::setSlotPort(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -513,7 +513,7 @@ bool PosixHandler::setSlotPort(const Number* const msg)
 }
 
 // localPort: Local (source) port number
-bool PosixHandler::setSlotLocalPort(const Number* const msg)
+bool PosixHandler::setSlotLocalPort(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -526,7 +526,7 @@ bool PosixHandler::setSlotLocalPort(const Number* const msg)
 }
 
 // shared: Reuse the port
-bool PosixHandler::setSlotShared(const Number* const msg)
+bool PosixHandler::setSlotShared(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -537,7 +537,7 @@ bool PosixHandler::setSlotShared(const Number* const msg)
 }
 
 // sendBuffSizeKb: Send buffer size in KB's    (default:  32 Kb)
-bool PosixHandler::setSlotSendBuffSize(const Number* const msg)
+bool PosixHandler::setSlotSendBuffSize(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -551,7 +551,7 @@ bool PosixHandler::setSlotSendBuffSize(const Number* const msg)
 }
 
 // recvBuffSizeKb: Receive buffer size in KB's (default: 128 Kb)
-bool PosixHandler::setSlotRecvBuffSize(const Number* const msg)
+bool PosixHandler::setSlotRecvBuffSize(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -565,7 +565,7 @@ bool PosixHandler::setSlotRecvBuffSize(const Number* const msg)
 }
 
 // setSlotIgnoreSourcePort: Ignore message from our this source port number
-bool PosixHandler::setSlotIgnoreSourcePort(const Number* const msg)
+bool PosixHandler::setSlotIgnoreSourcePort(std::shared_ptr<const Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

@@ -129,7 +129,7 @@ void DtedFile::copyData(const DtedFile& org, const bool)
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool DtedFile::setSlotVerifyChecksum(const base::Number* const msg)
+bool DtedFile::setSlotVerifyChecksum(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

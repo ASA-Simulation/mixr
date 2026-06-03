@@ -27,10 +27,10 @@ namespace base {
 //     const Volume* Density::getVolume() const
 //
 // setSlotMass() -- sets our mass object.
-//     bool Density::setSlotMass(const Mass* newMass)
+//     bool Density::setSlotMass(std::shared_ptr<const Mass> newMass)
 //
 // setSlotVolume() -- sets our volume object.
-//     bool Density::setSlotVolume(const Volume* newVolume)
+//     bool Density::setSlotVolume(std::shared_ptr<const Volume> newVolume)
 //
 // set() -- sets our density from some other density
 //     void Density::set(const Density& n)
@@ -60,8 +60,8 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotMass(const Mass*);
-    bool setSlotVolume(const Volume*);
+    bool setSlotMass(std::shared_ptr<const Mass>);
+    bool setSlotVolume(std::shared_ptr<const Volume>);
 };
 
 inline std::ostream& operator<<(std::ostream& sout, const Density& n)

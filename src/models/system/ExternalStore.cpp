@@ -36,7 +36,6 @@ void ExternalStore::copyData(const ExternalStore& org, const bool)
       const base::String* p{};
       if (org.type != nullptr) p = org.type->clone();
       setSlotType( p );
-      if (p != nullptr) p->unref();
    }
 
    canJettison  = org.canJettison;
@@ -110,14 +109,14 @@ bool ExternalStore::setJettisonable(const bool f)
 //------------------------------------------------------------------------------
 
 // Set type string
-bool ExternalStore::setSlotType(const base::String* const msg)
+bool ExternalStore::setSlotType(std::shared_ptr<const base::String> msg)
 {
    type = msg;
    return true;
 }
 
 // jettisonable: weapon can be jettisoned
-bool ExternalStore::setSlotJettisonable(base::Number* const p)
+bool ExternalStore::setSlotJettisonable(std::shared_ptr<base::Number> p)
 {
    setJettisonable( p->getBoolean() );
    return true;

@@ -46,17 +46,14 @@ void IrAtmosphere1::copyData(const IrAtmosphere1& org, const bool)
 void IrAtmosphere1::deleteData()
 {
    if (solarRadiationTable != nullptr) {
-      solarRadiationTable->unref();
       solarRadiationTable = nullptr;
    }
 
    if (backgroundRadiationTable != nullptr) {
-      backgroundRadiationTable->unref();
       backgroundRadiationTable = nullptr;
    }
 
    if (transmissivityTable != nullptr) {
-      transmissivityTable->unref();
       transmissivityTable = nullptr;
    }
 }
@@ -65,36 +62,30 @@ void IrAtmosphere1::deleteData()
 // Slot functions
 //------------------------------------------------------------------------------
 
-bool IrAtmosphere1::setSlotSolarRadiationTable(const base::Table2* const tbl)
+bool IrAtmosphere1::setSlotSolarRadiationTable(std::shared_ptr<const base::Table2> tbl)
 {
    bool ok{};
    if (tbl != nullptr) {
-      if (solarRadiationTable != nullptr) solarRadiationTable->unref();
-      tbl->ref();
       solarRadiationTable = tbl;
       ok = true;
    }
    return ok;
 }
 
-bool IrAtmosphere1::setSlotBackgroundRadiationTable(const base::Table3* const tbl)
+bool IrAtmosphere1::setSlotBackgroundRadiationTable(std::shared_ptr<const base::Table3> tbl)
 {
    bool ok{};
    if (tbl != nullptr) {
-      if (backgroundRadiationTable != nullptr) backgroundRadiationTable->unref();
-      tbl->ref();
       backgroundRadiationTable = tbl;
       ok = true;
    }
    return ok;
 }
 
-bool IrAtmosphere1::setSlotTransmissivityTable(const base::Table4* const tbl)
+bool IrAtmosphere1::setSlotTransmissivityTable(std::shared_ptr<const base::Table4> tbl)
 {
    bool ok{};
    if (tbl != nullptr) {
-      if (transmissivityTable != nullptr) transmissivityTable->unref();
-      tbl->ref();
       transmissivityTable = tbl;
       ok = true;
    }

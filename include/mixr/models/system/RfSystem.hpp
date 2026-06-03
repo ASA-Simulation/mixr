@@ -170,18 +170,18 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotAntennaName(base::String* const);
-   bool setSlotPeakPower(base::Number* const);
-   bool setSlotFrequency(base::Number* const);
-   bool setSlotBandwidth(base::Number* const);
-   bool setSlotBandwidthNoise(base::Number* const);
-   bool setSlotRfThreshold(base::Decibel* const);
-   bool setSlotRfNoiseFigure(base::Number* const);
-   bool setSlotRfSysTemp(base::Number* const);
-   bool setSlotRfTransmitLoss(base::Number* const);
-   bool setSlotRfReceiveLoss(base::Number* const);
-   bool setSlotRfSignalProcessLoss(base::Number* const);
-   bool setSlotDisableEmissions(base::Number* const);
+   bool setSlotAntennaName(std::shared_ptr<base::String>);
+   bool setSlotPeakPower(std::shared_ptr<base::Number>);
+   bool setSlotFrequency(std::shared_ptr<base::Number>);
+   bool setSlotBandwidth(std::shared_ptr<base::Number>);
+   bool setSlotBandwidthNoise(std::shared_ptr<base::Number>);
+   bool setSlotRfThreshold(std::shared_ptr<base::Decibel>);
+   bool setSlotRfNoiseFigure(std::shared_ptr<base::Number>);
+   bool setSlotRfSysTemp(std::shared_ptr<base::Number>);
+   bool setSlotRfTransmitLoss(std::shared_ptr<base::Number>);
+   bool setSlotRfReceiveLoss(std::shared_ptr<base::Number>);
+   bool setSlotRfSignalProcessLoss(std::shared_ptr<base::Number>);
+   bool setSlotDisableEmissions(std::shared_ptr<base::Number>);
 };
 
 }

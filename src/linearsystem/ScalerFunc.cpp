@@ -146,7 +146,7 @@ bool ScalerFunc::setRate(const unsigned int v)
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool ScalerFunc::setSlotRate(const base::Frequency* const msg)
+bool ScalerFunc::setSlotRate(std::shared_ptr<const base::Frequency> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -159,7 +159,7 @@ bool ScalerFunc::setSlotRate(const base::Frequency* const msg)
    return ok;
 }
 
-bool ScalerFunc::setSlotRate(const base::Number* const msg)
+bool ScalerFunc::setSlotRate(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -172,7 +172,7 @@ bool ScalerFunc::setSlotRate(const base::Number* const msg)
    return ok;
 }
 
-bool ScalerFunc::setSlotX0(const base::Number* const msg)
+bool ScalerFunc::setSlotX0(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -182,7 +182,7 @@ bool ScalerFunc::setSlotX0(const base::Number* const msg)
    return ok;
 }
 
-bool ScalerFunc::setSlotY0(const base::Number* const msg)
+bool ScalerFunc::setSlotY0(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

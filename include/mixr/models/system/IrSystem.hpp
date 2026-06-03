@@ -69,8 +69,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSeekerName(base::String* const);
-   bool setSlotDisableQueries(base::Number* const);
+   bool setSlotSeekerName(std::shared_ptr<base::String>);
+   bool setSlotDisableQueries(std::shared_ptr<base::Number>);
 };
 
 }

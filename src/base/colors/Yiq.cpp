@@ -71,7 +71,7 @@ void Yiq::getYIQ(Vec3d& hhh) const
 //------------------------------------------------------------------------------
 // setSlotY() -- set the Y value
 //------------------------------------------------------------------------------
-bool Yiq::setSlotY(const Number* const msg)
+bool Yiq::setSlotY(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value {msg->getReal()};
@@ -88,7 +88,7 @@ bool Yiq::setSlotY(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotI() -- set the I value
 //------------------------------------------------------------------------------
-bool Yiq::setSlotI(const Number* const msg)
+bool Yiq::setSlotI(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value {msg->getReal()};
@@ -105,7 +105,7 @@ bool Yiq::setSlotI(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotQ() -- set the Q value
 //------------------------------------------------------------------------------
-bool Yiq::setSlotQ(const Number* const msg)
+bool Yiq::setSlotQ(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value {msg->getReal()};

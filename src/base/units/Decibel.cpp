@@ -52,7 +52,7 @@ void Decibel::setValue(const double v)
    db = std::log10(v) * 10.0;
 }
 
-bool Decibel::setSlotValue(const Number* const msg)
+bool Decibel::setSlotValue(std::shared_ptr<const Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

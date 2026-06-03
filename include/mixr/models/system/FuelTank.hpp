@@ -44,8 +44,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotFuelWt(const base::Number* const);
-   bool setSlotCapacity(const base::Number* const);
+   bool setSlotFuelWt(std::shared_ptr<const base::Number>);
+   bool setSlotCapacity(std::shared_ptr<const base::Number>);
 };
 
 }

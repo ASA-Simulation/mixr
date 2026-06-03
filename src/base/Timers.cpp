@@ -155,7 +155,7 @@ void Timer::removeFromTimerList(Timer* timer)
 // -----------------------------------------------------------------
 
 // Sets the timer value
-bool Timer::setSlotTimerValue(const Time* const msg)
+bool Timer::setSlotTimerValue(std::shared_ptr<const Time> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -167,7 +167,7 @@ bool Timer::setSlotTimerValue(const Time* const msg)
 }
 
 // Sets the alarm value
-bool Timer::setSlotAlarmTime(const Time* const msg)
+bool Timer::setSlotAlarmTime(std::shared_ptr<const Time> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -177,7 +177,7 @@ bool Timer::setSlotAlarmTime(const Time* const msg)
 }
 
 // Sets the timer active (running) flag
-bool Timer::setSlotTimerActive(const Number* const msg)
+bool Timer::setSlotTimerActive(std::shared_ptr<const Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

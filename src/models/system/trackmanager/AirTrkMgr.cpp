@@ -170,12 +170,10 @@ void AirTrkMgr::processTrackList(const double dt)
       }
       else {
          // Free up emissions from other types of players
-         em->unref();
       }
    }
       else {
          // ignore -- too many reports
-      em->unref();
    }
    }
 
@@ -312,7 +310,6 @@ void AirTrkMgr::processTrackList(const double dt)
 
          // Track has timed out -- delete the track and ...
          trk->setType(0);
-         trk->unref();
          nTrks--;
          // move all other tracks down in the list.
          for (unsigned int it2 = it; it2 < nTrks; it2++) {
@@ -353,7 +350,6 @@ void AirTrkMgr::processTrackList(const double dt)
          tracks[nTrks++] = newTrk;
       }
       // Free the emission report
-      emissions[i]->unref();
    }
    base::unlock(trkListLock);
 }
@@ -361,7 +357,7 @@ void AirTrkMgr::processTrackList(const double dt)
 //------------------------------------------------------------------------------
 // setPositionGate() -- Sets the size of the position gate
 //------------------------------------------------------------------------------
-bool AirTrkMgr::setSlotPositionGate(const base::Number* const num)
+bool AirTrkMgr::setSlotPositionGate(std::shared_ptr<const base::Number> num)
 {
    double value{};
    const auto p = dynamic_cast<const base::Distance*>(num);
@@ -390,7 +386,7 @@ bool AirTrkMgr::setSlotPositionGate(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setRangeGate() -- Sets the size of the range gate
 //------------------------------------------------------------------------------
-bool AirTrkMgr::setSlotRangeGate(const base::Number* const num)
+bool AirTrkMgr::setSlotRangeGate(std::shared_ptr<const base::Number> num)
 {
    double value{};
    const auto p = dynamic_cast<const base::Distance*>(num);
@@ -419,7 +415,7 @@ bool AirTrkMgr::setSlotRangeGate(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setVelocityGate() -- Sets the size of the velocity gate
 //------------------------------------------------------------------------------
-bool AirTrkMgr::setSlotVelocityGate(const base::Number* const num)
+bool AirTrkMgr::setSlotVelocityGate(std::shared_ptr<const base::Number> num)
 {
    double value{};
    if (num != nullptr) {

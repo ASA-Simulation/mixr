@@ -140,7 +140,7 @@ bool StabilizingGimbal::setMountPosition(const MountPosition m)
 //------------------------------------------------------------------------------
 // setSlotStabilizingMode() -- calls setStabalizingMode()
 //------------------------------------------------------------------------------
-bool StabilizingGimbal::setSlotStabilizingMode(base::String* const msg)
+bool StabilizingGimbal::setSlotStabilizingMode(std::shared_ptr<base::String> msg)
 {
     // set our scan mode
     bool ok{true};
@@ -157,7 +157,7 @@ bool StabilizingGimbal::setSlotStabilizingMode(base::String* const msg)
 // setSlotMountPosition() -- calls setMountPosition()
 //------------------------------------------------------------------------------
 /*
-bool StabilizingGimbal::setSlotMountPosition(base::String* const msg)
+bool StabilizingGimbal::setSlotMountPosition(std::shared_ptr<base::String> msg)
 {
     // set our scan mode
     bool ok = true;

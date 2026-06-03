@@ -85,7 +85,7 @@ void Cie::getCIE(Vec3d& hhh) const
 //------------------------------------------------------------------------------
 // setSlotLuminance() -- set the luminance value
 //------------------------------------------------------------------------------
-bool Cie::setSlotLuminance(const Number* const msg)
+bool Cie::setSlotLuminance(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value = msg->getReal();
@@ -102,7 +102,7 @@ bool Cie::setSlotLuminance(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotX() -- set the X value
 //------------------------------------------------------------------------------
-bool Cie::setSlotX(const Number* const msg)
+bool Cie::setSlotX(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value = msg->getReal();
@@ -119,7 +119,7 @@ bool Cie::setSlotX(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotY() -- set the X value
 //------------------------------------------------------------------------------
-bool Cie::setSlotY(const Number* const msg)
+bool Cie::setSlotY(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value = msg->getReal();
@@ -136,7 +136,7 @@ bool Cie::setSlotY(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotMonitor() -- set the monitor parameters
 //------------------------------------------------------------------------------
-bool Cie::setSlotMonitor(const MonitorMetrics* const msg)
+bool Cie::setSlotMonitor(std::shared_ptr<const MonitorMetrics> msg)
 {
     if (msg == nullptr) return false;
     monitor = msg;

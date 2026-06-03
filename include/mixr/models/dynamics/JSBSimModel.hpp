@@ -99,9 +99,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotRootDir(const base::String* const);
-   bool setSlotModel(const base::String* const);
-   bool setSlotDebugLevel(const base::Integer* const);
+   bool setSlotRootDir(std::shared_ptr<const base::String>);
+   bool setSlotModel(std::shared_ptr<const base::String>);
+   bool setSlotDebugLevel(std::shared_ptr<const base::Integer>);
 };
 
 }

@@ -177,7 +177,7 @@ bool UdpUnicastHandler::sendDataTo(
 //------------------------------------------------------------------------------
 
 // ipAddress: String containing the IP address
-bool UdpUnicastHandler::setSlotIpAddress(const String* const msg)
+bool UdpUnicastHandler::setSlotIpAddress(std::shared_ptr<const String> msg)
 {
     bool ok{};
     if (msg != nullptr) {

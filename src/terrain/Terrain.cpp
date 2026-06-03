@@ -120,18 +120,14 @@ const char* Terrain::getPathname() const
 // Sets the name of the datafile
 bool Terrain::setFilename(const base::String* const msg)
 {
-   if (file != nullptr) file->unref();
    file = msg;
-   if (file != nullptr) file->ref();
    return true;
 }
 
 // Sets the path to the datafiles
 bool Terrain::setPathname(const base::String* const msg)
 {
-   if (path != nullptr) path->unref();
    path = msg;
-   if (path != nullptr) path->ref();
    return true;
 }
 

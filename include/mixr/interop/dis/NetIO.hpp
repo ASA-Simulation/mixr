@@ -377,26 +377,26 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotFederateName(const base::String* const) final;         // Sets our federate name
-   bool setSlotFederationName(const base::String* const) final;       // Sets our federation name
-   bool setSlotMaxTimeDR(const base::Time* const) final;              // Sets the max DR time(s) for all entity types
-   bool setSlotMaxPositionErr(const base::Distance* const) final;     // Sets the max positional error(s) for all entity types
-   bool setSlotMaxOrientationErr(const base::Angle* const) final;     // Sets the max orientation error(s) for all entity types
-   bool setSlotMaxEntityRange(const base::Distance* const) final;     // Sets the max entity range(s) for all entity types
-   bool setSlotMaxAge(const base::Time* const) final;                 // Sets the max age(s) for all entity types
+   bool setSlotFederateName(std::shared_ptr<const base::String>) final;         // Sets our federate name
+   bool setSlotFederationName(std::shared_ptr<const base::String>) final;       // Sets our federation name
+   bool setSlotMaxTimeDR(std::shared_ptr<const base::Time>) final;              // Sets the max DR time(s) for all entity types
+   bool setSlotMaxPositionErr(std::shared_ptr<const base::Distance>) final;     // Sets the max positional error(s) for all entity types
+   bool setSlotMaxOrientationErr(std::shared_ptr<const base::Angle>) final;     // Sets the max orientation error(s) for all entity types
+   bool setSlotMaxEntityRange(std::shared_ptr<const base::Distance>) final;     // Sets the max entity range(s) for all entity types
+   bool setSlotMaxAge(std::shared_ptr<const base::Time>) final;                 // Sets the max age(s) for all entity types
 
-   bool setSlotNetInput(base::NetHandler* const);                     // Network input handler
-   bool setSlotNetOutput(base::NetHandler* const);                    // Network output handler
-   bool setSlotVersion(const base::Number* const);                    // DIS version
-   bool setSlotMaxTimeDR(const base::PairStream* const);              // Sets the max DR time(s) for selected entity types
-   bool setSlotMaxPositionErr(const base::PairStream* const);         // Sets the max positional error(s) for selected entity types
-   bool setSlotMaxOrientationErr(const base::PairStream* const);      // Sets the max orientation error(s) for selected entity types
-   bool setSlotMaxAge(const base::PairStream* const);                 // Sets the max age(s) for selected entity types
-   bool setSlotMaxEntityRange(const base::PairStream* const);         // Sets the max entity range(s) for selected entity types
-   bool setSlotEmissionPduHandlers(base::PairStream* const);          // Sets the list of Electromagnetic Emission PDU handlers
-   bool setSlotSiteID(const base::Number* const);                     // Sets Site ID
-   bool setSlotApplicationID(const base::Number* const);              // Sets Application ID
-   bool setSlotExerciseID(const base::Number* const);                 // Sets Exercise ID
+   bool setSlotNetInput(std::shared_ptr<base::NetHandler>);                     // Network input handler
+   bool setSlotNetOutput(std::shared_ptr<base::NetHandler>);                    // Network output handler
+   bool setSlotVersion(std::shared_ptr<const base::Number>);                    // DIS version
+   bool setSlotMaxTimeDR(std::shared_ptr<const base::PairStream>);              // Sets the max DR time(s) for selected entity types
+   bool setSlotMaxPositionErr(std::shared_ptr<const base::PairStream>);         // Sets the max positional error(s) for selected entity types
+   bool setSlotMaxOrientationErr(std::shared_ptr<const base::PairStream>);      // Sets the max orientation error(s) for selected entity types
+   bool setSlotMaxAge(std::shared_ptr<const base::PairStream>);                 // Sets the max age(s) for selected entity types
+   bool setSlotMaxEntityRange(std::shared_ptr<const base::PairStream>);         // Sets the max entity range(s) for selected entity types
+   bool setSlotEmissionPduHandlers(std::shared_ptr<base::PairStream>);          // Sets the list of Electromagnetic Emission PDU handlers
+   bool setSlotSiteID(std::shared_ptr<const base::Number>);                     // Sets Site ID
+   bool setSlotApplicationID(std::shared_ptr<const base::Number>);              // Sets Application ID
+   bool setSlotExerciseID(std::shared_ptr<const base::Number>);                 // Sets Exercise ID
 };
 
 }

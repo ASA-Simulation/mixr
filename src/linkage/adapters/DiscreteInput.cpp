@@ -62,7 +62,7 @@ void DiscreteInput::processInputsImpl(const base::AbstractIoDevice* const device
 }
 
 // location: Input array index (location)
-bool DiscreteInput::setSlotLocation(const base::Number* const msg)
+bool DiscreteInput::setSlotLocation(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -75,7 +75,7 @@ bool DiscreteInput::setSlotLocation(const base::Number* const msg)
 }
 
 // port: DiHandler's port number
-bool DiscreteInput::setSlotPort(const base::Number* const msg)
+bool DiscreteInput::setSlotPort(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -88,7 +88,7 @@ bool DiscreteInput::setSlotPort(const base::Number* const msg)
 }
 
 // channel: DiHandler's channel (bit) number on the port
-bool DiscreteInput::setSlotChannel(const base::Number* const msg)
+bool DiscreteInput::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -101,7 +101,7 @@ bool DiscreteInput::setSlotChannel(const base::Number* const msg)
 }
 
 // invert: Inverted bit flag (default: false)
-bool DiscreteInput::setSlotInverted(const base::Number* const msg)
+bool DiscreteInput::setSlotInverted(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

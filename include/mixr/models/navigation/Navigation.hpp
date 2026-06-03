@@ -241,10 +241,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotRoute(const Route* const);        // and the initial route used by reset()
-   bool setSlotUtc(const base::Time* const);
-   bool setSlotFeba(const base::PairStream* const);
-   bool setSlotBullseye(Bullseye* const);
+   bool setSlotRoute(std::shared_ptr<const Route>);        // and the initial route used by reset()
+   bool setSlotUtc(std::shared_ptr<const base::Time>);
+   bool setSlotFeba(std::shared_ptr<const base::PairStream>);
+   bool setSlotBullseye(std::shared_ptr<Bullseye>);
 };
 
 }

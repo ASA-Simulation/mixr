@@ -38,7 +38,6 @@ void Function::copyData(const Function& org, const bool cc)
          copy = static_cast<const Table*>(org.table->clone());
       }
       setSlotLfiTable(copy);
-      if (copy != nullptr) copy->unref();
    }
 }
 
@@ -62,7 +61,7 @@ FStorage* Function::storageFactory() const
    }
 }
 
-bool Function::setSlotLfiTable(const Table* const msg)
+bool Function::setSlotLfiTable(std::shared_ptr<const Table> msg)
 {
    table = msg;
    return true;

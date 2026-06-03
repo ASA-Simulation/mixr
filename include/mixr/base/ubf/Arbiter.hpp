@@ -50,7 +50,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotBehaviors(base::PairStream* const);
+   bool setSlotBehaviors(std::shared_ptr<base::PairStream>);
 };
 
 inline base::List* Arbiter::getBehaviors()                 { return behaviors; }

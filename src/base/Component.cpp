@@ -42,7 +42,7 @@ BEGIN_SLOT_MAP(Component)
     ON_SLOT( 7, setSlotDisableMsgType,    Number)
 END_SLOT_MAP()
 
-bool Component::event(const int _event, ::mixr::base::Object* const _obj)
+bool Component::event(const int _event, std::shared_ptr<Object> _obj)
 {
     bool _used {};
 
@@ -76,18 +76,15 @@ void Component::copyData(const Component& org, const bool)
    selected = nullptr;
 
    // Copy child components
-   const PairStream* oc {org.components.getRefPtr()};
+   std::shared_ptr<const mixr::base::PairStream> oc {org.components};
    if (oc != nullptr) {
       const auto tmp = static_cast<PairStream*>(oc->clone());
-      oc->unref();
       processComponents(tmp, typeid(Component));
-      tmp->unref();
    } else {
       components = nullptr;
    }
 
    // Timing statistics
-   if (timingStats != nullptr) timingStats->unref();
    timingStats = nullptr;
    if (org.timingStats != nullptr) {
       timingStats = static_cast<Statistic*>(org.timingStats->clone());
@@ -113,7 +110,6 @@ void Component::deleteData()
     components = nullptr;
 
     if (timingStats != nullptr) {
-       timingStats->unref();
        timingStats = nullptr;
     }
 }
@@ -173,7 +169,6 @@ void Component::reset()
                 item = item->getNext();
             }
         }
-        subcomponents->unref();
         subcomponents = nullptr;
     }
 }
@@ -258,7 +253,6 @@ void Component::updateTC(const double dt)
                 item = item->getNext();
             }
         }
-        subcomponents->unref();
         subcomponents = nullptr;
     }
 }
@@ -284,7 +278,6 @@ void Component::updateData(const double dt)
                 item = item->getNext();
             }
         }
-        subcomponents->unref();
         subcomponents = nullptr;
     }
 }
@@ -295,12 +288,12 @@ void Component::updateData(const double dt)
 //------------------------------------------------------------------------------
 PairStream* Component::getComponents()
 {
-   return components.getRefPtr();
+   return components.get();
 }
 
 const PairStream* Component::getComponents() const
 {
-   return components.getRefPtr();
+   return components.get();
 }
 
 //------------------------------------------------------------------------------
@@ -309,10 +302,9 @@ const PairStream* Component::getComponents() const
 unsigned int Component::getNumberOfComponents() const
 {
    unsigned int n {};
-   const PairStream* subcomponents {components.getRefPtr()};
+   std::shared_ptr<const PairStream> subcomponents {components};
    if (subcomponents != nullptr) {
       n = subcomponents->entries();
-      subcomponents->unref();
       subcomponents = nullptr;
    }
    return n;
@@ -342,7 +334,6 @@ bool Component::shutdownNotification()
          p->event(SHUTDOWN_EVENT);
          item = item->getNext();
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 
@@ -441,7 +432,6 @@ const Pair* Component::findByName(const char* const slotname) const
             }
         }
 
-        subcomponents->unref();
         subcomponents = nullptr;
     }
     return q;
@@ -464,7 +454,6 @@ const Pair* Component::findByIndex(const int slotindex) const
    const PairStream* subcomponents {getComponents()};
    if (subcomponents != nullptr) {
       p = subcomponents->getPosition(slotindex);
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 
@@ -478,7 +467,6 @@ Pair* Component::findByIndex(const int slotindex)
    PairStream* subcomponents {getComponents()};
    if (subcomponents != nullptr) {
       p = subcomponents->getPosition(slotindex);
-      subcomponents->unref();
       subcomponents = nullptr;
    }
 
@@ -502,7 +490,6 @@ const Pair* Component::findByType(const std::type_info& type) const
             q = obj->findByType(type);
             item = item->getNext();
         }
-        subcomponents->unref();
         subcomponents = nullptr;
     }
     return q;
@@ -548,12 +535,10 @@ const Identifier* Component::findNameOfComponent(const Component* const p) const
                     *fullname += ".";
                     *fullname += name0->getString();
                     name = fullname;
-                    name0->unref();
                 }
                 item = item->getNext();
             }
         }
-        subcomponents->unref();
         subcomponents = nullptr;
     }
     return name;
@@ -566,7 +551,6 @@ bool Component::addComponent(Pair* const p)
 {
    PairStream* subcomponents {getComponents()};
    processComponents(subcomponents, typeid(Component), p);
-   if (subcomponents != nullptr) subcomponents->unref();
    return true;
 }
 
@@ -587,7 +571,7 @@ void Component::processComponents(
       Component* const remove
    )
 {
-   PairStream* oldList {components.getRefPtr()};
+   std::shared_ptr<PairStream> oldList {components};
 
    // ---
    // Our dynamic_cast (see below) already filters on the Component class
@@ -600,7 +584,7 @@ void Component::processComponents(
    // ---
    // Create a new list, copy (filter) the component pairs and set their container pointers
    // ---
-   const auto newList = new PairStream();
+   const auto newList = std::make_shared<PairStream>();
    if (list != nullptr) {
 
       // Add the (filtered) components to the new list and set their container
@@ -634,25 +618,23 @@ void Component::processComponents(
    // Swap lists
    // ---
    components = newList;
-   newList->unref();
 
    // ---
    // Anything selected?
    // ---
    if (selection != nullptr) {
       if (selection->isClassType(typeid(String))) {
-            const auto str = new String(*(static_cast<String*>(selection)));
+            std::shared_ptr<String> str = std::make_shared<String>();
+            str->setStr((static_cast<String*>(selection))->getString());
             select(str);
-            str->unref();
       } else {
-            const auto num = new Integer((static_cast<Number*>(selection))->getInt());
+            std::shared_ptr<Number> num = std::make_shared<Number>();
+            num->setValue((static_cast<Number*>(selection))->getInt());
             select(num);
-            num->unref();
       }
    }
 
    if (oldList != nullptr) {
-      oldList->unref();
    }
 }
 
@@ -661,7 +643,6 @@ void Component::processComponents(
 //------------------------------------------------------------------------------
 bool Component::setSelectionName(const Object* const s)
 {
-   if (selection != nullptr) selection->unref();
    selection = nullptr;
    if (s != nullptr) {
       selection = s->clone();
@@ -672,13 +653,13 @@ bool Component::setSelectionName(const Object* const s)
 //------------------------------------------------------------------------------
 // select() -- select one of our components, using String or Number
 //------------------------------------------------------------------------------
-bool Component::select(const String* const name)
+bool Component::select(const std::shared_ptr<const String>& name)
 {
     bool ok {true};
     selected = nullptr;
     setSelectionName(nullptr);
     if (name != nullptr) {
-        setSelectionName(name);
+        setSelectionName(name.get());
         Pair* p {findByName(*name)};
         if (p != nullptr) {
            selected = static_cast<Component*>(p->object());
@@ -690,13 +671,13 @@ bool Component::select(const String* const name)
     return ok;
 }
 
-bool Component::select(const Number* const num)
+bool Component::select(const std::shared_ptr<const Number>& num)
 {
     bool ok {true};
     selected = nullptr;
     setSelectionName(nullptr);
     if (num != nullptr) {
-        setSelectionName(num);
+        setSelectionName(num.get());
         Pair* p {findByIndex(num->getInt())};
         if (p != nullptr) {
            selected = static_cast<Component*>(p->object());
@@ -725,7 +706,6 @@ bool Component::setTimingStatsEnabled(const bool b)
       // Disable the timing statistics
       if (timingStats != nullptr) {
          // We disable it by getting rid of it.
-         timingStats->unref();
          timingStats = nullptr;
       }
    }
@@ -746,7 +726,7 @@ bool Component::setPrintTimingStats(const bool b)
 //------------------------------------------------------------------------------
 
 // setSlotEnableTimingStats() -- slot to enable/disable the timing statistics
-bool Component::setSlotEnableTimingStats(const Number* const num)
+bool Component::setSlotEnableTimingStats(std::shared_ptr<const Number> num)
 {
    bool ok {};
    if (num != nullptr) {
@@ -756,7 +736,7 @@ bool Component::setSlotEnableTimingStats(const Number* const num)
 }
 
 // setSlotPrintTimingStats() -- slot to enable/disable printing the timing statistics
-bool Component::setSlotPrintTimingStats(const Number* const num)
+bool Component::setSlotPrintTimingStats(std::shared_ptr<const Number> num)
 {
    bool ok {};
    if (num != nullptr) {
@@ -766,7 +746,7 @@ bool Component::setSlotPrintTimingStats(const Number* const num)
 }
 
 // setSlotFreeze() -- slot to set/clear the freeze flag
-bool Component::setSlotFreeze(const Number* const num)
+bool Component::setSlotFreeze(std::shared_ptr<const Number> num)
 {
    bool ok {};
    if (num != nullptr) {
@@ -777,35 +757,33 @@ bool Component::setSlotFreeze(const Number* const num)
 }
 
 // setSlotComponent() -- Sets a pairstream
-bool Component::setSlotComponent(PairStream* const multiple)
+bool Component::setSlotComponent(std::shared_ptr<PairStream> multiple)
 {
    // Process the new components list and swap
-   processComponents(multiple, typeid(Component));
+   processComponents(multiple.get(), typeid(Component));
    return true;
 }
 
 // setSlotComponent() -- Sets a single component
-bool Component::setSlotComponent(Component* const single)
+bool Component::setSlotComponent(std::shared_ptr<Component> single)
 {
    // When a only one component ... make it a PairStream
    const auto pairStream = new PairStream();
    const auto pair = new Pair("1", single);
    pairStream->put( pair );
-   pair->unref();
 
    // Process the new components list and swap
    processComponents(pairStream, typeid(Component));
-   pairStream->unref();
 
    return true;
 }
 
 // enableMessageType --- Enable message type { WARNING INFO DEBUG DATA USER }
-bool Component::setSlotEnableMsgType(const Identifier* const msg)
+bool Component::setSlotEnableMsgType(std::shared_ptr<const Identifier> msg)
 {
    bool ok {};
    if (msg != nullptr) {
-      const Identifier* p {msg};
+      const Identifier* p {msg.get()};
       if (*p == "WARNING")    ok = enableMessageTypes(MSG_WARNING);
       else if (*p == "INFO")  ok = enableMessageTypes(MSG_INFO);
       else if (*p == "DEBUG") ok = enableMessageTypes(MSG_DEBUG);
@@ -822,7 +800,7 @@ bool Component::setSlotEnableMsgType(const Identifier* const msg)
 }
 
 // enableMessageType --- Enable message type by number (e.g., 0x0100)
-bool Component::setSlotEnableMsgType(const Number* const msg)
+bool Component::setSlotEnableMsgType(std::shared_ptr<const Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -832,11 +810,11 @@ bool Component::setSlotEnableMsgType(const Number* const msg)
 }
 
 // disableMessageType --- Disable message type { WARNING INFO DEBUG DATA USER }
-bool Component::setSlotDisableMsgType(const Identifier* const msg)
+bool Component::setSlotDisableMsgType(std::shared_ptr<const Identifier> msg)
 {
    bool ok {};
    if (msg != nullptr) {
-      const Identifier* p {msg};
+      const Identifier* p {msg.get()};
       if (*p == "WARNING")    ok = disableMessageTypes(MSG_WARNING);
       else if (*p == "INFO")  ok = disableMessageTypes(MSG_INFO);
       else if (*p == "DEBUG") ok = disableMessageTypes(MSG_DEBUG);
@@ -853,7 +831,7 @@ bool Component::setSlotDisableMsgType(const Identifier* const msg)
 }
 
 // disableMessageType --- Disable message type by number (e.g., 0x0100)
-bool Component::setSlotDisableMsgType(const Number* const msg)
+bool Component::setSlotDisableMsgType(std::shared_ptr<const Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -884,10 +862,10 @@ bool Component::send(const char* const id, const int event)
 bool Component::send(const char* const id, const int event, const int value, SendData& sd)
 {
    bool val {};
-   Object* vv = sd.getValue(value);
+   std::shared_ptr<mixr::base::Object> vv = sd.getValue(value);
    if (vv != nullptr) {
       Component* g {sd.getObject(this,id)};
-      if (g != nullptr) val = g->event(event,vv);
+      if (g != nullptr) val = g->event(event, vv);
    }
    return val;
 }
@@ -896,10 +874,10 @@ bool Component::send(const char* const id, const int event, const int value, Sen
 bool Component::send(const char* const id, const int event, const float value, SendData& sd)
 {
    bool val {};
-   Object* vv {sd.getValue(static_cast<double>(value))};
+   std::shared_ptr<mixr::base::Object> vv {sd.getValue(static_cast<double>(value))};
    if (vv != nullptr) {
       Component* g {sd.getObject(this, id)};
-      if (g != nullptr) val = g->event(event,vv);
+      if (g != nullptr) val = g->event(event, vv);
    }
    return val;
 }
@@ -908,10 +886,10 @@ bool Component::send(const char* const id, const int event, const float value, S
 bool Component::send(const char* const id, const int event, const double value, SendData& sd)
 {
    bool val {};
-   Object* vv {sd.getValue(static_cast<double>(value))};
+   std::shared_ptr<mixr::base::Object> vv {sd.getValue(static_cast<double>(value))};
    if (vv != nullptr) {
       Component* g {sd.getObject(this, id)};
-      if (g != nullptr) val = g->event(event,vv);
+      if (g != nullptr) val = g->event(event, vv);
    }
    return val;
 }
@@ -920,10 +898,10 @@ bool Component::send(const char* const id, const int event, const double value, 
 bool Component::send(const char* const id, const int event, const char* const value, SendData& sd)
 {
    bool val {};
-   Object* vv {sd.getValue(value)};
+   std::shared_ptr<mixr::base::Object> vv {sd.getValue(value)};
    if (vv != nullptr) {
       Component* g {sd.getObject(this, id)};
-      if (g != nullptr) val = g->event(event,vv);
+      if (g != nullptr) val = g->event(event, vv);
    }
    return val;
 }
@@ -932,16 +910,16 @@ bool Component::send(const char* const id, const int event, const char* const va
 bool Component::send(const char* const id, const int event, const bool value, SendData& sd)
 {
    bool val {};
-   Object* vv {sd.getValue(value)};
+   std::shared_ptr<mixr::base::Object> vv {sd.getValue(value)};
    if (vv != nullptr) {
       Component* g {sd.getObject(this, id)};
-      if (g != nullptr) val = g->event(event,vv);
+      if (g != nullptr) val = g->event(event, vv);
    }
    return val;
 }
 
 // Send an event message with an Object value to component 'id'
-bool Component::send(const char* const id, const int event, Object* const value, SendData& sd)
+bool Component::send(const char* const id, const int event, std::shared_ptr<Object> value, SendData& sd)
 {
     // we don't check past values here, because it would be tedious and more overhead
     // to go through each object and see if any data has changed.  So we take a smaller
@@ -964,7 +942,7 @@ bool Component::send(const char* const id, const int event, const int value[], S
 {
    bool val {};
    for (int i = 0; i < n; i++) {
-      Object* vv {sd[i].getValue(value[i])};
+      std::shared_ptr<Object> vv {sd[i].getValue(value[i])};
       if (vv != nullptr) {
          Component* g {sd[i].getObject(this, id, (i+1))};
          if (g != nullptr) val = g->event(event,vv);
@@ -982,10 +960,10 @@ bool Component::send(const char* const id, const int event, const float value[],
 {
    bool val {};
    for (int i = 0; i < n; i++) {
-      Object* vv {sd[i].getValue(value[i])};
+      std::shared_ptr<Object> vv {sd[i].getValue(value[i])};
       if (vv != nullptr) {
          Component* g {sd[i].getObject(this,id,(i+1))};
-         if (g != nullptr) val = g->event(event,vv);
+         if (g != nullptr) val = g->event(event, vv);
       }
    }
    return val;
@@ -1000,10 +978,10 @@ bool Component::send(const char* const id, const int event, const double value[]
 {
    bool val {};
    for (int i = 0; i < n; i++) {
-      Object* vv {sd[i].getValue(value[i])};
+      std::shared_ptr<Object> vv {sd[i].getValue(value[i])};
       if (vv != nullptr) {
          Component* g {sd[i].getObject(this,id,(i+1))};
-         if (g != nullptr) val = g->event(event,vv);
+         if (g != nullptr) val = g->event(event, vv);
       }
    }
    return val;
@@ -1013,10 +991,10 @@ bool Component::send(const char* const id, const int event, const bool value[], 
 {
    bool val {};
    for (int i = 0; i < n; i++) {
-      Object* vv {sd[i].getValue(value[i])};
+      std::shared_ptr<Object> vv {sd[i].getValue(value[i])};
       if (vv != nullptr) {
          Component* g {sd[i].getObject(this,id,(i+1))};
-         if (g != nullptr) val = g->event(event,vv);
+         if (g != nullptr) val = g->event(event, vv);
       }
    }
    return val;
@@ -1026,22 +1004,22 @@ bool Component::send(const char* const id, const int event, const char* const va
 {
    bool val {};
    for (int i = 0; i < n; i++) {
-      Object* vv {sd[i].getValue(value[i])};
+      std::shared_ptr<Object> vv {sd[i].getValue(value[i])};
       if (vv != nullptr) {
          Component* g {sd[i].getObject(this,id,(i+1))};
-         if (g != nullptr) val = g->event(event,vv);
+         if (g != nullptr) val = g->event(event, vv);
       }
    }
    return val;
 }
 
-bool Component::send(const char* const id, const int event, Object* const value[], SendData sd[], const int n)
+bool Component::send(const char* const id, const int event, std::shared_ptr<Object> const value[], SendData sd[], const int n)
 {
    bool val {};
    for (int i = 0; i < n; i++) {
       if (value != nullptr) {
          Component* g {sd[i].getObject(this,id,(i+1))};
-         if (g != nullptr) val = g->event(event,value[i]);
+         if (g != nullptr) val = g->event(event, value[i]);
       }
    }
    return val;
@@ -1055,13 +1033,12 @@ bool Component::send(const char* const id, const int event, Object* const value[
 void Component::SendData::empty()
 {
    obj = nullptr;
-   if (past != nullptr) past->unref();
    past = nullptr;
 }
 
 
 // setObject() -- Set which object (component) we're sending to
-void Component::SendData::setObject(Component* p)
+void Component::SendData::setObject(std::shared_ptr<Component> p)
 {
    obj = p;
 }
@@ -1091,19 +1068,21 @@ Component* Component::SendData::getObject(Component* gobj, const char* const id,
             std::sprintf(name,id,n);
             p = gobj->findByName(name);
         }
-        if (p != nullptr) obj = static_cast<Component*>(p->object());
+        if (p != nullptr) {
+         auto* comp = static_cast<Component*>(p->object());
+         obj = std::make_shared<Component>(*comp);
+        }
     }
-    return obj;
+    return obj.get();
 }
 
 // getValue() -- get an object containing the int value to send
 // or null(0) if the value hasn't changed.
-Object* Component::SendData::getValue(const int value)
+std::shared_ptr<Object> Component::SendData::getValue(const int value)
 {
-    const auto num = dynamic_cast<Integer*>(past);
+    const auto num = std::dynamic_pointer_cast<Integer>(past);
     if (num == nullptr) {
-        if (past != nullptr) past->unref();
-        past = new Integer(value);
+        past = std::make_shared<Integer>(value);
         return past;
     }
     if (*num != value) {
@@ -1116,12 +1095,11 @@ Object* Component::SendData::getValue(const int value)
 
 // getValue() -- get an object containing the real value to send
 // or null(0) if the value hasn't changed.
-Object* Component::SendData::getValue(const float value)
+std::shared_ptr<Object> Component::SendData::getValue(const float value)
 {
-    const auto num = dynamic_cast<Float*>(past);
+    const auto num = std::dynamic_pointer_cast<Float>(past);
     if (num == nullptr) {
-        if (past != nullptr) past->unref();
-        past = new Float(value);
+        past = std::make_shared<Float>(value);
         return past;
     }
     if (*num != static_cast<double>(value)) {
@@ -1133,12 +1111,11 @@ Object* Component::SendData::getValue(const float value)
     }
 }
 
-Object* Component::SendData::getValue(const double value)
+std::shared_ptr<Object> Component::SendData::getValue(const double value)
 {
-    const auto num = dynamic_cast<Number*>(past);
+    const auto num = std::dynamic_pointer_cast<Number>(past);
     if (num == nullptr) {
-        if (past != nullptr) past->unref();
-        past = new Float(value);
+        past = std::make_shared<Float>(value);
         return past;
     }
 
@@ -1153,13 +1130,12 @@ Object* Component::SendData::getValue(const double value)
 
 // getValue() -- get an object containing the char string to send
 // or null(0) if the value hasn't changed.
-Object* Component::SendData::getValue(const char* const value)
+std::shared_ptr<Object> Component::SendData::getValue(const char* const value)
 {
     // get our past string
-    const auto str = dynamic_cast<String*>(past);
+    const auto str = std::dynamic_pointer_cast<String>(past);
     if (str == nullptr) {
-        if (past != nullptr) past->unref();
-        past = new String(value);
+        past = std::make_shared<String>(value);
         return past;
     }
 
@@ -1184,12 +1160,11 @@ Object* Component::SendData::getValue(const char* const value)
 
 // getValue() -- get an object containing the boolean value to send
 // or null(0) if the value hasn't changed.
-Object* Component::SendData::getValue(const bool value)
+std::shared_ptr<Object> Component::SendData::getValue(const bool value)
 {
-    const auto num = dynamic_cast<Boolean*>(past);
+    const auto num = std::dynamic_pointer_cast<Boolean>(past);
     if (num == nullptr) {
-        if (past != nullptr) past->unref();
-        past = new Boolean(value);
+        past = std::make_shared<Boolean>(value);
         return past;
     }
     if (*num != value) {

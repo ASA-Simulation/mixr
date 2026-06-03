@@ -45,8 +45,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotStabilizingMode(base::String* const);
-   //bool setSlotMountPosition(base::String* const);
+   bool setSlotStabilizingMode(std::shared_ptr<base::String>);
+   //bool setSlotMountPosition(std::shared_ptr<base::String>);
 };
 
 }

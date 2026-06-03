@@ -48,7 +48,7 @@ Sz2::Sz2()
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool Sz2::setSlotN1(const base::Number* const msg)
+bool Sz2::setSlotN1(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -58,7 +58,7 @@ bool Sz2::setSlotN1(const base::Number* const msg)
    return ok;
 }
 
-bool Sz2::setSlotN2(const base::Number* const msg)
+bool Sz2::setSlotN2(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -68,7 +68,7 @@ bool Sz2::setSlotN2(const base::Number* const msg)
    return ok;
 }
 
-bool Sz2::setSlotN3(const base::Number* const msg)
+bool Sz2::setSlotN3(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -78,7 +78,7 @@ bool Sz2::setSlotN3(const base::Number* const msg)
    return ok;
 }
 
-bool Sz2::setSlotD1(const base::Number* const msg)
+bool Sz2::setSlotD1(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -88,7 +88,7 @@ bool Sz2::setSlotD1(const base::Number* const msg)
    return ok;
 }
 
-bool Sz2::setSlotD2(const base::Number* const msg)
+bool Sz2::setSlotD2(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -98,7 +98,7 @@ bool Sz2::setSlotD2(const base::Number* const msg)
    return ok;
 }
 
-bool Sz2::setSlotD3(const base::Number* const msg)
+bool Sz2::setSlotD3(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

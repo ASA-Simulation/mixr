@@ -24,9 +24,7 @@ FlowRate::FlowRate(double newFlowRate, Volume* volume, Time* time)
     // set our initial distance and time (default to meters per second)
     if (volume != nullptr && time != nullptr) {
         // find out what volume and time we are using, and reference them
-        volume->ref();
         myVolume = volume;
-        time->ref();
         myTime = time;
         flowRate = newFlowRate;
 
@@ -68,10 +66,8 @@ void FlowRate::copyData(const FlowRate& org, const bool cc)
 
 void FlowRate::deleteData()
 {
-    if (myVolume != nullptr) myVolume->unref();
     myVolume = nullptr;
 
-    if (myTime != nullptr) myTime->unref();
     myTime = nullptr;
 }
 
@@ -136,7 +132,7 @@ bool FlowRate::set(const double newFlowRate, Volume* newVolume, Time* newTime)
     return ok;
 }
 
-bool FlowRate::setSlotVolume(Volume* newVol)
+bool FlowRate::setSlotVolume(std::shared_ptr<Volume> newVol)
 {
     bool ok {};
     if (newVol != nullptr) {
@@ -148,7 +144,7 @@ bool FlowRate::setSlotVolume(Volume* newVol)
     return ok;
 }
 
-bool FlowRate::setSlotTime(Time* newTime)
+bool FlowRate::setSlotTime(std::shared_ptr<Time> newTime)
 {
     bool ok {};
     if (newTime != nullptr) {

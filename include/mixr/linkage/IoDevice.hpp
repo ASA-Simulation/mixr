@@ -49,7 +49,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotAdapters(base::PairStream* const);
+   bool setSlotAdapters(std::shared_ptr<base::PairStream>);
 };
 
 }

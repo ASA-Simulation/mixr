@@ -38,7 +38,6 @@ MultiActorAgent::MultiActorAgent()
 void MultiActorAgent::deleteData()
 {
    // unref state
-   if ( state != nullptr )    { state->unref(); state = nullptr; }
    clearAgentList();
 }
 
@@ -90,7 +89,6 @@ void MultiActorAgent::controller(const double dt)
             base::ubf::AbstractAction* action{behavior->genAction(getState(), dt)};
             if (action) { // allow possibility of no action returned
                action->execute(getActor());
-               action->unref();
             }
          }
       }
@@ -103,13 +101,10 @@ void MultiActorAgent::setState(base::ubf::AbstractState* const x)
    if (x == nullptr)
       return;
    if (state != nullptr)
-      state->unref();
    state = x;
-   state->ref();
    state->container(this);
    const auto p = new base::Pair("", state);
    addComponent(p);
-   p->unref();
 }
 
 simulation::Station* MultiActorAgent::getStation()
@@ -166,7 +161,7 @@ bool MultiActorAgent::addAgent(base::String* name, base::ubf::AbstractBehavior* 
 //------------------------------------------------------------------------------
 
 // Sets the state object for this agent
-bool MultiActorAgent::setSlotState(base::ubf::AbstractState* const state)
+bool MultiActorAgent::setSlotState(std::shared_ptr<base::ubf::AbstractState> state)
 {
    bool ok{};
    if (state != nullptr) {
@@ -177,7 +172,7 @@ bool MultiActorAgent::setSlotState(base::ubf::AbstractState* const state)
 }
 
 // Sets the actor/behavior list
-bool MultiActorAgent::setSlotAgentList(base::PairStream* const msg)
+bool MultiActorAgent::setSlotAgentList(std::shared_ptr<base::PairStream> msg)
 {
     bool ok{};
     if (msg != nullptr) {

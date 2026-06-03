@@ -21,10 +21,10 @@ namespace base {
 //     bool FlowRate::set(const double newFlowRate, Volume* newVolume, Time* newTime)
 //
 // setSlotVolume() -- sets our volume object.
-//     bool FlowRate::setSlotVolume(Volume* newVol)
+//     bool FlowRate::setSlotVolume(std::shared_ptr<Volume> newVol)
 //
 // setSlotTime() -- sets our time object.
-//     bool FlowRate::setSlotTime(Time* newTime)
+//     bool FlowRate::setSlotTime(std::shared_ptr<Time> newTime)
 //
 // set() -- sets our velocity from some other velocity
 //     bool FlowRate::set(const double newFlowRate, Volume* newVolume, Time* newTime)
@@ -55,8 +55,8 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotVolume(Volume*);
-    bool setSlotTime(Time*);
+    bool setSlotVolume(std::shared_ptr<Volume>);
+    bool setSlotTime(std::shared_ptr<Time>);
 };
 
 }

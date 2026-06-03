@@ -3,10 +3,10 @@
 #define __mixr_base_Function_H__
 
 #include "mixr/base/Object.hpp"
-#include "mixr/base/safe_ptr.hpp"
 
 namespace mixr {
 namespace base {
+
 class FStorage;
 class Table;
 
@@ -21,7 +21,7 @@ class Table;
 //
 //   virtual FStorage* storageFactory() const;
 //       Data storage factory (pre-ref()'d)
-//   virtual bool setSlotLfiTable(const Table* const msg);
+//   virtual bool setSlotLfiTable(std::shared_ptr<const Table> msg);
 //       Set Slot Tables
 //
 // Slots:
@@ -38,14 +38,14 @@ public:
    virtual FStorage* storageFactory() const;    // Data storage factory (pre-ref()'d)
 
 protected:
-   const Table* getTable() const {  return table; }
+   std::shared_ptr<const Table> getTable() const {  return table; }
 
 private:
-   safe_ptr<const Table> table;   // Optional LFI Table
+   std::shared_ptr<const Table> table;   // Optional LFI Table
 
 protected:
    // slot table helper methods
-   virtual bool setSlotLfiTable(const Table* const);
+   virtual bool setSlotLfiTable(std::shared_ptr<const Table>);
 };
 
 }

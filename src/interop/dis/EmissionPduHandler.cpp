@@ -71,14 +71,12 @@ void EmissionPduHandler::copyData(const EmissionPduHandler& org, const bool)
    if (org.getSensorModel() != nullptr) {
       models::RfSensor* tmp = org.getSensorModel()->clone();
       setSensorModel(tmp);
-      tmp->unref();
    }
 
    setAntennaModel(nullptr);
    if (org.getAntennaModel() != nullptr) {
       models::Antenna* tmp = org.getAntennaModel()->clone();
       setAntennaModel(tmp);
-      tmp->unref();
    }
 
    // ---
@@ -214,7 +212,7 @@ bool EmissionPduHandler::setTemplatesFound(const bool newTF)
 //------------------------------------------------------------------------------
 
 // Sets the our DIS Emitter Name
-bool EmissionPduHandler::setSlotEmitterName(const base::Number* const msg)
+bool EmissionPduHandler::setSlotEmitterName(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -227,7 +225,7 @@ bool EmissionPduHandler::setSlotEmitterName(const base::Number* const msg)
 }
 
 // Sets our DIS Emitter Function
-bool EmissionPduHandler::setSlotEmitterFunction(const base::Number* const msg)
+bool EmissionPduHandler::setSlotEmitterFunction(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -240,18 +238,18 @@ bool EmissionPduHandler::setSlotEmitterFunction(const base::Number* const msg)
 }
 
 // Sets our template sensor model
-bool EmissionPduHandler::setSlotSensorTemplate(models::RfSensor* const msg)
+bool EmissionPduHandler::setSlotSensorTemplate(std::shared_ptr<models::RfSensor> msg)
 {
    return setSensorModel(msg);
 }
 
 // Sets our template antenna model
-bool EmissionPduHandler::setSlotAntennaTemplate(models::Antenna* const msg)
+bool EmissionPduHandler::setSlotAntennaTemplate(std::shared_ptr<models::Antenna> msg)
 {
    return setAntennaModel(msg);
 }
 
-bool EmissionPduHandler::setSlotDefaultIn(const base::Number* const msg)
+bool EmissionPduHandler::setSlotDefaultIn(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -260,7 +258,7 @@ bool EmissionPduHandler::setSlotDefaultIn(const base::Number* const msg)
    return ok;
 }
 
-bool EmissionPduHandler::setSlotDefaultOut(const base::Number* const msg)
+bool EmissionPduHandler::setSlotDefaultOut(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -345,16 +343,12 @@ bool EmissionPduHandler::updateIncoming(const ElectromagneticEmissionPDU* const 
                   // Create the container gimbal!
                   gimbal = new models::Gimbal();
                   const auto pair = new base::Pair("gimbal", gimbal);
-                  gimbal->unref();  // pair owns it
                   player->addComponent(pair);
-                  pair->unref();    // player owns it
                }
                // Add this antenna to the container gimbal
                ap->container(gimbal);
                const auto pair = new base::Pair("antenna", ap);
-               ap->unref();   // pair owns it
                gimbal->addComponent(pair);
-               pair->unref(); // top level gimbal owns it
             }
 
             // Give the sensor list to the IPlayer
@@ -365,16 +359,12 @@ bool EmissionPduHandler::updateIncoming(const ElectromagneticEmissionPDU* const 
                   // Create the sensor manager
                   sm = new models::SensorMgr();
                   const auto pair = new base::Pair("sensorMgr", sm);
-                  sm->unref();   // pair owns it
                   player->addComponent(pair);
-                  pair->unref(); // player owns it
                }
                // Add this system to the sensor manager
                rp->container(sm);
                const auto pair = new base::Pair("sensor", rp);
-               rp->unref();   // pair owns it
                sm->addComponent(pair);
-               pair->unref(); // sensor manager owns it
             }
 
             setSensor(rp);

@@ -61,7 +61,6 @@ void Nib::copyData(const Nib& org, const bool cc)
    // Clear (not copy) the attached missile types
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMslTypes[i] != nullptr) {
-         apartMslTypes[i]->unref();;
          apartMslTypes[i] = nullptr;
       }
    }
@@ -107,7 +106,6 @@ void Nib::deleteData()
 
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMslTypes[i] != nullptr) {
-         apartMslTypes[i]->unref();
          apartMslTypes[i] = nullptr;
       }
    }
@@ -129,14 +127,12 @@ bool Nib::shutdownNotification()
 {
    for (unsigned int i = 0; i < MAX_AMSL; i++) {
       if (apartMslTypes[i] != nullptr) {
-         apartMslTypes[i]->unref();
          apartMslTypes[i] = nullptr;
       }
    }
 
    for (unsigned int i = 0; i < MAX_EM_SYSTEMS; i++) {
       if (emitterSysHandler[i] != nullptr) {
-         emitterSysHandler[i]->unref();
          emitterSysHandler[i] = nullptr;
       }
    }
@@ -401,7 +397,6 @@ bool Nib::emitterBeamsManager(const double curExecTime)
                   item = item->getNext();
                }
 
-               subcomponents->unref();
                subcomponents = nullptr;
             }
 

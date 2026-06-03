@@ -55,7 +55,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotBacklog(const Number* const);
+   bool setSlotBacklog(std::shared_ptr<const Number>);
 };
 
 }

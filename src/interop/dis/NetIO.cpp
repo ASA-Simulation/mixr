@@ -173,7 +173,6 @@ void NetIO::copyData(const NetIO& org, const bool cc)
    for (unsigned int i = 0; i < org.nEmissionHandlers; i++) {
       const EmissionPduHandler* const tmp = org.emissionHandlers[i]->clone();
       addEmissionPduHandler(tmp);
-      tmp->unref();
    }
 
    for (unsigned char i = 0; i < NUM_ENTITY_KINDS; i++) {
@@ -446,7 +445,6 @@ void NetIO::processInputList()
 //   base::PairStream* p = getSimulation()->getPlayers();
 //   if (p != nullptr) {
 //      std::cout << ";  np = " << p->entries();
-//      p->unref();
 //   }
 //   std::cout << std::endl;
 }
@@ -1014,7 +1012,6 @@ void NetIO::defineFederateName()
       if (ok) {
          const auto p = new base::String(cbuff);
          setFederateName(p);
-         p->unref();
       }
    } else {
       setFederateName(nullptr);
@@ -1030,7 +1027,6 @@ void NetIO::defineFederationName()
       if (ok) {
          const auto p = new base::String(cbuff);
          setFederationName(p);
-         p->unref();
       }
    } else {
       setFederationName(nullptr);
@@ -1295,7 +1291,6 @@ double NetIO::getEePwThrsh() const        { return EE_PW_THRSH; }
 void NetIO::addEmissionPduHandler(const EmissionPduHandler* const item)
 {
    if (nEmissionHandlers < MAX_EMISSION_HANDLERS) {
-      item->ref();
       emissionHandlers[nEmissionHandlers] = item;
       nEmissionHandlers++;
    }
@@ -1309,7 +1304,6 @@ void NetIO::clearEmissionPduHandlers()
    // and decrement 'nEmissionHandlers' before the object is unref()'ed
    while (nEmissionHandlers > 0) {
       nEmissionHandlers--;
-      emissionHandlers[nEmissionHandlers]->unref();
       emissionHandlers[nEmissionHandlers] = nullptr;
    }
 }
@@ -1366,35 +1360,35 @@ const EmissionPduHandler* NetIO::findEmissionPduHandler(const EmissionSystem* co
 //------------------------------------------------------------------------------
 
 // Sets our federate name (override NetIO)
-bool NetIO::setSlotFederateName(const base::String* const)
+bool NetIO::setSlotFederateName(std::shared_ptr<const base::String>)
 {
    std::cerr << "NetIO::setSlotFederateName() -- With NetIO, use the siteID and applicationID slots to create the federate name" << std::endl;
    return false;
 }
 
 // Sets our federation name (override NetIO)
-bool NetIO::setSlotFederationName(const base::String* const)
+bool NetIO::setSlotFederationName(std::shared_ptr<const base::String>)
 {
    std::cerr << "NetIO::setSlotFederationName() -- With NetIO, use the exerciseID slot to create the federation name" << std::endl;
    return false;
 }
 
 // Set Network Input Handler
-bool NetIO::setSlotNetInput(base::NetHandler* const msg)
+bool NetIO::setSlotNetInput(std::shared_ptr<base::NetHandler> msg)
 {
     netInput = msg;
     return true;
 }
 
 // Net Network Output Handler
-bool NetIO::setSlotNetOutput(base::NetHandler* const msg)
+bool NetIO::setSlotNetOutput(std::shared_ptr<base::NetHandler> msg)
 {
     netOutput = msg;
     return true;
 }
 
 // DIS version number [ 0 .. 6 ] (IST-CF-03-01, May 5, 2003)
-bool NetIO::setSlotVersion(const base::Number* const num)
+bool NetIO::setSlotVersion(std::shared_ptr<const base::Number> num)
 {
     bool ok {};
     if (num != nullptr) {
@@ -1410,7 +1404,7 @@ bool NetIO::setSlotVersion(const base::Number* const num)
 }
 
 // Sets the maximum range for pairs of entities by kind/domain
-bool NetIO::setSlotMaxEntityRange(const base::PairStream* const msg)
+bool NetIO::setSlotMaxEntityRange(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -1445,13 +1439,13 @@ bool NetIO::setSlotMaxEntityRange(const base::PairStream* const msg)
 }
 
 // Sets the maximum range for all entity types
-bool NetIO::setSlotMaxEntityRange(const base::Distance* const msg)
+bool NetIO::setSlotMaxEntityRange(std::shared_ptr<const base::Distance> msg)
 {
    return setMaxEntityRange(msg, 255, 255);
 }
 
 // Sets max DR times for pairs of entities by kind/domain
-bool NetIO::setSlotMaxTimeDR(const base::PairStream* const msg)
+bool NetIO::setSlotMaxTimeDR(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -1487,14 +1481,14 @@ bool NetIO::setSlotMaxTimeDR(const base::PairStream* const msg)
 
 
 // Sets max DR times for all entity types
-bool NetIO::setSlotMaxTimeDR(const base::Time* const msg)
+bool NetIO::setSlotMaxTimeDR(std::shared_ptr<const base::Time> msg)
 {
    return setMaxTimeDR(msg, 255, 255);
 }
 
 
 // Sets max position errors for pairs of entities by kind/domain
-bool NetIO::setSlotMaxPositionErr(const base::PairStream* const msg)
+bool NetIO::setSlotMaxPositionErr(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -1529,13 +1523,13 @@ bool NetIO::setSlotMaxPositionErr(const base::PairStream* const msg)
 }
 
 // Sets max position errors for all entity types
-bool NetIO::setSlotMaxPositionErr(const base::Distance* const msg)
+bool NetIO::setSlotMaxPositionErr(std::shared_ptr<const base::Distance> msg)
 {
    return setMaxPositionErr(msg, 255, 255);
 }
 
 // Sets max orientation errors for pairs of entities by kind/domain
-bool NetIO::setSlotMaxOrientationErr(const base::PairStream* const msg)
+bool NetIO::setSlotMaxOrientationErr(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -1570,14 +1564,14 @@ bool NetIO::setSlotMaxOrientationErr(const base::PairStream* const msg)
 }
 
 // Sets max orientation errors for all entity types
-bool NetIO::setSlotMaxOrientationErr(const base::Angle* const msg)
+bool NetIO::setSlotMaxOrientationErr(std::shared_ptr<const base::Angle> msg)
 {
    return setMaxOrientationErr(msg, 255, 255);
 }
 
 
 // Sets max ages (without update) of for pairs of networked entities by kind/domain
-bool NetIO::setSlotMaxAge(const base::PairStream* const msg)
+bool NetIO::setSlotMaxAge(std::shared_ptr<const base::PairStream> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -1612,13 +1606,13 @@ bool NetIO::setSlotMaxAge(const base::PairStream* const msg)
 }
 
 // Sets max ages (without update) of all entity types
-bool NetIO::setSlotMaxAge(const base::Time* const msg)
+bool NetIO::setSlotMaxAge(std::shared_ptr<const base::Time> msg)
 {
    return setMaxAge(msg, 255, 255);
 }
 
 // Sets the list of Electromagnetic Emission PDU handlers
-bool NetIO::setSlotEmissionPduHandlers(base::PairStream* const msg)
+bool NetIO::setSlotEmissionPduHandlers(std::shared_ptr<base::PairStream> msg)
 {
     bool ok {};
     if (msg != nullptr) {
@@ -1689,7 +1683,7 @@ bool NetIO::slot2KD(const char* const slotname, unsigned char* const kind, unsig
 }
 
 // Set Site ID
-bool NetIO::setSlotSiteID(const base::Number* const num)
+bool NetIO::setSlotSiteID(std::shared_ptr<const base::Number> num)
 {
     bool ok {};
     if (num != nullptr) {
@@ -1704,7 +1698,7 @@ bool NetIO::setSlotSiteID(const base::Number* const num)
 }
 
 // Set Application ID
-bool NetIO::setSlotApplicationID(const base::Number* const num)
+bool NetIO::setSlotApplicationID(std::shared_ptr<const base::Number> num)
 {
     bool ok {};
     if (num != nullptr) {
@@ -1719,7 +1713,7 @@ bool NetIO::setSlotApplicationID(const base::Number* const num)
 }
 
 // Set Exercise ID
-bool NetIO::setSlotExerciseID(const base::Number* const num)
+bool NetIO::setSlotExerciseID(std::shared_ptr<const base::Number> num)
 {
     bool ok {};
     if (num != nullptr) {
@@ -1886,7 +1880,6 @@ NtmInputNode::NtmInputNode(const unsigned int l, const unsigned int c, const Ntm
 
    if (ntm != nullptr) {
       ourNtm = ntm;
-      ourNtm->ref();
    }
    subnodeList = new base::List();
 }
@@ -1904,7 +1897,6 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool cc)
    code = org.code;
 
    if (ourNtm != nullptr) {
-      ourNtm->unref();
       ourNtm = nullptr;
    }
    if (org.ourNtm != nullptr) {
@@ -1912,7 +1904,6 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool cc)
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
    if (org.subnodeList != nullptr) {
@@ -1923,12 +1914,10 @@ void NtmInputNode::copyData(const NtmInputNode& org, const bool cc)
 void NtmInputNode::deleteData()
 {
    if (ourNtm != nullptr) {
-      ourNtm->unref();
       ourNtm = nullptr;
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
 }
@@ -2090,7 +2079,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
                // wild card terminal node
                if (ourNtm == nullptr) {
                   ourNtm = disNtm;
-                  ourNtm->ref();
                   ok = true;
                } else if (isMessageEnabled(MSG_WARNING)) {
                   std::cerr << "Warning: duplicate incoming NTM(";
@@ -2125,7 +2113,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
             if (!alreadyExists) {
                const auto newNode = new NtmInputNode( (level+1), nextLevelCode, disNtm );
                subnodeList->put(newNode);
-               newNode->unref();   // ref()'d when put into the subnodelist
                ok = true;
             }
             else if (isMessageEnabled(MSG_WARNING)) {
@@ -2164,7 +2151,6 @@ bool NtmInputNode::add2OurLists(interop::Ntm* const ntm)
             const auto newNode = new NtmInputNode( (level+1), nextLevelCode );
             subnodeList->put(newNode);
             ok = newNode->add2OurLists(disNtm);
-            newNode->unref();   // ref()'d when put into the subnodelist
          }
       }
 

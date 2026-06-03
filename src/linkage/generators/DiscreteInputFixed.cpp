@@ -54,7 +54,7 @@ void DiscreteInputFixed::processInputsImpl(const double dt, base::AbstractIoData
 // Slot Functions
 //------------------------------------------------------------------------------
 
-bool DiscreteInputFixed::setSlotChannel(const base::Number* const msg)
+bool DiscreteInputFixed::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -67,7 +67,7 @@ bool DiscreteInputFixed::setSlotChannel(const base::Number* const msg)
 }
 
 // signal: Signal type { ON, OFF }
-bool DiscreteInputFixed::setSlotSignal(const base::String* const msg)
+bool DiscreteInputFixed::setSlotSignal(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {

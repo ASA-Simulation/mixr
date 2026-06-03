@@ -91,7 +91,6 @@ void Antenna::copyData(const Antenna& org, const bool)
    if (org.gainPattern != nullptr) {
       base::Function* copy{org.gainPattern->clone()};
       setSlotGainPattern( copy );
-      copy->unref();
    } else {
       setSlotGainPattern(nullptr);
    }
@@ -155,7 +154,6 @@ void Antenna::process(const double dt)
             em->clear();
             base::lock(freeEmLock);
             if (freeEmStack.isNotFull()) freeEmStack.push(em);
-            else em->unref();
             base::unlock(freeEmLock);
          }
       }
@@ -167,9 +165,7 @@ void Antenna::process(const double dt)
 //------------------------------------------------------------------------------
 bool Antenna::setSystem(RfSystem* const s)
 {
-   if (sys != nullptr) sys->unref();
    sys = s;
-   if (sys != nullptr) sys->ref();
    return true;
 }
 
@@ -181,7 +177,6 @@ void Antenna::clearQueues()
    base::lock(freeEmLock);
    Emission* em{freeEmStack.pop()};
    while (em != nullptr) {
-      em->unref();
       em = freeEmStack.pop();
    }
    base::unlock(freeEmLock);
@@ -189,7 +184,6 @@ void Antenna::clearQueues()
    base::lock(inUseEmLock);
    em = inUseEmQueue.get();
    while (em != nullptr) {
-      em->unref();
       em = inUseEmQueue.get();
    }
    base::unlock(inUseEmLock);
@@ -258,9 +252,7 @@ bool Antenna::setGain(const base::Number* const g)
 bool Antenna::setGainPattern(base::Function* const tbl)
 {
     bool ok{true};
-    if (gainPattern != nullptr) gainPattern->unref();
     gainPattern = tbl;
-    if (gainPattern != nullptr) gainPattern->ref();
     return ok;
 }
 
@@ -383,7 +375,6 @@ void Antenna::rfTransmit(Emission* const xmit)
    Player* ownship{getOwnship()};
    if (xmit == nullptr || tdb == nullptr || ownship == nullptr) {
       // Clean up and leave
-      if (tdb != nullptr) tdb->unref();
       return;
    }
 
@@ -542,7 +533,6 @@ void Antenna::rfTransmit(Emission* const xmit)
 
                // or just forget it
                //else {
-                  em->unref();
                //}
 
             } else {
@@ -557,7 +547,6 @@ void Antenna::rfTransmit(Emission* const xmit)
    }
 
    // Unref() the TDB
-   tdb->unref();
 }
 
 //------------------------------------------------------------------------------
@@ -606,7 +595,6 @@ bool Antenna::onRfEmissionEvent(Emission* const em)
       Player* ownship{getOwnship()};
       RfSystem* sys1{getSystem()};
       if (ownship != nullptr && sys1 != nullptr) {
-         sys1->ref();
 
          // Line-Of-Sight (LOS) vectors back to the transmitter.
          const base::Vec3d xlos{em->getTgtLosVec()};
@@ -681,7 +669,6 @@ bool Antenna::onRfEmissionEvent(Emission* const em)
 
          sys1->rfReceivedEmission(em, this, static_cast<double>(raGain));
 
-         sys1->unref();
       }
 
    }
@@ -698,7 +685,6 @@ bool Antenna::onRfEmissionReturnEventAntenna(Emission* const em)
     // Pass all returned emissions to our sensor
     RfSystem* sys1{getSystem()};
     if (sys1 != nullptr) {
-        sys1->ref();
 
         // Compute antenna effective area
         double aea{getEffectiveArea(em->getGain(), em->getWavelength())};
@@ -707,7 +693,6 @@ bool Antenna::onRfEmissionReturnEventAntenna(Emission* const em)
         sys1->rfReceivedEmission(em, this, static_cast<double>(aea));
         used = true;
 
-        sys1->unref();
     }
     return used;
 }

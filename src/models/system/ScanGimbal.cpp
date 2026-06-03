@@ -842,7 +842,7 @@ bool ScanGimbal::setMaxRevs(const double newMaxRevs)
 //------------------------------------------------------------------------------
 
 // setSlotScanMode() -- calls setScanMode()
-bool ScanGimbal::setSlotScanMode(base::String* const newMode)
+bool ScanGimbal::setSlotScanMode(std::shared_ptr<base::String> newMode)
 {
     // set our scan mode
     bool ok{true};
@@ -860,7 +860,7 @@ bool ScanGimbal::setSlotScanMode(base::String* const newMode)
 }
 
 // setSlotLeftToRightScan() - calls setLeftToRightScan()
-bool ScanGimbal::setSlotLeftToRightScan(const base::Number* const newLeftToRightScan)
+bool ScanGimbal::setSlotLeftToRightScan(std::shared_ptr<const base::Number> newLeftToRightScan)
 {
     bool ok{};
     if (newLeftToRightScan != nullptr) {
@@ -872,7 +872,7 @@ bool ScanGimbal::setSlotLeftToRightScan(const base::Number* const newLeftToRight
 }
 
 // setSlotScanWidth() -- calls setScanWidth()
-bool ScanGimbal::setSlotScanWidth(const base::Number* const newWidth)
+bool ScanGimbal::setSlotScanWidth(std::shared_ptr<const base::Number> newWidth)
 {
     bool ok{};
     if (newWidth != nullptr) {
@@ -883,7 +883,7 @@ bool ScanGimbal::setSlotScanWidth(const base::Number* const newWidth)
 }
 
 // setSlotSearchVolume() -- calls setSearchVolume()
-bool ScanGimbal::setSlotSearchVolume(base::List* const numList)
+bool ScanGimbal::setSlotSearchVolume(std::shared_ptr<base::List> numList)
 {
     bool ok{};
     double values[2]{};
@@ -895,7 +895,7 @@ bool ScanGimbal::setSlotSearchVolume(base::List* const numList)
 }
 
 // setSlotRefPosition() --  calls setRefPosition
-bool ScanGimbal::setSlotRefPosition(const base::List* const numList)
+bool ScanGimbal::setSlotRefPosition(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     double values[2]{};
@@ -907,7 +907,7 @@ bool ScanGimbal::setSlotRefPosition(const base::List* const numList)
 }
 
 // setSlotBarSpacing() --
-bool ScanGimbal::setSlotBarSpacing(const base::Number* const newSpacing)
+bool ScanGimbal::setSlotBarSpacing(std::shared_ptr<const base::Number> newSpacing)
 {
     bool ok{};
     if (newSpacing != nullptr) {
@@ -918,7 +918,7 @@ bool ScanGimbal::setSlotBarSpacing(const base::Number* const newSpacing)
 }
 
 // setSlotNumBars() --
-bool ScanGimbal::setSlotNumBars(const base::Number* const newNumBars)
+bool ScanGimbal::setSlotNumBars(std::shared_ptr<const base::Number> newNumBars)
 {
     bool ok{};
     if (newNumBars != nullptr) {
@@ -929,7 +929,7 @@ bool ScanGimbal::setSlotNumBars(const base::Number* const newNumBars)
 }
 
 // setSlotRevPerSec() --
-bool ScanGimbal::setSlotRevPerSec(const base::Number* const newRevPerSec)
+bool ScanGimbal::setSlotRevPerSec(std::shared_ptr<const base::Number> newRevPerSec)
 {
     bool ok{};
     if (newRevPerSec != nullptr) {
@@ -940,7 +940,7 @@ bool ScanGimbal::setSlotRevPerSec(const base::Number* const newRevPerSec)
 }
 
 // setSlotScanRadius() --
-bool ScanGimbal::setSlotScanRadius(const base::Number* const newScanRadius)
+bool ScanGimbal::setSlotScanRadius(std::shared_ptr<const base::Number> newScanRadius)
 {
     bool ok{};
     if (newScanRadius != nullptr) {
@@ -957,7 +957,7 @@ bool ScanGimbal::setSlotScanRadius(const base::Number* const newScanRadius)
 // setSlotPRVertices() -- gets a pairstream and puts the vertices into an array
 // example --
 //     vertices: { [ 1 2 ]  [ 3 4 ] [ 5 6 ] }
-bool ScanGimbal::setSlotPRVertices(const base::PairStream* const prObj)
+bool ScanGimbal::setSlotPRVertices(std::shared_ptr<const base::PairStream> prObj)
 {
    bool ok{true};
 
@@ -994,7 +994,7 @@ bool ScanGimbal::setSlotPRVertices(const base::PairStream* const prObj)
 }
 
 // setSlotMaxRevs() --
-bool ScanGimbal::setSlotMaxRevs(const base::Number* const newMaxRevs)
+bool ScanGimbal::setSlotMaxRevs(std::shared_ptr<const base::Number> newMaxRevs)
 {
     bool ok{};
     if (newMaxRevs != nullptr) {

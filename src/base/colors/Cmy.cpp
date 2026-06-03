@@ -71,7 +71,7 @@ void Cmy::getCMY(Vec3d& hhh) const
 //------------------------------------------------------------------------------
 // setSlotCyan() -- set the cyan value
 //------------------------------------------------------------------------------
-bool Cmy::setSlotCyan(const Number* const msg)
+bool Cmy::setSlotCyan(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     double value{msg->getReal()};
@@ -88,7 +88,7 @@ bool Cmy::setSlotCyan(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotMagenta() -- set the magenta value
 //------------------------------------------------------------------------------
-bool Cmy::setSlotMagenta(const Number* const msg)
+bool Cmy::setSlotMagenta(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value{msg->getReal()};
@@ -105,7 +105,7 @@ bool Cmy::setSlotMagenta(const Number* const msg)
 //------------------------------------------------------------------------------
 // setSlotYellow() -- set the yellow value
 //------------------------------------------------------------------------------
-bool Cmy::setSlotYellow(const Number* const msg)
+bool Cmy::setSlotYellow(std::shared_ptr<const Number> msg)
 {
     if (msg == nullptr) return false;
     const double value{msg->getReal()};

@@ -73,7 +73,7 @@ void TabPrinter::setMsgHeaders(const bool f)
 //------------------------------------------------------------------------------
 // setSlotMsgHdr
 //------------------------------------------------------------------------------
-bool TabPrinter::setSlotMsgHdr(const base::String* const msg)
+bool TabPrinter::setSlotMsgHdr(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -107,7 +107,7 @@ bool TabPrinter::setSlotMsgHdr(const base::String* const msg)
 //------------------------------------------------------------------------------
 // setSlotDivider
 //------------------------------------------------------------------------------
-bool TabPrinter::setSlotDivider(const base::String* const msg)
+bool TabPrinter::setSlotDivider(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {

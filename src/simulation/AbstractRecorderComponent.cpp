@@ -91,7 +91,7 @@ bool AbstractRecorderComponent::setDisabledList(const unsigned int* const list, 
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool AbstractRecorderComponent::setSlotEnabledList(const base::List* const list)
+bool AbstractRecorderComponent::setSlotEnabledList(std::shared_ptr<const base::List> list)
 {
    unsigned int n2{};
    unsigned int* p2{};
@@ -125,7 +125,7 @@ bool AbstractRecorderComponent::setSlotEnabledList(const base::List* const list)
    return true;
 }
 
-bool AbstractRecorderComponent::setSlotDisabledList(const base::List* const list)
+bool AbstractRecorderComponent::setSlotDisabledList(std::shared_ptr<const base::List> list)
 {
    unsigned int n2{};
    unsigned int* p2{};

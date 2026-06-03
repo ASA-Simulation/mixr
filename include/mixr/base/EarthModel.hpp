@@ -81,11 +81,11 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotA(const Distance* const);
-   bool setSlotA(const Number* const);
-   bool setSlotB(const Distance* const);
-   bool setSlotB(const Number* const);
-   bool setSlotF(const Number* const);
+   bool setSlotA(std::shared_ptr<const Distance>);
+   bool setSlotA(std::shared_ptr<const Number>);
+   bool setSlotB(std::shared_ptr<const Distance>);
+   bool setSlotB(std::shared_ptr<const Number>);
+   bool setSlotF(std::shared_ptr<const Number>);
 
 };
 

@@ -216,7 +216,6 @@ void AbstractWeapon::reset()
 
    setTOF(0.0);
 
-   if (flyout != nullptr) flyout->unref();
 }
 
 //------------------------------------------------------------------------------
@@ -368,8 +367,6 @@ bool AbstractWeapon::onJettisonEvent()
       setReleased(true);
 
       // cleanup
-      if (flyout != nullptr) flyout->unref();
-      if (initWpn != nullptr) initWpn->unref();
 
       ok = true;
    }
@@ -413,7 +410,6 @@ void AbstractWeapon::checkDetonationEffect()
          }
 
          // cleanup
-         plist->unref();
          plist = nullptr;
       }
 
@@ -589,7 +585,6 @@ AbstractWeapon* AbstractWeapon::release()
                initWpn->setMode(Player::LAUNCHED);
                initWpn->setReleased(true);
                initWpn->setReleaseHold(false);
-               initWpn->unref();
             } else {
                // When we haven't already created a flyout then this is
                // a direct release ...
@@ -788,7 +783,6 @@ AbstractWeapon* AbstractWeapon::getPointer()
    if (flyoutWpn != nullptr) {
       return flyoutWpn.getRefPtr();
    } else {
-      this->ref();
       return this;
    }
 }
@@ -799,7 +793,6 @@ const AbstractWeapon* AbstractWeapon::getPointer() const
    if (flyoutWpn != nullptr) {
       return flyoutWpn.getRefPtr();
    } else {
-      this->ref();
       return this;
    }
 }
@@ -1289,49 +1282,49 @@ bool AbstractWeapon::setDummy(const bool f)
 //------------------------------------------------------------------------------
 
 // released:  Weapon has been released
-bool AbstractWeapon::setSlotReleased(const base::Number* const p)
+bool AbstractWeapon::setSlotReleased(std::shared_ptr<const base::Number> p)
 {
     setReleased( p->getBoolean() );
     return true;
 }
 
 // failed: Weapon failed (e.g., reasonableness Test)
-bool AbstractWeapon::setSlotFailed(const base::Number* const p)
+bool AbstractWeapon::setSlotFailed(std::shared_ptr<const base::Number> p)
 {
     setFailed( p->getBoolean() );
     return true;
 }
 
 // Power: weapon power flag
-bool AbstractWeapon::setSlotPower(const base::Number* const p)
+bool AbstractWeapon::setSlotPower(std::shared_ptr<const base::Number> p)
 {
     setPower( p->getBoolean() );
     return true;
 }
 
 // hang: Will be a hung store
-bool AbstractWeapon::setSlotWillHang(const base::Number* const p)
+bool AbstractWeapon::setSlotWillHang(std::shared_ptr<const base::Number> p)
 {
     setWillHang( p->getBoolean() );
     return true;
 }
 
 // hung: Hung store
-bool AbstractWeapon::setSlotHung(const base::Number* const p)
+bool AbstractWeapon::setSlotHung(std::shared_ptr<const base::Number> p)
 {
     setHung( p->getBoolean() );
     return true;
 }
 
 // dummy: Dummy store
-bool AbstractWeapon::setSlotDummy(const base::Number* const p)
+bool AbstractWeapon::setSlotDummy(std::shared_ptr<const base::Number> p)
 {
     setDummy( p->getBoolean() );
     return true;
 }
 
 // maxTOF:  max time of flight      (base::Time)
-bool AbstractWeapon::setSlotMaxTOF(const base::Time* const p)
+bool AbstractWeapon::setSlotMaxTOF(std::shared_ptr<const base::Time> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1341,13 +1334,13 @@ bool AbstractWeapon::setSlotMaxTOF(const base::Time* const p)
 }
 
 // maxTOF:  max time of flight      (sec)
-bool AbstractWeapon::setSlotMaxTOF(const base::Number* const p)
+bool AbstractWeapon::setSlotMaxTOF(std::shared_ptr<const base::Number> p)
 {
     return setMaxTOF( p->getReal() );
 }
 
 // tsg: time to start guidance    (base::Time)
-bool AbstractWeapon::setSlotTSG(const base::Time* const p)
+bool AbstractWeapon::setSlotTSG(std::shared_ptr<const base::Time> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1357,13 +1350,13 @@ bool AbstractWeapon::setSlotTSG(const base::Time* const p)
 }
 
 // tsg: time to start guidance    (sec)
-bool AbstractWeapon::setSlotTSG(const base::Number* const p)
+bool AbstractWeapon::setSlotTSG(std::shared_ptr<const base::Number> p)
 {
     return setTSG( p->getReal() );
 }
 
 // maxBurstRng: max burst range    (base::Distance)
-bool AbstractWeapon::setSlotMaxBurstRng(const base::Distance* const p)
+bool AbstractWeapon::setSlotMaxBurstRng(std::shared_ptr<const base::Distance> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1373,14 +1366,14 @@ bool AbstractWeapon::setSlotMaxBurstRng(const base::Distance* const p)
 }
 
 // maxBurstRng: max burst range    (meters)
-bool AbstractWeapon::setSlotMaxBurstRng(const base::Number* const p)
+bool AbstractWeapon::setSlotMaxBurstRng(std::shared_ptr<const base::Number> p)
 {
     return setMaxBurstRng( p->getReal() );
 }
 
 
 // lethalRange: lethal range    (base::Distance)
-bool AbstractWeapon::setSlotLethalRange(const base::Distance* const p)
+bool AbstractWeapon::setSlotLethalRange(std::shared_ptr<const base::Distance> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1390,13 +1383,13 @@ bool AbstractWeapon::setSlotLethalRange(const base::Distance* const p)
 }
 
 // lethalRange: lethal range    (meters)
-bool AbstractWeapon::setSlotLethalRange(const base::Number* const p)
+bool AbstractWeapon::setSlotLethalRange(std::shared_ptr<const base::Number> p)
 {
     return setLethalRange( p->getReal() );
 }
 
 // sobt: start-of-burn time        (base::Time)
-bool AbstractWeapon::setSlotSOBT(const base::Time* const p)
+bool AbstractWeapon::setSlotSOBT(std::shared_ptr<const base::Time> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1406,14 +1399,14 @@ bool AbstractWeapon::setSlotSOBT(const base::Time* const p)
 }
 
 // sobt: start-of-burn time        (sec)
-bool AbstractWeapon::setSlotSOBT(const base::Number* const p)
+bool AbstractWeapon::setSlotSOBT(std::shared_ptr<const base::Number> p)
 {
     setSOBT( p->getReal() );
     return true;
 }
 
 // eobt: end-of-burn time        (base::Time)
-bool AbstractWeapon::setSlotEOBT(const base::Time* const p)
+bool AbstractWeapon::setSlotEOBT(std::shared_ptr<const base::Time> p)
 {
    bool ok{};
    if (p != nullptr) {
@@ -1423,21 +1416,21 @@ bool AbstractWeapon::setSlotEOBT(const base::Time* const p)
 }
 
 // eobt: end-of-burn time        (sec)
-bool AbstractWeapon::setSlotEOBT(const base::Number* const p)
+bool AbstractWeapon::setSlotEOBT(std::shared_ptr<const base::Number> p)
 {
     setEOBT( p->getReal() );
     return true;
 }
 
 // maxBurstRng: max burst rng    (meters)
-bool AbstractWeapon::setSlotMaxGimbal(const base::Angle* const p)
+bool AbstractWeapon::setSlotMaxGimbal(std::shared_ptr<const base::Angle> p)
 {
     setMaxGimbalAngle( static_cast<double>(base::Radians::convertStatic(*p)) );
     return true;
 }
 
 // tgtPos: TEST
-bool AbstractWeapon::setSlotTgtPos(const base::List* const numList)
+bool AbstractWeapon::setSlotTgtPos(std::shared_ptr<const base::List> numList)
 {
     bool ok{};
     double values[3]{};
@@ -1451,21 +1444,21 @@ bool AbstractWeapon::setSlotTgtPos(const base::List* const numList)
 }
 
 // weaponID: weapon type ID
-bool AbstractWeapon::setSlotWeaponID(const base::Number* const p)
+bool AbstractWeapon::setSlotWeaponID(std::shared_ptr<const base::Number> p)
 {
     setWeaponID( p->getInt() );
     return true;
 }
 
 // jettisonable: weapon can be jettisoned
-bool AbstractWeapon::setSlotJettisonable(const base::Number* const p)
+bool AbstractWeapon::setSlotJettisonable(std::shared_ptr<const base::Number> p)
 {
     setJettisonable( p->getBoolean() );
     return true;
 }
 
 // testTgtName: TEST only: target player name
-bool AbstractWeapon::setSlotTestTgtName(const base::String* const p)
+bool AbstractWeapon::setSlotTestTgtName(std::shared_ptr<const base::String> p)
 {
    tstTgtNam = p;
    return true;

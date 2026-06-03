@@ -99,7 +99,6 @@ double AngularVelocity::convert(Angle* newAngleUnit, Time* newTimeUnit)
         //New angle is in degrees:
         const auto degrees = new Degrees;
         desiredAngle = static_cast<double>(degrees->convert(*internalRadians));
-        degrees->unref();
     }
     else if (dynamic_cast<Radians*>(newAngleUnit) != nullptr)
     {
@@ -111,14 +110,12 @@ double AngularVelocity::convert(Angle* newAngleUnit, Time* newTimeUnit)
         //New angle is in semicircles:
         const auto semicircles = new Semicircles;
         desiredAngle = static_cast<double>(semicircles->convert(*internalRadians));
-        semicircles->unref();
     }
     else
     {
         //Give Error - Not sure what type it is:
         std::cerr << "Angle Conversion Type Not Found." << std::endl;
     }
-    internalRadians->unref();
 
     //Find out what units the time input is in - do not use built in convert - very easy to do by hand:
     const auto q = dynamic_cast<Seconds*>(newTimeUnit);
@@ -157,7 +154,7 @@ bool AngularVelocity::setRadiansPerSecond(const double newAngularVelocity)
     return ok1;
 }
 
-bool AngularVelocity::setSlotAngle(const Angle* const msg)
+bool AngularVelocity::setSlotAngle(std::shared_ptr<const Angle> msg)
 {
     bool ok{};
 
@@ -172,7 +169,7 @@ bool AngularVelocity::setSlotAngle(const Angle* const msg)
 //------------------------------------------------------------------------------
 // setSlotTime() -- sets time based on input object and its value:
 //------------------------------------------------------------------------------
-bool AngularVelocity::setSlotTime(const Time* const msg)
+bool AngularVelocity::setSlotTime(std::shared_ptr<const Time> msg)
 {
     bool ok{};
 

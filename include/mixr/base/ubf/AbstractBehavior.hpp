@@ -40,7 +40,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotVote(const base::Number* const);
+   bool setSlotVote(std::shared_ptr<const base::Number>);
 };
 
 inline void AbstractBehavior::setVote(const int x)    { vote = x; }

@@ -162,7 +162,7 @@ bool TcpServerMultiple::setBacklog(const unsigned int value)
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool TcpServerMultiple::setSlotBacklog(const Number* const msg)
+bool TcpServerMultiple::setSlotBacklog(std::shared_ptr<const Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

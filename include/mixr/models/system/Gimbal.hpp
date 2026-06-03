@@ -329,61 +329,61 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotType(const base::String* const);                     // Physical gimbal type: "mechanical" or "electronic"
-   bool setSlotLocation(const base::List* const);                   // Relative location vector (meters) [ x y z ]
+   bool setSlotType(std::shared_ptr<const base::String>);                     // Physical gimbal type: "mechanical" or "electronic"
+   bool setSlotLocation(std::shared_ptr<const base::List>);                   // Relative location vector (meters) [ x y z ]
 
-   bool setSlotPosition(const base::List* const);                   // Initial position vector (radians) [ az el roll ]
-   bool setSlotPosAzimuth(const base::Angle* const);                // Initial azimuth position
-   bool setSlotPosElevation(const base::Angle* const);              // Initial elevation position
-   bool setSlotPosRoll(const base::Angle* const);                   // Initial roll position
+   bool setSlotPosition(std::shared_ptr<const base::List>);                   // Initial position vector (radians) [ az el roll ]
+   bool setSlotPosAzimuth(std::shared_ptr<const base::Angle>);                // Initial azimuth position
+   bool setSlotPosElevation(std::shared_ptr<const base::Angle>);              // Initial elevation position
+   bool setSlotPosRoll(std::shared_ptr<const base::Angle>);                   // Initial roll position
 
-   bool setSlotAzimuthLimits(const base::List* const);              // Azimuth limit vector (radians) [ left right ]
-   bool setSlotAzimuthLimitLeft(const base::Angle* const);          // Left azimuth limit
-   bool setSlotAzimuthLimitRight(const base::Angle* const);         // Right azimuth limit
+   bool setSlotAzimuthLimits(std::shared_ptr<const base::List>);              // Azimuth limit vector (radians) [ left right ]
+   bool setSlotAzimuthLimitLeft(std::shared_ptr<const base::Angle>);          // Left azimuth limit
+   bool setSlotAzimuthLimitRight(std::shared_ptr<const base::Angle>);         // Right azimuth limit
 
-   bool setSlotElevationLimits(const base::List* const);            // Elevation limit vector (radians) [ lower upper ]
-   bool setSlotElevationLower(const base::Angle* const);            // Lower elevation limit
-   bool setSlotElevationUpper(const base::Angle* const);            // Upper elevation limit
+   bool setSlotElevationLimits(std::shared_ptr<const base::List>);            // Elevation limit vector (radians) [ lower upper ]
+   bool setSlotElevationLower(std::shared_ptr<const base::Angle>);            // Lower elevation limit
+   bool setSlotElevationUpper(std::shared_ptr<const base::Angle>);            // Upper elevation limit
 
-   bool setSlotRollLimits(const base::List* const);                 // Roll limit vector (radians) [ lower upper ]
-   bool setSlotRollLimitLower(const base::Angle* const);            // Lower roll limit
-   bool setSlotRollLimitUpper(const base::Angle* const);            // Upper roll limit
+   bool setSlotRollLimits(std::shared_ptr<const base::List>);                 // Roll limit vector (radians) [ lower upper ]
+   bool setSlotRollLimitLower(std::shared_ptr<const base::Angle>);            // Lower roll limit
+   bool setSlotRollLimitUpper(std::shared_ptr<const base::Angle>);            // Upper roll limit
 
-   bool setSlotMaxRates(const base::List* const);                   // Max "mechanical" rate vector (rad/sec) [ az el roll ]
-   bool setSlotMaxRateAzimuth(const base::Angle* const);            // Max "mechanical" azimuth rate (base::Angle/sec)
-   bool setSlotMaxRateElevation(const base::Angle* const);          // Max "mechanical" elevation rate (base::Angle/sec)
-   bool setSlotMaxRateRoll(const base::Angle* const);               // Max "mechanical" roll rate (base::Angle/sec)
+   bool setSlotMaxRates(std::shared_ptr<const base::List>);                   // Max "mechanical" rate vector (rad/sec) [ az el roll ]
+   bool setSlotMaxRateAzimuth(std::shared_ptr<const base::Angle>);            // Max "mechanical" azimuth rate (base::Angle/sec)
+   bool setSlotMaxRateElevation(std::shared_ptr<const base::Angle>);          // Max "mechanical" elevation rate (base::Angle/sec)
+   bool setSlotMaxRateRoll(std::shared_ptr<const base::Angle>);               // Max "mechanical" roll rate (base::Angle/sec)
 
-   bool setSlotCmdPos(const base::List* const);                     // Commanded position vector  [ az el roll ] (sets POSITION_SERVO)
-   bool setSlotCmdPosAzimuth(const base::Angle* const);             // Commanded azimuth position  (sets POSITION_SERVO)
-   bool setSlotCmdPosElevation(const base::Angle* const);           // Commanded elevation position (sets POSITION_SERVO)
-   bool setSlotCmdPosRoll(const base::Angle* const);                // Commanded roll position  (sets POSITION_SERVO)
+   bool setSlotCmdPos(std::shared_ptr<const base::List>);                     // Commanded position vector  [ az el roll ] (sets POSITION_SERVO)
+   bool setSlotCmdPosAzimuth(std::shared_ptr<const base::Angle>);             // Commanded azimuth position  (sets POSITION_SERVO)
+   bool setSlotCmdPosElevation(std::shared_ptr<const base::Angle>);           // Commanded elevation position (sets POSITION_SERVO)
+   bool setSlotCmdPosRoll(std::shared_ptr<const base::Angle>);                // Commanded roll position  (sets POSITION_SERVO)
 
-   bool setSlotCmdRate(const base::List* const);                    // Commanded rate vector (rad/sec) [ az el roll ] (sets RATE_SERVO)
-   bool setSlotCmdRateAzimuth(const base::Angle* const);            // Commanded azimuth rate (sets RATE_SERVO)
-   bool setSlotCmdRateElevation(const base::Angle* const);          // Commanded elevation rate (sets RATE_SERVO)
-   bool setSlotCmdRateRoll(const base::Angle* const);               // Commanded roll rate (sets RATE_SERVO)
+   bool setSlotCmdRate(std::shared_ptr<const base::List>);                    // Commanded rate vector (rad/sec) [ az el roll ] (sets RATE_SERVO)
+   bool setSlotCmdRateAzimuth(std::shared_ptr<const base::Angle>);            // Commanded azimuth rate (sets RATE_SERVO)
+   bool setSlotCmdRateElevation(std::shared_ptr<const base::Angle>);          // Commanded elevation rate (sets RATE_SERVO)
+   bool setSlotCmdRateRoll(std::shared_ptr<const base::Angle>);               // Commanded roll rate (sets RATE_SERVO)
 
-   bool setSlotTerrainOcculting(const base::Number* const);         // Enable target terrain occulting (default: false)
-   bool setSlotCheckHorizon(const base::Number* const);             // Enable horizon masking check (default: true)
+   bool setSlotTerrainOcculting(std::shared_ptr<const base::Number>);         // Enable target terrain occulting (default: false)
+   bool setSlotCheckHorizon(std::shared_ptr<const base::Number>);             // Enable horizon masking check (default: true)
 
-   bool setSlotPlayerTypes(const base::PairStream* const);          // Player of interest types (default: 0 )
-   bool setSlotMaxPlayers(const base::Number* const);               // Max number of players of interest (default: 0)
+   bool setSlotPlayerTypes(std::shared_ptr<const base::PairStream>);          // Player of interest types (default: 0 )
+   bool setSlotMaxPlayers(std::shared_ptr<const base::Number>);               // Max number of players of interest (default: 0)
 
                                                                     // Max range to players of interest or zero for all (meters)
-   bool setSlotMaxRange2PlayersOfInterest(const base::Distance* const);
+   bool setSlotMaxRange2PlayersOfInterest(std::shared_ptr<const base::Distance>);
 
    // Max angle of gimbal boresight to players of interest or zero for all (rad)
-   bool setSlotMaxAngle2PlayersOfInterest(const base::Angle* const);
+   bool setSlotMaxAngle2PlayersOfInterest(std::shared_ptr<const base::Angle>);
 
    // Sets the local only players of interest flag
-   bool setSlotLocalPlayersOfInterestOnly(const base::Number* const);
+   bool setSlotLocalPlayersOfInterestOnly(std::shared_ptr<const base::Number>);
 
    // Using player of interest's world (ECEF) coordinate system
-   bool setSlotUseWorldCoordinates(const base::Number* const);
+   bool setSlotUseWorldCoordinates(std::shared_ptr<const base::Number>);
 
    // Use only the ownship player's heading to when transforming between body and local NED
-   bool setSlotUseOwnHeadingOnly(const base::Number* const);
+   bool setSlotUseOwnHeadingOnly(std::shared_ptr<const base::Number>);
 };
 
 }

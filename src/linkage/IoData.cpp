@@ -166,7 +166,7 @@ bool IoData::setNumDO(const int num)
 }
 
 // define the number of analog inputs (AIs) in the data block
-bool IoData::setSlotNumAI(const base::Number* const msg)
+bool IoData::setSlotNumAI(std::shared_ptr<const base::Number> msg)
 {
    bool ok {true};
    if (msg != nullptr) {
@@ -178,7 +178,7 @@ bool IoData::setSlotNumAI(const base::Number* const msg)
 }
 
 // define the number of analog outputs (AOs) in the data block
-bool IoData::setSlotNumAO(const base::Number* const msg)
+bool IoData::setSlotNumAO(std::shared_ptr<const base::Number> msg)
 {
    bool ok {true};
    if (msg != nullptr) {
@@ -190,7 +190,7 @@ bool IoData::setSlotNumAO(const base::Number* const msg)
 }
 
 // define the number of discrete inputs (DIs) in the data block
-bool IoData::setSlotNumDI(const base::Number* const msg)
+bool IoData::setSlotNumDI(std::shared_ptr<const base::Number> msg)
 {
    bool ok {true};
    if (msg != nullptr) {
@@ -202,7 +202,7 @@ bool IoData::setSlotNumDI(const base::Number* const msg)
 }
 
 // define the number of discrete outputs (DOs) in the data block
-bool IoData::setSlotNumDO(const base::Number* const msg)
+bool IoData::setSlotNumDO(std::shared_ptr<const base::Number> msg)
 {
    bool ok {true};
    if (msg != nullptr) {

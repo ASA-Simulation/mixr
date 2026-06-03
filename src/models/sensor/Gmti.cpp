@@ -106,7 +106,7 @@ void Gmti::setPoi(const base::Vec3d& newPoi)
 //------------------------------------------------------------------------------
 // setSlotPoi:  Set Slot POI Vector [ north east down ]
 //------------------------------------------------------------------------------
-bool Gmti::setSlotPoi(base::List* const numList)
+bool Gmti::setSlotPoi(std::shared_ptr<base::List> numList)
 {
     bool ok{};
     double values[3]{};

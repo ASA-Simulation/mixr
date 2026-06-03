@@ -134,27 +134,23 @@ void NetIO::copyData(const NetIO& org, const bool)
    for (unsigned int i = 0; i < org.nInputEntityTypes; i++) {
       Ntm* cp = org.inputEntityTypes[i]->clone();
       addInputEntityType( cp );
-      cp->unref();
    }
 
     clearOutputEntityTypes();
     for (unsigned int i = 0; i < org.nOutputEntityTypes; i++) {
       Ntm* cp = org.outputEntityTypes[i]->clone();
       addOutputEntityType( cp );
-      cp->unref();
     }
 }
 
 void NetIO::deleteData()
 {
    for (unsigned int i = 0; i < nInNibs; i++) {
-      inputList[i]->unref();
       inputList[i] = nullptr;
    }
    nInNibs = 0;
 
    for (unsigned int i = 0; i < nOutNibs; i++) {
-      outputList[i]->unref();
       outputList[i] = nullptr;
    }
    nOutNibs = 0;
@@ -505,7 +501,6 @@ void NetIO::updateOutputList()
             playerItem = playerItem->getNext();
          }
 
-         players->unref();
       }
 
       // ---
@@ -621,7 +616,6 @@ void NetIO::destroyInputNib(Nib* const nib)
       nib->getPlayer()->setMode(models::Player::DELETE_REQUEST);
    }
    // Once no one has a reference to us, our destructor will be called.
-   nib->unref();
 }
 
 void NetIO::destroyOutputNib(Nib* const nib)
@@ -630,7 +624,6 @@ void NetIO::destroyOutputNib(Nib* const nib)
    if (p != nullptr) p->setOutgoingNib(nullptr, netID);
 
    // Once no one has a reference to us, our destructor will be called.
-   nib->unref();
 }
 
 //------------------------------------------------------------------------------
@@ -702,8 +695,6 @@ models::Player* NetIO::createIPlayer(Nib* const nib)
          player->reset();
 
          // the simulation has it, so we should unref() both the player and the pair.
-         player->unref();
-         playerPair->unref();
       }
    }
 
@@ -723,7 +714,6 @@ Nib* NetIO::insertNewOutputNib(models::Player* const player)
         if (newNib != nullptr) {
             // Insert the new NIB into the 'output' list
             bool ok = addNibToList(newNib, OUTPUT_NIB);
-            newNib->unref(); // the list owns it now.
             if (!ok) newNib = nullptr;
         }
     }
@@ -800,7 +790,6 @@ bool NetIO::addNibToList(Nib* const nib, const IoType ioType)
       if (n < MAX_OBJECTS) {
 
          // Put the NIB on the top of the table
-         nib->ref();
          tbl[n] = nib;
 
          // Create a key for this new NIB
@@ -848,7 +837,6 @@ void NetIO::removeNibFromList(Nib* const nib, const IoType ioType)
 
    // Shift down all items above this NIB one position
    if (found >= 0) {
-      tbl[found]->unref();
       int n1 = (n - 1);
       for (int i = found; i < n1; i++) {
          tbl[i] = tbl[i+1];
@@ -920,7 +908,6 @@ bool NetIO::addInputEntityType(Ntm* const ntm)
    bool ok = false;
    if (nInputEntityTypes < MAX_ENTITY_TYPES && ntm != nullptr) {
 
-      ntm->ref();
       inputEntityTypes[nInputEntityTypes] = ntm;
       nInputEntityTypes++;
 
@@ -944,7 +931,6 @@ bool NetIO::addOutputEntityType(Ntm* const ntm)
    bool ok = false;
    if (nOutputEntityTypes < MAX_ENTITY_TYPES && ntm != nullptr) {
 
-      ntm->ref();
       outputEntityTypes[nOutputEntityTypes] = ntm;
       nOutputEntityTypes++;
 
@@ -967,14 +953,12 @@ bool NetIO::clearInputEntityTypes()
 {
    // Unref() the root node of the quick look tree
    if (inputNtmTree != nullptr) {
-      inputNtmTree->unref();
       inputNtmTree = nullptr;
    }
 
    // Clear our old input entity type table --
    while (nInputEntityTypes > 0) {
       nInputEntityTypes--;
-      inputEntityTypes[nInputEntityTypes]->unref();
       inputEntityTypes[nInputEntityTypes] = nullptr;
    }
 
@@ -986,14 +970,12 @@ bool NetIO::clearOutputEntityTypes()
 {
    // Unref() the root node of the quick look tree
    if (outputNtmTree != nullptr) {
-      outputNtmTree->unref();
       outputNtmTree = nullptr ;
    }
 
    // Clear our old output entity type table --
    while (nOutputEntityTypes > 0) {
       nOutputEntityTypes--;
-      outputEntityTypes[nOutputEntityTypes]->unref();
       outputEntityTypes[nOutputEntityTypes] = nullptr;
    }
 
@@ -1053,7 +1035,7 @@ void NetIO::testOutputEntityTypes(const unsigned int)
 //------------------------------------------------------------------------------
 
 // Set networkID
-bool NetIO::setSlotNetworkID(const base::Number* const num)
+bool NetIO::setSlotNetworkID(std::shared_ptr<const base::Number> num)
 {
     bool ok = false;
     if (num != nullptr) {
@@ -1070,19 +1052,19 @@ bool NetIO::setSlotNetworkID(const base::Number* const num)
 }
 
 // Sets our federate name
-bool NetIO::setSlotFederateName(const base::String* const msg)
+bool NetIO::setSlotFederateName(std::shared_ptr<const base::String> msg)
 {
    return setFederateName(msg);
 }
 
 // Sets our federation name
-bool NetIO::setSlotFederationName(const base::String* const msg)
+bool NetIO::setSlotFederationName(std::shared_ptr<const base::String> msg)
 {
    return setFederationName(msg);
 }
 
 // Set input enable flag
-bool NetIO::setSlotEnableInput(const base::Number* const p)
+bool NetIO::setSlotEnableInput(std::shared_ptr<const base::Number> p)
 {
     bool ok = false;
     if (p != nullptr) {
@@ -1093,7 +1075,7 @@ bool NetIO::setSlotEnableInput(const base::Number* const p)
 }
 
 // Set output enable flag
-bool NetIO::setSlotEnableOutput(const base::Number* const p)
+bool NetIO::setSlotEnableOutput(std::shared_ptr<const base::Number> p)
 {
     bool ok = false;
     if (p != nullptr) {
@@ -1104,7 +1086,7 @@ bool NetIO::setSlotEnableOutput(const base::Number* const p)
 }
 
 // Set relay enable flag
-bool NetIO::setSlotEnableRelay(const base::Number* const p)
+bool NetIO::setSlotEnableRelay(std::shared_ptr<const base::Number> p)
 {
     bool ok = false;
     if (p != nullptr) {
@@ -1115,7 +1097,7 @@ bool NetIO::setSlotEnableRelay(const base::Number* const p)
 }
 
 // Sets the source of the time ( UTC or EXEC )
-bool NetIO::setSlotTimeline(const base::Identifier* const p)
+bool NetIO::setSlotTimeline(std::shared_ptr<const base::Identifier> p)
 {
     bool ok = false;
     if (p != nullptr) {
@@ -1132,7 +1114,7 @@ bool NetIO::setSlotTimeline(const base::Identifier* const p)
 }
 
 // Sets the table of input entity to player mapper objects
-bool NetIO::setSlotInputEntityTypes(base::PairStream* const msg)
+bool NetIO::setSlotInputEntityTypes(std::shared_ptr<base::PairStream> msg)
 {
     bool ok = false;
     if (msg != nullptr) {
@@ -1157,7 +1139,7 @@ bool NetIO::setSlotInputEntityTypes(base::PairStream* const msg)
 }
 
 // Sets the table of output entity to player mapper objects
-bool NetIO::setSlotOutputEntityTypes(base::PairStream* const msg)
+bool NetIO::setSlotOutputEntityTypes(std::shared_ptr<base::PairStream> msg)
 {
     bool ok = false;
     if (msg != nullptr) {
@@ -1182,7 +1164,7 @@ bool NetIO::setSlotOutputEntityTypes(base::PairStream* const msg)
 }
 
 // Sets the mac DR time(s)
-bool NetIO::setSlotMaxTimeDR(const base::Time* const msg)
+bool NetIO::setSlotMaxTimeDR(std::shared_ptr<const base::Time> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -1193,7 +1175,7 @@ bool NetIO::setSlotMaxTimeDR(const base::Time* const msg)
 }
 
 // Sets the max positional error(s)
-bool NetIO::setSlotMaxPositionErr(const base::Distance* const msg)
+bool NetIO::setSlotMaxPositionErr(std::shared_ptr<const base::Distance> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -1204,7 +1186,7 @@ bool NetIO::setSlotMaxPositionErr(const base::Distance* const msg)
 }
 
 // Sets the max orientation error(s)
-bool NetIO::setSlotMaxOrientationErr(const base::Angle* const msg)
+bool NetIO::setSlotMaxOrientationErr(std::shared_ptr<const base::Angle> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -1215,7 +1197,7 @@ bool NetIO::setSlotMaxOrientationErr(const base::Angle* const msg)
 }
 
 // Sets the max age(s)
-bool NetIO::setSlotMaxAge(const base::Time* const msg)
+bool NetIO::setSlotMaxAge(std::shared_ptr<const base::Time> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -1226,7 +1208,7 @@ bool NetIO::setSlotMaxAge(const base::Time* const msg)
 }
 
 // Sets the max entity range(s)
-bool NetIO::setSlotMaxEntityRange(const base::Distance* const msg)
+bool NetIO::setSlotMaxEntityRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -1356,7 +1338,6 @@ NtmOutputNodeStd::NtmOutputNodeStd(const models::Player* const p, const char* co
    }
 
    if (p != nullptr) {
-      p->ref();
       tp = p;
 }
 
@@ -1386,7 +1367,6 @@ void NtmOutputNodeStd::copyData(const NtmOutputNodeStd& org, const bool cc)
    }
 
    if (tp != nullptr) {
-      tp->unref();
       tp = nullptr;
    }
    if (org.tp != nullptr) {
@@ -1394,7 +1374,6 @@ void NtmOutputNodeStd::copyData(const NtmOutputNodeStd& org, const bool cc)
    }
 
    if (ntmList != nullptr) {
-      ntmList->unref();
       ntmList = nullptr;
    }
    if (org.ntmList != nullptr) {
@@ -1402,7 +1381,6 @@ void NtmOutputNodeStd::copyData(const NtmOutputNodeStd& org, const bool cc)
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
    if (org.subnodeList != nullptr) {
@@ -1419,17 +1397,14 @@ void NtmOutputNodeStd::deleteData()
    }
 
    if (tp != nullptr) {
-      tp->unref();
       tp = nullptr;
    }
 
    if (ntmList != nullptr) {
-      ntmList->unref();
       ntmList = nullptr;
    }
 
    if (subnodeList != nullptr) {
-      subnodeList->unref();
       subnodeList = nullptr;
    }
 }
@@ -1573,7 +1548,6 @@ bool NtmOutputNodeStd::checkAndAddNtm(Ntm* const tgtNtm)
 
          // add the new node to our subnode list
          subnodeList->put(newNode);
-         newNode->unref();
          ok = true;
       }
    }
@@ -1588,7 +1562,6 @@ bool NtmOutputNodeStd::addNtmSorted(Ntm* const newNtm)
 {
    bool ok = false;
    if (newNtm != nullptr) {
-      newNtm->ref();
 
       // Create a new List::Item to contain this Ntm
       const auto newItem = new base::List::Item();

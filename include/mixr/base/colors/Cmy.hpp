@@ -71,9 +71,9 @@ protected:
 
 private:
    // slot table helper methods
-   bool setSlotCyan(const Number* const);
-   bool setSlotMagenta(const Number* const);
-   bool setSlotYellow(const Number* const);
+   bool setSlotCyan(std::shared_ptr<const Number>);
+   bool setSlotMagenta(std::shared_ptr<const Number>);
+   bool setSlotYellow(std::shared_ptr<const Number>);
 };
 
 }

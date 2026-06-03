@@ -54,7 +54,6 @@ void IrSignature::copyData(const IrSignature& org, const bool)
    if (org.waveBandTable != nullptr) {
       base::Table1* copy{org.waveBandTable->clone()};
       setSlotWaveBandSizes( copy );
-      copy->unref();
    } else {
       setSlotWaveBandSizes(nullptr);
    }
@@ -62,7 +61,6 @@ void IrSignature::copyData(const IrSignature& org, const bool)
    if (org.irShapeSignature != nullptr) {
       IrShape* copy{org.irShapeSignature->clone()};
       setSlotIrShapeSignature( copy );
-      copy->unref();
    } else {
       setSlotIrShapeSignature(nullptr);
    }
@@ -70,10 +68,8 @@ void IrSignature::copyData(const IrSignature& org, const bool)
 
 void IrSignature::deleteData()
 {
-   if (irShapeSignature != nullptr)   { irShapeSignature->unref(); irShapeSignature = nullptr; }
 
    if (waveBandTable != nullptr) {
-      waveBandTable->unref();
       waveBandTable = nullptr;
       numWaveBands = 0;
    }
@@ -82,16 +78,14 @@ void IrSignature::deleteData()
 //------------------------------------------------------------------------------
 // setSlotBinSizes() --  set number of separate bands
 //------------------------------------------------------------------------------
-bool IrSignature::setSlotWaveBandSizes(const base::Table1* const tbl)
+bool IrSignature::setSlotWaveBandSizes(std::shared_ptr<const base::Table1> tbl)
 {
    if (waveBandTable != nullptr) {
-      waveBandTable->unref();
       waveBandTable = nullptr;
       numWaveBands = 0;
    }
    if (tbl != nullptr) {
       waveBandTable = tbl;
-      tbl->ref();
       numWaveBands = tbl->getNumXPoints();
    }
    return true;
@@ -100,15 +94,13 @@ bool IrSignature::setSlotWaveBandSizes(const base::Table1* const tbl)
 //------------------------------------------------------------------------------
 // setSlotIrShapeSignature() --  set IR shape of the signature
 //------------------------------------------------------------------------------
-bool IrSignature::setSlotIrShapeSignature(IrShape* const s)
+bool IrSignature::setSlotIrShapeSignature(std::shared_ptr<IrShape> s)
 {
    if (irShapeSignature != nullptr) {
-      irShapeSignature->unref();
       irShapeSignature = nullptr;
    }
    if (s != nullptr) {
       irShapeSignature = s;
-      irShapeSignature->ref();
    }
    return true;
 }
@@ -116,7 +108,7 @@ bool IrSignature::setSlotIrShapeSignature(IrShape* const s)
 //------------------------------------------------------------------------------
 // setSlotBaseHeatSignature() -- set base heat signature
 //------------------------------------------------------------------------------
-bool IrSignature::setSlotBaseHeatSignature(base::Number* const num)
+bool IrSignature::setSlotBaseHeatSignature(std::shared_ptr<base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -135,7 +127,7 @@ bool IrSignature::setSlotBaseHeatSignature(base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotEmissivity() -- set emissivity
 //------------------------------------------------------------------------------
-bool IrSignature::setSlotEmissivity(mixr::base::Number* const num)
+bool IrSignature::setSlotEmissivity(std::shared_ptr<mixr::base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -153,7 +145,7 @@ bool IrSignature::setSlotEmissivity(mixr::base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotEffectiveArea() -- set effective area
 //------------------------------------------------------------------------------
-bool IrSignature::setSlotEffectiveArea(mixr::base::Number* const num)
+bool IrSignature::setSlotEffectiveArea(std::shared_ptr<mixr::base::Number> num)
 {
    bool ok{};
    double value{};

@@ -214,7 +214,7 @@ public:
 
    void updateData(const double dt = 0.0) override;
    void updateTC(const double dt = 0.0) override;
-   bool event(const int event, Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<Object> obj = nullptr) override;
    void reset() override;
 
 protected:
@@ -225,8 +225,8 @@ protected:
    Mode getMode() const                { return mode; }
 
    // Current argument
-   Object* getArgument()               { return arg; }
-   const Object* getArgument() const   { return arg; }
+   std::shared_ptr<Object> getArgument()               { return arg; }
+   std::shared_ptr<const Object> getArgument() const   { return arg; }
 
    // Previous state number
    unsigned short getPreviousState() const   { return pState; }
@@ -262,16 +262,16 @@ protected:
    // ---
 
    // Go to the next state in order, while passing an optional argument, 'arg'
-   bool next(Object* const arg = 0);
+   bool next(std::shared_ptr<Object> arg = 0);
 
    // Go to the new state, 'newState', while passing an optional argument, 'arg'
-   bool goTo(const unsigned short newState, Object* const arg = 0);
+   bool goTo(const unsigned short newState, std::shared_ptr<Object> arg = 0);
 
    // Call the 'newState', while passing an optional argument, 'arg'
-   bool call(const unsigned short newState, Object* const arg = 0);
+   bool call(const unsigned short newState, std::shared_ptr<Object> arg = 0);
 
    // Return to the calling state, while returning an optional argument, 'arg'
-   bool rtn(Object* const arg = 0);
+   bool rtn(std::shared_ptr<Object> arg = 0);
 
 
    // ---
@@ -290,22 +290,22 @@ protected:
    // ---
 
    // Go to the next parent state in order, while passing an optional argument, 'arg'
-   bool nextState(Object* const arg = 0);
+   bool nextState(std::shared_ptr<Object> arg = 0);
 
    // Go to the new parent state, 'newState', while passing an optional argument, 'arg'
-   bool goToState(const unsigned short newState, Object* const arg = 0);
+   bool goToState(const unsigned short newState, std::shared_ptr<Object> arg = 0);
 
    // Call the parent state 'newState', while passing an optional argument, 'arg'
-   bool callState(const unsigned short newState, Object* const arg = 0);
+   bool callState(const unsigned short newState, std::shared_ptr<Object> arg = 0);
 
    // Return to the parent's calling state, while returning an optional argument, 'arg'
-   bool rtnState(Object* const arg = 0);
+   bool rtnState(std::shared_ptr<Object> arg = 0);
 
    // ---
    // Event handlers
    // ---
-   virtual bool onEntry(Object* const msg = nullptr);
-   virtual bool onReturn(Object* const msg = nullptr);
+   virtual bool onEntry(std::shared_ptr<Object> msg = nullptr);
+   virtual bool onReturn(std::shared_ptr<Object> msg = nullptr);
    virtual bool onExit();
 
    // ---
@@ -321,14 +321,14 @@ private:
    // Next state
    unsigned short nState {INVALID_STATE};     // Next state number
    unsigned short nSubstate {INVALID_STATE};  // Next substate number
-   safe_ptr<Object> nArg;                     // Next argument
+   std::shared_ptr<Object> nArg;                     // Next argument
    Mode nMode {Mode::HOLD_STATE};             // Next mode
 
    // Current state
    unsigned short state {INVALID_STATE};      // Current state number
    unsigned short substate {INVALID_STATE};   // Current substate number
    Mode mode {Mode::HOLD_STATE};              // Current mode
-   safe_ptr<Object> arg;                      // Current argument
+   std::shared_ptr<Object> arg;                      // Current argument
    StateMachine* stMach {};                   // Current state's state machine object
    Identifier* stMachName {};                 // Current state's state machine name
 
@@ -344,11 +344,11 @@ private:
    unsigned short sp {STACK_SIZE};                           // Stack pointer
 
    // List of state machines
-   safe_ptr<PairStream> stMachList;
+   std::shared_ptr<PairStream> stMachList;
 
 private:
    // slot table helper methods
-   bool setSlotStateMachines(const PairStream* const);
+   bool setSlotStateMachines(std::shared_ptr<PairStream>);
 };
 
 }

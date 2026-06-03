@@ -1,9 +1,8 @@
+#pragma once
 
-#ifndef __mixr_base_Component_H__
-#define __mixr_base_Component_H__
+#include <memory>
 
 #include "mixr/base/Object.hpp"
-#include "mixr/base/safe_ptr.hpp"
 
 namespace mixr {
 namespace base {
@@ -268,14 +267,14 @@ public:
       public:  ~SendData()                                         { empty(); }
       public:  void empty();
       public:  Component* getObject(Component* p, const char* const id, const int n = 0);
-      public:  void setObject(Component* p);
-      public:  Object* getValue(const int value);
-      public:  Object* getValue(const float value);
-      public:  Object* getValue(const double value);
-      public:  Object* getValue(const char* const value);
-      public:  Object* getValue(const bool value);
-      private: Component* obj {};   // Object to send to
-      private: Object* past {};     // Old value
+      public:  void setObject(std::shared_ptr<Component> p);
+      public:  std::shared_ptr<Object> getValue(const int value);
+      public:  std::shared_ptr<Object> getValue(const float value);
+      public:  std::shared_ptr<Object> getValue(const double value);
+      public:  std::shared_ptr<Object> getValue(const char* const value);
+      public:  std::shared_ptr<Object> getValue(const bool value);
+      private: std::shared_ptr<Component> obj {};   // Object to send to
+      private: std::shared_ptr<Object> past {};     // Old value
    };
 
 public:
@@ -326,7 +325,7 @@ public:
    // Returns true if the 'event' has received and processed this component.
    // Typically implemented using the event macros (see above).
    // ---
-   virtual bool event(const int event, Object* const obj = nullptr);
+   virtual bool event(const int event, std::shared_ptr<Object> obj = nullptr);
 
    // ---
    // Send the 'event' message to our component named 'id' with an optional
@@ -340,7 +339,7 @@ public:
    bool send(const char* const id, const int event, const double value, SendData&);
    bool send(const char* const id, const int event, const char* const value, SendData&);
    bool send(const char* const id, const int event, const bool value, SendData&);
-   bool send(const char* const id, const int event, Object* const value, SendData&);
+   bool send(const char* const id, const int event, std::shared_ptr<Object> value, SendData&);
 
    // ---
    // Sends the 'event' message to 'n' components with 'n' arguments from the
@@ -356,7 +355,7 @@ public:
    bool send(const char* const id, const int event, const double value[], SendData sd[], const int n);
    bool send(const char* const id, const int event, const char* const value[], SendData sd[], const int n);
    bool send(const char* const id, const int event, const bool value[], SendData sd[], const int n);
-   bool send(const char* const id, const int event, Object* const value[], SendData sd[], const int n);
+   bool send(const char* const id, const int event, std::shared_ptr<Object> const value[], SendData sd[], const int n);
 
    // Timing-Critical Statistics (managed by the tcFrame() function)
    const Statistic* getTimingStats() const                                   { return timingStats; }
@@ -373,8 +372,8 @@ protected:
    virtual bool onEventReset();             // Reset event handler
 
    virtual bool setSelectionName(const Object* const s); // Name (or number) of component to select
-   virtual bool select(const String* const name);        // Select component by name
-   virtual bool select(const Number* const num);         // Select component by number
+   virtual bool select(const std::shared_ptr<const String>& name);        // Select component by name
+   virtual bool select(const std::shared_ptr<const Number>& num);         // Select component by number
 
    // processComponents() -- process our new components list;
    //   -- Add the components from the input list, 'list', to a new list
@@ -391,7 +390,7 @@ protected:
       );
 
 private:
-   safe_ptr<PairStream> components;    // Child components
+   std::shared_ptr<PairStream> components;    // Child components
    Component* containerPtr {};         // We are a component of this container
 
    Component* selected {};             // Selected child (process only this one)
@@ -404,20 +403,18 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotComponent(PairStream* const multiple);        // Sets the components list
-   bool setSlotComponent(Component* const single);           // Sets a single component
-   bool setSlotSelect(const String* const name)              { return select(name); }
-   bool setSlotSelect(const Number* const num)               { return select(num);  }
-   bool setSlotEnableTimingStats(const Number* const);       // Sets the timing enabled flag
-   bool setSlotPrintTimingStats(const Number* const);        // Sets the print timing stats flag
-   bool setSlotFreeze(const Number* const);                  // Sets the freeze flag
-   bool setSlotEnableMsgType(const Identifier* const);       // Enables message types by name
-   bool setSlotEnableMsgType(const Number* const);           // Enables message types by bit
-   bool setSlotDisableMsgType(const Identifier* const);      // Disables message types by name
-   bool setSlotDisableMsgType(const Number* const);          // Disables message types by bit
+   bool setSlotComponent(std::shared_ptr<PairStream> multiple);        // Sets the components list
+   bool setSlotComponent(std::shared_ptr<Component> single);           // Sets a single component
+   bool setSlotSelect(std::shared_ptr<const String> name)              { return select(name); }
+   bool setSlotSelect(std::shared_ptr<const Number> num)               { return select(num);  }
+   bool setSlotEnableTimingStats(std::shared_ptr<const Number>);       // Sets the timing enabled flag
+   bool setSlotPrintTimingStats(std::shared_ptr<const Number>);        // Sets the print timing stats flag
+   bool setSlotFreeze(std::shared_ptr<const Number>);                  // Sets the freeze flag
+   bool setSlotEnableMsgType(std::shared_ptr<const Identifier>);       // Enables message types by name
+   bool setSlotEnableMsgType(std::shared_ptr<const Number>);           // Enables message types by bit
+   bool setSlotDisableMsgType(std::shared_ptr<const Identifier>);      // Disables message types by name
+   bool setSlotDisableMsgType(std::shared_ptr<const Number>);          // Disables message types by bit
 };
 
 }
 }
-
-#endif

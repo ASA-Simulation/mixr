@@ -154,11 +154,9 @@ bool Datalink::setRadio(CommRadio* const p)
 {
    if (radio != nullptr) {
       radio->setDatalink(nullptr);
-      radio->unref();
    }
    radio = p;
    if (radio != nullptr) {
-      radio->ref();
       radio->setDatalink(this);
    }
    return true;
@@ -168,11 +166,9 @@ bool Datalink::setRadio(CommRadio* const p)
 bool Datalink::setRadioName(const base::String* const p)
 {
     if (radioName != nullptr) {
-        radioName->unref();
     }
     radioName = p;
     if (radioName != nullptr) {
-        radioName->ref();
     }
     return true;
 }
@@ -181,11 +177,9 @@ bool Datalink::setRadioName(const base::String* const p)
 bool Datalink::setTrackManager(TrackManager* const tm)
 {
     if (trackManager != nullptr) {
-        trackManager->unref();
     }
     trackManager = tm;
     if (trackManager != nullptr) {
-        trackManager->ref();
     }
     return true;
 }
@@ -194,11 +188,9 @@ bool Datalink::setTrackManager(TrackManager* const tm)
 bool Datalink::setTrackManagerName(const base::String* const name)
 {
     if (tmName != nullptr) {
-        tmName->unref();
     }
     tmName = name;
     if (tmName != nullptr) {
-        tmName->ref();
     }
     return true;
 }
@@ -272,7 +264,6 @@ void Datalink::dynamics(const double)
         if (msg != nullptr) {
             if (base::getComputerTime() - msg->getTimeStamp() > msg->getLifeSpan()) {
                 //remove message by not adding to list to be put back into queue
-                msg->unref();
             } else {
                 tempInQueue[numIn++] = msg;
             }
@@ -295,7 +286,6 @@ void Datalink::dynamics(const double)
         if(msg != nullptr) {
             if(base::getComputerTime() - msg->getTimeStamp() > msg->getLifeSpan()) {
                 //remove message by not adding to list to be put back into queue
-                msg->unref();
             } else {
                 tempOutQueue[numOut++] = msg;
             }
@@ -355,7 +345,6 @@ bool Datalink::sendMessage(base::Object* const msg)
                }
 
             }
-               players->unref();
                players = nullptr;
             }
          }
@@ -408,11 +397,9 @@ bool Datalink::queueIncomingMessage(base::Object* const msg)
 
       for(int i = 0; i < 10; i++) {
          base::Object* obj{inQueue->get()};
-         obj->unref();
       } //clear out 10 oldest messages
    }
    if (msg != nullptr) {
-      msg->ref();
       inQueue->put(msg);
    }
    return true;
@@ -434,11 +421,9 @@ bool Datalink::queueOutgoingMessage(base::Object* const msg)
 
         for(int i = 0; i < 10; i++) {
             base::Object* obj{outQueue->get()};
-            if (obj != nullptr) obj->unref();
         } //clear out 10 oldest messages
     }
     if (msg != nullptr) {
-       msg->ref();
        outQueue->put(msg);
     }
     return true;
@@ -451,12 +436,10 @@ void Datalink::clearQueues()
 {
    base::Object* msg{inQueue->get()};
    while (msg != nullptr) {
-      msg->unref();
       msg = inQueue->get();
    }
    msg = outQueue->get();
    while (msg != nullptr) {
-      msg->unref();
       msg = outQueue->get();
    }
 }
@@ -477,7 +460,6 @@ bool Datalink::onDatalinkMessageEvent(base::Object* const msg)
          base::Component* sc{static_cast<base::Component*>(pair->object())};
          sc->event(DATALINK_MESSAGE, msg);
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
    return true;
@@ -487,7 +469,7 @@ bool Datalink::onDatalinkMessageEvent(base::Object* const msg)
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool Datalink::setSlotRadioId(const base::Number* const msg)
+bool Datalink::setSlotRadioId(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -501,7 +483,7 @@ bool Datalink::setSlotRadioId(const base::Number* const msg)
    return ok;
 }
 
-bool Datalink::setSlotMaxRange(const base::Distance* const msg)
+bool Datalink::setSlotMaxRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if(msg != nullptr) {

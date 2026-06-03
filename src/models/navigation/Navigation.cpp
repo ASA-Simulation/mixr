@@ -64,14 +64,12 @@ void Navigation::copyData(const Navigation& org, const bool cc)
       Route* p{org.priRoute->clone()};
       priRoute = p;
       p->container(this);
-      p->unref();  // safe_ptr<> has it
    } else {
       priRoute = nullptr;
    }
    if (org.initRoute != nullptr) {
       Route* p{org.initRoute->clone()};
       initRoute = p;
-      p->unref();  // safe_ptr<> has it
    } else {
       initRoute = nullptr;
    }
@@ -79,7 +77,6 @@ void Navigation::copyData(const Navigation& org, const bool cc)
       Bullseye* b{org.bull->clone()};
       bull = b;
       b->container(this);
-      b->unref();  // safe_ptr<> has it
    } else {
       bull = nullptr;
    }
@@ -156,7 +153,6 @@ void Navigation::reset()
    }
    if (initRoute != nullptr) {
       priRoute = initRoute->clone();
-      priRoute->unref();  // safe_ptr<> has it
    }
    if (priRoute != nullptr) {
       priRoute->container(this);
@@ -777,7 +773,7 @@ bool Navigation::setRoute(Route* const msg)
 //------------------------------------------------------------------------------
 // Set slot functions
 //------------------------------------------------------------------------------
-bool Navigation::setSlotRoute(const Route* const msg)
+bool Navigation::setSlotRoute(std::shared_ptr<const Route> msg)
 {
    initRoute = msg;
 
@@ -787,7 +783,6 @@ bool Navigation::setSlotRoute(const Route* const msg)
    }
    if (initRoute != nullptr) {
       priRoute = initRoute->clone();
-      priRoute->unref();  // safe_ptr<> has it
    }
    if (priRoute != nullptr) {
       priRoute->container(this);
@@ -795,7 +790,7 @@ bool Navigation::setSlotRoute(const Route* const msg)
    return true;
 }
 
-bool Navigation::setSlotUtc(const base::Time* const msg)
+bool Navigation::setSlotUtc(std::shared_ptr<const base::Time> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -806,7 +801,7 @@ bool Navigation::setSlotUtc(const base::Time* const msg)
 }
 
 // setSlotFeba() --- Sets the FEBA points
-bool Navigation::setSlotFeba(const base::PairStream* const msg)
+bool Navigation::setSlotFeba(std::shared_ptr<const base::PairStream> msg)
 {
     bool ok{true};
 
@@ -884,7 +879,7 @@ bool Navigation::setSlotFeba(const base::PairStream* const msg)
 
     return ok;
 }
-bool Navigation::setSlotBullseye(Bullseye* const msg)
+bool Navigation::setSlotBullseye(std::shared_ptr<Bullseye> msg)
 {
    if (bull != nullptr) {
       bull->container(nullptr);

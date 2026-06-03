@@ -59,8 +59,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotType(const base::String* const);
-   bool setSlotJettisonable(base::Number* const);
+   bool setSlotType(std::shared_ptr<const base::String>);
+   bool setSlotJettisonable(std::shared_ptr<base::Number>);
 };
 
 }

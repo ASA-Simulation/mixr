@@ -99,7 +99,6 @@ void Station::copyData(const Station& org, const bool)
    if (org.sim != nullptr) {
       Simulation* copy = org.sim->clone();
       setSlotSimulation( copy );
-      copy->unref();
    } else {
       setSlotSimulation(nullptr);
    }
@@ -108,7 +107,6 @@ void Station::copyData(const Station& org, const bool)
    if (org.igHosts != nullptr) {
       base::PairStream* copy = org.igHosts->clone();
       setSlotIgHosts( copy );
-      copy->unref();
    } else {
       setSlotIgHosts(static_cast<base::PairStream*>(nullptr));
    }
@@ -117,7 +115,6 @@ void Station::copyData(const Station& org, const bool)
    if (org.networks != nullptr) {
       base::PairStream* copy = org.networks->clone();
       setSlotNetworks( copy );
-      copy->unref();
    } else {
       setSlotNetworks(static_cast<base::PairStream*>(nullptr));
    }
@@ -126,14 +123,12 @@ void Station::copyData(const Station& org, const bool)
    if (org.ioHandler != nullptr) {
       base::AbstractIoHandler* copy = org.ioHandler->clone();
       setSlotIoHandler( copy );
-      copy->unref();
    }
 
    {  // clone the data recorder
       AbstractDataRecorder* copy{};
       if (org.dataRecorder != nullptr) copy = org.dataRecorder->clone();
       setDataRecorder(copy);
-      if (copy != nullptr) copy->unref();
    }
 
    tcRate = org.tcRate;
@@ -154,7 +149,6 @@ void Station::copyData(const Station& org, const bool)
    if (org.startupResetTimer0!= nullptr) {
       base::Time* copy = org.startupResetTimer0->clone();
       setSlotStartupResetTime( copy );
-      copy->unref();
    } else {
       setSlotStartupResetTime(nullptr);
    }
@@ -162,8 +156,6 @@ void Station::copyData(const Station& org, const bool)
    startupResetTimer = org.startupResetTimer;
 
    // Unref our old stuff (if any)
-   if (ownshipName != nullptr)      { ownshipName->unref(); ownshipName = nullptr; }
-   if (ownship != nullptr)          { ownship->unref(); ownship = nullptr; }
 
    // Copy own ownship name
    if (org.ownshipName != nullptr) {
@@ -294,7 +286,6 @@ void Station::updateTC(const double dt)
 
          item = item->getNext();
       }
-      if (playerList != nullptr) playerList->unref();
    }
 
    // Startup RESET timer --
@@ -444,7 +435,6 @@ void Station::createTimeCriticalProcess()
 {
    if ( tcThread == nullptr ) {
       tcThread = new StationTcPeriodicThread(this, getTimeCriticalRate());
-      tcThread->unref(); // 'tcThread' is a safe_ptr<>
 
       if (tcStackSize > 0) tcThread->setStackSize( tcStackSize );
 
@@ -465,7 +455,6 @@ void Station::createNetworkProcess()
 {
    if ( netThread == nullptr ) {
       netThread = new StationNetPeriodicThread(this, getNetworkRate());
-      netThread->unref(); // 'netThread' is a safe_ptr<>
 
       if (netStackSize > 0) netThread->setStackSize( netStackSize );
 
@@ -486,7 +475,6 @@ void Station::createBackgroundProcess()
 {
    if ( bgThread == nullptr ) {
       bgThread = new StationBgPeriodicThread(this, getBackgroundRate());
-      bgThread->unref(); // 'bgThread' is a safe_ptr<>
 
       if (bgStackSize > 0) bgThread->setStackSize( bgStackSize );
 
@@ -826,7 +814,6 @@ bool Station::setOwnshipByName(const char* const newOS)
       }
 
       // Cleanup
-      pl->unref();
       pl = nullptr;
    }
 
@@ -844,10 +831,8 @@ bool Station::setOwnshipPlayer(AbstractPlayer* const newOS)
     // When we're just setting a null(0) ownship ...
     if (newOS == nullptr) {
         // Unref the old player
-        if (ownshipName != nullptr) { ownshipName->unref(); ownshipName = nullptr; }
         if (ownship != nullptr) {
             ownship->event(ON_OWNSHIP_DISCONNECT);
-            ownship->unref();
             ownship = nullptr;
         }
         return true;
@@ -864,17 +849,13 @@ bool Station::setOwnshipPlayer(AbstractPlayer* const newOS)
                 const auto ip = dynamic_cast<AbstractPlayer*>( pair->object() );
                 if (ip == newOS && ip->isLocalPlayer()) {
                     // Unref the old stuff
-                    if (ownshipName != nullptr) { ownshipName->unref(); ownshipName = nullptr; }
                     if (ownship != nullptr) {
                         ownship->event(ON_OWNSHIP_DISCONNECT);
-                        ownship->unref();
                         ownship = nullptr;
                     }
                     // Ok, we found the player -- make it our ownship
                     ownship = newOS;
-                    ownship->ref();
                     ownshipName = pair->slot();
-                    ownshipName->ref();
                     ownship->event(ON_OWNSHIP_CONNECT);
                     set = true;
                 }
@@ -882,7 +863,6 @@ bool Station::setOwnshipPlayer(AbstractPlayer* const newOS)
             item = item->getNext();
         }
 
-        pl->unref();
         pl = nullptr;
     }
     return set;
@@ -893,9 +873,7 @@ bool Station::setOwnshipPlayer(AbstractPlayer* const newOS)
 //------------------------------------------------------------------------------
 bool Station::setDataRecorder(AbstractDataRecorder* const p)
 {
-   if (dataRecorder != nullptr) { dataRecorder->container(nullptr); dataRecorder->unref(); }
    dataRecorder = p;
-   if (dataRecorder != nullptr) { dataRecorder->container(this); dataRecorder->ref(); }
    return true;
 }
 
@@ -903,21 +881,19 @@ bool Station::setDataRecorder(AbstractDataRecorder* const p)
 //-----------------------------------------------------------------------------
 // setSlotSimExec() -- Sets a pointer to our simulation executive
 //-----------------------------------------------------------------------------
-bool Station::setSlotSimulation(Simulation* const p)
+bool Station::setSlotSimulation(std::shared_ptr<Simulation> p)
 {
     if (sim != nullptr) {
         sim->container(nullptr);
-        sim->unref();
     }
     sim = p;
     if (sim != nullptr) {
-        sim->ref();
         sim->container(this);
     }
     return true;
 }
 
-bool Station::setSlotIgHosts(base::PairStream* const list)
+bool Station::setSlotIgHosts(std::shared_ptr<base::PairStream> list)
 {
    base::PairStream* newList{};
 
@@ -959,7 +935,7 @@ bool Station::setSlotIgHosts(base::PairStream* const list)
    return true;
 }
 
-bool Station::setSlotIoHandler(base::AbstractIoHandler* const p)
+bool Station::setSlotIoHandler(std::shared_ptr<base::AbstractIoHandler> p)
 {
    if (ioHandler != nullptr) {
       ioHandler->container(nullptr);
@@ -972,18 +948,16 @@ bool Station::setSlotIoHandler(base::AbstractIoHandler* const p)
 //------------------------------------------------------------------------------
 // setSlotOwnshipName() -- sets the ownship name to the new string
 //------------------------------------------------------------------------------
-bool Station::setSlotOwnshipName(const base::String* const newName)
+bool Station::setSlotOwnshipName(std::shared_ptr<const base::String> newName)
 {
-   if (ownshipName != nullptr) ownshipName->unref();
    ownshipName = newName;
-   if (ownshipName != nullptr) ownshipName->ref();
    return true;
 }
 
 //------------------------------------------------------------------------------
 // setSlotNetworks() -- Set our list of networks
 //------------------------------------------------------------------------------
-bool Station::setSlotNetworks(base::PairStream* const a)
+bool Station::setSlotNetworks(std::shared_ptr<base::PairStream> a)
 {
     bool ok{true};
 
@@ -1022,7 +996,7 @@ bool Station::setSlotNetworks(base::PairStream* const a)
 //------------------------------------------------------------------------------
 // setSlotTimeCriticalRate() -- Sets the T/C thread rate (hz)
 //------------------------------------------------------------------------------
-bool Station::setSlotTimeCriticalRate(const base::Number* const num)
+bool Station::setSlotTimeCriticalRate(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1041,7 +1015,7 @@ bool Station::setSlotTimeCriticalRate(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotTimeCriticalPri() -- Sets the T/C thread priority
 //------------------------------------------------------------------------------
-bool Station::setSlotTimeCriticalPri(const base::Number* const num)
+bool Station::setSlotTimeCriticalPri(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1056,7 +1030,7 @@ bool Station::setSlotTimeCriticalPri(const base::Number* const num)
     return ok;
 }
 
-bool Station::setSlotTimeCriticalStackSize(const base::Number* const num)
+bool Station::setSlotTimeCriticalStackSize(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1072,7 +1046,7 @@ bool Station::setSlotTimeCriticalStackSize(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotNetworkRate() -- Sets the network thread rate (hz)
 //------------------------------------------------------------------------------
-bool Station::setSlotNetworkRate(const base::Number* const num)
+bool Station::setSlotNetworkRate(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1091,7 +1065,7 @@ bool Station::setSlotNetworkRate(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotNetworkPri() -- Sets the network thread priority
 //------------------------------------------------------------------------------
-bool Station::setSlotNetworkPri(const base::Number* const num)
+bool Station::setSlotNetworkPri(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1106,7 +1080,7 @@ bool Station::setSlotNetworkPri(const base::Number* const num)
     return ok;
 }
 
-bool Station::setSlotNetworkStackSize(const base::Number* const num)
+bool Station::setSlotNetworkStackSize(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1122,7 +1096,7 @@ bool Station::setSlotNetworkStackSize(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotBackgroundRate() -- Sets the background thread rate (hz)
 //------------------------------------------------------------------------------
-bool Station::setSlotBackgroundRate(const base::Number* const num)
+bool Station::setSlotBackgroundRate(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1141,7 +1115,7 @@ bool Station::setSlotBackgroundRate(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotBackgroundPri() -- Sets the background thread priority
 //------------------------------------------------------------------------------
-bool Station::setSlotBackgroundPri(const base::Number* const num)
+bool Station::setSlotBackgroundPri(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1156,7 +1130,7 @@ bool Station::setSlotBackgroundPri(const base::Number* const num)
     return ok;
 }
 
-bool Station::setSlotBackgroundStackSize(const base::Number* const num)
+bool Station::setSlotBackgroundStackSize(std::shared_ptr<const base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -1172,16 +1146,14 @@ bool Station::setSlotBackgroundStackSize(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotStartupResetTime() -- Sets the startup RESET pulse timer
 //------------------------------------------------------------------------------
-bool Station::setSlotStartupResetTime(const base::Time* const num)
+bool Station::setSlotStartupResetTime(std::shared_ptr<const base::Time> num)
 {
     if (startupResetTimer0 != nullptr) {
-        startupResetTimer0->unref();
         startupResetTimer0 = nullptr;
         startupResetTimer = -1.0;
     }
     startupResetTimer0 = num;
     if (startupResetTimer0 != nullptr) {
-        startupResetTimer0->ref();
         startupResetTimer = base::Seconds::convertStatic(*startupResetTimer0);
     }
     return true;
@@ -1200,7 +1172,7 @@ bool Station::setFastForwardRate(const unsigned int r)
 //------------------------------------------------------------------------------
 // Sets the fast forward rate
 //------------------------------------------------------------------------------
-bool Station::setSlotFastForwardRate(const base::Number* const msg)
+bool Station::setSlotFastForwardRate(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1215,7 +1187,7 @@ bool Station::setSlotFastForwardRate(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Enables/disables the base::Timer::updateTimers() call
 //------------------------------------------------------------------------------
-bool Station::setSlotEnableUpdateTimers(const base::Number* const msg)
+bool Station::setSlotEnableUpdateTimers(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

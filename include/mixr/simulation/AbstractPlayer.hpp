@@ -120,8 +120,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotID(const base::Number* const);
-   bool setSlotInitMode(base::String* const);
+   bool setSlotID(std::shared_ptr<const base::Number>);
+   bool setSlotInitMode(std::shared_ptr<base::String>);
 };
 
 #include "mixr/simulation/AbstractPlayer.inl"

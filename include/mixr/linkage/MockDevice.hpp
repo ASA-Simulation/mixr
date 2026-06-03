@@ -60,7 +60,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotGenerators(base::PairStream* const);
+   bool setSlotGenerators(std::shared_ptr<base::PairStream>);
 };
 
 }

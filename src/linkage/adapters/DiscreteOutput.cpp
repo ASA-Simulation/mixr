@@ -62,7 +62,7 @@ void DiscreteOutput::processOutputsImpl(const base::AbstractIoData* const outDat
 }
 
 // location: Output array index (location)
-bool DiscreteOutput::setSlotLocation(const base::Number* const msg)
+bool DiscreteOutput::setSlotLocation(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -75,7 +75,7 @@ bool DiscreteOutput::setSlotLocation(const base::Number* const msg)
 }
 
 // port: DiHandler's port number
-bool DiscreteOutput::setSlotPort(const base::Number* const msg)
+bool DiscreteOutput::setSlotPort(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -88,7 +88,7 @@ bool DiscreteOutput::setSlotPort(const base::Number* const msg)
 }
 
 // channel: DiHandler's channel (bit) number on the port
-bool DiscreteOutput::setSlotChannel(const base::Number* const msg)
+bool DiscreteOutput::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -101,7 +101,7 @@ bool DiscreteOutput::setSlotChannel(const base::Number* const msg)
 }
 
 // invert: Inverted bit flag (default: false)
-bool DiscreteOutput::setSlotInverted(const base::Number* const msg)
+bool DiscreteOutput::setSlotInverted(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

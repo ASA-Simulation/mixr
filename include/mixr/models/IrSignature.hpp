@@ -130,11 +130,11 @@ private:
 
 private:
    // slot table helper methods 
-   bool setSlotWaveBandSizes(const base::Table1* const);
-   bool setSlotIrShapeSignature(IrShape* const);
-   bool setSlotBaseHeatSignature(base::Number* const);
-   bool setSlotEmissivity(base::Number* const);
-   bool setSlotEffectiveArea(base::Number* const);
+   bool setSlotWaveBandSizes(std::shared_ptr<const base::Table1>);
+   bool setSlotIrShapeSignature(std::shared_ptr<IrShape>);
+   bool setSlotBaseHeatSignature(std::shared_ptr<base::Number>);
+   bool setSlotEmissivity(std::shared_ptr<base::Number>);
+   bool setSlotEffectiveArea(std::shared_ptr<base::Number>);
 };
 
 }

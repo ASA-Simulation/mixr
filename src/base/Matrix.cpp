@@ -193,11 +193,6 @@ Matrix* Matrix::getInvLU() const
       }
    }
 
-   pL->unref();
-   pU->unref();
-   pB->unref();
-   pY->unref();
-
    return pX;
 }
 
@@ -219,10 +214,6 @@ double Matrix::getDeterm() const
    for (unsigned int i = 0; i < N; i++) {
       determ *= (*pU)(i,i);
    }
-
-   // unref pointers
-   pL->unref();
-   pU->unref();
 
    return determ;
 }
@@ -1066,9 +1057,6 @@ bool Matrix::getEigenPower(const double maxErr, const int maxIter,
          const double Wmag{pW->getMaxMag()};      // max mag value from elements of vector W
          if (Wmag == 0.0) {
             // mag value is zero; cleanup and leave
-            pW->unref();
-            pZ->unref();
-            pA->unref();
             return false;
          }
          pW->multiply(1.0/Wmag);           // normalize eigenvector with max element of W
@@ -1088,7 +1076,6 @@ bool Matrix::getEigenPower(const double maxErr, const int maxIter,
             double num = base::dotProduct(*pZT, *pW);
             double den = base::dotProduct(*pZT, *pZ);
             alfa *= (num / den);  // save Rayleigh eigenvalue estimate
-            pZT->unref();
          }
 #endif
 
@@ -1096,7 +1083,6 @@ bool Matrix::getEigenPower(const double maxErr, const int maxIter,
          // save eigenvector W estimate in vector Z to begin next loop
          //----------------------------------------------------
          *pZ = *pW;                        // save eigenvector estimate for next iteration
-         pW->unref();
       }
 
       //----------------------------------------------------
@@ -1107,8 +1093,6 @@ bool Matrix::getEigenPower(const double maxErr, const int maxIter,
          CVector* pW1{base::multiply(*pZ, alfa)};  // pW1 used here as intermediate vector
          pE->subtract(*pW1);
          Err = pE->getNorm();              // magnitude of error vector
-         pE->unref();
-         pW1->unref();
       }
 
       //----------------------------------------------------
@@ -1126,8 +1110,6 @@ bool Matrix::getEigenPower(const double maxErr, const int maxIter,
    //-------------------------------------------------------
    // unref pointers
    //-------------------------------------------------------
-   pZ->unref();
-   pA->unref();
 
    return true;
 }
@@ -1275,10 +1257,6 @@ bool Matrix::getQR(Matrix* const pQ, Matrix* const pR) const
       double s{pV->getNorm()};
 
       if (s == 0.0) {
-         pQI->unref();
-         pRI->unref();
-         pX->unref();
-         pV->unref();
          return false;
       }
 
@@ -1293,17 +1271,12 @@ bool Matrix::getQR(Matrix* const pQ, Matrix* const pR) const
          CVector* pU0{base::multiply((*pRIT), (*pW))};
          CVector* pU{base::multiply((*pU0), 2.0)};
          RVector* pUT{pU->getTranspose()};
-         pU0->unref();
-         pU->unref();
-         pRIT->unref();
 
          //----------------------------------------------------
          // R = R - W*U'
          //----------------------------------------------------
          Matrix* pM1{outerProduct(*pW, *pUT)};
          pRI->subtract(*pM1);
-         pM1->unref();
-         pUT->unref();
       }
 
       //----------------------------------------------------
@@ -1314,16 +1287,11 @@ bool Matrix::getQR(Matrix* const pQ, Matrix* const pR) const
          Matrix* pM3{base::multiply(*pQI, *pM2)};
          Matrix* pM4{base::multiply(*pM3, 2.0)};
          pQI->subtract(*pM4);
-         pM2->unref();
-         pM3->unref();
-         pM4->unref();
       }
 
       //-------------------------------------------------------
       // Unref pointers
       //-------------------------------------------------------
-      pW->unref();
-      pWT->unref();
    }
 
    //-------------------------------------------------------
@@ -1335,10 +1303,6 @@ bool Matrix::getQR(Matrix* const pQ, Matrix* const pR) const
    //-------------------------------------------------------
    // Unref pointers
    //-------------------------------------------------------
-   pQI->unref();
-   pRI->unref();
-   pX->unref();
-   pV->unref();
 
    return true;
 }
@@ -1410,12 +1374,6 @@ bool Matrix::getTriDiagonal(Matrix* const pA) const
       //----------------------------------------------------
       // unref intermediate loop pointers
       //----------------------------------------------------
-      pX->unref();
-      pY->unref();
-      pM->unref();
-      pH->unref();
-      pAI0->unref();
-      pAI1->unref();
    }
 
    //-------------------------------------------------------
@@ -1426,7 +1384,6 @@ bool Matrix::getTriDiagonal(Matrix* const pA) const
    //----------------------------------------------------
    // unref pointers
    //----------------------------------------------------
-   pAI->unref();
 
    return true;
 }

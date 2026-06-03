@@ -83,7 +83,7 @@ bool Ntm::setEntityType(
 //------------------------------------------------------------------------------
 // Set DIS entity type enumerations
 //------------------------------------------------------------------------------
-bool Ntm::setSlotDisEntityType(const base::List* const msg)
+bool Ntm::setSlotDisEntityType(std::shared_ptr<const base::List> msg)
 {
    bool ok {};
    if (msg != nullptr) {

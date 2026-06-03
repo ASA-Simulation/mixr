@@ -1,5 +1,5 @@
 {
-    "C_Cpp.default.compileCommands": "build/compile_commands.json",
+    "C_Cpp.default.compileCommands": ".vscode/compile_commands.json",
     "editor.formatOnSave": false,
     "files.associations": {
         "chrono": "cpp",
@@ -77,6 +77,4 @@
         "ranges": "cpp",
         "stop_token": "cpp"
     },
-    "mesonbuild.buildFolder": "build",
-    "mesonbuild.configureOnOpen": false
 }

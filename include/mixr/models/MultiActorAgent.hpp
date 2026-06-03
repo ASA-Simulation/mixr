@@ -73,8 +73,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotState(base::ubf::AbstractState* const);
-   bool setSlotAgentList(base::PairStream* const);
+   bool setSlotState(std::shared_ptr<base::ubf::AbstractState>);
+   bool setSlotAgentList(std::shared_ptr<base::PairStream>);
 };
 
 inline void MultiActorAgent::setActor(base::Component* c) { actor=c; }

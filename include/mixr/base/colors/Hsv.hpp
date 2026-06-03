@@ -105,9 +105,9 @@ protected:
     Vec4d hsv;
 
 private:
-    bool setSlotHue(const Number* const);
-    bool setSlotSaturation(const Number* const);
-    bool setSlotValue(const Number* const);
+    bool setSlotHue(std::shared_ptr<const Number>);
+    bool setSlotSaturation(std::shared_ptr<const Number>);
+    bool setSlotValue(std::shared_ptr<const Number>);
 };
 
 }

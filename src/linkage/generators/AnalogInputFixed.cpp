@@ -42,7 +42,7 @@ void AnalogInputFixed::processInputsImpl(const double dt, base::AbstractIoData* 
    }
 }
 
-bool AnalogInputFixed::setSlotChannel(const base::Number* const msg)
+bool AnalogInputFixed::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -54,7 +54,7 @@ bool AnalogInputFixed::setSlotChannel(const base::Number* const msg)
    return ok;
 }
 
-bool AnalogInputFixed::setSlotValue(const base::Number* const msg)
+bool AnalogInputFixed::setSlotValue(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

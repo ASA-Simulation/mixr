@@ -40,7 +40,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotVerifyChecksum(const base::Number* const);
+   bool setSlotVerifyChecksum(std::shared_ptr<const base::Number>);
 };
 
 

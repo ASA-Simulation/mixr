@@ -67,13 +67,13 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotMinSpeed(const base::Number* const);
-   bool setSlotSpeedMaxG(const base::Number* const);
-   bool setSlotMaxG(const base::Number* const);
-   bool setSlotMaxAccel(const base::Number* const);
-   bool setSlotCmdAltitude(const base::Distance* const);
-   bool setSlotCmdHeading(const base::Angle* const);
-   bool setSlotCmdVelocity(const base::Number* const);
+   bool setSlotMinSpeed(std::shared_ptr<const base::Number>);
+   bool setSlotSpeedMaxG(std::shared_ptr<const base::Number>);
+   bool setSlotMaxG(std::shared_ptr<const base::Number>);
+   bool setSlotMaxAccel(std::shared_ptr<const base::Number>);
+   bool setSlotCmdAltitude(std::shared_ptr<const base::Distance>);
+   bool setSlotCmdHeading(std::shared_ptr<const base::Angle>);
+   bool setSlotCmdVelocity(std::shared_ptr<const base::Number>);
 };
 
 }

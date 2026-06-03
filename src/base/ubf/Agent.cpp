@@ -31,8 +31,6 @@ Agent::Agent()
 
 void Agent::deleteData()
 {
-   if ( behavior!=nullptr ) { behavior->unref(); behavior = nullptr; }
-   if ( state!=nullptr )    { state->unref(); state = nullptr; }
 
    myActor = nullptr;
 }
@@ -74,7 +72,6 @@ void Agent::controller(const double dt)
       AbstractAction* action{getBehavior()->genAction(state, dt)};
       if (action) {
          action->execute(actor);
-         action->unref();
       }
    }
 }
@@ -88,9 +85,7 @@ void Agent::setBehavior(AbstractBehavior* const x)
    if (x==nullptr)
       return;
    if (behavior!=nullptr)
-      behavior->unref();
    behavior = x;
-   behavior->ref();
    behavior->container(this);
 }
 
@@ -103,13 +98,10 @@ void Agent::setState(AbstractState* const x)
    if (x==nullptr)
       return;
    if (state!=nullptr)
-      state->unref();
    state = x;
-   state->ref();
    state->container(this);
    const auto p = new base::Pair("", state);
    addComponent(p);
-   p->unref();
 }
 
 
@@ -132,7 +124,7 @@ void Agent::initActor()
 //------------------------------------------------------------------------------
 
 // Sets the state object for this agent
-bool Agent::setSlotState(AbstractState* const state)
+bool Agent::setSlotState(std::shared_ptr<AbstractState> state)
 {
    bool ok{};
    if (state != nullptr) {
@@ -142,7 +134,7 @@ bool Agent::setSlotState(AbstractState* const state)
    return ok;
 }
 
-bool Agent::setSlotBehavior(AbstractBehavior* const x)
+bool Agent::setSlotBehavior(std::shared_ptr<AbstractBehavior> x)
 {
    bool ok{};
    if ( x!=nullptr ) {

@@ -51,7 +51,7 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotIpAddress(const String* const);
+    bool setSlotIpAddress(std::shared_ptr<const String>);
 };
 
 }

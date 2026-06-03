@@ -338,7 +338,6 @@ void Player::copyData(const Player& org, const bool cc)
    if (org.signature != nullptr) {
       RfSignature* copy = org.signature->clone();
       setSlotSignature( copy );
-      copy->unref();
    } else {
       setSlotSignature(nullptr);
    }
@@ -346,7 +345,6 @@ void Player::copyData(const Player& org, const bool cc)
    if (org.irSignature != nullptr) {
       IrSignature* copy{org.irSignature->clone()};
       setSlotIrSignature( copy );
-      copy->unref();
    } else {
       setSlotIrSignature(nullptr);
    }
@@ -393,7 +391,6 @@ void Player::copyData(const Player& org, const bool cc)
 
    // Reflected emission requests are not copied
    for (unsigned int i = 0; i < MAX_RF_REFLECTIONS; i++) {
-      if (rfReflect[i] != nullptr) { rfReflect[i]->unref(); rfReflect[i] = nullptr; }
       rfReflectTimer[i] = 0;
    }
 
@@ -423,7 +420,6 @@ void Player::deleteData()
    setStoresMgr(nullptr);
 
    for (unsigned int i = 0; i < MAX_RF_REFLECTIONS; i++) {
-      if (rfReflect[i] != nullptr) { rfReflect[i]->unref(); rfReflect[i] = nullptr; }
    }
 }
 
@@ -433,7 +429,6 @@ void Player::deleteData()
 bool Player::shutdownNotification()
 {
    for (unsigned int i = 0; i < MAX_RF_REFLECTIONS; i++) {
-      if (rfReflect[i] != nullptr) { rfReflect[i]->unref(); rfReflect[i] = nullptr; }
    }
 
    return BaseClass::shutdownNotification();
@@ -543,7 +538,6 @@ void Player::updateTC(const double dt0)
             rfReflectTimer[i] -= dt0;
             if (rfReflectTimer[i] <= 0) {
                // Clear the request
-               rfReflect[i]->unref();
                rfReflect[i] = nullptr;
             }
          }
@@ -2378,7 +2372,6 @@ bool Player::killedNotification(Player* const p)
                base::Component* sc{static_cast<base::Component*>(pair->object())};
                sc->event(KILL_EVENT, p);
             }
-            subcomponents->unref();
             subcomponents = nullptr;
          }
       }
@@ -2424,7 +2417,6 @@ bool Player::collisionNotification(Player* const p)
                base::Component* sc{static_cast<base::Component*>(pair->object())};
                sc->event(KILL_EVENT, p);
             }
-            subcomponents->unref();
             subcomponents = nullptr;
          }
       }
@@ -2463,7 +2455,6 @@ bool Player::crashNotification()
                base::Component* sc{static_cast<base::Component*>(pair->object())};
                sc->event(KILL_EVENT);
             }
-            subcomponents->unref();
             subcomponents = nullptr;
          }
       }
@@ -2653,7 +2644,6 @@ bool Player::onReflectionsRequest(base::Component* const p)
 
    // New request and we have an empty slot?
    if (!ok && haveEmptySlot) {
-      p->ref();
       rfReflect[idx] = p;
       rfReflectTimer[idx] = 1.1;
       ok = true;
@@ -2674,7 +2664,6 @@ bool Player::onReflectionsCancel(const base::Component* const p)
    for (unsigned int i = 0; i < MAX_RF_REFLECTIONS && !ok; i++) {
       if (rfReflect[i] == p) {
          // Clear the request
-         rfReflect[i]->unref();
          rfReflect[i] = nullptr;
          ok = true;
       }
@@ -3086,7 +3075,6 @@ void Player::deadReckonPosition(const double dt)
    if ( !isNetworkedPlayer() ) return;
 
    if (getNib() != nullptr) {
-      nib->ref();
 
       // Dead reckon our position and orientation
       base::Vec3d drPos;
@@ -3131,7 +3119,6 @@ void Player::deadReckonPosition(const double dt)
       setGeocAcceleration( nib->getDrAcceleration() );
       setGeocAngularVelocities( nib->getDrAngularVelocities() );
 
-      nib->unref();
    }
 }
 
@@ -3224,13 +3211,10 @@ bool Player::setDynamicsModel(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (dynamicsModel != nullptr) dynamicsModel->unref();
       dynamicsModel = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(DynamicsModel)) ) {
-      if (dynamicsModel != nullptr) dynamicsModel->unref();
       dynamicsModel = sys;
-      dynamicsModel->ref();
       ok = true;
    }
    return ok;
@@ -3243,13 +3227,10 @@ bool Player::setDatalink(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (datalink != nullptr) datalink->unref();
       datalink = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(Datalink)) ) {
-      if (datalink != nullptr) datalink->unref();
       datalink = sys;
-      datalink->ref();
       ok = true;
    }
    return ok;
@@ -3262,13 +3243,10 @@ bool Player::setGimbal(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (gimbal != nullptr) gimbal->unref();
       gimbal = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(Gimbal)) ) {
-      if (gimbal != nullptr) gimbal->unref();
       gimbal = sys;
-      gimbal->ref();
       ok = true;
    }
    return ok;
@@ -3281,13 +3259,10 @@ bool Player::setNavigation(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (nav != nullptr) nav->unref();
       nav = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(Navigation)) ) {
-      if (nav != nullptr) nav->unref();
       nav = sys;
-      nav->ref();
       ok = true;
    }
    return ok;
@@ -3300,13 +3275,10 @@ bool Player::setOnboardComputer(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (obc != nullptr) obc->unref();
       obc = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(OnboardComputer)) ) {
-      if (obc != nullptr) obc->unref();
       obc = sys;
-      obc->ref();
       ok = true;
    }
    return ok;
@@ -3319,13 +3291,10 @@ bool Player::setPilot(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (pilot != nullptr) pilot->unref();
       pilot = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(Pilot)) ) {
-      if (pilot != nullptr) pilot->unref();
       pilot = sys;
-      pilot->ref();
       ok = true;
    }
    return ok;
@@ -3338,13 +3307,10 @@ bool Player::setRadio(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (radio != nullptr) radio->unref();
       radio = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(Radio)) ) {
-      if (radio != nullptr) radio->unref();
       radio = sys;
-      radio->ref();
       ok = true;
    }
    return ok;
@@ -3357,13 +3323,10 @@ bool Player::setSensor(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (sensor != nullptr) sensor->unref();
       sensor = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(RfSensor)) ) {
-      if (sensor != nullptr) sensor->unref();
       sensor = sys;
-      sensor->ref();
       ok = true;
    }
    return ok;
@@ -3376,13 +3339,10 @@ bool Player::setIrSystem(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (irSystem != nullptr) irSystem->unref();
       irSystem = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(IrSystem)) ) {
-      if (irSystem != nullptr) irSystem->unref();
       irSystem = sys;
-      irSystem->ref();
       ok = true;
    }
    return ok;
@@ -3395,13 +3355,10 @@ bool Player::setStoresMgr(base::Pair* const sys)
 {
    bool ok{};
    if (sys == nullptr) {
-      if (sms != nullptr) sms->unref();
       sms = nullptr;
       ok = true;
    } else if ( sys->object()->isClassType(typeid(StoresMgr)) ) {
-      if (sms != nullptr) sms->unref();
       sms = sys;
-      sms->ref();
       ok = true;
    }
    return ok;
@@ -3412,7 +3369,7 @@ bool Player::setStoresMgr(base::Pair* const sys)
 //------------------------------------------------------------------------------
 
 // initXPos: X position (+north)
-bool Player::setSlotInitXPos(const base::Distance* const msg)
+bool Player::setSlotInitXPos(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3424,7 +3381,7 @@ bool Player::setSlotInitXPos(const base::Distance* const msg)
 }
 
 // initXPos: X position (+north) (meters)
-bool Player::setSlotInitXPos(const base::Number* const msg)
+bool Player::setSlotInitXPos(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3436,7 +3393,7 @@ bool Player::setSlotInitXPos(const base::Number* const msg)
 }
 
 // initYPos: Y position (+east)
-bool Player::setSlotInitYPos(const base::Distance* const msg)
+bool Player::setSlotInitYPos(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3448,7 +3405,7 @@ bool Player::setSlotInitYPos(const base::Distance* const msg)
 }
 
 // initYPos: Y position (+east)(meters)
-bool Player::setSlotInitYPos(const base::Number* const msg)
+bool Player::setSlotInitYPos(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3460,7 +3417,7 @@ bool Player::setSlotInitYPos(const base::Number* const msg)
 }
 
 // initAlt: Altitude (HAE @ sim ref pt) (+up)
-bool Player::setSlotInitAlt(const base::Distance* const msg)
+bool Player::setSlotInitAlt(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3472,7 +3429,7 @@ bool Player::setSlotInitAlt(const base::Distance* const msg)
 }
 
 // initAlt: Altitude (HAE @ sim ref pt) (+up) (meters)
-bool Player::setSlotInitAlt(const base::Number* const msg)
+bool Player::setSlotInitAlt(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3484,7 +3441,7 @@ bool Player::setSlotInitAlt(const base::Number* const msg)
 }
 
 // initPosition: Position Vector: meters [ north east down ]
-bool Player::setSlotInitPosition(const base::List* const msg)
+bool Player::setSlotInitPosition(std::shared_ptr<const base::List> msg)
 {
    bool ok{};
    double values[3]{};
@@ -3498,7 +3455,7 @@ bool Player::setSlotInitPosition(const base::List* const msg)
 }
 
 // initLatitude: Latitude
-bool Player::setSlotInitLat(const base::LatLon* const msg)
+bool Player::setSlotInitLat(std::shared_ptr<const base::LatLon> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3513,7 +3470,7 @@ bool Player::setSlotInitLat(const base::LatLon* const msg)
 }
 
 // initLatitude: Latitude
-bool Player::setSlotInitLat(const base::Angle* const msg)
+bool Player::setSlotInitLat(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3528,7 +3485,7 @@ bool Player::setSlotInitLat(const base::Angle* const msg)
 }
 
 // initLatitude: Latitude (degrees)
-bool Player::setSlotInitLat(const base::Number* const msg)
+bool Player::setSlotInitLat(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3543,7 +3500,7 @@ bool Player::setSlotInitLat(const base::Number* const msg)
 }
 
 // initLongitude: Longitude
-bool Player::setSlotInitLon(const base::LatLon* const msg)
+bool Player::setSlotInitLon(std::shared_ptr<const base::LatLon> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3558,7 +3515,7 @@ bool Player::setSlotInitLon(const base::LatLon* const msg)
 }
 
 // initLongitude: Longitude
-bool Player::setSlotInitLon(const base::Angle* const msg)
+bool Player::setSlotInitLon(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3573,7 +3530,7 @@ bool Player::setSlotInitLon(const base::Angle* const msg)
 }
 
 // initLongitude: Longitude (degrees)
-bool Player::setSlotInitLon(const base::Number* const msg)
+bool Player::setSlotInitLon(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3588,7 +3545,7 @@ bool Player::setSlotInitLon(const base::Number* const msg)
 }
 
 // initGeocentric: Position vector [ x y z ] (meters)
-bool Player::setSlotInitGeocentric(const base::List* const msg)
+bool Player::setSlotInitGeocentric(std::shared_ptr<const base::List> msg)
 {
    bool ok{};
    double values[3]{};
@@ -3601,7 +3558,7 @@ bool Player::setSlotInitGeocentric(const base::List* const msg)
 }
 
 // initRoll: Initial roll angle
-bool Player::setSlotInitRoll(const base::Angle* const msg)
+bool Player::setSlotInitRoll(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3618,7 +3575,7 @@ bool Player::setSlotInitRoll(const base::Angle* const msg)
 }
 
 // initRoll: Initial roll angle (radians)
-bool Player::setSlotInitRoll(const base::Number* const msg)
+bool Player::setSlotInitRoll(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3705,7 +3662,7 @@ bool Player::setInitHeading(const base::Number* const msg)
 }
 
 // initEuler: Initial Euler Angles: radians [ roll pitch yaw ]
-bool Player::setSlotInitEulerAngles(const base::List* const numList)
+bool Player::setSlotInitEulerAngles(std::shared_ptr<const base::List> numList)
 {
    bool ok{};
    double values[3]{};
@@ -3727,7 +3684,7 @@ bool Player::setSlotInitEulerAngles(const base::List* const numList)
 }
 
 // testRollRate: Test roll rate
-bool Player::setSlotTestRollRate(const base::Angle* const msg)
+bool Player::setSlotTestRollRate(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3740,7 +3697,7 @@ bool Player::setSlotTestRollRate(const base::Angle* const msg)
 }
 
 // testPitchRate: Test pitch rate
-bool Player::setSlotTestPitchRate(const base::Angle* const msg)
+bool Player::setSlotTestPitchRate(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3753,7 +3710,7 @@ bool Player::setSlotTestPitchRate(const base::Angle* const msg)
 }
 
 // testHeadingRate: Test heading rate
-bool Player::setSlotTestYawRate(const base::Angle* const msg)
+bool Player::setSlotTestYawRate(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3766,7 +3723,7 @@ bool Player::setSlotTestYawRate(const base::Angle* const msg)
 }
 
 // testBodyAxis: Test rates are in the body axis else they're Euler rates (default: false)
-bool Player::setSlotTestBodyAxis(const base::Number* const msg)
+bool Player::setSlotTestBodyAxis(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3778,7 +3735,7 @@ bool Player::setSlotTestBodyAxis(const base::Number* const msg)
 
 
 // initVelocity: Initial Velocity: meters/second
-bool Player::setSlotInitVelocity(const base::Number* const msg)
+bool Player::setSlotInitVelocity(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3789,7 +3746,7 @@ bool Player::setSlotInitVelocity(const base::Number* const msg)
 }
 
 // initVelocityKts: Initial Velocity: knots (NM/hour)
-bool Player::setSlotInitVelocityKts(const base::Number* const msg)
+bool Player::setSlotInitVelocityKts(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3802,7 +3759,7 @@ bool Player::setSlotInitVelocityKts(const base::Number* const msg)
 
 // id: Player id  [ 1 .. 65535 ]
 /*
-bool Player::setSlotID(const base::Number* const num)
+bool Player::setSlotID(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    int newID{num->getInt()};
@@ -3817,7 +3774,7 @@ bool Player::setSlotID(const base::Number* const num)
 */
 
 // side: Which side? { BLUE, RED, YELLOW, CYAN, GRAY, WHITE }
-bool Player::setSlotSide(base::String* const msg)
+bool Player::setSlotSide(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (*msg == "blue" || *msg == "BLUE") { setSide(BLUE); ok = true; }
@@ -3831,7 +3788,7 @@ bool Player::setSlotSide(base::String* const msg)
 
 // mode: Initial player mode ( INACTIVE, ACTIVE, DEAD )
 /*
-bool Player::setSlotInitMode(base::String* const msg)
+bool Player::setSlotInitMode(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (*msg == "inactive" || *msg == "INACTIVE") { setInitMode(INACTIVE); ok = true; }
@@ -3845,7 +3802,7 @@ bool Player::setSlotInitMode(base::String* const msg)
 */
 
 // useCoordSys: Coord system to use for updating player position
-bool Player::setSlotUseCoordSys(base::String* const msg)
+bool Player::setSlotUseCoordSys(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (*msg == "local" || *msg == "LOCAL") { setUseCoordSys(CS_LOCAL); ok = true; }
@@ -3855,7 +3812,7 @@ bool Player::setSlotUseCoordSys(base::String* const msg)
 }
 
 // signature: Player's RCS signature
-bool Player::setSlotSignature(RfSignature* const s)
+bool Player::setSlotSignature(std::shared_ptr<RfSignature> s)
 {
    if (signature != nullptr) {
       signature->container(nullptr);
@@ -3868,14 +3825,14 @@ bool Player::setSlotSignature(RfSignature* const s)
 }
 
 // irSignature: Player's IR signature
-bool Player::setSlotIrSignature(IrSignature* const s)
+bool Player::setSlotIrSignature(std::shared_ptr<IrSignature> s)
 {
    irSignature = s;
    return true;
 }
 
 // camouflageType: User defined camouflage type (positive integer or zero for none)
-bool Player::setSlotCamouflageType(const base::Number* const msg)
+bool Player::setSlotCamouflageType(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3888,7 +3845,7 @@ bool Player::setSlotCamouflageType(const base::Number* const msg)
 }
 
 // terrainElevReq: Terrain elevation from the IG system is requested; otherwise use DTED (default: false)
-bool Player::setSlotTerrainElevReq(const base::Number* const num)
+bool Player::setSlotTerrainElevReq(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3898,7 +3855,7 @@ bool Player::setSlotTerrainElevReq(const base::Number* const num)
 }
 
 // interpolateTerrain: Interpolate our DTED terrain elevation data (default: false)
-bool Player::setSlotInterpolateTerrain(const base::Number* const msg)
+bool Player::setSlotInterpolateTerrain(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3908,7 +3865,7 @@ bool Player::setSlotInterpolateTerrain(const base::Number* const msg)
 }
 
 // terrainOffset: Ground clamp offset from terrain to player's CG (base::Distance)
-bool Player::setSlotTerrainOffset(const base::Distance* const msg)
+bool Player::setSlotTerrainOffset(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3918,7 +3875,7 @@ bool Player::setSlotTerrainOffset(const base::Distance* const msg)
 }
 
 // positionFreeze: Position freeze (default: false)
-bool Player::setSlotPositionFreeze(const base::Number* const num)
+bool Player::setSlotPositionFreeze(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3928,7 +3885,7 @@ bool Player::setSlotPositionFreeze(const base::Number* const num)
 }
 
 // altitudeFreeze: Altitude freeze (default: false)
-bool Player::setSlotAltitudeFreeze(const base::Number* const num)
+bool Player::setSlotAltitudeFreeze(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3938,7 +3895,7 @@ bool Player::setSlotAltitudeFreeze(const base::Number* const num)
 }
 
 // attitudeFreeze: Attitude freeze (default: false)
-bool Player::setSlotAttitudeFreeze(const base::Number* const num)
+bool Player::setSlotAttitudeFreeze(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3948,7 +3905,7 @@ bool Player::setSlotAttitudeFreeze(const base::Number* const num)
 }
 
 // fuelFreeze: Fuel freeze (default: false)
-bool Player::setSlotFuelFreeze(const base::Number* const num)
+bool Player::setSlotFuelFreeze(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3958,7 +3915,7 @@ bool Player::setSlotFuelFreeze(const base::Number* const num)
 }
 
 // crashOverride: Crash Override (i.e., ignore collision and crash events)(default: false)
-bool Player::setSlotCrashOverride(const base::Number* const num)
+bool Player::setSlotCrashOverride(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3968,7 +3925,7 @@ bool Player::setSlotCrashOverride(const base::Number* const num)
 }
 
 // killOverride: Kill/Damage Override -- player can not be killed/damaged (default: false)
-bool Player::setSlotKillOverride(const base::Number* const num)
+bool Player::setSlotKillOverride(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -3978,7 +3935,7 @@ bool Player::setSlotKillOverride(const base::Number* const num)
 }
 
 // killRemoval: If true destroyed players are set to KILLED and are eventually removed (default: false)
-bool Player::setSlotKillRemoval(const base::Number* const msg)
+bool Player::setSlotKillRemoval(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3988,7 +3945,7 @@ bool Player::setSlotKillRemoval(const base::Number* const msg)
 }
 
 // enableNetOutput: Enable network output of this player (default: true)
-bool Player::setSlotEnableNetOutput(const base::Number* const msg)
+bool Player::setSlotEnableNetOutput(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -3998,7 +3955,7 @@ bool Player::setSlotEnableNetOutput(const base::Number* const msg)
 }
 
 // dataLogTime: Time between player data samples to an optional data
-bool Player::setSlotDataLogTime(const base::Time* const num)
+bool Player::setSlotDataLogTime(std::shared_ptr<const base::Time> num)
 {
    bool ok{};
    if (num != nullptr) {

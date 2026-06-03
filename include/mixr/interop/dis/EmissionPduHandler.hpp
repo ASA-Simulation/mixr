@@ -184,12 +184,12 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotEmitterName(const base::Number* const);      // Sets our DIS Emitter Name
-   bool setSlotEmitterFunction(const base::Number* const);  // Sets our DIS Emitter Function
-   bool setSlotSensorTemplate(models::RfSensor* const);     // Sets our template sensor model
-   bool setSlotAntennaTemplate(models::Antenna* const);     // Sets our template antenna model
-   bool setSlotDefaultIn(const base::Number* const);
-   bool setSlotDefaultOut(const base::Number* const);
+   bool setSlotEmitterName(std::shared_ptr<const base::Number>);      // Sets our DIS Emitter Name
+   bool setSlotEmitterFunction(std::shared_ptr<const base::Number>);  // Sets our DIS Emitter Function
+   bool setSlotSensorTemplate(std::shared_ptr<models::RfSensor>);     // Sets our template sensor model
+   bool setSlotAntennaTemplate(std::shared_ptr<models::Antenna>);     // Sets our template antenna model
+   bool setSlotDefaultIn(std::shared_ptr<const base::Number>);
+   bool setSlotDefaultOut(std::shared_ptr<const base::Number>);
 };
 
 inline unsigned char EmissionPduHandler::getEmitterIdNumber() const  { return emitterIdNumber; }

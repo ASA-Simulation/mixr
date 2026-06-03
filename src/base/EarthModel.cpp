@@ -46,11 +46,12 @@ BEGIN_SLOTTABLE(EarthModel)
 END_SLOTTABLE(EarthModel)
 
 BEGIN_SLOT_MAP(EarthModel)
-   ON_SLOT(1, setSlotA, Distance) /* always check units before numbers */
-   ON_SLOT(1, setSlotA, Number)
+   /* always check units before numbers */
+   ON_SLOT(1, [this](std::shared_ptr<const Distance> msg){ return this->setSlotA(msg); }, Distance)
+   ON_SLOT(1, [this](std::shared_ptr<const Number> msg){ return this->setSlotA(msg); }, Number)
 
-   ON_SLOT(2, setSlotB, Distance) /* always check units before numbers */
-   ON_SLOT(2, setSlotB, Number)
+   ON_SLOT(2, [this](std::shared_ptr<const Distance> msg){ return this->setSlotB(msg); }, Distance)
+   ON_SLOT(2, [this](std::shared_ptr<const Number> msg){ return this->setSlotB(msg); }, Number)
 
    ON_SLOT(3, setSlotF, Number)
 END_SLOT_MAP()
@@ -156,7 +157,7 @@ bool EarthModel::setF(const double f0)
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool EarthModel::setSlotA(const Distance* const msg)
+bool EarthModel::setSlotA(std::shared_ptr<const Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -165,7 +166,7 @@ bool EarthModel::setSlotA(const Distance* const msg)
    return ok;
 }
 
-bool EarthModel::setSlotA(const Number* const msg)
+bool EarthModel::setSlotA(std::shared_ptr<const Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -174,7 +175,7 @@ bool EarthModel::setSlotA(const Number* const msg)
    return ok;
 }
 
-bool EarthModel::setSlotB(const Distance* const msg)
+bool EarthModel::setSlotB(std::shared_ptr<const Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -183,7 +184,7 @@ bool EarthModel::setSlotB(const Distance* const msg)
    return ok;
 }
 
-bool EarthModel::setSlotB(const Number* const msg)
+bool EarthModel::setSlotB(std::shared_ptr<const Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -192,7 +193,7 @@ bool EarthModel::setSlotB(const Number* const msg)
    return ok;
 }
 
-bool EarthModel::setSlotF(const Number* const msg)
+bool EarthModel::setSlotF(std::shared_ptr<const Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

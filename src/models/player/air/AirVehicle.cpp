@@ -102,7 +102,7 @@ const AerodynamicsModel* AirVehicle::getAerodynamicsModel() const
 //-----------------------------------------------------------------------------
 
 // Set initial gear position by name: up, down
-bool AirVehicle::setSlotInitGearPos(const base::String* const pos)
+bool AirVehicle::setSlotInitGearPos(std::shared_ptr<const base::String> pos)
 {
    bool ok {};
    if (pos != nullptr) {
@@ -127,7 +127,7 @@ bool AirVehicle::setSlotInitGearPos(const base::String* const pos)
 }
 
 // Set initial gear position by number: zero is up, non-zero is down
-bool AirVehicle::setSlotInitGearPos(const base::Number* const pos)
+bool AirVehicle::setSlotInitGearPos(std::shared_ptr<const base::Number> pos)
 {
    bool ok {};
    if (pos != nullptr) {

@@ -49,12 +49,12 @@ public:
 
 private:
    // slot table helper methods
-   bool setSlotN1(const base::Number* const);
-   bool setSlotN2(const base::Number* const);
-   bool setSlotN3(const base::Number* const);
-   bool setSlotD1(const base::Number* const);
-   bool setSlotD2(const base::Number* const);
-   bool setSlotD3(const base::Number* const);
+   bool setSlotN1(std::shared_ptr<const base::Number>);
+   bool setSlotN2(std::shared_ptr<const base::Number>);
+   bool setSlotN3(std::shared_ptr<const base::Number>);
+   bool setSlotD1(std::shared_ptr<const base::Number>);
+   bool setSlotD2(std::shared_ptr<const base::Number>);
+   bool setSlotD3(std::shared_ptr<const base::Number>);
 };
 
 }

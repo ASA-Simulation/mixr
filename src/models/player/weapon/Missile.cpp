@@ -166,7 +166,7 @@ bool Missile::calculateVectors(const Player* const tgt, const Track* const trk, 
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool Missile::setSlotVpMin(const base::Number* const msg)
+bool Missile::setSlotVpMin(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -176,7 +176,7 @@ bool Missile::setSlotVpMin(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotVpMax(const base::Number* const msg)
+bool Missile::setSlotVpMax(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -186,7 +186,7 @@ bool Missile::setSlotVpMax(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotVpMaxG(const base::Number* const msg)
+bool Missile::setSlotVpMaxG(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -196,7 +196,7 @@ bool Missile::setSlotVpMaxG(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotMaxG(const base::Number* const msg)
+bool Missile::setSlotMaxG(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -206,7 +206,7 @@ bool Missile::setSlotMaxG(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotMaxAccel(const base::Number* const msg)
+bool Missile::setSlotMaxAccel(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -216,7 +216,7 @@ bool Missile::setSlotMaxAccel(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotCmdPitch(const base::Number* const msg)
+bool Missile::setSlotCmdPitch(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -226,7 +226,7 @@ bool Missile::setSlotCmdPitch(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotCmdHeading(const base::Number* const msg)
+bool Missile::setSlotCmdHeading(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -236,7 +236,7 @@ bool Missile::setSlotCmdHeading(const base::Number* const msg)
    return ok;
 }
 
-bool Missile::setSlotCmdVelocity(const base::Number* const msg)
+bool Missile::setSlotCmdVelocity(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {

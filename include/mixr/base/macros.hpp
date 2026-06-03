@@ -1,6 +1,6 @@
+#pragma once
 
-#ifndef __mixr_base_macros__
-#define __mixr_base_macros__
+#include <memory>
 
 //------------------------------------------------------------------------------
 // Object class macros:
@@ -139,7 +139,7 @@
     public: static const ::mixr::base::MetaObject* getMetaObject();                                                             \
     public: static const char* getFactoryName();                                                                                \
     public: bool isFactoryName(const char name[]) const override;                                                               \
-    protected: bool setSlotByIndex(const int slotindex, ::mixr::base::Object* const obj) override;                              \
+    protected: bool setSlotByIndex(const int slotindex, std::shared_ptr<::mixr::base::Object> obj) override;                              \
     public: static const ::mixr::base::SlotTable& getSlotTable();                                                               \
     protected: static const ::mixr::base::SlotTable slottable;                                                                  \
     private: static const char* slotnames[];                                                                                    \
@@ -258,7 +258,7 @@
     const char* ThisType::slotnames[] = { "" };                                            \
     const int ThisType::nslots {};                                                         \
     const ::mixr::base::SlotTable ThisType::slottable(0, 0, BaseClass::getSlotTable());    \
-    bool ThisType::setSlotByIndex(const int si, ::mixr::base::Object* const obj)           \
+    bool ThisType::setSlotByIndex(const int si, std::shared_ptr<::mixr::base::Object> obj)  \
     {                                                                                      \
         return BaseClass::setSlotByIndex(si,obj);                                          \
     }
@@ -299,14 +299,14 @@
                                                ThisType::BaseClass::getSlotTable());
 
 
-#define BEGIN_SLOT_MAP(ThisType)                                                           \
-    bool ThisType::setSlotByIndex(const int slotindex, ::mixr::base::Object* const obj)    \
-    {                                                                                      \
-        const int _n {BaseClass::getSlotTable().n()};                                      \
-        if (slotindex <= _n) {                                                             \
-            return BaseClass::setSlotByIndex(slotindex,obj);                               \
-        }                                                                                  \
-        bool _ok {};                                                                       \
+#define BEGIN_SLOT_MAP(ThisType)                                                                    \
+    bool ThisType::setSlotByIndex(const int slotindex, std::shared_ptr<::mixr::base::Object> obj)   \
+    {                                                                                               \
+        const int _n {BaseClass::getSlotTable().n()};                                               \
+        if (slotindex <= _n) {                                                                      \
+            return BaseClass::setSlotByIndex(slotindex, obj);                                        \
+        }                                                                                           \
+        bool _ok {};                                                                                \
         int _n1 {slotindex - _n};
 
 
@@ -317,7 +317,7 @@
 
 #define ON_SLOT(idx, setFunc, ObjType)                                                 \
     if ( !_ok ) {                                                                      \
-        const auto _msg = dynamic_cast<ObjType*>(obj);                                 \
+        const std::shared_ptr<ObjType> _msg = std::dynamic_pointer_cast<ObjType>(obj);                 \
         if (idx == _n1 && _msg != nullptr) {                                           \
             _ok = setFunc(_msg);                                                       \
         }                                                                              \
@@ -325,7 +325,7 @@
 
 
 #define BEGIN_EVENT_HANDLER(ThisType)                                                  \
-    bool ThisType::event(const int _event, ::mixr::base::Object* const _obj)           \
+    bool ThisType::event(const int _event, std::shared_ptr<::mixr::base::Object> _obj) \
     {                                                                                  \
         bool _used {};
 
@@ -336,9 +336,9 @@
     }
 
 
-#define ON_EVENT_OBJ(token,onEvent,ObjType)                                            \
-    if (!_used && token == _event && dynamic_cast<ObjType*>(_obj) != nullptr) {        \
-        _used = onEvent(static_cast<ObjType*>(_obj));                                  \
+#define ON_EVENT_OBJ(token,onEvent,ObjType)                                                 \
+    if (!_used && token == _event && std::dynamic_pointer_cast<ObjType>(_obj) != nullptr) { \
+        _used = onEvent(std::static_pointer_cast<ObjType>(_obj));                           \
     }
 
 
@@ -412,5 +412,3 @@
    else if (_code ==StateTableCode:: FIND_NEXT_STATE && _next == INVALID_STATE) {          \
       _next =_cstate + 1;      /* next is just one more! */                                \
    }
-
-#endif

@@ -3,11 +3,13 @@
 #define __mixr_models_Action_H__
 
 #include "mixr/base/ubf/AbstractAction.hpp"
-#include "mixr/base/safe_ptr.hpp"
 
 namespace mixr {
+
 namespace base { class Distance; class LatLon; class Number; }
+
 namespace models {
+
 class OnboardComputer;
 class Sar;
 class Steerpoint;
@@ -56,13 +58,13 @@ public:
    bool execute(base::Component* actor) override;
 
 protected:
-   OnboardComputer* getManager()   { return manager; }          // Our manager
+   std::shared_ptr<OnboardComputer> getManager()   { return manager; }          // Our manager
    bool setManager(OnboardComputer* const);                     // Set our manager
 
    virtual void setCompleted(const bool);                       // Sets the completed flag
 
 private:
-   base::safe_ptr<OnboardComputer> manager;   // Our manager (only set while we're in progress)
+   std::shared_ptr<OnboardComputer> manager;   // Our manager (only set while we're in progress)
    int refId {};                              // Ref ID
    bool completed {};                         // True if action has been completed
 };
@@ -125,11 +127,11 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotSarLat(const base::LatLon* const);
-   bool setSlotSarLon(const base::LatLon* const);
-   bool setSlotSarElev(const base::Distance* const);
-   bool setSlotResolution(const base::Distance* const);
-   bool setSlotImageSize(const base::Number* const);
+   bool setSlotSarLat(std::shared_ptr<const base::LatLon>);
+   bool setSlotSarLon(std::shared_ptr<const base::LatLon>);
+   bool setSlotSarElev(std::shared_ptr<const base::Distance>);
+   bool setSlotResolution(std::shared_ptr<const base::Distance>);
+   bool setSlotImageSize(std::shared_ptr<const base::Number>);
 };
 
 
@@ -172,10 +174,10 @@ private:
    unsigned int station {};       // station number
 
 private:
-   bool setSlotTargetLat(const base::LatLon*);
-   bool setSlotTargetLon(const base::LatLon*);
-   bool setSlotTargetElev(const base::Number*);
-   bool setSlotStationNum(const base::Number*);
+   bool setSlotTargetLat(std::shared_ptr<const base::LatLon>);
+   bool setSlotTargetLon(std::shared_ptr<const base::LatLon>);
+   bool setSlotTargetElev(std::shared_ptr<const base::Number>);
+   bool setSlotStationNum(std::shared_ptr<const base::Number>);
 };
 
 //------------------------------------------------------------------------------
@@ -209,8 +211,8 @@ private:
     double startTOD {};    // our starting tod (that way we know when we've elapsed so far)
 
 private:
-   bool setSlotInterval(const base::Number*);
-   bool setSlotNumToLaunch(const base::Number*);
+   bool setSlotInterval(std::shared_ptr<const base::Number>);
+   bool setSlotNumToLaunch(std::shared_ptr<const base::Number>);
 };
 
 
@@ -241,7 +243,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotCamouflageType(const base::Number* const);   // Sets user defined camouflage type
+   bool setSlotCamouflageType(std::shared_ptr<const base::Number>);   // Sets user defined camouflage type
 };
 
 }

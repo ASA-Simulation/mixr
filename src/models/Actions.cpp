@@ -335,11 +335,9 @@ void ActionImagingSar::setCompleted(const bool flg)
 void ActionImagingSar::setSarSystem(Sar* const p)
 {
    if (sar != nullptr) {
-      sar->unref();
    }
    sar = p;
    if (sar != nullptr) {
-      sar->ref();
    }
 }
 
@@ -347,7 +345,7 @@ void ActionImagingSar::setSarSystem(Sar* const p)
 // Slot functions
 //------------------------------------------------------------------------------
 
-bool ActionImagingSar::setSlotSarLat(const base::LatLon* const msg)
+bool ActionImagingSar::setSlotSarLat(std::shared_ptr<const base::LatLon> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -356,7 +354,7 @@ bool ActionImagingSar::setSlotSarLat(const base::LatLon* const msg)
    return ok;
 }
 
-bool ActionImagingSar::setSlotSarLon(const base::LatLon* const msg)
+bool ActionImagingSar::setSlotSarLon(std::shared_ptr<const base::LatLon> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -365,7 +363,7 @@ bool ActionImagingSar::setSlotSarLon(const base::LatLon* const msg)
    return ok;
 }
 
-bool ActionImagingSar::setSlotSarElev(const base::Distance* const msg)
+bool ActionImagingSar::setSlotSarElev(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -375,7 +373,7 @@ bool ActionImagingSar::setSlotSarElev(const base::Distance* const msg)
    return ok;
 }
 
-bool ActionImagingSar::setSlotResolution(const base::Distance* const msg)
+bool ActionImagingSar::setSlotResolution(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -385,7 +383,7 @@ bool ActionImagingSar::setSlotResolution(const base::Distance* const msg)
    return ok;
 }
 
-bool ActionImagingSar::setSlotImageSize(const base::Number* const msg)
+bool ActionImagingSar::setSlotImageSize(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -518,7 +516,7 @@ bool ActionWeaponRelease::setStation(const unsigned int num)
 }
 
 // Slot functions
-bool ActionWeaponRelease::setSlotTargetLat(const base::LatLon* newLat)
+bool ActionWeaponRelease::setSlotTargetLat(std::shared_ptr<const base::LatLon> newLat)
 {
     bool ok{};
     if (newLat != nullptr) {
@@ -527,7 +525,7 @@ bool ActionWeaponRelease::setSlotTargetLat(const base::LatLon* newLat)
     }
     return ok;
 }
-bool ActionWeaponRelease::setSlotTargetLon(const base::LatLon* newLon)
+bool ActionWeaponRelease::setSlotTargetLon(std::shared_ptr<const base::LatLon> newLon)
 {
     bool ok{};
     if (newLon != nullptr) {
@@ -536,7 +534,7 @@ bool ActionWeaponRelease::setSlotTargetLon(const base::LatLon* newLon)
     }
     return ok;
 }
-bool ActionWeaponRelease::setSlotTargetElev(const base::Number* newElev)
+bool ActionWeaponRelease::setSlotTargetElev(std::shared_ptr<const base::Number> newElev)
 {
     bool ok{};
     if (newElev != nullptr) {
@@ -545,7 +543,7 @@ bool ActionWeaponRelease::setSlotTargetElev(const base::Number* newElev)
     }
     return ok;
 }
-bool ActionWeaponRelease::setSlotStationNum(const base::Number* newStation)
+bool ActionWeaponRelease::setSlotStationNum(std::shared_ptr<const base::Number> newStation)
 {
     bool ok{};
     if (newStation != nullptr) {
@@ -661,7 +659,7 @@ void ActionDecoyRelease::process(const double)
 }
 
 // Slot functions
-bool ActionDecoyRelease::setSlotNumToLaunch(const base::Number* x)
+bool ActionDecoyRelease::setSlotNumToLaunch(std::shared_ptr<const base::Number> x)
 {
     bool ok{};
     if (x != nullptr) {
@@ -669,7 +667,7 @@ bool ActionDecoyRelease::setSlotNumToLaunch(const base::Number* x)
     }
     return ok;
 }
-bool ActionDecoyRelease::setSlotInterval(const base::Number* x)
+bool ActionDecoyRelease::setSlotInterval(std::shared_ptr<const base::Number> x)
 {
     bool ok{};
     if (x != nullptr) {
@@ -739,7 +737,7 @@ bool ActionCamouflageType::setCamouflageType(const unsigned int v)
 }
 
 // Sets user defined camouflage type
-bool ActionCamouflageType::setSlotCamouflageType(const base::Number* const msg)
+bool ActionCamouflageType::setSlotCamouflageType(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

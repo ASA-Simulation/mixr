@@ -33,11 +33,9 @@ SimAgent::SimAgent()
 void SimAgent::deleteData()
 {
    if (actorPlayerName!=nullptr) {
-      actorPlayerName->unref();
       actorPlayerName=nullptr;
    }
    if (actorComponentName!=nullptr) {
-      actorComponentName->unref();
       actorComponentName=nullptr;
    }
 }
@@ -100,7 +98,7 @@ void SimAgent::setActorComponentByName(const char* x)
 // set slot functions
 //------------------------------------------------------------------------------
 
-bool SimAgent::setSlotActorPlayerName(const base::String* const x)
+bool SimAgent::setSlotActorPlayerName(std::shared_ptr<const base::String> x)
 {
    bool ok{};
    if ( x != nullptr ) {
@@ -110,7 +108,7 @@ bool SimAgent::setSlotActorPlayerName(const base::String* const x)
    return ok;
 }
 
-bool SimAgent::setSlotActorComponentName(const base::String* const x)
+bool SimAgent::setSlotActorComponentName(std::shared_ptr<const base::String> x)
 {
    bool ok{};
    if ( x != nullptr ) {

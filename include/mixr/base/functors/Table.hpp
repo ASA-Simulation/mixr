@@ -65,7 +65,7 @@ public:
 
    // Returns the number of entries in the data table
    virtual unsigned int tableSize() const = 0;
-   virtual bool setDataTable(const List* const);
+   virtual bool setDataTable(const std::shared_ptr<const List>&);
 
    // Returns the min and max values of the dependent variable data table
    virtual void findMinMax(double* minValue, double* maxValue) const;
@@ -82,24 +82,24 @@ public:
    bool isValid() const override;
 
 public:
-    // Exceptions
-    class ExpInvalidTable : public Object::Exception {
-        public:
-            ExpInvalidTable() : Exception() {}
-            const char* getDescription() const override          { return "table is invalid"; }
-    };
-
-    class ExpInvalidVector : public Object::Exception {
-        public:
-            ExpInvalidVector() : Exception() {}
-            const char* getDescription() const override          { return "table vector is invalid"; }
-    };
-
-    class ExpInvalidFStorage : public Object::Exception {
-        public:
-            ExpInvalidFStorage() : Exception() {}
-            const char* getDescription() const override          { return "Incorrect type of FStorage"; }
-    };
+    // // Exceptions
+    // class ExpInvalidTable : public Object::Exception {
+    //     public:
+    //         ExpInvalidTable() : Exception() {}
+    //         const char* getDescription() const override          { return "table is invalid"; }
+    // };
+    //
+    // class ExpInvalidVector : public Object::Exception {
+    //     public:
+    //         ExpInvalidVector() : Exception() {}
+    //         const char* getDescription() const override          { return "table vector is invalid"; }
+    // };
+    //
+    // class ExpInvalidFStorage : public Object::Exception {
+    //     public:
+    //         ExpInvalidFStorage() : Exception() {}
+    //         const char* getDescription() const override          { return "Incorrect type of FStorage"; }
+    // };
 
 
 protected:
@@ -115,8 +115,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotDataTable(const List* const x)               { return setDataTable(x); }
-   bool setSlotExtrapolationEnabled(const Number* const);
+   bool setSlotDataTable(std::shared_ptr<const List> x)               { return setDataTable(x); }
+   bool setSlotExtrapolationEnabled(std::shared_ptr<const Number>);
 };
 
 }

@@ -187,17 +187,17 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotLowerWavelength(const base::Number* const);   // Sets lower wavelength
-   bool setSlotUpperWavelength(const base::Number* const);   // Sets upper wavelength
-   bool setSlotNEI(const base::Number* const);               // Sets Noise Equivalent Irradiance
-   bool setSlotThreshold(const base::Number* const);         // Sets Signal to Noise Threshold
-   bool setSlotIFOV(const base::Number* const);              // Sets Instantaneous Field of View
-   bool setSlotSensorType(const base::String* const);        // Sets the Sensor Type
-   //bool setSlotFieldOfRegard(const base::Number* const);   // Sets the field of regard
-   //bool setSlotAzimuthBin(const base::Number* const);      // Sets the Azimuth Bin
-   //bool setSlotElevationBin(const base::Number* const);    // Sets the Elevation Bin
-   bool setSlotMaximumRange(const base::Number* const);      // Sets the Maximum Range
-   bool setSlotTrackManagerName(base::String* const);        // Sets our track manager by name
+   bool setSlotLowerWavelength(std::shared_ptr<const base::Number>);   // Sets lower wavelength
+   bool setSlotUpperWavelength(std::shared_ptr<const base::Number>);   // Sets upper wavelength
+   bool setSlotNEI(std::shared_ptr<const base::Number>);               // Sets Noise Equivalent Irradiance
+   bool setSlotThreshold(std::shared_ptr<const base::Number>);         // Sets Signal to Noise Threshold
+   bool setSlotIFOV(std::shared_ptr<const base::Number>);              // Sets Instantaneous Field of View
+   bool setSlotSensorType(std::shared_ptr<const base::String>);        // Sets the Sensor Type
+   //bool setSlotFieldOfRegard(std::shared_ptr<const base::Number>);   // Sets the field of regard
+   //bool setSlotAzimuthBin(std::shared_ptr<const base::Number>);      // Sets the Azimuth Bin
+   //bool setSlotElevationBin(std::shared_ptr<const base::Number>);    // Sets the Elevation Bin
+   bool setSlotMaximumRange(std::shared_ptr<const base::Number>);      // Sets the Maximum Range
+   bool setSlotTrackManagerName(std::shared_ptr<base::String>);        // Sets our track manager by name
 };
 
 }

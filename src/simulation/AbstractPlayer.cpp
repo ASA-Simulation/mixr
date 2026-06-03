@@ -166,11 +166,9 @@ const AbstractNib* AbstractPlayer::getLocalNib(const unsigned int netId) const
 // Sets a pointer to the Network Interface Block (NIB)
 bool AbstractPlayer::setNib(AbstractNib* const n)
 {
-   if (nib != nullptr) nib->unref();
    nib = n;
    if (nib != nullptr) {
       // Ref() the new NIB and get the network ID
-      nib->ref();
       AbstractNetIO* netIO {nib->getNetIO()};
       if (netIO != nullptr) netID = netIO->getNetworkID();
    } else {
@@ -192,9 +190,7 @@ bool AbstractPlayer::setOutgoingNib(AbstractNib* const p, const unsigned int id)
    bool ok{};
    if (nibList != nullptr && id >= 1 && id <= AbstractNetIO::MAX_NETWORD_ID) {
       unsigned int idx {id - 1};
-      if (nibList[idx] != nullptr) nibList[idx]->unref();
       nibList[idx] = p;
-      if (nibList[idx] != nullptr) nibList[idx]->ref();
    }
    return ok;
 }
@@ -202,7 +198,7 @@ bool AbstractPlayer::setOutgoingNib(AbstractNib* const p, const unsigned int id)
 //-----------------------------------------------------------------------------
 
 // id: Player id  [ 1 .. 65535 ]
-bool AbstractPlayer::setSlotID(const base::Number* const num)
+bool AbstractPlayer::setSlotID(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    int newID = num->getInt();
@@ -216,7 +212,7 @@ bool AbstractPlayer::setSlotID(const base::Number* const num)
 }
 
 // mode: Initial player mode ( INACTIVE, ACTIVE, DEAD )
-bool AbstractPlayer::setSlotInitMode(base::String* const msg)
+bool AbstractPlayer::setSlotInitMode(std::shared_ptr<base::String> msg)
 {
    bool ok{};
    if (*msg == "inactive" || *msg == "INACTIVE") { setInitMode(INACTIVE); ok = true; }

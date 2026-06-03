@@ -100,7 +100,6 @@ void Radar::clearTracksAndQueues()
    base::lock(myLock);
    for (unsigned int i = 0; i < numReports && i < MAX_REPORTS; i++) {
       if (reports[i] != nullptr) {
-         reports[i]->unref();
          reports[i] = nullptr;
       }
    }
@@ -111,7 +110,6 @@ void Radar::clearTracksAndQueues()
    // Clear out the queues
    // ---
    base::lock(myLock);
-   for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) { em->unref(); }
    while (rptSnQueue.isNotEmpty()) { rptSnQueue.get(); }
    base::unlock(myLock);
 }
@@ -173,7 +171,6 @@ void Radar::transmit(const double dt)
       em->setReturnRequest( isReceiverEnabled() );
       em->setTransmitter(this);
       getAntenna()->rfTransmit(em);
-      em->unref();
    }
 
 }
@@ -275,7 +272,6 @@ void Radar::receive(const double dt)
             if (signalToInterferenceRatioDbl >= getRfThreshold() && em->getRange() <= (maxRng*1.25) && rptQueue.isNotFull()) {
 
                // send the report to the track manager
-               em->ref();
                rptQueue.put(em);
                rptSnQueue.put(signalToInterferenceRatioDbl);
 
@@ -294,7 +290,6 @@ void Radar::receive(const double dt)
          }
       }
 
-      em->unref();   // this unref() undoes the ref() done by RfSystem::rfReceivedEmission
       em = nullptr;
 
       //if (np >= 0 && np < MAX_EMISSIONS) {
@@ -332,7 +327,6 @@ void Radar::process(const double dt)
       // No track manager! Then just flush the input queue.
       base::lock(myLock);
       for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) {
-         em->unref();
          rptSnQueue.get();
       }
       base::unlock(myLock);
@@ -350,7 +344,6 @@ void Radar::process(const double dt)
          if (tm != nullptr) {
             tm->newReport(reports[i], rptMaxSn[i]);
          }
-         reports[i]->unref();
          reports[i] = nullptr;
          rptMaxSn[i] = 0;
       }
@@ -393,8 +386,6 @@ void Radar::process(const double dt)
             if (snDbl > rptMaxSn[matched]) {
                // When the S/N value of the new emission is greater than the report,
                // we use the new emission
-               reports[matched]->unref();
-               em->ref();
                reports[matched] = em;
                rptMaxSn[matched] = snDbl;
             }
@@ -406,13 +397,11 @@ void Radar::process(const double dt)
          // ---
 
          if (matched < 0 && numReports < MAX_REPORTS) {
-            em->ref();
             reports[numReports] = em;
             rptMaxSn[numReports] = snDbl;
             numReports++;
          }
          // finished
-         em->unref();
       }
    }
    base::unlock(myLock);
@@ -430,7 +419,6 @@ unsigned int Radar::getReports(const Emission** list, const unsigned int max) co
       num = numReports;
       if (num > max) num = max;
       for (unsigned int i = 0; i < num; i++) {
-         reports[i]->ref();
          list[i] = reports[i];
       }
       base::unlock(myLock);
@@ -529,7 +517,7 @@ unsigned int Radar::computeRangeIndex(const double rng)
 //------------------------------------------------------------------------------
 
 // igain: Integrator gain (dB or no units; def: 1.0)
-bool Radar::setSlotIGain(base::Number* const v)
+bool Radar::setSlotIGain(std::shared_ptr<base::Number> v)
 {
    bool ok{};
    if (v != nullptr) {

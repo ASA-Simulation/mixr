@@ -63,14 +63,14 @@ public:
     void reset() override;
 
 protected:
-   virtual bool setSlotVpMin(const base::Number* const msg);
-   virtual bool setSlotVpMax(const base::Number* const msg);
-   virtual bool setSlotVpMaxG(const base::Number* const msg);
-   virtual bool setSlotMaxG(const base::Number* const msg);
-   virtual bool setSlotMaxAccel(const base::Number* const msg);
-   virtual bool setSlotCmdPitch(const base::Number* const msg);
-   virtual bool setSlotCmdHeading(const base::Number* const msg);
-   virtual bool setSlotCmdVelocity(const base::Number* const msg);
+   virtual bool setSlotVpMin(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotVpMax(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotVpMaxG(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotMaxG(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotMaxAccel(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotCmdPitch(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotCmdHeading(std::shared_ptr<const base::Number> msg);
+   virtual bool setSlotCmdVelocity(std::shared_ptr<const base::Number> msg);
 
    // Weapon interface
    void weaponGuidance(const double dt) override;

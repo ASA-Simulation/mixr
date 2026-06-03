@@ -30,7 +30,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotIrShapeArea(const base::Number* const);
+   bool setSlotIrShapeArea(std::shared_ptr<const base::Number>);
 };
 
 //------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotIrSphereRadius(const base::Number* const);
+   bool setSlotIrSphereRadius(std::shared_ptr<const base::Number>);
 };
 
 //------------------------------------------------------------------------------
@@ -84,9 +84,9 @@ private:
    double x{10.0}, y{10.0}, z{10.0};
 
 private:
-   bool setSlotIrBoxX(const base::Number* const);
-   bool setSlotIrBoxY(const base::Number* const);
-   bool setSlotIrBoxZ(const base::Number* const);
+   bool setSlotIrBoxX(std::shared_ptr<const base::Number>);
+   bool setSlotIrBoxY(std::shared_ptr<const base::Number>);
+   bool setSlotIrBoxZ(std::shared_ptr<const base::Number>);
 };
 
 }

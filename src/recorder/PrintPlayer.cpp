@@ -35,7 +35,6 @@ void PrintPlayer::copyData(const PrintPlayer& org, const bool)
       const base::String* clone{};
       if (org.name != nullptr) clone = org.name->clone();
       setName(clone);
-      if (clone != nullptr) clone->unref();
    }
 }
 
@@ -49,9 +48,7 @@ void PrintPlayer::deleteData()
 //------------------------------------------------------------------------------
 bool PrintPlayer::setName(const base::String* const msg)
 {
-   if (name != nullptr) { name->unref(); }
    name = msg;
-   if (name != nullptr) { name->ref(); }
    return true;
 }
 

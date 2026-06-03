@@ -4,12 +4,12 @@
 
 #include "mixr/base/colors/Color.hpp"
 #include "mixr/base/osg/Matrixd"
-#include "mixr/base/safe_ptr.hpp"
 #include "mixr/base/osg/Vec3d"
 #include "mixr/base/osg/Vec4d"
 
 namespace mixr {
 namespace base {
+
 class Table1;
 class List;
 
@@ -47,8 +47,13 @@ class MonitorMetrics : public Object
 
 public:
     MonitorMetrics();
-    MonitorMetrics(const Table1* redLuminance, const Table1* greenLuminance, const Table1* blueLuminance,
-                   const Matrixd& phosphorCoordinates, const Vec3d& whiteRGB, const Vec3d& whiteCIE);
+    MonitorMetrics(
+        std::shared_ptr<const Table1> redLuminance, 
+        std::shared_ptr<const Table1> greenLuminance,
+        std::shared_ptr<const Table1> blueLuminance,
+        const Matrixd& phosphorCoordinates, 
+        const Vec3d& whiteRGB, 
+        const Vec3d& whiteCIE);
 
     void cie2rgb(Vec4d& rgba, const Vec3d& cie) const;
 
@@ -59,9 +64,9 @@ private:
     Matrixd transform;
 
     // RGB luminance vs RGB level on this monitor
-    safe_ptr<const Table1> redLuminance;
-    safe_ptr<const Table1> greenLuminance;
-    safe_ptr<const Table1> blueLuminance;
+    std::shared_ptr<const Table1> redLuminance;
+    std::shared_ptr<const Table1> greenLuminance;
+    std::shared_ptr<const Table1> blueLuminance;
 
     // CIE coordinates of Red, Green, and Blue for this monitor
     Matrixd phosphorCoordinates;
@@ -72,12 +77,12 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotRed(const Table1* const);
-    bool setSlotGreen(const Table1* const);
-    bool setSlotBlue(const Table1* const);
-    bool setSlotPhosphors(const List* const);
-    bool setSlotWhiteRGB(const List* const);
-    bool setSlotWhiteCIE(const List* const);
+    bool setSlotRed(std::shared_ptr<const Table1>);
+    bool setSlotGreen(std::shared_ptr<const Table1>);
+    bool setSlotBlue(std::shared_ptr<const Table1>);
+    bool setSlotPhosphors(std::shared_ptr<const List>);
+    bool setSlotWhiteRGB(std::shared_ptr<const List>);
+    bool setSlotWhiteCIE(std::shared_ptr<const List>);
 };
 
 }

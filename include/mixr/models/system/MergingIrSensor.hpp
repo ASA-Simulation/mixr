@@ -48,8 +48,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotAzimuthBin(const base::Number* const);     // Sets the Azimuth Bin
-   bool setSlotElevationBin(const base::Number* const);   // Sets the Elevation Bin
+   bool setSlotAzimuthBin(std::shared_ptr<const base::Number>);     // Sets the Azimuth Bin
+   bool setSlotElevationBin(std::shared_ptr<const base::Number>);   // Sets the Elevation Bin
 };
 
 }

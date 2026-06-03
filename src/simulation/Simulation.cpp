@@ -91,14 +91,12 @@ void Simulation::copyData(const Simulation& org, const bool)
    if (origPlayers != nullptr) { origPlayers = nullptr; }
    if (org.origPlayers != nullptr) {
       origPlayers = org.origPlayers->clone();
-      origPlayers->unref();  // safe_ptr<> has it
    }
 
    // Copy active players
    if (players != nullptr)     { players = nullptr; }
    if (org.players != nullptr) {
       players = org.players->clone();
-      players->unref();  // safe_ptr<> has it
    }
 
    // Timing
@@ -133,7 +131,6 @@ void Simulation::copyData(const Simulation& org, const bool)
 
    for (int i = 0; i < numTcThreads; i++) {
       tcThreads[i]->terminate();
-      tcThreads[i]->unref();
       tcThreads[i] = nullptr;
    }
    numTcThreads = 0;
@@ -142,7 +139,6 @@ void Simulation::copyData(const Simulation& org, const bool)
 
    for (int i = 0; i < numBgThreads; i++) {
       bgThreads[i]->terminate();
-      bgThreads[i]->unref();
       bgThreads[i] = nullptr;
    }
    numBgThreads = 0;
@@ -157,13 +153,11 @@ void Simulation::deleteData()
 
    base::Pair* newPlayer{newPlayerQueue.get()};
    while (newPlayer != nullptr) {
-      newPlayer->unref();
       newPlayer = newPlayerQueue.get();
    }
 
    for (int i = 0; i < numTcThreads; i++) {
       tcThreads[i]->terminate();
-      tcThreads[i]->unref();
       tcThreads[i] = nullptr;
     }
    numTcThreads = 0;
@@ -171,7 +165,6 @@ void Simulation::deleteData()
 
    for (int i = 0; i < numBgThreads; i++) {
       bgThreads[i]->terminate();
-      bgThreads[i]->unref();
       bgThreads[i] = nullptr;
    }
    numBgThreads = 0;
@@ -190,7 +183,6 @@ void Simulation::reset()
    // ... We're going to create a new player list.
    // ---
    base::safe_ptr<base::PairStream> newList( new base::PairStream() );
-   newList->unref();  // 'newList' has it, so unref() from the 'new'
 
    // ---
    // Copy original players to the new list
@@ -262,7 +254,6 @@ void Simulation::reset()
             std::cout << "Created T/C pool thread[" << i << "] = " << tcThreads[i] << std::endl;
             numTcThreads++;
          } else {
-            tcThreads[numTcThreads]->unref();
             tcThreads[numTcThreads] = nullptr;
             if (isMessageEnabled(MSG_ERROR)) {
                std::cerr << "Simulation::reset(): ERROR, failed to create a T/C pool thread!" << std::endl;
@@ -295,7 +286,6 @@ void Simulation::reset()
             std::cout << "Created background pool thread[" << i << "] = " << bgThreads[i] << std::endl;
             numBgThreads++;
          } else {
-            bgThreads[numBgThreads]->unref();
             bgThreads[numBgThreads] = nullptr;
             if (isMessageEnabled(MSG_ERROR)) {
                std::cerr << "Simulation::reset(): ERROR, failed to create a background pool thread!" << std::endl;
@@ -414,7 +404,6 @@ bool Simulation::shutdownNotification()
       }
 
       // cleanup
-      plist->unref();
       plist = nullptr;
    }
 
@@ -426,7 +415,6 @@ bool Simulation::shutdownNotification()
    while (newPlayer != nullptr) {
       base::Component* p{static_cast<base::Component*>(newPlayer->object())};
       p->event(SHUTDOWN_EVENT);
-      newPlayer->unref();
       newPlayer = newPlayerQueue.get();
    }
 
@@ -831,7 +819,7 @@ Station* Simulation::getStationImp()
 // setSlotPlayers() -- set the original player list (make sure we have only
 // player type objects with unique names and IDs)
 //------------------------------------------------------------------------------
-bool Simulation::setSlotPlayers(base::PairStream* const pl)
+bool Simulation::setSlotPlayers(std::shared_ptr<base::PairStream> pl)
 {
    // Early out if we're just zeroing the player lists
    if (pl == nullptr) {
@@ -939,7 +927,6 @@ bool Simulation::setSlotPlayers(base::PairStream* const pl)
 
       // Set the active player list pointer
       players = newList;
-      newList->unref();
    }
 
    return ok;
@@ -980,7 +967,6 @@ void Simulation::updatePlayerList()
         // Something old and something new ...
         // ---
         base::safe_ptr<base::PairStream> newList( new base::PairStream() );
-        newList->unref();  // 'newList' has it, so unref() from the 'new'
 
         // ---
         // Copy players to the new list; except 'deleteRequest' mode players
@@ -1024,7 +1010,6 @@ void Simulation::updatePlayerList()
             // Insert the new player into the new list in sorted order
             insertPlayerSort(newPlayer, newList);
 
-            newPlayer->unref();
 
          newPlayer = newPlayerQueue.get();
         }
@@ -1045,7 +1030,6 @@ void Simulation::updatePlayerList()
 bool Simulation::addNewPlayer(base::Pair* const player)
 {
     if (player == nullptr) return false;
-    player->ref();
 
     newPlayerQueue.put(player);
 
@@ -1064,7 +1048,6 @@ bool Simulation::addNewPlayer(const char* const playerName, AbstractPlayer* cons
 
     const auto pair = new base::Pair(playerName, player);
     bool ok{addNewPlayer(pair)};
-    pair->unref();
     return ok;
 }
 
@@ -1073,11 +1056,9 @@ bool Simulation::addNewPlayer(const char* const playerName, AbstractPlayer* cons
 //------------------------------------------------------------------------------
 bool Simulation::insertPlayerSort(base::Pair* const newPlayerPair, base::PairStream* const newList)
 {
-    newList->ref();
 
     // create a new base::List::Item to hold the player
     base::List::Item* newItem{new base::List::Item};
-    newPlayerPair->ref();
     newItem->value = newPlayerPair;
 
     // Get the player
@@ -1132,7 +1113,6 @@ bool Simulation::insertPlayerSort(base::Pair* const newPlayerPair, base::PairStr
         newList->insert(newItem, nullptr);
     }
 
-    newList->unref();
     return true;
 }
 
@@ -1266,7 +1246,7 @@ void Simulation::setWeaponEventID(unsigned short id)
 // Set Slot routines
 //------------------------------------------------------------------------------
 
-bool Simulation::setSlotSimulationTime(const base::Time* const msg)
+bool Simulation::setSlotSimulationTime(std::shared_ptr<const base::Time> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -1280,7 +1260,7 @@ bool Simulation::setSlotSimulationTime(const base::Time* const msg)
     return ok;
 }
 
-bool Simulation::setSlotDay(const base::Number* const msg)
+bool Simulation::setSlotDay(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1295,7 +1275,7 @@ bool Simulation::setSlotDay(const base::Number* const msg)
    return ok;
 }
 
-bool Simulation::setSlotMonth(const base::Number* const msg)
+bool Simulation::setSlotMonth(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1310,7 +1290,7 @@ bool Simulation::setSlotMonth(const base::Number* const msg)
    return ok;
 }
 
-bool Simulation::setSlotYear(const base::Number* const msg)
+bool Simulation::setSlotYear(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1325,7 +1305,7 @@ bool Simulation::setSlotYear(const base::Number* const msg)
    return ok;
 }
 
-bool Simulation::setSlotFirstWeaponId(const base::Number* const msg)
+bool Simulation::setSlotFirstWeaponId(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1341,7 +1321,7 @@ bool Simulation::setSlotFirstWeaponId(const base::Number* const msg)
    return ok;
 }
 
-bool Simulation::setSlotNumTcThreads(const base::Number* const msg)
+bool Simulation::setSlotNumTcThreads(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -1365,7 +1345,7 @@ bool Simulation::setSlotNumTcThreads(const base::Number* const msg)
    return ok;
 }
 
-bool Simulation::setSlotNumBgThreads(const base::Number* const msg)
+bool Simulation::setSlotNumBgThreads(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

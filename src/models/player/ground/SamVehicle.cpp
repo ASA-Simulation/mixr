@@ -81,7 +81,6 @@ void SamVehicle::updateData(const double dt)
             }
             item = item->getNext();
          }
-         stores->unref();
          stores = nullptr;
       }
 
@@ -136,7 +135,7 @@ bool SamVehicle::setMinLaunchRange(const double rng)
 //------------------------------------------------------------------------------
 
 // maxLaunchRange: Max launch range (base::Distance)
-bool SamVehicle::setSlotMaxLaunchRange(const base::Distance* const msg)
+bool SamVehicle::setSlotMaxLaunchRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -146,7 +145,7 @@ bool SamVehicle::setSlotMaxLaunchRange(const base::Distance* const msg)
 }
 
 // minLaunchRange: Min launch range (base::Distance)
-bool SamVehicle::setSlotMinLaunchRange(const base::Distance* const msg)
+bool SamVehicle::setSlotMinLaunchRange(std::shared_ptr<const base::Distance> msg)
 {
    bool ok{};
    if (msg != nullptr) {

@@ -47,7 +47,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotDragIndex(base::Number* const);
+   bool setSlotDragIndex(std::shared_ptr<base::Number>);
 };
 
 }

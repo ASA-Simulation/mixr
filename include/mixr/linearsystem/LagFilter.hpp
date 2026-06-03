@@ -44,8 +44,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotTau(const base::Time* const);
-   bool setSlotTau(const base::Number* const);
+   bool setSlotTau(std::shared_ptr<const base::Time>);
+   bool setSlotTau(std::shared_ptr<const base::Number>);
 };
 
 }

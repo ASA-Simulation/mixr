@@ -91,9 +91,9 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotMulticastGroup(const String* const);
-    bool setSlotTTL(const Number* const);
-    bool setSlotLoopback(const Number* const);
+    bool setSlotMulticastGroup(std::shared_ptr<const String>);
+    bool setSlotTTL(std::shared_ptr<const Number>);
+    bool setSlotLoopback(std::shared_ptr<const Number>);
 };
 
 }

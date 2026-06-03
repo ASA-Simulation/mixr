@@ -60,7 +60,7 @@ private:
 
 protected:
    // slot table helper methods
-   virtual bool setSlotCoefficients(const List* const);
+   virtual bool setSlotCoefficients(std::shared_ptr<const List>);
 };
 
 }

@@ -43,7 +43,7 @@ void Rgb::copyData(const Rgb& org, const bool)
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool Rgb::setSlotRed(const Number* const msg)
+bool Rgb::setSlotRed(std::shared_ptr<const Number> msg)
 {
     const double value{msg->getReal()};
     const bool ok{setRed( value )};
@@ -53,7 +53,7 @@ bool Rgb::setSlotRed(const Number* const msg)
     return ok;
 }
 
-bool Rgb::setSlotGreen(const Number* const msg)
+bool Rgb::setSlotGreen(std::shared_ptr<const Number> msg)
 {
     const double value{msg->getReal()};
     const bool ok{setGreen( value )};
@@ -63,7 +63,7 @@ bool Rgb::setSlotGreen(const Number* const msg)
     return ok;
 }
 
-bool Rgb::setSlotBlue(const Number* const msg)
+bool Rgb::setSlotBlue(std::shared_ptr<const Number> msg)
 {
     const double value{msg->getReal()};
     const bool ok{setBlue( value )};

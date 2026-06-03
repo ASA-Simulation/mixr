@@ -50,8 +50,8 @@ private:
 private:
    // slot table helper methods
    // slot to set agent's actor (component to be controlled)
-   bool setSlotActorPlayerName(const base::String* const);
-   bool setSlotActorComponentName(const base::String* const);
+   bool setSlotActorPlayerName(std::shared_ptr<const base::String>);
+   bool setSlotActorComponentName(std::shared_ptr<const base::String>);
 };
 
 

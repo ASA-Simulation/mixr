@@ -94,9 +94,7 @@ void Nib::deleteData()
 //------------------------------------------------------------------------------
 void Nib::setBaseEntity(BaseEntity* const p)
 {
-   if (baseEntity != nullptr) baseEntity->unref();
    baseEntity = p;
-   if (baseEntity != nullptr) baseEntity->ref();
 }
 
 void Nib::setWeaponFireEvent(const unsigned short e)

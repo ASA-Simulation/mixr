@@ -64,7 +64,7 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotEntityType(const base::List* const);         // Sets entity type enumerations
+   bool setSlotEntityType(std::shared_ptr<const base::List>);         // Sets entity type enumerations
 };
 
 }

@@ -5,10 +5,10 @@
 #include "mixr/base/Object.hpp"
 #include "mixr/base/osg/Vec3d"
 #include "mixr/base/osg/Vec4d"
-#include "mixr/base/safe_ptr.hpp"
 
 namespace mixr {
 namespace models {
+
 class Player;
 class Gimbal;
 
@@ -132,16 +132,16 @@ public:
    const Gimbal* getGimbal() const              { return gimbal; }
 
    // Pointer to the player that sent this message
-   Player* getOwnship()                         { return ownship; }
-   const Player* getOwnship() const             { return ownship; }
+   std::shared_ptr<mixr::models::Player> getOwnship()             { return ownship; }
+   std::shared_ptr<const mixr::models::Player> getOwnship() const { return ownship; }
 
    // Pointer to the target of this message
-   Player* getTarget()                          { return target; }
-   const Player* getTarget() const              { return target; }
+   std::shared_ptr<mixr::models::Player> getTarget()             { return target; }
+   std::shared_ptr<const mixr::models::Player> getTarget() const { return target; }
 
    // Optional: data message attached to sensor message
-   base::Object* getDataMessage()              { return dataMsg; }
-   const base::Object* getDataMessage() const  { return dataMsg; }
+   std::shared_ptr<base::Object> getDataMessage()              { return dataMsg; }
+   std::shared_ptr<const base::Object> getDataMessage() const  { return dataMsg; }
 
    // Sets the gimbal that generated this message
    void setGimbal(Gimbal* const);
@@ -172,9 +172,9 @@ private:
    base::Vec3d losT2O;       // Normalized target to ownship LOS vector (target's NED)
    base::Vec3d aoi;          // Normalized target Angle Of Incidence (AOI) vector
    Gimbal* gimbal {};        // The gimbal that transmitted the message
-   base::safe_ptr<Player> ownship;         // The originating (ownship) player
-   base::safe_ptr<Player> target;          // The Target player
-   base::safe_ptr<base::Object> dataMsg;   // Embedded data message (e.g., datalink, etc)
+   std::shared_ptr<Player> ownship;         // The originating (ownship) player
+   std::shared_ptr<Player> target;          // The Target player
+   std::shared_ptr<base::Object> dataMsg;   // Embedded data message (e.g., datalink, etc)
    bool returnReq {};        // Return Request
    bool localOnly {};        // Local players only flag
 };

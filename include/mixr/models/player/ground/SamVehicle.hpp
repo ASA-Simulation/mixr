@@ -48,8 +48,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotMinLaunchRange(const base::Distance* const);
-   bool setSlotMaxLaunchRange(const base::Distance* const);
+   bool setSlotMinLaunchRange(std::shared_ptr<const base::Distance>);
+   bool setSlotMaxLaunchRange(std::shared_ptr<const base::Distance>);
 };
 
 }

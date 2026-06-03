@@ -141,19 +141,19 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotTrackManagerName(base::String* const);         // Sets our track manager by name
-   bool setSlotModeStream(base::PairStream* const);           // Sets a list of R/F sensor submodes
-   bool setSlotModeSingle(RfSensor* const);                   // Sets a single (only) R/F sensor submode
-   bool setSlotRanges(base::List* const);                     // Sets out list of valid ranges (nm)
-   bool setSlotInitRangeIdx(base::Number* const);             // Sets out initial range index [ 1 .. nRanges ]
-   bool setSlotPrf(const base::Frequency* const);             // Sets PRF as a base::Frequency
-   bool setSlotPrf(const base::Number* const);                // Sets PRF in hertz
-   bool setSlotPulseWidth(const base::Time* const);           // Sets pulse width using base::Time
-   bool setSlotPulseWidth(const base::Number* const);         // Sets pulse width in seconds
-   bool setSlotBeamWidth(const base::Angle* const);           // Sets beam width as a base::Angle
-   bool setSlotBeamWidth(const base::Number* const);          // Sets beam width in radians
-   bool setSlotTypeId(const base::String* const);             // Sets the type ID
-   bool setSlotSyncXmitWithScan(const base::Number* const);   // Sets sync transmitter with antenna scan flag
+   bool setSlotTrackManagerName(std::shared_ptr<base::String>);         // Sets our track manager by name
+   bool setSlotModeStream(std::shared_ptr<base::PairStream>);           // Sets a list of R/F sensor submodes
+   bool setSlotModeSingle(std::shared_ptr<RfSensor>);                   // Sets a single (only) R/F sensor submode
+   bool setSlotRanges(std::shared_ptr<base::List>);                     // Sets out list of valid ranges (nm)
+   bool setSlotInitRangeIdx(std::shared_ptr<base::Number>);             // Sets out initial range index [ 1 .. nRanges ]
+   bool setSlotPrf(std::shared_ptr<const base::Frequency>);             // Sets PRF as a base::Frequency
+   bool setSlotPrf(std::shared_ptr<const base::Number>);                // Sets PRF in hertz
+   bool setSlotPulseWidth(std::shared_ptr<const base::Time>);           // Sets pulse width using base::Time
+   bool setSlotPulseWidth(std::shared_ptr<const base::Number>);         // Sets pulse width in seconds
+   bool setSlotBeamWidth(std::shared_ptr<const base::Angle>);           // Sets beam width as a base::Angle
+   bool setSlotBeamWidth(std::shared_ptr<const base::Number>);          // Sets beam width in radians
+   bool setSlotTypeId(std::shared_ptr<const base::String>);             // Sets the type ID
+   bool setSlotSyncXmitWithScan(std::shared_ptr<const base::Number>);   // Sets sync transmitter with antenna scan flag
 };
 
 }

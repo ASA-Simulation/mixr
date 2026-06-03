@@ -69,7 +69,6 @@ void RfSensor::copyData(const RfSensor& org, const bool)
     BaseClass::copyData(org);
 
     // Copy subpages
-    if (modes != nullptr) { modes->unref(); }
     if (org.modes != nullptr) {
         modes = org.modes->clone();
         processModes();
@@ -80,7 +79,6 @@ void RfSensor::copyData(const RfSensor& org, const bool)
     if (org.tmName != nullptr) {
        base::String* clone{org.tmName->clone()};
        setTrackManagerName(clone);
-       clone->unref();
     } else {
       setTrackManagerName(nullptr);
     }
@@ -108,7 +106,6 @@ void RfSensor::deleteData()
     setTrackManagerName(nullptr);
 
     if (modes != nullptr) {
-       modes->unref();
        modes = nullptr;
     }
 }
@@ -122,7 +119,6 @@ bool RfSensor::shutdownNotification()
    setMasterMode(nullptr);
 
    if (modes != nullptr) {
-       modes->unref();
        modes = nullptr;
     }
 
@@ -382,13 +378,11 @@ bool RfSensor::setRange(const double v)
 //------------------------------------------------------------------------------
 //  setSlotModeStream() -- takes a PairStream in and inits the mode list
 //------------------------------------------------------------------------------
-bool RfSensor::setSlotModeStream (base::PairStream* const obj)
+bool RfSensor::setSlotModeStream(std::shared_ptr<base::PairStream> obj)
 {
     if (obj != nullptr) {
         // When a PairStream (i.e., more than one, a list) of pages
-        if (modes != nullptr) modes->unref();
-        modes = obj;
-        modes->ref();
+        modes = obj.get();
 
     }
     return processModes();
@@ -397,15 +391,13 @@ bool RfSensor::setSlotModeStream (base::PairStream* const obj)
 //------------------------------------------------------------------------------
 //  setSlotModeSingle() -- takes a single Mode and inits the mode list
 //------------------------------------------------------------------------------
-bool RfSensor::setSlotModeSingle(RfSensor* const obj)
+bool RfSensor::setSlotModeSingle(std::shared_ptr<RfSensor> obj)
 {
-    if (modes != nullptr) modes->unref();
 
     modes = new base::PairStream();
 
     const auto p = new base::Pair("1",obj);
     modes->put( p );
-    p->unref();
 
     return processModes();
 }
@@ -413,7 +405,7 @@ bool RfSensor::setSlotModeSingle(RfSensor* const obj)
 //------------------------------------------------------------------------------
 //  setSlotRanges() -- Our list of valid ranges (nm)
 //------------------------------------------------------------------------------
-bool RfSensor::setSlotRanges(base::List* const list)
+bool RfSensor::setSlotRanges(std::shared_ptr<base::List> list)
 {
     bool ok{};
     if (list != nullptr) {
@@ -427,7 +419,7 @@ bool RfSensor::setSlotRanges(base::List* const list)
 //------------------------------------------------------------------------------
 //  setSlotInitRangeIdx() -- Our initial range index
 //------------------------------------------------------------------------------
-bool RfSensor::setSlotInitRangeIdx(base::Number* const num)
+bool RfSensor::setSlotInitRangeIdx(std::shared_ptr<base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -454,7 +446,7 @@ bool RfSensor::setInitRngIdx(const int idx)
 //------------------------------------------------------------------------------
 
 // Sets PRF as a base::Frequency
-bool RfSensor::setSlotPrf(const base::Frequency* const msg)
+bool RfSensor::setSlotPrf(std::shared_ptr<const base::Frequency> msg)
 {
    bool ok{};
 
@@ -470,7 +462,7 @@ bool RfSensor::setSlotPrf(const base::Frequency* const msg)
 }
 
 // Sets PRF in hertz
-bool RfSensor::setSlotPrf(const base::Number* const msg)
+bool RfSensor::setSlotPrf(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
 
@@ -491,7 +483,7 @@ bool RfSensor::setSlotPrf(const base::Number* const msg)
 //------------------------------------------------------------------------------
 
 // Sets pulse width using base::Time
-bool RfSensor::setSlotPulseWidth(const base::Time* const msg)
+bool RfSensor::setSlotPulseWidth(std::shared_ptr<const base::Time> msg)
 {
    bool ok{};
 
@@ -507,7 +499,7 @@ bool RfSensor::setSlotPulseWidth(const base::Time* const msg)
 }
 
 // Sets pulse width in seconds
-bool RfSensor::setSlotPulseWidth(const base::Number* const msg)
+bool RfSensor::setSlotPulseWidth(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
 
@@ -526,7 +518,7 @@ bool RfSensor::setSlotPulseWidth(const base::Number* const msg)
 //------------------------------------------------------------------------------
 
 // Sets beam width as an base::Angle
-bool RfSensor::setSlotBeamWidth(const base::Angle* const msg)
+bool RfSensor::setSlotBeamWidth(std::shared_ptr<const base::Angle> msg)
 {
    bool ok{};
 
@@ -542,7 +534,7 @@ bool RfSensor::setSlotBeamWidth(const base::Angle* const msg)
 }
 
 // Sets beam width in radians
-bool RfSensor::setSlotBeamWidth(const base::Number* const msg)
+bool RfSensor::setSlotBeamWidth(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
 
@@ -558,7 +550,7 @@ bool RfSensor::setSlotBeamWidth(const base::Number* const msg)
 }
 
 // Sets the type ID
-bool RfSensor::setSlotTypeId(const base::String* const msg)
+bool RfSensor::setSlotTypeId(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
 
@@ -570,7 +562,7 @@ bool RfSensor::setSlotTypeId(const base::String* const msg)
 }
 
 // Sets sync transmitter with antenna scan flag
-bool RfSensor::setSlotSyncXmitWithScan(const base::Number* const msg)
+bool RfSensor::setSlotSyncXmitWithScan(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -604,11 +596,9 @@ bool RfSensor::onReturnToSearchEvent()
 bool RfSensor::setTrackManagerName(base::String* name)
 {
     if (tmName != nullptr) {
-        tmName->unref();
     }
     tmName = name;
     if (tmName != nullptr) {
-        tmName->ref();
     }
     return true;
 }
@@ -619,11 +609,9 @@ bool RfSensor::setTrackManagerName(base::String* name)
 bool RfSensor::setTrackManager(TrackManager* tm)
 {
     if (trackManager != nullptr) {
-        trackManager->unref();
     }
     trackManager = tm;
     if (trackManager != nullptr) {
-        trackManager->ref();
     }
     return true;
 }
@@ -633,9 +621,7 @@ bool RfSensor::setTrackManager(TrackManager* tm)
 //------------------------------------------------------------------------------
 bool RfSensor::setMasterMode(RfSensor* const m)
 {
-    if (masterModePtr != nullptr) masterModePtr->unref();
     masterModePtr = m;
-    if (masterModePtr != nullptr) masterModePtr->ref();
     return true;
 }
 
@@ -645,7 +631,7 @@ bool RfSensor::setMasterMode(RfSensor* const m)
 
 // setSlotTrackManagerName() -- sets the name of the track manager;
 // we'll lookup the actual track manager in reset() later
-bool RfSensor::setSlotTrackManagerName(base::String* const v)
+bool RfSensor::setSlotTrackManagerName(std::shared_ptr<base::String> v)
 {
     return setTrackManagerName(v);
 }

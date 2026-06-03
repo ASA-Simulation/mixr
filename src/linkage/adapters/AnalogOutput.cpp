@@ -50,7 +50,6 @@ void AnalogOutput::copyData(const AnalogOutput& org, const bool)
          copy = org.table->clone();
       }
       setTable(copy);
-      if (copy != nullptr) copy->unref();
    }
 }
 
@@ -66,7 +65,6 @@ bool AnalogOutput::setTable(const base::Table1* const msg)
 
     // Unref() the old (if any)
     if (table != nullptr) {
-        table->unref();
     }
 
     // set our pointer to the new
@@ -75,7 +73,6 @@ bool AnalogOutput::setTable(const base::Table1* const msg)
     // Check and ref() the new table (if any)
     if (table != nullptr) {
         if (table->isValid()) {
-            table->ref();
         } else {
             if (isMessageEnabled(MSG_ERROR)) {
                 std::cerr << "AnalogOutput::setTable(): invalid table!" << std::endl;
@@ -108,7 +105,7 @@ void AnalogOutput::processOutputsImpl(const base::AbstractIoData* const outData,
 }
 
 // location: Output array index (location)
-bool AnalogOutput::setSlotLocation(const base::Number* const msg)
+bool AnalogOutput::setSlotLocation(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -121,7 +118,7 @@ bool AnalogOutput::setSlotLocation(const base::Number* const msg)
 }
 
 // channel: AI card's channel number
-bool AnalogOutput::setSlotChannel(const base::Number* const msg)
+bool AnalogOutput::setSlotChannel(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -134,7 +131,7 @@ bool AnalogOutput::setSlotChannel(const base::Number* const msg)
 }
 
 // offset: Offset value
-bool AnalogOutput::setSlotOffset(const base::Number* const msg)
+bool AnalogOutput::setSlotOffset(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -144,7 +141,7 @@ bool AnalogOutput::setSlotOffset(const base::Number* const msg)
 }
 
 // gain: Gain value
-bool AnalogOutput::setSlotGain(const base::Number* const msg)
+bool AnalogOutput::setSlotGain(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

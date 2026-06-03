@@ -260,7 +260,6 @@ void FileWriter::closeFile()
 
          // write the message
          processRecordImp(handle);
-         handle->unref();
          handle = nullptr;
       }
 
@@ -363,7 +362,6 @@ void FileWriter::setFullFilename(const char* const name)
 
 bool FileWriter::setFilename(const base::String* const msg)
 {
-   if (filename != nullptr) { filename->unref(); filename = nullptr; }
    if (msg != nullptr) filename = new base::String(*msg);
 
     return true;
@@ -371,7 +369,6 @@ bool FileWriter::setFilename(const base::String* const msg)
 
 bool FileWriter::setPathName(const base::String* const msg)
 {
-   if (pathname != nullptr) { pathname->unref(); pathname = nullptr; }
    if (msg != nullptr) pathname = new base::String(*msg);
 
    return true;

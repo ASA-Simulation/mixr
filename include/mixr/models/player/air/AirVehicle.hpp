@@ -152,8 +152,8 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotInitGearPos(const base::String* const);
-   bool setSlotInitGearPos(const base::Number* const);
+   bool setSlotInitGearPos(std::shared_ptr<const base::String>);
+   bool setSlotInitGearPos(std::shared_ptr<const base::Number>);
 };
 
 }

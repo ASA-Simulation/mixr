@@ -54,7 +54,7 @@ bool LowpassFilter::setWc(const double v)
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool LowpassFilter::setSlotWc(const base::Frequency* const msg)
+bool LowpassFilter::setSlotWc(std::shared_ptr<const base::Frequency> msg)
 {
    bool ok = false;
    if (msg != nullptr) {
@@ -73,7 +73,7 @@ bool LowpassFilter::setSlotWc(const base::Frequency* const msg)
    return ok;
 }
 
-bool LowpassFilter::setSlotWc(const base::Number* const msg)
+bool LowpassFilter::setSlotWc(std::shared_ptr<const base::Number> msg)
 {
    bool ok = false;
    if (msg != nullptr) {

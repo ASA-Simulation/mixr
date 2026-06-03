@@ -83,7 +83,7 @@ bool Polynomial::setCoefficients(const double* const aa, const int mm)
    return ok;
 }
 
-bool Polynomial::setSlotCoefficients(const List* const msg)
+bool Polynomial::setSlotCoefficients(std::shared_ptr<const List> msg)
 {
    bool ok {};
 

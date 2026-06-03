@@ -44,7 +44,6 @@ void IoDevice::copyData(const IoDevice& org, const bool)
    if (org.adapters != nullptr) {
       const auto copy = static_cast<base::PairStream*>(org.adapters->clone());
       setSlotAdapters(copy);
-      copy->unref();
    }
 }
 
@@ -88,7 +87,7 @@ void IoDevice::processOutputAdapters(const base::AbstractIoData* const outData)
 }
 
 // read list of adapters
-bool IoDevice::setSlotAdapters(base::PairStream* const list)
+bool IoDevice::setSlotAdapters(std::shared_ptr<base::PairStream> list)
 {
    bool ok{true};
 

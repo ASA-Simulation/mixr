@@ -62,7 +62,6 @@ void Tdb::copyData(const Tdb& org, const bool)
 
    if (targets != nullptr) {
       for (unsigned int i = 0; i < org.numTgts; i++) {
-         org.targets[i]->ref();
          targets[i] = org.targets[i];
          ranges[i] = org.ranges[i];
          rngRates[i] = org.rngRates[i];
@@ -95,7 +94,6 @@ void Tdb::clearArrays()
       while (numTgts > 0) {
          --numTgts;
          if (targets[numTgts] != nullptr) {
-            targets[numTgts]->unref();
             targets[numTgts] = nullptr;
          }
       }
@@ -377,7 +375,6 @@ unsigned int Tdb::processPlayers(base::PairStream* const players)
                      // !!! All is well with this target !!!
 
                      // Ref() and save the target pointer
-                     target->ref();
                      targets[numTgts++] = target;
                   }
                }
@@ -534,15 +531,11 @@ unsigned int Tdb::computeBoresightData()
 void Tdb::setGimbal(const Gimbal* const newGimbal)
 {
    // Unref() the old, set and ref() the new
-   if (ownship != nullptr) { ownship->unref(); ownship = nullptr; }
-   if (gimbal != nullptr) gimbal->unref();
 
    gimbal = newGimbal;
 
    if (gimbal != nullptr) {
-      gimbal->ref();
       ownship = gimbal->getOwnship();
-      if (ownship != nullptr) ownship->ref();
    }
 }
 

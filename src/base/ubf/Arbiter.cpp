@@ -29,7 +29,6 @@ Arbiter::Arbiter()
 void Arbiter::deleteData()
 {
    // unref behaviors
-   if ( behaviors!=nullptr ) { behaviors->unref();   behaviors = nullptr; }
 }
 
 //------------------------------------------------------------------------------
@@ -51,7 +50,6 @@ AbstractAction* Arbiter::genAction(const AbstractState* const state, const doubl
          // add to action set
          actionSet->addTail(action);
          // unref our action reference
-         action->unref();
       }
       // goto behavior
       item = item->getNext();
@@ -62,7 +60,6 @@ AbstractAction* Arbiter::genAction(const AbstractState* const state, const doubl
    AbstractAction* complexAction{genComplexAction(actionSet)};
 
    // done with action set
-   actionSet->unref();
 
    // return action to perform
    return complexAction;
@@ -86,9 +83,7 @@ AbstractAction* Arbiter::genComplexAction(base::List* const actionSet)
       if (maxVote==0 || action->getVote() > maxVote) {
 
          // Yes ...
-         if (complexAction != nullptr) complexAction->unref();
          complexAction = action;
-         complexAction->ref();
          maxVote = action->getVote();
       }
 
@@ -121,7 +116,7 @@ void Arbiter::addBehavior(AbstractBehavior* const x)
 // Slot functions
 //------------------------------------------------------------------------------
 
-bool Arbiter::setSlotBehaviors(base::PairStream* const x)
+bool Arbiter::setSlotBehaviors(std::shared_ptr<base::PairStream> x)
 {
    bool ok{true};
 

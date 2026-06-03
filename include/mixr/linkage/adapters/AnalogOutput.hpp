@@ -65,11 +65,11 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotLocation(const base::Number* const);
-   bool setSlotChannel(const base::Number* const);
-   bool setSlotOffset(const base::Number* const);
-   bool setSlotGain(const base::Number* const);
-   bool setSlotTable(const base::Table1* const x)           {return setTable(x);}
+   bool setSlotLocation(std::shared_ptr<const base::Number>);
+   bool setSlotChannel(std::shared_ptr<const base::Number>);
+   bool setSlotOffset(std::shared_ptr<const base::Number>);
+   bool setSlotGain(std::shared_ptr<const base::Number>);
+   bool setSlotTable(std::shared_ptr<const base::Table1> x)           {return setTable(x);}
 };
 
 }

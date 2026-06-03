@@ -95,13 +95,13 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotMsgToken(const base::Number* const);
-   bool setSlotFieldName(const base::String* const);
-   bool setSlotCompareToStr(const base::String* const);
-   bool setSlotCompareToNum(const base::Number* const);
-   bool setSlotCompareToDbl(const base::Number* const);
-   bool setSlotCondition(const base::String* const);
-   bool setSlotTimeOnly(const base::Number* const);
+   bool setSlotMsgToken(std::shared_ptr<const base::Number>);
+   bool setSlotFieldName(std::shared_ptr<const base::String>);
+   bool setSlotCompareToStr(std::shared_ptr<const base::String>);
+   bool setSlotCompareToNum(std::shared_ptr<const base::Number>);
+   bool setSlotCompareToDbl(std::shared_ptr<const base::Number>);
+   bool setSlotCondition(std::shared_ptr<const base::String>);
+   bool setSlotTimeOnly(std::shared_ptr<const base::Number>);
 };
 
 inline unsigned int PrintSelected::getMsgToken() const { return msgToken; }

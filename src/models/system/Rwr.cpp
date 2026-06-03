@@ -55,7 +55,6 @@ void Rwr::copyData(const Rwr& org, const bool)
 void Rwr::deleteData()
 {
    // Clear out the queues
-   for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) { em->unref(); }
 }
 
 //------------------------------------------------------------------------------
@@ -64,7 +63,6 @@ void Rwr::deleteData()
 bool Rwr::shutdownNotification()
 {
    // Clear out the queues
-   for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) { em->unref(); }
    return BaseClass::shutdownNotification();
 }
 
@@ -141,13 +139,11 @@ void Rwr::receive(const double dt)
             //}
 
             // Send to the track list processor
-            em->ref();  // ref() for track list processing
             rptQueue.put(em);
          }
       }
 
       // finished
-      em->unref();   // this unref() undoes the ref() done by RfSystem::rfReceivedEmission
       em = nullptr;
 
 
@@ -178,7 +174,6 @@ void Rwr::process(const double dt)
    // ---
    for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) {
       // finished
-      em->unref();   // this undoes the ref() added in Rwr::receive()
    }
 }
 
@@ -190,7 +185,6 @@ bool Rwr::killedNotification(Player* const p)
     // ---
     // Clear out the queues
     // ---
-    for (Emission* em = rptQueue.get(); em != nullptr; em = rptQueue.get()) { em->unref(); }
 
     // ---
     // Make sure our base class knows we're dead.

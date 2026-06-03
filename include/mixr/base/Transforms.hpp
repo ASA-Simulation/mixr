@@ -60,14 +60,14 @@ protected:
 
 private:
    // slot table helper methods
-   bool setSlotComputematrix1(const Angle* const);
-   bool setSlotComputematrix1(const Number* const);
-   bool setSlotComputematrix2(const Angle* const);
-   bool setSlotComputematrix2(const Number* const);
-   bool setSlotComputematrix3(const Angle* const);
-   bool setSlotComputematrix3(const Number* const);
-   bool setSlotComputematrix4(const Angle* const);
-   bool setSlotComputematrix4(const Number* const);
+   bool setSlotComputematrix1(std::shared_ptr<const Angle>);
+   bool setSlotComputematrix1(std::shared_ptr<const Number>);
+   bool setSlotComputematrix2(std::shared_ptr<const Angle>);
+   bool setSlotComputematrix2(std::shared_ptr<const Number>);
+   bool setSlotComputematrix3(std::shared_ptr<const Angle>);
+   bool setSlotComputematrix3(std::shared_ptr<const Number>);
+   bool setSlotComputematrix4(std::shared_ptr<const Angle>);
+   bool setSlotComputematrix4(std::shared_ptr<const Number>);
 };
 
 //------------------------------------------------------------------------------

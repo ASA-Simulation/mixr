@@ -31,19 +31,19 @@ class Pair : public Object
 public:
    // Constructor: the slot name and object pointer are both required!
    // -- the object is ref() by this constructor.
-   Pair(const char* slot, Object* object);
+   Pair(const char* slot, std::shared_ptr<Object> object);
 
    Identifier* slot()               { return slotname; } // The slot name
    const Identifier* slot() const   { return slotname; } // The slot name (const version)
 
-   Object* object()                 { return obj; }      // The object
-   const Object* object() const     { return obj; }      // The object (const version)
+   Object* object()                 { return obj.get(); }      // The object
+   const Object* object() const     { return obj.get(); }      // The object (const version)
 
    bool isValid() const override;
 
 private:
    Identifier* slotname {};   // Slot name
-   Object* obj {};            // Object
+   std::shared_ptr<Object> obj {};            // Object
 };
 
 }

@@ -107,8 +107,8 @@ private:
 
 private:
     // slot table helper methods
-    bool setSlotAngle(const Angle* const);      // Input as type of angle (Radians, Degrees, ...)
-    bool setSlotTime(const Time* const);        // Input as type of time (Seconds, MilliSeconds, ...)
+    bool setSlotAngle(std::shared_ptr<const Angle>);      // Input as type of angle (Radians, Degrees, ...)
+    bool setSlotTime(std::shared_ptr<const Time>);        // Input as type of time (Seconds, MilliSeconds, ...)
 };
 
 }

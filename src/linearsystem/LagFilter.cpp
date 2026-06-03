@@ -60,7 +60,7 @@ bool LagFilter::setTau(const double v)
 // Set slot functions
 //------------------------------------------------------------------------------
 
-bool LagFilter::setSlotTau(const base::Time* const msg)
+bool LagFilter::setSlotTau(std::shared_ptr<const base::Time> msg)
 {
    bool ok {};
    if (msg != nullptr) {
@@ -77,7 +77,7 @@ bool LagFilter::setSlotTau(const base::Time* const msg)
    return ok;
 }
 
-bool LagFilter::setSlotTau(const base::Number* const msg)
+bool LagFilter::setSlotTau(std::shared_ptr<const base::Number> msg)
 {
    bool ok {};
    if (msg != nullptr) {

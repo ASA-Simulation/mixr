@@ -114,13 +114,13 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotArmingOption(base::Identifier* const);
-   bool setSlotNoseFuze(base::Number* const);
-   bool setSlotMidFuze(base::Number* const);
-   bool setSlotTailFuze(base::Number* const);
-   bool setSlotFuzeAltitude(base::Number* const);
-   bool setSlotFuzeTime(base::Number* const);
-   bool setSlotDragIndex(base::Number* const);
+   bool setSlotArmingOption(std::shared_ptr<base::Identifier>);
+   bool setSlotNoseFuze(std::shared_ptr<base::Number>);
+   bool setSlotMidFuze(std::shared_ptr<base::Number>);
+   bool setSlotTailFuze(std::shared_ptr<base::Number>);
+   bool setSlotFuzeAltitude(std::shared_ptr<base::Number>);
+   bool setSlotFuzeTime(std::shared_ptr<base::Number>);
+   bool setSlotDragIndex(std::shared_ptr<base::Number>);
 };
 
 }

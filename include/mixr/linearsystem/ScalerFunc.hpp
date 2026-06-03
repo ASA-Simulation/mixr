@@ -81,10 +81,10 @@ protected:
 
 private:
    // slot table helper methods
-   bool setSlotRate(const base::Frequency* const);
-   bool setSlotRate(const base::Number* const);
-   bool setSlotX0(const base::Number* const);
-   bool setSlotY0(const base::Number* const);
+   bool setSlotRate(std::shared_ptr<const base::Frequency>);
+   bool setSlotRate(std::shared_ptr<const base::Number>);
+   bool setSlotX0(std::shared_ptr<const base::Number>);
+   bool setSlotY0(std::shared_ptr<const base::Number>);
 };
 
 }

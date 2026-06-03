@@ -95,7 +95,6 @@ void RfSystem::deleteData()
    setSlotAntennaName(nullptr);
    for (unsigned int i = 0; i < np && i < MAX_EMISSIONS; i++) {
       if (packets[i] != nullptr) {
-         packets[i]->unref();
          packets[i] = nullptr;
       }
    }
@@ -111,7 +110,6 @@ bool RfSystem::shutdownNotification()
 
    for (unsigned int i = 0; i < np && i < MAX_EMISSIONS; i++) {
       if (packets[i] != nullptr) {
-         packets[i]->unref();
          packets[i] = nullptr;
       }
    }
@@ -197,7 +195,6 @@ void RfSystem::processPlayersOfInterest()
 
       getAntenna()->processPlayersOfInterest(poi);
 
-      if (poi != nullptr)     { poi->unref(); poi = nullptr; }
    }
 }
 
@@ -243,7 +240,6 @@ void RfSystem::rfReceivedEmission(Emission* const em, Antenna* const, double raG
          // Save packet and signal for receive()
          base::lock(packetLock);
          if (np < MAX_EMISSIONS) {
-            em->ref();
             packets[np] = em;
             signals[np] = signal;
             np++;
@@ -554,11 +550,9 @@ bool RfSystem::setDisableEmissionsFlag(const bool b)
 bool RfSystem::setAntenna(Antenna* const p)
 {
    if (antenna != nullptr) {
-      antenna->unref();
    }
    antenna = p;
    if (antenna != nullptr) {
-      antenna->ref();
    }
    return true;
 }
@@ -574,20 +568,18 @@ bool RfSystem::computeReceiverNoise()
 //------------------------------------------------------------------------------
 
 // antennaName: Antenna name  (base::String)
-bool RfSystem::setSlotAntennaName(base::String* const p)
+bool RfSystem::setSlotAntennaName(std::shared_ptr<base::String> p)
 {
    if (antennaName != nullptr) {
-      antennaName->unref();
    }
    antennaName = p;
    if (antennaName != nullptr) {
-      antennaName->ref();
    }
    return true;
 }
 
 // setSlotFrequency() -- Set the Frequency (base::Number or base::Frequency)
-bool RfSystem::setSlotFrequency(base::Number* const v)
+bool RfSystem::setSlotFrequency(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     double x{-1.0};
@@ -612,7 +604,7 @@ bool RfSystem::setSlotFrequency(base::Number* const v)
 }
 
 // bandwidth: Bandwidth     (Hz)
-bool RfSystem::setSlotBandwidth(base::Number* const num)
+bool RfSystem::setSlotBandwidth(std::shared_ptr<base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -638,7 +630,7 @@ bool RfSystem::setSlotBandwidth(base::Number* const num)
 }
 
 // bandwidthNoise: Bandwidth Noise  (Hz)
-bool RfSystem::setSlotBandwidthNoise(base::Number* const num)
+bool RfSystem::setSlotBandwidthNoise(std::shared_ptr<base::Number> num)
 {
     bool ok{};
     if (num != nullptr) {
@@ -664,7 +656,7 @@ bool RfSystem::setSlotBandwidthNoise(base::Number* const num)
 }
 
 // setSlotPeakPower() -- set the peak power (base::Number or base::Watts)
-bool RfSystem::setSlotPeakPower(base::Number* const v)
+bool RfSystem::setSlotPeakPower(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     double x{-1.0};
@@ -690,7 +682,7 @@ bool RfSystem::setSlotPeakPower(base::Number* const v)
 }
 
 // setSlotRfThreshold() -- set the receiver threshold (db over S/N)
-bool RfSystem::setSlotRfThreshold(base::Decibel* const v)
+bool RfSystem::setSlotRfThreshold(std::shared_ptr<base::Decibel> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -700,7 +692,7 @@ bool RfSystem::setSlotRfThreshold(base::Decibel* const v)
 }
 
 // setSlotRfNoiseFigure() -- set the noise figure (no units)
-bool RfSystem::setSlotRfNoiseFigure(base::Number* const v)
+bool RfSystem::setSlotRfNoiseFigure(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -715,7 +707,7 @@ bool RfSystem::setSlotRfNoiseFigure(base::Number* const v)
 }
 
 // setSlotRfSysTemp() -- set the system temperature (kelvin)
-bool RfSystem::setSlotRfSysTemp(base::Number* const v)
+bool RfSystem::setSlotRfSysTemp(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -730,7 +722,7 @@ bool RfSystem::setSlotRfSysTemp(base::Number* const v)
 }
 
 // setSlotRfTransmitLoss() -- set the transmit loss
-bool RfSystem::setSlotRfTransmitLoss(base::Number* const v)
+bool RfSystem::setSlotRfTransmitLoss(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -745,7 +737,7 @@ bool RfSystem::setSlotRfTransmitLoss(base::Number* const v)
 }
 
 // setSlotRfReceiveLoss() -- set the receive loss
-bool RfSystem::setSlotRfReceiveLoss(base::Number* const v)
+bool RfSystem::setSlotRfReceiveLoss(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -760,7 +752,7 @@ bool RfSystem::setSlotRfReceiveLoss(base::Number* const v)
 }
 
 // setSlotRfSignalProcessLoss() -- set signal processing loss
-bool RfSystem::setSlotRfSignalProcessLoss(base::Number* const v)
+bool RfSystem::setSlotRfSignalProcessLoss(std::shared_ptr<base::Number> v)
 {
     bool ok{};
     if (v != nullptr) {
@@ -775,7 +767,7 @@ bool RfSystem::setSlotRfSignalProcessLoss(base::Number* const v)
 }
 
 // setSlotDisableEmissions() -- sets the disable sending emissions flag
-bool RfSystem::setSlotDisableEmissions(base::Number* const msg)
+bool RfSystem::setSlotDisableEmissions(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

@@ -144,7 +144,6 @@ void IrSystem::processPlayersOfInterest()
       // Pass our players of interest to the seeker for processing
       getSeeker()->processPlayersOfInterest(poi);
 
-      if (poi != nullptr) { poi->unref(); poi = nullptr; }
    }
 }
 
@@ -198,11 +197,9 @@ bool IrSystem::setDisableQueriesFlag(const bool b)
 bool IrSystem::setSeeker(IrSeeker* const p)
 {
    if (seeker != nullptr) {
-      seeker->unref();
    }
    seeker = p;
    if (seeker != nullptr) {
-      seeker->ref();
    }
    return true;
 }
@@ -212,20 +209,18 @@ bool IrSystem::setSeeker(IrSeeker* const p)
 //------------------------------------------------------------------------------
 
 // seekerName: IrSeeker name  (base::String)
-bool IrSystem::setSlotSeekerName(base::String* const p)
+bool IrSystem::setSlotSeekerName(std::shared_ptr<base::String> p)
 {
    if (seekerName != nullptr) {
-      seekerName->unref();
    }
    seekerName = p;
    if (seekerName != nullptr) {
-      seekerName->ref();
    }
    return true;
 }
 
 // setSlotDisableQueries() -- sets the disable sending emissions flag
-bool IrSystem::setSlotDisableQueries(base::Number* const msg)
+bool IrSystem::setSlotDisableQueries(std::shared_ptr<base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {

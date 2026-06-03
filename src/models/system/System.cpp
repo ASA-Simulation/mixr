@@ -161,7 +161,6 @@ bool System::killedNotification(Player* const p)
          base::Component* sc{static_cast<base::Component*>(pair->object())};
          sc->event(KILL_EVENT, p);
       }
-      subcomponents->unref();
       subcomponents = nullptr;
    }
    return true;
@@ -233,7 +232,7 @@ bool System::findOwnship()
 //-----------------------------------------------------------------------------
 // Set functions
 //-----------------------------------------------------------------------------
-bool System::setSlotPowerSwitch(const base::String* const msg)
+bool System::setSlotPowerSwitch(std::shared_ptr<const base::String> msg)
 {
    bool ok{};
    if (msg != nullptr) {

@@ -87,7 +87,7 @@ std::ostream& operator<<(std::ostream& sout, const Complex& z)
 //------------------------------------------------------------------------------
 // Slot functions
 //------------------------------------------------------------------------------
-bool Complex::setSlotImaginary(const Number* const msg)
+bool Complex::setSlotImaginary(std::shared_ptr<const Number> msg)
 {
     double value{msg->getDouble()};
     const bool ok{setImag( value )};

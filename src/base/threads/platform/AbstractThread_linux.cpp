@@ -24,16 +24,12 @@ void* AbstractThread::staticThreadFunc(void* lpParam)
    Component* parent{thread->getParent()};
 
    // Make sure that our Thread class and its parent are not going to go a way.
-   thread->ref();
-   parent->ref();
 
    // The main thread function, which is a Thread class memeber function,
    // will handle the rest.
    unsigned long rtn{thread->mainThreadFunc()};
    thread->setTerminated();
 
-   parent->unref();
-   thread->unref();
 
    return reinterpret_cast<void*>(rtn);
 }
@@ -154,8 +150,6 @@ bool AbstractThread::terminate()
       // The staticThreadFunc() function ref()'s 'this' Thread class and our
       // parent object, but since we've been terminated, the thread won't be
       // returning via staticThreadFunc(), so we need to unref() here.
-      getParent()->unref();
-      this->unref();
    }
    return killed;
 }

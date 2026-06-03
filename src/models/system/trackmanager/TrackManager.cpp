@@ -107,7 +107,6 @@ void TrackManager::clearTracksAndQueues()
    // ---
    base::lock(queueLock);
    for (Emission* em = emQueue.get(); em != nullptr; em = emQueue.get()) {
-      em->unref();    // unref() the emission
       snQueue.get();  // and every emission had a S/N value
    }
    base::unlock(queueLock);
@@ -121,7 +120,6 @@ void TrackManager::clearTracksAndQueues()
    for (unsigned int i = 0; i < n; i++) {
       if (tracks[i] != nullptr) {
          tracks[i]->clear();
-         tracks[i]->unref();
          tracks[i] = nullptr;
       }
    }
@@ -260,7 +258,6 @@ int TrackManager::getTrackList(Track* tlist[], const unsigned int max)
       base::lock(trkListLock);
       for (unsigned int i = 0; i < nTrks && i < max; i++) {
          tlist[n] = tracks[i];
-         tlist[n]->ref();
          n++;
       }
       base::unlock(trkListLock);
@@ -277,7 +274,6 @@ int TrackManager::getTrackList(const Track* tlist[], const unsigned int max) con
       base::lock(trkListLock);
       for (unsigned int i = 0; i < nTrks && i < max; i++) {
          tlist[n] = tracks[i];
-         tlist[n]->ref();
          n++;
       }
       base::unlock(trkListLock);
@@ -304,7 +300,6 @@ void TrackManager::newReport(Emission* em, double sn)
    if (em != nullptr) {
       base::lock(queueLock);
       if (emQueue.isNotFull()) {
-      em->ref();
       emQueue.put(em);
       snQueue.put(sn);
       }
@@ -338,7 +333,6 @@ bool TrackManager::addTrack(Track* const t)
 
    base::lock(trkListLock);
    if (nTrks < maxTrks) {
-      t->ref();
       tracks[nTrks++] = t;
       ok = true;
    }
@@ -374,7 +368,7 @@ void TrackManager::makeMatrixA(double dt)
 //------------------------------------------------------------------------------
 // setMaxTracks() -- Sets the maximum number of active tracks
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotMaxTracks(const base::Number* const num)
+bool TrackManager::setSlotMaxTracks(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -392,7 +386,7 @@ bool TrackManager::setSlotMaxTracks(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotMaxTrackAge() -- Sets the maximum age of tracks
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotMaxTrackAge(const base::Number* const num)
+bool TrackManager::setSlotMaxTrackAge(std::shared_ptr<const base::Number> num)
 {
    double age{};
    const auto p = dynamic_cast<const base::Time*>(num);
@@ -419,7 +413,7 @@ bool TrackManager::setSlotMaxTrackAge(const base::Number* const num)
 //------------------------------------------------------------------------------
 // setSlotFirstTrackId() -- Sets the first (starting) track id number
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotFirstTrackId(const base::Number* const num)
+bool TrackManager::setSlotFirstTrackId(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {
@@ -438,7 +432,7 @@ bool TrackManager::setSlotFirstTrackId(const base::Number* const num)
 //------------------------------------------------------------------------------
 // Sets alpha
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotAlpha(const base::Number* const msg)
+bool TrackManager::setSlotAlpha(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -451,7 +445,7 @@ bool TrackManager::setSlotAlpha(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets beta
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotBeta(const base::Number* const msg)
+bool TrackManager::setSlotBeta(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -464,7 +458,7 @@ bool TrackManager::setSlotBeta(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets gamma
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotGamma(const base::Number* const msg)
+bool TrackManager::setSlotGamma(std::shared_ptr<const base::Number> msg)
 {
    bool ok{};
    if (msg != nullptr) {
@@ -477,7 +471,7 @@ bool TrackManager::setSlotGamma(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets logTrackUpdates
 //------------------------------------------------------------------------------
-bool TrackManager::setSlotLogTrackUpdates(const base::Number* const num)
+bool TrackManager::setSlotLogTrackUpdates(std::shared_ptr<const base::Number> num)
 {
    bool ok{};
    if (num != nullptr) {

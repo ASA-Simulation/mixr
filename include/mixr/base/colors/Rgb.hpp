@@ -37,9 +37,9 @@ public:
 
 private:
     // slot table helper methods
-    bool setSlotRed(const Number* const);
-    bool setSlotGreen(const Number* const);
-    bool setSlotBlue(const Number* const);
+    bool setSlotRed(std::shared_ptr<const Number>);
+    bool setSlotGreen(std::shared_ptr<const Number>);
+    bool setSlotBlue(std::shared_ptr<const Number>);
 };
 
 }

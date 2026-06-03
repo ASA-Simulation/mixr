@@ -60,7 +60,7 @@ protected:
 
 private:
    // slot table helper methods
-   virtual bool setSlotValue(const Number* const);
+   virtual bool setSlotValue(std::shared_ptr<const Number>);
 };
 
 }

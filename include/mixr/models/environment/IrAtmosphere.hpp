@@ -130,10 +130,10 @@ private:
 
 private:
    // slot operations
-   bool setSlotWaveBands(const base::Table1* const);
-   bool setSlotTransmissivityTable1(const base::Table1* const);
-   bool setSlotSkyRadiance(base::Number* const);
-   bool setSlotEarthRadiance(base::Number* const);
+   bool setSlotWaveBands(std::shared_ptr<const base::Table1>);
+   bool setSlotTransmissivityTable1(std::shared_ptr<const base::Table1>);
+   bool setSlotSkyRadiance(std::shared_ptr<base::Number>);
+   bool setSlotEarthRadiance(std::shared_ptr<base::Number>);
 };
 
 }

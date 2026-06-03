@@ -96,7 +96,6 @@ void AngleOnlyTrackManager::clearTracksAndQueues()
     // ---
     base::lock(queueLock);
     for (IrQueryMsg* q = queryQueue.get(); q != nullptr; q = queryQueue.get()) {
-        q->unref();     // unref() the IR query message
         snQueue.get();  // and every IR query message had a S/N value
     }
     base::unlock(queueLock);
@@ -109,7 +108,6 @@ void AngleOnlyTrackManager::clearTracksAndQueues()
     nTrks = 0;
     for (unsigned int i = 0; i < n; i++) {
         tracks[i]->clear();
-        tracks[i]->unref();
         tracks[i] = nullptr;
     }
     base::unlock(trkListLock);
@@ -122,7 +120,6 @@ void AngleOnlyTrackManager::newReport(IrQueryMsg* q, double sn)
 {
     // Queue up IR query messages reports
     if (q != nullptr) {
-        q->ref();
         base::lock(queueLock);
         queryQueue.put(q);
         snQueue.put(sn);
@@ -156,7 +153,6 @@ bool AngleOnlyTrackManager::addTrack(Track* const t)
 
     base::lock(trkListLock);
     if (nTrks < maxTrks) {
-        t->ref();
         tracks[nTrks++] = t;
         ok = true;
     }
@@ -168,7 +164,7 @@ bool AngleOnlyTrackManager::addTrack(Track* const t)
 //------------------------------------------------------------------------------
 // Sets azimuth bin
 //------------------------------------------------------------------------------
-bool AngleOnlyTrackManager::setSlotAzimuthBin(const base::Number* const msg)
+bool AngleOnlyTrackManager::setSlotAzimuthBin(std::shared_ptr<const base::Number> msg)
 {
     double value{};
 
@@ -188,7 +184,7 @@ bool AngleOnlyTrackManager::setSlotAzimuthBin(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets azimuth bin
 //------------------------------------------------------------------------------
-bool AngleOnlyTrackManager::setSlotElevationBin(const base::Number* const msg)
+bool AngleOnlyTrackManager::setSlotElevationBin(std::shared_ptr<const base::Number> msg)
 {
     double value{};
 
@@ -208,7 +204,7 @@ bool AngleOnlyTrackManager::setSlotElevationBin(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets alpha
 //------------------------------------------------------------------------------
-bool AngleOnlyTrackManager::setSlotAlpha(const base::Number* const msg)
+bool AngleOnlyTrackManager::setSlotAlpha(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {
@@ -222,7 +218,7 @@ bool AngleOnlyTrackManager::setSlotAlpha(const base::Number* const msg)
 //------------------------------------------------------------------------------
 // Sets beta
 //------------------------------------------------------------------------------
-bool AngleOnlyTrackManager::setSlotBeta(const base::Number* const msg)
+bool AngleOnlyTrackManager::setSlotBeta(std::shared_ptr<const base::Number> msg)
 {
     bool ok{};
     if (msg != nullptr) {

@@ -154,14 +154,12 @@ void QuadMap::findDataFiles()
             const auto pair = static_cast<base::Pair*>( item->getValue() );
             const auto dataFile = dynamic_cast<Terrain*>( pair->object() );
             if (dataFile != nullptr && dataFile->isDataLoaded()) {
-               dataFile->ref();
                dataFiles[count] = dataFile;
                count++;
             }
             item = item->getNext();
          }
          numDataFiles = count;
-         subcomponents->unref();
          subcomponents = nullptr;
       }
    }
@@ -226,14 +224,11 @@ bool QuadMap::setDataFile(const unsigned int i, Terrain* newDF)
     if (i < MAX_DATA_FILES && newDF != nullptr ) {
         if (dataFiles[i] == nullptr) {
             dataFiles[i] = newDF;
-            dataFiles[i]->ref();
             // make sure we increment our # of data files, since this is a new one!
             numDataFiles++;
         }
         else {
-            dataFiles[i]->unref();
             dataFiles[i] = newDF;
-            dataFiles[i]->ref();
         }
     }
     return true;
@@ -256,7 +251,6 @@ void QuadMap::clearData()
 {
    for (unsigned int i = 0; i < MAX_DATA_FILES; i++) {
       if (dataFiles[i] != nullptr) {
-         dataFiles[i]->unref();
          dataFiles[i] = nullptr;
       }
    }

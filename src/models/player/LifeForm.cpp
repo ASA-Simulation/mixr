@@ -36,7 +36,6 @@ void LifeForm::copyData(const LifeForm& org, const bool)
     BaseClass::copyData(org);
     actionState = org.actionState;
     tgtAquired = org.tgtAquired;
-    if (tgtPlayer != nullptr) tgtPlayer->unref();
     tgtPlayer = nullptr;
     lockMode = org.lockMode;
     weaponSel = org.weaponSel;
@@ -44,7 +43,6 @@ void LifeForm::copyData(const LifeForm& org, const bool)
 
 void LifeForm::deleteData()
 {
-    if (tgtPlayer != nullptr) tgtPlayer->unref();
     tgtPlayer = nullptr;
 }
 
@@ -53,7 +51,6 @@ void LifeForm::deleteData()
 //------------------------------------------------------------------------------
 bool LifeForm::shutdownNotification()
 {
-   if (tgtPlayer != nullptr) tgtPlayer->unref();
    tgtPlayer = nullptr;
    return BaseClass::shutdownNotification();
 }
@@ -82,7 +79,6 @@ void LifeForm::reset()
       lockMode = SEARCHING;
       weaponSel = LF_GUN;
    }
-   if (tgtPlayer != nullptr) tgtPlayer->unref();
    tgtPlayer = nullptr;
 
    BaseClass::reset();
@@ -118,8 +114,6 @@ void LifeForm::fire()
            }
         }
     }
-    hdgObj->unref();
-    pitchObj->unref();
 }
 
 // override our set velocity, so we can determine if we are walking, running, or standing
@@ -196,7 +190,6 @@ void LifeForm::look(const double up, const double sdws)
             setEulerAngles(eul);
             // now based on this we need to know if we have a target in our crosshairs...
             tgtAquired = false;
-            if (tgtPlayer != nullptr) tgtPlayer->unref();
             tgtPlayer = nullptr;
             const base::Vec3d myPos{getPosition()};
             base::Vec3d tgtPos;
@@ -230,16 +223,13 @@ void LifeForm::look(const double up, const double sdws)
                                     lockMode = TGT_IN_SIGHT;
                                     tgtAquired = true;
                                     if (tgtPlayer != player) {
-                                        if (tgtPlayer != nullptr) tgtPlayer->unref();
                                         tgtPlayer = player;
-                                        tgtPlayer->ref();
                                     }
                                 }
                             }
                         }
                         item = item->getNext();
                     }
-                    players->unref();
                     players = nullptr;
                 }
             }

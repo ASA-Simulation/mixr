@@ -72,10 +72,10 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotCommandedPosition(const base::Identifier* const);
-   bool setSlotLauncherDownAngle(const base::Angle* const);
-   bool setSlotLauncherUpAngle(const base::Angle* const);
-   bool setSlotLauncherMoveTime(const base::Time* const);
+   bool setSlotCommandedPosition(std::shared_ptr<const base::Identifier>);
+   bool setSlotLauncherDownAngle(std::shared_ptr<const base::Angle>);
+   bool setSlotLauncherUpAngle(std::shared_ptr<const base::Angle>);
+   bool setSlotLauncherMoveTime(std::shared_ptr<const base::Time>);
 };
 
 }
