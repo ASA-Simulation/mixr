@@ -2,20 +2,10 @@ set -x
 set -e
 
 #
-# sanity check: number of arguments
-#
-
-if [[ $# -ne 1 ]]; then
-    echo "Expected exactly 1 parameter: the conan remote." >&2
-    exit 1
-fi
-
-#
 # set CONAN_REMOTE
 #
-
-CONAN_REMOTE=$1
-echo "Uploading to conan remote: $1"
+CONAN_REMOTE=${CONAN_REMOTE:-$1}
+echo "Uploading to conan remote: $CONAN_REMOTE"
 
 #
 # building the conan package
