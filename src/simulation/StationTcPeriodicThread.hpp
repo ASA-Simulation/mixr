@@ -1,6 +1,4 @@
-
-#ifndef __mixr_simulation_StationTcPeriodicThread_H__
-#define __mixr_simulation_StationTcPeriodicThread_H__
+#pragma once
 
 #include "mixr/base/threads/PeriodicThread.hpp"
 
@@ -17,6 +15,6 @@ class StationTcPeriodicThread final : public base::PeriodicThread
 };
 
 }
+
 }
 
-#endif

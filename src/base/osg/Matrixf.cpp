@@ -40,5 +40,5 @@ void Matrixf::set(const Matrixd& rhs)
 }
 
 // now compile up Matrix via Matrix_implementation
-#include "Matrix_implementation.cpp"
+#include "Matrix_implementation.inl"
 

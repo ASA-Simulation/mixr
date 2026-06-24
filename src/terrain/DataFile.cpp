@@ -13,7 +13,6 @@ EMPTY_SLOTTABLE(DataFile)
 
 DataFile::DataFile()
 {
-   STANDARD_CONSTRUCTOR()
 }
 
 void DataFile::copyData(const DataFile& org, const bool)

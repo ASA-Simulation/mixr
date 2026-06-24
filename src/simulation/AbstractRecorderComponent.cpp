@@ -1,7 +1,7 @@
 
 #include "mixr/simulation/AbstractRecorderComponent.hpp"
 
-#include "mixr/base/List.hpp"
+
 #include <iostream>
 
 namespace mixr {

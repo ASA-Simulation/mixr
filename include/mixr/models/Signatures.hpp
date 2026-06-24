@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Signature_H__
-#define __mixr_models_Signature_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 #include "mixr/base/util/constants.hpp"
@@ -232,6 +230,6 @@ private:
 };
 
 }
+
 }
 
-#endif

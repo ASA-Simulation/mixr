@@ -1,6 +1,4 @@
-
-#ifndef __mixr_recorder_FileWriter_H__
-#define __mixr_recorder_FileWriter_H__
+#pragma once
 
 #include "mixr/recorder/OutputHandler.hpp"
 
@@ -82,6 +80,6 @@ private:
 };
 
 }
+
 }
 
-#endif

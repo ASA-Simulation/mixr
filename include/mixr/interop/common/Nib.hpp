@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_common_Nib_H__
-#define __mixr_interop_common_Nib_H__
+#pragma once
 
 #include "mixr/simulation/AbstractNib.hpp"
 
@@ -277,14 +275,14 @@ private:
 
    NetIO::IoType ioType;               // Input/Output direction of this NIB
 
-   base::safe_ptr<const base::String> federateName; // Federate name
-   base::safe_ptr<models::Player> pPlayer;          // Our player
-   base::safe_ptr<NetIO> pNetIO;                    // Our Network
+   std::shared_ptr<const base::String> federateName; // Federate name
+   std::shared_ptr<models::Player> pPlayer;          // Our player
+   std::shared_ptr<NetIO> pNetIO;                    // Our Network
    bool checked {};                                 // NIB was checked
    unsigned short playerID {};                      // Player ID
 
    // Type mapper and type checked flags
-   base::safe_ptr<const Ntm> ntm;      // Type mapper
+   std::shared_ptr<const Ntm> ntm;      // Type mapper
    bool entityTypeChecked {};          // Entity type has been checked
 
    // Player data
@@ -340,6 +338,6 @@ private:
 };
 
 }
+
 }
 
-#endif

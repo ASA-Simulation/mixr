@@ -76,7 +76,7 @@ private:
    enum { MBT = 100 };         // Max number of burst trajectories
 
    double muzzleVel {DEFAULT_MUZZLE_VEL}; // Muzzle velocity (m/s)
-   base::safe_ptr<Player> hitPlayer;      // Player we hit (if any)
+   std::shared_ptr<Player> hitPlayer;      // Player we hit (if any)
 
    // Bullet trajectories
    int nbt {};                     // Number of burst trajectories

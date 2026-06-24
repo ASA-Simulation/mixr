@@ -95,7 +95,7 @@ protected:
       
       void clear()        { player = nullptr; active = false; }
 
-      base::safe_ptr<Player> player;    // The player
+      std::shared_ptr<Player> player;    // The player
       double range {};                  // Previous range (m)
       double rangeRate {};              // Previous range rate (m/s)
       double distance {};               // Distance at collision (m)

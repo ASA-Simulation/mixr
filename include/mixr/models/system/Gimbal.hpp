@@ -1,6 +1,5 @@
 
-#ifndef __mixr_models_Gimbal_H__
-#define __mixr_models_Gimbal_H__
+#pragma once
 
 #include "mixr/models/system/System.hpp"
 
@@ -270,7 +269,7 @@ public:  // Public section
    static void limitVec(base::Vec2d& vec, const base::Vec2d& ll, const base::Vec2d& ul);
    static void limitVec(base::Vec3d& vec, const base::Vec3d& ll, const base::Vec3d& ul);
 
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:
@@ -325,7 +324,7 @@ private:
    bool     useWorld {true};           // Using player of interest's world coordinates
    bool     ownHeadingOnly {true};     // Whether only the ownship heading is used by the target data block
 
-   base::safe_ptr<Tdb> tdb;  // Current Target Data Block
+   std::shared_ptr<Tdb> tdb;  // Current Target Data Block
 
 private:
    // slot table helper methods
@@ -387,6 +386,6 @@ private:
 };
 
 }
+
 }
 
-#endif

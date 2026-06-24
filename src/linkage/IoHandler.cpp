@@ -7,8 +7,8 @@
 #include "IoPeriodicThread.hpp"
 
 #include "mixr/base/numeric/Number.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/units/Frequencies.hpp"
 
 namespace mixr {

@@ -4,7 +4,7 @@
 #include "mixr/simulation/Simulation.hpp"
 #include "mixr/simulation/Station.hpp"
 
-#include "mixr/base/List.hpp"
+
 #include <iostream>
 
 namespace mixr {

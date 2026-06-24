@@ -1,6 +1,5 @@
 
-#ifndef __mixr_models_JSBSimModel_H__
-#define __mixr_models_JSBSimModel_H__
+#pragma once
 
 #include "mixr/models/dynamics/AerodynamicsModel.hpp"
 
@@ -105,6 +104,6 @@ private:
 };
 
 }
+
 }
 
-#endif

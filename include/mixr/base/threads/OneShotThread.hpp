@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_OneShotThread_H__
-#define __mixr_base_OneShotThread_H__
+#pragma once
 
 #include "mixr/base/threads/AbstractThread.hpp"
 
@@ -32,7 +30,7 @@ private:
 };
 
 }
+
 }
 
-#endif
 

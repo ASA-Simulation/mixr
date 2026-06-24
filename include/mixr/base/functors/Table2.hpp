@@ -42,7 +42,7 @@ public:
    virtual double lfi(const double iv1, const double iv2, FStorage* const s = nullptr) const;
 
    // Load the Y (iv2) breakpoints
-   virtual bool setYBreakpoints2(const List* const bkpts);
+   virtual bool setYBreakpoints2(std::shared_ptr<const List> syb2obj);
 
    double lfi(const double iv1, FStorage* const s = nullptr) const override;
    unsigned int tableSize() const override;

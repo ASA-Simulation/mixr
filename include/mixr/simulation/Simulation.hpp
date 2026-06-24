@@ -253,8 +253,8 @@ private:
    AbstractPlayer* findPlayerPrivate(const short id, const int netID) const;
    AbstractPlayer* findPlayerByNamePrivate(const char* const playerName) const;
 
-   base::safe_ptr<base::PairStream> players;     // Main player list (sorted by network and player IDs)
-   base::safe_ptr<base::PairStream> origPlayers; // Original player list
+   std::shared_ptr<base::PairStream> players;     // Main player list (sorted by network and player IDs)
+   std::shared_ptr<base::PairStream> origPlayers; // Original player list
 
    unsigned int cycleCnt{};      // Real-Time Cycle Counter (Cycles consist of Frames)
    unsigned int frameCnt{};      // Real-Time Frame Counter (Frames consist of Phases)

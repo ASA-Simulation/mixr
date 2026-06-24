@@ -1,5 +1,4 @@
 {
-    "C_Cpp.default.compileCommands": ".vscode/compile_commands.json",
     "editor.formatOnSave": false,
     "files.associations": {
         "chrono": "cpp",

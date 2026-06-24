@@ -8,9 +8,9 @@
 #include "mixr/base/functors/Func1.hpp"
 #include "mixr/base/functors/Func2.hpp"
 #include "mixr/base/numeric/Integer.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
+
 
 #include "mixr/base/units/Angles.hpp"
 #include "mixr/base/units/Decibel.hpp"
@@ -43,12 +43,13 @@ BEGIN_SLOT_MAP(Antenna)
     ON_SLOT(4,  setSlotGainPattern,       base::Function)
     ON_SLOT(5,  setSlotGainPatternDeg,    base::Number)
     ON_SLOT(6,  setSlotRecycleFlg,        base::Number)
-    ON_SLOT(7,  setSlotBeamWidth,         base::Angle)      // Check for base::Angle before base::Number
-    ON_SLOT(7,  setSlotBeamWidth,         base::Number)
+
+    ON_SLOT(7,  [this](std::shared_ptr<const base::Angle> x) { return this->setSlotBeamWidth(x); },  base::Angle)      // Check for base::Angle before base::Number
+    ON_SLOT(7,  [this](std::shared_ptr<const base::Number> x) { return this->setSlotBeamWidth(x); }, base::Number)
 END_SLOT_MAP()
 
 BEGIN_EVENT_HANDLER(Antenna)
-    ON_EVENT_OBJ(RF_EMISSION_RETURN,onRfEmissionReturnEventAntenna,Emission)
+    ON_EVENT_OBJ(RF_EMISSION_RETURN, onRfEmissionReturnEventAntenna, Emission)
 END_EVENT_HANDLER()
 
 Antenna::Antenna()
@@ -89,7 +90,7 @@ void Antenna::copyData(const Antenna& org, const bool)
    gainPatternDeg = org.gainPatternDeg;
 
    if (org.gainPattern != nullptr) {
-      base::Function* copy{org.gainPattern->clone()};
+      std::shared_ptr<base::Function> copy = std::make_shared<base::Function>(*org.gainPattern);
       setSlotGainPattern( copy );
    } else {
       setSlotGainPattern(nullptr);
@@ -479,7 +480,7 @@ void Antenna::rfTransmit(Emission* const xmit)
          if (erp[i] > threshold) {
 
             // Get a free emission packet
-            Emission* em{};
+            std::shared_ptr<Emission> em {nullptr};
             if (recycle) {
                base::lock(freeEmLock);
                em = freeEmStack.pop();
@@ -552,7 +553,7 @@ void Antenna::rfTransmit(Emission* const xmit)
 //------------------------------------------------------------------------------
 // onStartScanEvent() -- process the start of a scan
 //------------------------------------------------------------------------------
-bool Antenna::onStartScanEvent(base::Integer* const bar)
+bool Antenna::onStartScanEvent(std::shared_ptr<base::Integer> bar)
 {
    // Pass the event to our system
    RfSystem* p{getSystem()};
@@ -563,7 +564,7 @@ bool Antenna::onStartScanEvent(base::Integer* const bar)
 //------------------------------------------------------------------------------
 // onEndScanEvent() -- process the end of a scan
 //------------------------------------------------------------------------------
-bool Antenna::onEndScanEvent(base::Integer* const bar)
+bool Antenna::onEndScanEvent(std::shared_ptr<base::Integer> bar)
 {
    // Pass the event to our sensor
    RfSystem* p{getSystem()};

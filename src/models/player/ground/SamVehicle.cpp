@@ -4,8 +4,8 @@
 #include "mixr/models/player/weapon/Sam.hpp"
 #include "mixr/models/system/StoresMgr.hpp"
 
-#include "mixr/base/List.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/osg/Matrixd"
 #include "mixr/base/units/Angles.hpp"
 #include "mixr/base/units/Distances.hpp"

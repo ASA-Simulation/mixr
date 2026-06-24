@@ -6,8 +6,8 @@
 #include "mixr/models/Track.hpp"
 #include "mixr/models/system/trackmanager/AirTrkMgr.hpp"
 
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
 
 namespace mixr {
 namespace models {
@@ -153,7 +153,7 @@ int OnboardComputer::getShootList(const Track* tlist[], const int max) const
     return n;
 }
 
-int OnboardComputer::getShootList(base::safe_ptr<Track>* const tlist, const int max)
+int OnboardComputer::getShootList(std::shared_ptr<Track>* const tlist, const int max)
 {
     int n{};
     if (nextToShoot != nullptr && tlist != nullptr && max > 0) {
@@ -163,7 +163,7 @@ int OnboardComputer::getShootList(base::safe_ptr<Track>* const tlist, const int 
     return n;
 }
 
-int OnboardComputer::getShootList(base::safe_ptr<const Track>* const tlist, const int max) const
+int OnboardComputer::getShootList(std::shared_ptr<const Track>* const tlist, const int max) const
 {
     int n{};
     if (nextToShoot != nullptr && tlist != nullptr && max > 0) {
@@ -178,7 +178,7 @@ int OnboardComputer::getShootList(base::safe_ptr<const Track>* const tlist, cons
 //------------------------------------------------------------------------------
 Track* OnboardComputer::getNextTarget()
 {
-    base::safe_ptr<Track> trackList[2];
+    std::shared_ptr<Track> trackList[2];
     int n{getShootList(trackList, 2)};
     Track* trk{};
     if (n > 0) {
@@ -199,7 +199,7 @@ void OnboardComputer::updateShootList(const bool step)
 
    // First, let's get the active track list
    const unsigned int MAX_TRKS{20};
-   base::safe_ptr<Track> trackList[MAX_TRKS];
+   std::shared_ptr<Track> trackList[MAX_TRKS];
 
    int n{};
    TrackManager* tm{getTrackManagerByType(typeid(AirTrkMgr))};
@@ -289,7 +289,7 @@ bool OnboardComputer::requestNextToShoot(const Track* const nts)
 
       // First, let's get the active track list
       const unsigned int MAX_TRKS{20};
-      base::safe_ptr<Track> trackList[MAX_TRKS];
+      std::shared_ptr<Track> trackList[MAX_TRKS];
 
       int n{};
       TrackManager* tm{getTrackManagerByType(typeid(AirTrkMgr))};

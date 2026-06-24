@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linkage_IoHandler_H__
-#define __mixr_linkage_IoHandler_H__
+#pragma once
 
 #include "mixr/base/concepts/linkage/AbstractIoHandler.hpp"
 
@@ -89,13 +87,13 @@ private:
    double getRate() const         { return rate; }      // Thread rate (hz)
 
    // data i/o
-   base::safe_ptr<base::AbstractIoData> inData;         // "input" data received from the hardware
-   base::safe_ptr<base::AbstractIoData> outData;        // "output" data sent to the hardware
-   base::safe_ptr<base::PairStream> devices;            // Device list
+   std::shared_ptr<base::AbstractIoData> inData;         // "input" data received from the hardware
+   std::shared_ptr<base::AbstractIoData> outData;        // "output" data sent to the hardware
+   std::shared_ptr<base::PairStream> devices;            // Device list
 
    double rate {50};                                    // Thread Rate (hz)
    double pri {0.5};                                    // Priority of the thread (0->lowest, 1->highest)
-   base::safe_ptr<IoPeriodicThread> periodicThread;     // periodic thread to process I/O
+   std::shared_ptr<IoPeriodicThread> periodicThread;     // periodic thread to process I/O
 
 private:
    // slot table helper methods
@@ -108,6 +106,6 @@ private:
 };
 
 }
+
 }
 
-#endif

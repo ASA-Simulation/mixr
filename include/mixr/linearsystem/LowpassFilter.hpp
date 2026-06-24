@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linearsystem_LowpassFilter_H__
-#define __mixr_linearsystem_LowpassFilter_H__
+#pragma once
 
 #include "mixr/linearsystem/FirstOrderTf.hpp"
 
@@ -44,7 +42,7 @@ private:
    bool setSlotWc(std::shared_ptr<const base::Number>);
 };
 
-}
-}
+
+};
 
 #endif

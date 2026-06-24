@@ -1,10 +1,9 @@
 
-#ifndef __mixr_models_Track_H__
-#define __mixr_models_Track_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/osg/Vec3d"
 #include "mixr/base/osg/Vec4d"
 
@@ -337,7 +336,7 @@ protected:
 };
 
 }
+
 }
 
-#endif
 

@@ -36,7 +36,7 @@ void Stt::dynamics(const double dt)
     TrackManager* tm{getTrackManager()};
     if (getAntenna() != nullptr && getOwnship() != nullptr && tm != nullptr) {
 
-        base::safe_ptr<Track> trackList[2];
+        std::shared_ptr<Track> trackList[2];
         int n = tm->getTrackList(trackList,2);
 
         if (n > 0) {

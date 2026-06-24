@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_ExternalStore_H__
-#define __mixr_models_ExternalStore_H__
+#pragma once
 
 #include "mixr/models/system/System.hpp"
 
@@ -46,14 +44,14 @@ public:
    // Event handler(s)
    virtual bool onJettisonEvent();
 
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:
    bool setJettisonable(const bool);    // Sets the jettison enable flag
 
 private:
-   base::safe_ptr<const base::String> type;   // Type string for external store
+   std::shared_ptr<const base::String> type;   // Type string for external store
    bool canJettison {true};                   // Weapon can be jettisoned.
    bool jettisoned {};                        // Weapon has been jettisoned.
 
@@ -64,6 +62,6 @@ private:
 };
 
 }
+
 }
 
-#endif

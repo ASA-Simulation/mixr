@@ -9,9 +9,9 @@
 
 #include "mixr/base/Identifier.hpp"
 #include "mixr/base/LatLon.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
+
 #include "mixr/base/String.hpp"
 
 #include "mixr/base/units/Distances.hpp"
@@ -404,7 +404,7 @@ const base::Pair* Route::findSteerpointImp(const unsigned int idx) const
 //------------------------------------------------------------------------------
 // getSteerpoints() -- Get the route we're flying to (starting at 'to')
 //------------------------------------------------------------------------------
-unsigned int Route::getSteerpoints(base::safe_ptr<Steerpoint>* const stptList, const unsigned int max)
+unsigned int Route::getSteerpoints(std::shared_ptr<Steerpoint>* const stptList, const unsigned int max)
 {
     unsigned int i{};
     base::PairStream* steerpoints{getComponents()};
@@ -442,7 +442,7 @@ unsigned int Route::getSteerpoints(base::safe_ptr<Steerpoint>* const stptList, c
 //------------------------------------------------------------------------------
 // getAllSteerpoints() -- Get all of the steerpoints in the route
 //------------------------------------------------------------------------------
-unsigned int Route::getAllSteerpoints(base::safe_ptr<Steerpoint>* const stptList, const unsigned int max)
+unsigned int Route::getAllSteerpoints(std::shared_ptr<Steerpoint>* const stptList, const unsigned int max)
 {
     unsigned int i{};
     base::PairStream* steerpoints{getComponents()};

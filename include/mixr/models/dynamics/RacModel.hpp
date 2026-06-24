@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_RacModel_H__
-#define __mixr_models_RacModel_H__
+#pragma once
 
 #include "mixr/models/dynamics/AerodynamicsModel.hpp"
 
@@ -77,6 +75,6 @@ private:
 };
 
 }
+
 }
 
-#endif

@@ -1,13 +1,11 @@
-
-#ifndef __mixr_base_colors_Hsv_H__
-#define __mixr_base_colors_Hsv_H__
+#pragma once
 
 #include "mixr/base/colors/Color.hpp"
 #include "mixr/base/osg/Vec3d"
 #include "mixr/base/osg/Vec4d"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
+    
 class Number;
 
 //------------------------------------------------------------------------------
@@ -111,6 +109,3 @@ private:
 };
 
 }
-}
-
-#endif

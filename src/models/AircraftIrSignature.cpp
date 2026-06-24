@@ -11,7 +11,7 @@
 #include "mixr/base/functors/Table2.hpp"
 #include "mixr/base/functors/Table4.hpp"
 #include "mixr/base/functors/Table5.hpp"
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/numeric/Number.hpp"
 #include "mixr/base/units/Areas.hpp"
 

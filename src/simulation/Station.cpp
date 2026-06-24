@@ -10,8 +10,8 @@
 
 #include "mixr/base/concepts/linkage/AbstractIoHandler.hpp"
 #include "mixr/base/numeric/Number.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/Timers.hpp"
 #include "mixr/base/units/Times.hpp"
 
@@ -97,7 +97,7 @@ void Station::copyData(const Station& org, const bool)
 
    // Set the simulation exec
    if (org.sim != nullptr) {
-      Simulation* copy = org.sim->clone();
+      std::shared_ptr<Simulation> copy = std::make_shared<Simulation>(*org.sim);
       setSlotSimulation( copy );
    } else {
       setSlotSimulation(nullptr);
@@ -105,23 +105,23 @@ void Station::copyData(const Station& org, const bool)
 
    // Copy the image generator host handlers
    if (org.igHosts != nullptr) {
-      base::PairStream* copy = org.igHosts->clone();
+      std::shared_ptr<base::PairStream> copy = std::make_shared<base::PairStream>(*org.igHosts);
       setSlotIgHosts( copy );
    } else {
-      setSlotIgHosts(static_cast<base::PairStream*>(nullptr));
+      setSlotIgHosts(nullptr);
    }
 
    // Copy the networks
    if (org.networks != nullptr) {
-      base::PairStream* copy = org.networks->clone();
+      std::shared_ptr<base::PairStream> copy = std::make_shared<base::PairStream>(*org.networks);
       setSlotNetworks( copy );
    } else {
-      setSlotNetworks(static_cast<base::PairStream*>(nullptr));
+      setSlotNetworks(nullptr);
    }
 
    // Copy the I/O handlers
    if (org.ioHandler != nullptr) {
-      base::AbstractIoHandler* copy = org.ioHandler->clone();
+      std::shared_ptr<base::AbstractIoHandler> copy = std::make_shared<base::AbstractIoHandler>(*org.ioHandler);
       setSlotIoHandler( copy );
    }
 
@@ -147,7 +147,7 @@ void Station::copyData(const Station& org, const bool)
    tmrUpdateEnbl = org.tmrUpdateEnbl;
 
    if (org.startupResetTimer0!= nullptr) {
-      base::Time* copy = org.startupResetTimer0->clone();
+      std::shared_ptr<base::Time> copy = std::make_shared<base::Time>(*org.startupResetTimer0);
       setSlotStartupResetTime( copy );
    } else {
       setSlotStartupResetTime(nullptr);
@@ -532,7 +532,7 @@ void Station::processBackgroundTasks(const double dt)
 //------------------------------------------------------------------------------
 void Station::processNetworkInputTasks(const double dt)
 {
-   base::safe_ptr<base::PairStream> networks( getNetworks() );
+   std::shared_ptr<base::PairStream> networks( getNetworks() );
    if (networks != nullptr) {
       base::List::Item* item{networks->getFirstItem()};
       while (item != nullptr) {
@@ -551,7 +551,7 @@ void Station::processNetworkInputTasks(const double dt)
 //------------------------------------------------------------------------------
 void Station::processNetworkOutputTasks(const double dt)
 {
-   base::safe_ptr<base::PairStream> networks( getNetworks() );
+   std::shared_ptr<base::PairStream> networks( getNetworks() );
    if (networks != nullptr) {
       base::List::Item* item{networks->getFirstItem()};
       while (item != nullptr) {
@@ -918,7 +918,7 @@ bool Station::setSlotIgHosts(std::shared_ptr<base::PairStream> list)
    // Remove the old image generator host interfaces
    if (igHosts != nullptr) {
 
-      base::safe_ptr<base::PairStream> oldList( igHosts );
+      std::shared_ptr<base::PairStream> oldList( igHosts );
       igHosts = nullptr;
 
       // we are no longer the container for these old image generator host interfaces

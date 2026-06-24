@@ -4,7 +4,7 @@
 #include "mixr/models/system/Datalink.hpp"
 #include "mixr/models/Emission.hpp"
 
-#include "mixr/base/PairStream.hpp"
+
 #include "mixr/base/numeric/Number.hpp"
 
 #include "mixr/base/units/Frequencies.hpp"

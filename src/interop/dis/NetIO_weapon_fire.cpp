@@ -10,8 +10,8 @@
 #include "mixr/models/WorldModel.hpp"
 
 #include "mixr/base/network/NetHandler.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 
 namespace mixr {
 namespace dis {
@@ -53,7 +53,7 @@ void NetIO::processFirePDU(const FirePDU* const pdu)
 //    models::Player* tPlayer = nullptr;
 //    if (tSiteId == getSiteID() && tApplicationId == getApplicationID()) {
         // Must be local
-//        base::safe_ptr<base::PairStream> players( getSimulation()->getPlayers() );
+//        std::shared_ptr<base::PairStream> players( getSimulation()->getPlayers() );
 //        tPlayer = dynamic_cast<models::Player*>(getSimulation()->findPlayer(tPlayerId));  // added DDH
 //    }
     //std::cout << "Net Fire(2) tPlayer = " << tPlayer << std::endl;

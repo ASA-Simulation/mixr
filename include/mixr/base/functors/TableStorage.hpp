@@ -1,11 +1,8 @@
-
-#ifndef __mixr_base_TableStorage_H__
-#define __mixr_base_TableStorage_H__
+#pragma once
 
 #include "mixr/base/functors/FStorage.hpp"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
 
 //------------------------------------------------------------------------------
 // Class: TableStorage
@@ -20,6 +17,3 @@ public:
 };
 
 }
-}
-
-#endif

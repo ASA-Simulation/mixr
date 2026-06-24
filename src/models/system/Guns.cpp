@@ -4,7 +4,7 @@
 #include "mixr/models/player/weapon/Bullet.hpp"
 #include "mixr/models/WorldModel.hpp"
 
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/numeric/Number.hpp"
 
 #include "mixr/simulation/AbstractDataRecorder.hpp"

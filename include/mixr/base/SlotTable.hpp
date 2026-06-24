@@ -1,6 +1,9 @@
+#pragma once
 
-#ifndef __mixr_base_SlotTable_H__
-#define __mixr_base_SlotTable_H__
+#include <memory>
+#include <vector>
+#include <string>
+#include <expected>
 
 namespace mixr {
 namespace base {
@@ -25,31 +28,26 @@ namespace base {
 class SlotTable
 {
 public:
-   SlotTable() = default;
-   SlotTable(const char* slotnames[], const int nslots, const SlotTable& baseTable);
-   SlotTable(const char* slotnames[], const int nslots);
+   SlotTable() = delete;
+   SlotTable(const std::vector<std::string>& slotnames, const std::shared_ptr<const SlotTable>& baseTable = nullptr);
    SlotTable(const SlotTable&) = delete;
    SlotTable& operator=(const SlotTable&) = delete;
-   virtual ~SlotTable();
+   virtual ~SlotTable() = default;
 
    // Returns the last slot index number, which includes all base class slots.
    int n() const;
 
    // Returns the index, [ 1 .. n() ], for slot name 'slotname', or zero if not found
-   int index(const char* const slotname) const;
+   int index(const std::string& slotname) const;
 
    // Returns the name of the slot at index 'slotindex', range [ 1 .. n() ],
    // or zero is returned if the index is out of range.
-   const char* name(const int slotindex) const;
+   std::expected<const std::string, std::exception> name(const int slotindex) const;
 
 private:
-   SlotTable* baseTable {};   // Pointer to base class's slot table
-   char** slots1 {};          // Array of slot names
-   int nslots1 {};            // Number of slots in table
+   const std::shared_ptr<const SlotTable> baseTable; // Pointer to base class's slot table
+   const std::vector<std::string> m_slots;             // Array of slot names
 };
 
 }
 }
-
-#endif
-

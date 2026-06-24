@@ -163,6 +163,13 @@ bool LatLon::setSlotDirection(std::shared_ptr<const String> sdobj)
    return ok;
 }
 
+bool LatLon::set_slot_direction(const std::shared_ptr<String>& sdobj)
+{
+   bool ok{};
+   if (sdobj != nullptr) ok = setDir(*sdobj);
+   return ok;
+}
+
 //------------------------------------------------------------------------------
 //  setSlotDegrees() -- sets the initial degrees
 //------------------------------------------------------------------------------

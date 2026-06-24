@@ -1,11 +1,9 @@
+#pragma once
 
-#ifndef __mixr_base_colors_Yiq_H__
-#define __mixr_base_colors_Yiq_H__
-
+#include "mixr/base/types.hpp"
 #include "mixr/base/colors/Color.hpp"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
 
 //------------------------------------------------------------------------------
 // Class:  Yiq
@@ -65,22 +63,19 @@ public:
     double y() const;
     double i() const;
     double q() const;
-    void getYIQ(Vec3d& yiq) const;
+    void getYIQ(t_Vec3& yiq) const;
 
-    static void yiq2rgb(Vec4d& rgb, const Vec3d& yiq);
-    static void rgb2yiq(Vec3d& yiq, const Vec4d& rgb);
+    static void yiq2rgb(t_Vec4& rgb, const t_Vec3& yiq);
+    static void rgb2yiq(t_Vec3& yiq, const t_Vec4& rgb);
 
 protected:
-    Vec3d yiq;
+    t_Vec3 yiq;
 
 private:
    // slot table helper methods
-   bool setSlotY(std::shared_ptr<const Number>);
-   bool setSlotI(std::shared_ptr<const Number>);
-   bool setSlotQ(std::shared_ptr<const Number>);
+   bool setSlotY(std::shared_ptr<const t_real>);
+   bool setSlotI(std::shared_ptr<const t_real>);
+   bool setSlotQ(std::shared_ptr<const t_real>);
 };
 
 }
-}
-
-#endif

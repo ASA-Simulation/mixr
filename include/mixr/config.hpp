@@ -7,8 +7,7 @@
 // Important: only define C pre-processor directives in this file
 //
 // =============================================================================
-#ifndef __mixr_config_H__
-#define __mixr_config_H__
+#pragma once
 
 // MIXR release version number
 #ifndef MIXR_VERSION
@@ -53,6 +52,4 @@
 //  Max number of new, outgoing players published per frame (see NetIO.hpp)
 #ifndef MIXR_CONFIG_MAX_NETIO_NEW_OUTGOING
 #define MIXR_CONFIG_MAX_NETIO_NEW_OUTGOING 150
-#endif
-
 #endif

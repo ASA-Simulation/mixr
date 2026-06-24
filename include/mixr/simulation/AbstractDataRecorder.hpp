@@ -1,6 +1,4 @@
-
-#ifndef __mixr_simulation_AbstractDataRecorder_H__
-#define __mixr_simulation_AbstractDataRecorder_H__
+#pragma once
 
 #include "mixr/simulation/AbstractRecorderComponent.hpp"
 #include "mixr/simulation/recorder_macros.hpp"
@@ -80,6 +78,6 @@ inline bool AbstractDataRecorder::recordData(
 }
 
 }
+
 }
 
-#endif

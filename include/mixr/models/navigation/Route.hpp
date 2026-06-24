@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Route_H__
-#define __mixr_models_Route_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 
@@ -85,8 +83,8 @@ public:
    virtual const base::Pair* findSteerpoint(const unsigned int idx) const;
 
    // Get the route -- or use base::Component::getComponents()
-   virtual unsigned int getSteerpoints(base::safe_ptr<Steerpoint>* const stptList, const unsigned int max);    // Start from 'to'
-   virtual unsigned int getAllSteerpoints(base::safe_ptr<Steerpoint>* const stptList, const unsigned int max); // All
+   virtual unsigned int getSteerpoints(std::shared_ptr<Steerpoint>* const stptList, const unsigned int max);    // Start from 'to'
+   virtual unsigned int getAllSteerpoints(std::shared_ptr<Steerpoint>* const stptList, const unsigned int max); // All
    virtual unsigned int getNumberOfSteerpoints() const;   // return the number of steerpoint (components) in our route
 
    // Insert a steerpoint at 'pos' position in our list;
@@ -109,7 +107,7 @@ public:
    virtual void triggerAction();
 
    void updateData(const double dt = 0.0) override;
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:
@@ -132,8 +130,8 @@ private:
    const base::Pair* findSteerpointImp(const unsigned int idx) const;
    const Steerpoint* getSteerpointImp() const;
 
-   base::safe_ptr<base::Pair>         to;               // "To" Steerpoint pair [ name steerpoint ]
-   base::safe_ptr<const base::String> initToStptName;   // Name of the initial "to" steerpoint
+   std::shared_ptr<base::Pair>         to;               // "To" Steerpoint pair [ name steerpoint ]
+   std::shared_ptr<const base::String> initToStptName;   // Name of the initial "to" steerpoint
    unsigned int initToStptIdx {};                       // Index of the initial "to" steerpoint
    unsigned int stptIdx {};                             // Steerpoint index [ 1 ... n ] in list
    double       autoSeqDistNM {2.0};                    // Distance to auto sequence (NM)
@@ -211,6 +209,6 @@ inline const base::Pair* Route::findSteerpoint(const unsigned int idx) const
 }
 
 }
+
 }
 
-#endif

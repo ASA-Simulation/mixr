@@ -3,69 +3,41 @@
 
 #include "mixr/base/functors/Table.hpp"
 #include "mixr/base/functors/FStorage.hpp"
-#include "mixr/base/List.hpp"
 
 #include <iostream>
 
 namespace mixr {
 namespace base {
 
-IMPLEMENT_SUBCLASS(Function, "Function")
+IMPLEMENT_ABSTRACT_SUBCLASS(Function, "Function");
+EMPTY_SLOTTABLE(Function);
+EMPTY_COPYDATA(Function);
+EMPTY_DELETEDATA(Function);
 
-BEGIN_SLOTTABLE(Function)
-    "table",          // Optional LFI table
-END_SLOTTABLE(Function)
+IMPLEMENT_ABSTRACT_SUBCLASS(Func1, "Func1");
+EMPTY_SLOTTABLE(Func1);
+EMPTY_COPYDATA(Func1);
+EMPTY_DELETEDATA(Func1);
 
-BEGIN_SLOT_MAP(Function)
-    ON_SLOT( 1, setSlotLfiTable, Table)
-END_SLOT_MAP()
+IMPLEMENT_ABSTRACT_SUBCLASS(Func2, "Func2");
+EMPTY_SLOTTABLE(Func2);
+EMPTY_COPYDATA(Func2);
+EMPTY_DELETEDATA(Func2);
 
-Function::Function()
-{
-   STANDARD_CONSTRUCTOR()
+IMPLEMENT_ABSTRACT_SUBCLASS(Func3, "Func3");
+EMPTY_SLOTTABLE(Func3);
+EMPTY_COPYDATA(Func3);
+EMPTY_DELETEDATA(Func3);
 
-   table = nullptr;
-}
+IMPLEMENT_ABSTRACT_SUBCLASS(Func4, "Func4");
+EMPTY_SLOTTABLE(Func4);
+EMPTY_COPYDATA(Func4);
+EMPTY_DELETEDATA(Func4);
 
-void Function::copyData(const Function& org, const bool cc)
-{
-   BaseClass::copyData(org);
-   if (cc) table = nullptr;
-
-   {
-      const Table* copy{};
-      if (org.table != nullptr) {
-         copy = static_cast<const Table*>(org.table->clone());
-      }
-      setSlotLfiTable(copy);
-   }
-}
-
-void Function::deleteData()
-{
-   setSlotLfiTable(nullptr);
-}
-
-//------------------------------------------------------------------------------
-// Storage factory
-//------------------------------------------------------------------------------
-FStorage* Function::storageFactory() const
-{
-   // Since no derived class handled this ...
-   if (table != nullptr) {
-      // then we're going to let the table handle it, if any
-      return table->storageFactory();
-   } else {
-      // or we're just going to return a standard FStorage object.
-      return new FStorage();
-   }
-}
-
-bool Function::setSlotLfiTable(std::shared_ptr<const Table> msg)
-{
-   table = msg;
-   return true;
-}
+IMPLEMENT_ABSTRACT_SUBCLASS(Func5, "Func5");
+EMPTY_SLOTTABLE(Func5);
+EMPTY_COPYDATA(Func5);
+EMPTY_DELETEDATA(Func5);
 
 }
 }

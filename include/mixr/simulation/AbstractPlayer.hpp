@@ -1,6 +1,4 @@
-
-#ifndef __mixr_simulation_AbstractPlayer_H__
-#define __mixr_simulation_AbstractPlayer_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 
@@ -127,6 +125,6 @@ private:
 #include "mixr/simulation/AbstractPlayer.inl"
 
 }
+
 }
 
-#endif

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_terrain_DedFile_H__
-#define __mixr_terrain_DedFile_H__
+#pragma once
 
 #include "../DataFile.hpp"
 
@@ -44,6 +42,6 @@ private:
 };
 
 }
+
 }
 
-#endif

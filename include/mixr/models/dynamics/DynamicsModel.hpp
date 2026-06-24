@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_DynamicsModel_H__
-#define __mixr_models_DynamicsModel_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 
@@ -105,6 +103,6 @@ public:
 };
 
 }
+
 }
 
-#endif

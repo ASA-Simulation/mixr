@@ -5,8 +5,8 @@
 #include "mixr/models/system/Antenna.hpp"
 #include "mixr/models/Emission.hpp"
 
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
 #include "mixr/base/units/Angles.hpp"
 #include "mixr/base/units/Frequencies.hpp"
 #include "mixr/base/units/Powers.hpp"

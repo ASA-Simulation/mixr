@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Navigation_H__
-#define __mixr_models_Navigation_H__
+#pragma once
 
 #include "mixr/models/system/System.hpp"
 
@@ -180,9 +178,9 @@ protected:
 private:
    void initData();
 
-   base::safe_ptr<const Route> initRoute; // initial route (for reset purposes)
-   base::safe_ptr<Route> priRoute;        // Primary route
-   base::safe_ptr<Bullseye> bull;         // our bullseye (just one for now)
+   std::shared_ptr<const Route> initRoute; // initial route (for reset purposes)
+   std::shared_ptr<Route> priRoute;        // Primary route
+   std::shared_ptr<Bullseye> bull;         // our bullseye (just one for now)
 
    // Positional data
    double latitude {};       // System Latitude          (degs)
@@ -248,6 +246,6 @@ private:
 };
 
 }
+
 }
 
-#endif

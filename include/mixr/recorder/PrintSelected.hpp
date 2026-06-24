@@ -1,6 +1,4 @@
-
-#ifndef __mixr_recorder_PrintSelected_H__
-#define __mixr_recorder_PrintSelected_H__
+#pragma once
 
 #include "mixr/recorder/OutputHandler.hpp"
 #include "mixr/recorder/PrintHandler.hpp"
@@ -116,6 +114,6 @@ inline bool PrintSelected::getCompareToBool() const
 }
 
 }
+
 }
 
-#endif

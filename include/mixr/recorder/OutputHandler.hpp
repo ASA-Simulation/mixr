@@ -3,7 +3,7 @@
 #define __mixr_recorder_OutputHandler_H__
 
 #include "mixr/simulation/AbstractRecorderComponent.hpp"
-#include "mixr/base/List.hpp"
+
 
 namespace mixr {
 namespace base { class List; }

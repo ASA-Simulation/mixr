@@ -1,8 +1,8 @@
 
-#ifndef __mixr_models_AerodynamicsModel_H__
-#define __mixr_models_AerodynamicsModel_H__
+#pragma once
 
 #include "mixr/models/dynamics/DynamicsModel.hpp"
+
 
 namespace mixr {
 namespace models {
@@ -75,6 +75,6 @@ public:
 };
 
 }
+
 }
 
-#endif

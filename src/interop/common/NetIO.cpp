@@ -13,9 +13,9 @@
 #include "mixr/base/numeric/Number.hpp"
 
 #include "mixr/base/Identifier.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
+
 #include "mixr/base/String.hpp"
 
 #include "mixr/base/units/Angles.hpp"
@@ -1246,7 +1246,7 @@ NetIO::NtmInputNode& NetIO::NtmInputNode::operator=(const NetIO::NtmInputNode& o
    return *this;
 }
 
-NetIO::NtmInputNode* NetIO::NtmInputNode::clone() const
+std::shared_ptr<NetIO::NtmInputNode> NetIO::NtmInputNode::clone() const
 {
    return nullptr;
 }
@@ -1279,7 +1279,7 @@ NetIO::NtmOutputNode& NetIO::NtmOutputNode::operator=(const NetIO::NtmOutputNode
    return *this;
 }
 
-NetIO::NtmOutputNode* NetIO::NtmOutputNode::clone() const
+std::shared_ptr<NetIO::NtmOutputNode> NetIO::NtmOutputNode::clone() const
 {
    return nullptr;
 }

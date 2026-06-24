@@ -39,23 +39,23 @@ BEGIN_SLOT_MAP(TargetData)
    ON_SLOT( 5, setSlotManualAssign,    base::Number)
    ON_SLOT( 6, setSlotStickType,       base::Identifier)
 
-   ON_SLOT( 7, setSlotStickDistance,   base::Distance)
-   ON_SLOT( 7, setSlotStickDistance,   base::Number)
+   ON_SLOT( 7, [this](std::shared_ptr<const base::Distance> msg) { return setSlotStickDistance(msg); },   base::Distance)
+   ON_SLOT( 7, [this](std::shared_ptr<const base::Number> msg) { return setSlotStickDistance(msg); },   base::Number)
 
-   ON_SLOT( 8, setSlotInterval,        base::Time)
-   ON_SLOT( 8, setSlotInterval,        base::Number)
+   ON_SLOT( 8, [this](std::shared_ptr<const base::Time> msg) { return setSlotInterval(msg); },   base::Time)
+   ON_SLOT( 8, [this](std::shared_ptr<const base::Number> msg) { return setSlotInterval(msg); },   base::Number)
 
-   ON_SLOT( 9, setSlotMaxMissDistance, base::Distance)
-   ON_SLOT( 9, setSlotMaxMissDistance, base::Number)
+   ON_SLOT( 9, [this](std::shared_ptr<const base::Distance> msg) { return setSlotMaxMissDistance(msg); },   base::Distance)
+   ON_SLOT( 9, [this](std::shared_ptr<const base::Number> msg) { return setSlotMaxMissDistance(msg); },   base::Number)
 
-   ON_SLOT(10, setSlotArmDelay,        base::Time)
-   ON_SLOT(10, setSlotArmDelay,        base::Number)
+   ON_SLOT( 10, [this](std::shared_ptr<const base::Time> msg) { return setSlotArmDelay(msg); },   base::Time)
+   ON_SLOT( 10, [this](std::shared_ptr<const base::Number> msg) { return setSlotArmDelay(msg); },   base::Number)
 
-   ON_SLOT(11, setSlotAngle,           base::Angle)
-   ON_SLOT(11, setSlotAngle,           base::Number)
+   ON_SLOT( 11, [this](std::shared_ptr<const base::Angle> msg) { return setSlotAngle(msg); },   base::Angle)
+   ON_SLOT( 11, [this](std::shared_ptr<const base::Number> msg) { return setSlotAngle(msg); },   base::Number)
 
-   ON_SLOT(12, setSlotAzimuth,         base::Angle)
-   ON_SLOT(12, setSlotAzimuth,         base::Number)
+   ON_SLOT( 12, [this](std::shared_ptr<const base::Angle> msg) { return setSlotAzimuth(msg); },   base::Angle)
+   ON_SLOT( 12, [this](std::shared_ptr<const base::Number> msg) { return setSlotAzimuth(msg); },   base::Number)
    ON_SLOT(13, setSlotVelocity,        base::Number)
 END_SLOT_MAP()
 

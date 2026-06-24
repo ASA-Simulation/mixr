@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_common_Ntm_H__
-#define __mixr_interop_common_Ntm_H__
+#pragma once
 
 #include "mixr/interop/common/NetIO.hpp"
 
@@ -73,7 +71,7 @@ public:
    virtual bool copyEntityType(Nib* const targetNib) const =0;
 
 private:
-   base::safe_ptr<const models::Player> tPlayer; // Template player
+   std::shared_ptr<const models::Player> tPlayer; // Template player
 
 private:
    // slot table helper methods
@@ -81,6 +79,6 @@ private:
 };
 
 }
+
 }
 
-#endif

@@ -186,11 +186,11 @@ public:
     virtual bool setSearchVolume(const double width, const double height, const int reqBars = 0);
 
     // Event handler(s)
-    virtual bool onStartScanEvent(base::Integer* const bar);
-    virtual bool onEndScanEvent(base::Integer* const bar);
+    virtual bool onStartScanEvent(std::shared_ptr<base::Integer> bar);
+    virtual bool onEndScanEvent(std::shared_ptr<base::Integer> bar);
 
     // Component Interface
-    bool event(const int event, base::Object* const obj = nullptr) override;
+    bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
     void reset() override;
 
 protected:

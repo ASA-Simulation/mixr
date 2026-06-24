@@ -22,11 +22,9 @@ namespace linearsystem {
 //
 //------------------------------------------------------------------------------
 class SaH : public ScalerFunc
-{
-    DECLARE_SUBCLASS(SaH, ScalerFunc)
+#pragma once
 
-public:
-   SaH();
+#include "mixr/linearsystem/TransferFunction.hpp"
    SaH(const unsigned int rate, const unsigned int sampleRate);
 
    unsigned int getSampleRate() const         { return sampleRate; } // hz
@@ -58,7 +56,7 @@ private:
    bool setSlotSampleRate(std::shared_ptr<const base::Number>);
 };
 
-}
-}
+
+};
 
 #endif

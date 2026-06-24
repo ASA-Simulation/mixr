@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linearsystem_Limit01_H__
-#define __mixr_linearsystem_Limit01_H__
+#pragma once
 
 #include "mixr/linearsystem/LimitFunc.hpp"
 
@@ -20,7 +18,7 @@ public:
    Limit01();
 };
 
-}
-}
+
+};
 
 #endif

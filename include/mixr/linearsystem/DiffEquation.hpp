@@ -17,11 +17,9 @@ namespace linearsystem {
 //
 //------------------------------------------------------------------------------
 class DiffEquation : public ScalerFunc
-{
-    DECLARE_SUBCLASS(DiffEquation, ScalerFunc)
+#pragma once
 
-public:
-   DiffEquation();
+#include "mixr/linearsystem/LinearSystem.hpp"
    DiffEquation(const unsigned int rate);
 
    double g(const double x) override;
@@ -35,7 +33,7 @@ protected:
    double* pb {};    // (b[k] * x[k]) terms; for k = 0 .. n
 };
 
-}
-}
+
+};
 
 #endif

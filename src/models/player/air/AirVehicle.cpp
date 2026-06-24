@@ -2,7 +2,7 @@
 #include "mixr/models/player/air/AirVehicle.hpp"
 
 #include "mixr/models/dynamics/AerodynamicsModel.hpp"
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/numeric/Number.hpp"
 
 namespace mixr {

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_SynchronizedState_H__
-#define __mixr_models_SynchronizedState_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 #include "mixr/base/osg/Vec3d"
@@ -53,7 +51,7 @@ private:
 };
 
 }
+
 }
 
-#endif
 

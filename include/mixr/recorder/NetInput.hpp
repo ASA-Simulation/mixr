@@ -40,7 +40,7 @@ protected:
 private:
    void initData();
 
-    base::safe_ptr<mixr::base::NetHandler> netHandler;   // Network handler (input/output, or just output if netInput is defined)
+    std::shared_ptr<mixr::base::NetHandler> netHandler;   // Network handler (input/output, or just output if netInput is defined)
     bool networkInitialized {};        // Network has been initialized
     bool networkInitFailed {};         // Network initialization has failed
     bool noWaitFlag {};                // No wait (unblocked) I/O flag

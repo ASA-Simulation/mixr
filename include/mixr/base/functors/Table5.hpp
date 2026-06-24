@@ -44,7 +44,7 @@ public:
    virtual double lfi(const double iv1, const double iv2, const double iv3, const double iv4, const double iv5, FStorage* const s = nullptr) const;
 
    // Loads the V (iv5) breakpoints
-   virtual bool setVBreakpoints5(const List* const bkpts);
+   virtual bool setVBreakpoints5(std::shared_ptr<const List> swb5obj);
 
    double lfi(const double iv1, const double iv2, const double iv3, const double iv4, FStorage* const s = nullptr) const override;
    double lfi(const double iv1, const double iv2, const double iv3, FStorage* const s = nullptr) const override;

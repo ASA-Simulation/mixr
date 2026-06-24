@@ -34,7 +34,7 @@ protected:
    void receivedEmissionReport(Emission* const) override;
 
 private:
-   base::safe_ptr<Datalink> datalink;   // Our companion datalink system
+   std::shared_ptr<Datalink> datalink;   // Our companion datalink system
 };
 
 }

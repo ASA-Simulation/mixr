@@ -1,6 +1,5 @@
 
-#ifndef __mixr_interop_rprfom_Nib_H__
-#define __mixr_interop_rprfom_Nib_H__
+#pragma once
 
 #include "mixr/interop/hla/Nib.hpp"
 
@@ -102,6 +101,6 @@ private:
 };
 
 }
+
 }
 
-#endif

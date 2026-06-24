@@ -15,8 +15,7 @@
 //       Event values (MAX_KEY_EVENT+1) to (USER_EVENTS-1) reserved for framework
 //       Event values above USER_EVENT are available for user events
 //------------------------------------------------------------------------------
-#ifndef __mixr_base_Event_Tokens_H__
-#define __mixr_base_Event_Tokens_H__
+#pragma once
 
 // ---
 // Key events -- Are passed up to an object's container if not used.
@@ -244,6 +243,6 @@ enum {
 
     USER_EVENTS           = 2000   // First user defined event
 
+
 };
 
-#endif

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_hla_Nib_H__
-#define __mixr_interop_hla_Nib_H__
+#pragma once
 
 #include "mixr/interop/common/Nib.hpp"
 #include "mixr/interop/hla/NetIO.hpp"
@@ -82,8 +80,8 @@ private:
 };
 
 }
+
 }
 
-#endif
 
 

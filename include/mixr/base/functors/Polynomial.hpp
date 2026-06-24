@@ -1,14 +1,14 @@
+#pragma once
 
-#ifndef __mixr_base_Polynomial_H__
-#define __mixr_base_Polynomial_H__
+#include <vector>
 
 #include "mixr/base/Object.hpp"
-#include "mixr/base/functors/Func1.hpp"
+#include "mixr/base/functors/Function.hpp"
 
 namespace mixr {
 namespace base {
+
 class FStorage;
-class List;
 
 //------------------------------------------------------------------------------
 // Class: Polynomial
@@ -39,31 +39,28 @@ class Polynomial : public Func1
 
 public:
    // Highest allowed degree of polynomial
-   static const int MAX_DEGREE{32};
+   static constexpr int MAX_DEGREE{32};
 
 public:
    Polynomial();
 
-   int getDegree() const                  { return (m-1); }
-   const double* getCoefficients() const  { return a; }
+   int getDegree() const                  { return m_coefficients.size() - 1; }
+   const double* getCoefficients() const  { return m_coefficients.data(); }
 
-   double f(const double x, FStorage* const s = nullptr) const override;
+   double f(const double x) const override;
 
-protected:
-   bool setCoefficients(const double* const coeff, const int n);
+   bool setCoefficients(const std::vector<double>&);
 
 private:
-   static const int MAX_COEFF{MAX_DEGREE+1};
+   static constexpr int MAX_COEFF{MAX_DEGREE+1};
 
-   double a[MAX_COEFF]{};   // Constant coefficients vector
-   int m{};                 // Number of coefficients (degree + 1)
+   std::vector<double> m_coefficients{MAX_COEFF}; // Constant coefficients vector
 
 protected:
    // slot table helper methods
-   virtual bool setSlotCoefficients(std::shared_ptr<const List>);
+   virtual bool setSlotCoefficients(std::shared_ptr<const std::vector<double>>);
+   virtual std::shared_ptr<const std::vector<double>> getSlotCoefficients() const;
 };
 
 }
 }
-
-#endif

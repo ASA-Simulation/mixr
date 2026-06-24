@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linkage_AnalogOutput_H__
-#define __mixr_linkage_AnalogOutput_H__
+#pragma once
 
 #include "mixr/linkage/adapters/AbstractAdapter.hpp"
 
@@ -73,6 +71,6 @@ private:
 };
 
 }
+
 }
 
-#endif

@@ -1,11 +1,12 @@
+#pragma once
 
-#ifndef __mixr_base_Table_H__
-#define __mixr_base_Table_H__
+#include <exception>
 
 #include "mixr/base/Object.hpp"
 
 namespace mixr {
 namespace base {
+
 class FStorage;
 class List;
 class Number;
@@ -82,24 +83,23 @@ public:
    bool isValid() const override;
 
 public:
-    // // Exceptions
-    // class ExpInvalidTable : public Object::Exception {
-    //     public:
-    //         ExpInvalidTable() : Exception() {}
-    //         const char* getDescription() const override          { return "table is invalid"; }
-    // };
-    //
-    // class ExpInvalidVector : public Object::Exception {
-    //     public:
-    //         ExpInvalidVector() : Exception() {}
-    //         const char* getDescription() const override          { return "table vector is invalid"; }
-    // };
-    //
-    // class ExpInvalidFStorage : public Object::Exception {
-    //     public:
-    //         ExpInvalidFStorage() : Exception() {}
-    //         const char* getDescription() const override          { return "Incorrect type of FStorage"; }
-    // };
+    /**
+     * Exceptions
+     */
+    class ExpInvalidTable : public std::exception {
+        public:
+            constexpr const char* what() const noexcept override          { return "table is invalid"; }
+    };
+   
+    class ExpInvalidVector : public std::exception {
+        public:
+            constexpr const char* what() const noexcept override          { return "table vector is invalid"; }
+    };
+   
+    class ExpInvalidFStorage : public std::exception {
+        public:
+            constexpr const char* what() const noexcept override          { return "Incorrect type of FStorage"; }
+    };
 
 
 protected:
@@ -114,12 +114,12 @@ private:
    bool extFlg {};       // Extrapolation enabled flag
 
 private:
-   // slot table helper methods
-   bool setSlotDataTable(std::shared_ptr<const List> x)               { return setDataTable(x); }
-   bool setSlotExtrapolationEnabled(std::shared_ptr<const Number>);
+    /**
+     * Slot table helper methods
+     */
+    bool setSlotDataTable(std::shared_ptr<const List> x)               { return setDataTable(x); }
+    bool setSlotExtrapolationEnabled(std::shared_ptr<const Number>);
 };
 
 }
 }
-
-#endif

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linearsystem_Limit11_H__
-#define __mixr_linearsystem_Limit11_H__
+#pragma once
 
 #include "mixr/linearsystem/LimitFunc.hpp"
 
@@ -22,7 +20,7 @@ public:
    Limit11();
 };
 
-}
-}
+
+};
 
 #endif

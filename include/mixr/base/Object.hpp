@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_Object_H__
-#define __mixr_base_Object_H__
+#pragma once
 
 // platform configuration file
 #include "mixr/config.hpp"
@@ -9,13 +7,11 @@
 
 #include <typeinfo>
 #include <memory>
+#include <variant>
 
 #include "mixr/base/macros.hpp"
 #include "mixr/base/SlotTable.hpp"
-
 #include "mixr/base/MetaObject.hpp"
-
-#include <iosfwd>
 
 namespace mixr {
 namespace base {
@@ -267,36 +263,63 @@ namespace base {
 //    to spot potential memory leaks.
 //
 //------------------------------------------------------------------------------
+
+class Object;
+
+using Element = std::variant<
+   std::nullptr_t,
+   std::shared_ptr<bool>,
+   std::shared_ptr<double>,
+   std::shared_ptr<std::string>,
+   std::shared_ptr<Object>
+>;
+
+
 class Object
 {
    // -------------------------------------------------------------------------
    // Standard object stuff --
    //    derived classes will use the macro DECLARE_SUBCLASS(); see macros.hpp
    // -------------------------------------------------------------------------
-   public: Object();
-   public: Object(const Object& org);
-   public: Object& operator=(const Object& org);
-   public: virtual Object* clone() const;
-   public: virtual ~Object();
-
-   protected: void copyData(const Object& org, const bool cc = false);
-   protected: void deleteData();
+   public: Object() = default;
+   public: Object(const Object& org) = default;
+   public: Object& operator=(const Object& org) = default;
+   public: std::shared_ptr<Object> clone() const;
+   public: virtual ~Object() = default;
 
    // helper methods
    public: virtual bool isClassType(const std::type_info& type) const;
-   public: virtual bool isFactoryName(const char name[]) const;
-   public: static const char* getFactoryName();
+   public: virtual bool isFactoryName(const std::string& name) const;
+   public: static const std::string& getFactoryName();
 
    // slot table
-   protected: static const SlotTable slottable;    // class slot table
-   private: static const char* slotnames[];        // slot names in this object's slot table
-   private: static const int nslots;               // number of slots in this object's slot table
+   // protected: static const std::shared_ptr<const SlotTable> slottable;    // class slot table
+   // private: static const std::string slotnames[];        // slot names in this object's slot table
+   // private: static const int nslots;               // number of slots in this object's slot table
 
    // slot table functions
-   public: static const SlotTable& getSlotTable();
-   protected: virtual bool setSlotByIndex(const int slotindex, std::shared_ptr<Object> obj);
-   public: bool setSlotByName(std::string slotname, std::shared_ptr<Object> obj);
-   public: const char* slotIndex2Name(const int slotindex) const;
+
+
+
+
+   public: virtual const std::shared_ptr<const SlotTable>& getSlotTable() const;
+   public: virtual const std::shared_ptr<const MetaObject>& getMetaObject() const;
+
+   protected: static const std::shared_ptr<const SlotTable> slotTable;
+   protected: static const std::shared_ptr<const MetaObject> metaObject;
+
+
+
+
+
+
+
+
+   protected: virtual bool setSlotByIndex(const int slotindex, Element obj);
+   protected: virtual Element getSlotByIndex(const int slotindex) const;
+   public: bool setSlotByName(std::string slotname, Element obj);
+   public: Element getSlotByName(std::string slotname) const;
+   public: const std::string slotIndex2Name(const int slotindex) const;
    public: int slotName2Index(const std::string& slotname) const;
 
 public:
@@ -319,24 +342,16 @@ public:
    bool enableMessageTypes(const unsigned short msgTypeBits);
    bool disableMessageTypes(const unsigned short msgTypeBits);
 
-   static const MetaObject* getMetaObject();
+
 
 protected:
-   // slot table for this object (set to the object's class slot table)
-   const SlotTable* slotTable {};
-
    unsigned short getMessageEnableBits() const  { return enbMsgBits; }
    unsigned short getMessageDisableBits() const { return disMsgBits; }
 
 private:
    unsigned short enbMsgBits { MSG_ERROR | MSG_WARNING };  // Enabled message bits
    unsigned short disMsgBits {};                           // Disabled message bits
-
-   static MetaObject metaObject;
 };
 
 }
 }
-
-#endif
-

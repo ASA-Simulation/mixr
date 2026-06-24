@@ -1,13 +1,6 @@
-
 #include "mixr/base/colors/Cie.hpp"
 
-#include "mixr/base/numeric/Float.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/MonitorMetrics.hpp"
-#include <cstdio>
-
-namespace mixr {
-namespace base {
+namespace mixr::base {
 
 IMPLEMENT_SUBCLASS(Cie, "cie")
 

@@ -38,7 +38,7 @@ END_SLOTTABLE(Add)
 
 BEGIN_SLOT_MAP(Add)
     // Accept an Number at any slot index ...
-    const auto _msg = dynamic_cast<Number*>(obj);
+    const auto _msg = std::dynamic_pointer_cast<const Number>(obj);
     if (_msg != nullptr) { _ok = setSecondNumber(_msg); }
 END_SLOT_MAP()
 
@@ -94,7 +94,7 @@ void Divide::operation()
 //------------------------------------------------------------------------------
 // setSecondNumber() --
 //------------------------------------------------------------------------------
-bool Add::setSecondNumber(const Number* const ssnobj)
+bool Add::setSecondNumber(std::shared_ptr<const Number> ssnobj)
 {
     if (ssnobj != nullptr) {
         n2 = ssnobj->getReal();

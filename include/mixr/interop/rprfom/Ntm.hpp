@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_rprfom_Ntm_H__
-#define __mixr_interop_rprfom_Ntm_H__
+#pragma once
 
 #include "mixr/interop/common/Ntm.hpp"
 #include "mixr/interop/rprfom/NetIO.hpp"
@@ -68,6 +66,6 @@ private:
 };
 
 }
+
 }
 
-#endif

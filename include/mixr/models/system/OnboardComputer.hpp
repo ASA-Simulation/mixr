@@ -54,8 +54,8 @@ public:
    virtual void triggerAction(Action* const act);
 
    // Legacy function (will be removed in a future major release)
-   virtual int getShootList(base::safe_ptr<Track>* const tlist, const int max);
-   virtual int getShootList(base::safe_ptr<const Track>* const tlist, const int max) const;
+   virtual int getShootList(std::shared_ptr<Track>* const tlist, const int max);
+   virtual int getShootList(std::shared_ptr<const Track>* const tlist, const int max) const;
 
    void reset() override;
    void updateData(const double dt = 0.0) override;
@@ -71,7 +71,7 @@ protected:
    bool shutdownNotification() override;
 
 private:
-   base::safe_ptr<Action> action;  // Current steerpoint action
+   std::shared_ptr<Action> action;  // Current steerpoint action
    Track* nextToShoot {};          // Next to shoot track
 };
 

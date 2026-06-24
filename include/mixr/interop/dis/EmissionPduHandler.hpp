@@ -176,9 +176,9 @@ private:
    unsigned char emitterIdNumber {};                   // Unique ID number for each emitter system
    unsigned char emitterFunction {ESF_FIRE_CONTROL};   // Emitter function code
 
-   base::safe_ptr<models::RfSensor> sensor;            // The R/F sensor (radar, jammers, etc)
-   base::safe_ptr<models::RfSensor> sensorModel;       // Our template sensor model
-   base::safe_ptr<models::Antenna>  antennaModel;      // Our template antenna model
+   std::shared_ptr<models::RfSensor> sensor;            // The R/F sensor (radar, jammers, etc)
+   std::shared_ptr<models::RfSensor> sensorModel;       // Our template sensor model
+   std::shared_ptr<models::Antenna>  antennaModel;      // Our template antenna model
 
    double emPduExecTime {};                            // Exec time of last Emission PDU output (seconds)
 

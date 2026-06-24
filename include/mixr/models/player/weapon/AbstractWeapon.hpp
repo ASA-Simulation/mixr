@@ -276,7 +276,7 @@ public:
    bool crashNotification() override;
 
    void updateTC(const double dt = 0.0) override;
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:
@@ -324,25 +324,25 @@ private:
     static const double DEFAULT_MAX_TGT_RNG;     // meters
     static const double DEFAULT_MAX_TGT_LOS_ERR; // radians
 
-    base::safe_ptr<AbstractWeapon> flyoutWpn;      // Initial weapon: points to the cloned flyout weapon
+    std::shared_ptr<AbstractWeapon> flyoutWpn;      // Initial weapon: points to the cloned flyout weapon
                                                    // Cloned flyout: weapon: points to self
 
-    base::safe_ptr<AbstractWeapon> initialWpn;     // Initial weapon: points to self
+    std::shared_ptr<AbstractWeapon> initialWpn;     // Initial weapon: points to self
                                                    // Cloned flyout: points to the initial weapon
 
     base::Vec3d tgtPos;                     // Target Position -- platform coord (NED)
     bool       tgtPosValid {};                 // If true, target position is valid
-    base::safe_ptr<Player> tgtPlayer;      // Target Player
-    base::safe_ptr<Track>  tgtTrack;       // Target Track
+    std::shared_ptr<Player> tgtPlayer;      // Target Player
+    std::shared_ptr<Track>  tgtTrack;       // Target Track
     base::Vec3d    tgtVel {};                  // Target/Track Velocity (m/s) relative to ownship velocity
-    base::safe_ptr<Player> launchVehicle;  // Launching/Releasing Player
+    std::shared_ptr<Player> launchVehicle;  // Launching/Releasing Player
     bool       posTrkEnb {};                   // If true, update tgtPos from the target/track
     double     maxTgtRng {DEFAULT_MAX_TGT_RNG};                   // Max target range for default tgt selection      (meters)
     double     maxTgtLosErr {DEFAULT_MAX_TGT_LOS_ERR};                // Max target LOS error for default tgt selection  (radians)
     double     detonationRange {};             // Range to target at time of detonation           (meters)
     base::Vec3d  tgtDetLoc;                 // Detonation location in target player's coord    (meters)
 
-    base::safe_ptr<Stores> launcher;    // Launcher
+    std::shared_ptr<Stores> launcher;    // Launcher
     int         station {};                // Station number (on launcher)
 
     int         weaponID {};               // Weapon type ID (user defined)
@@ -358,7 +358,7 @@ private:
     bool        jettisoned {};             // Weapon has been jettisioned.
     bool        dummyFlg {};               // Dummy (launch, but don't flyout or detonate)
     Detonation  results {DETONATE_NONE};                // Results of weapon detonation
-    base::safe_ptr<const base::String> tstTgtNam; // Test only: target player name
+    std::shared_ptr<const base::String> tstTgtNam; // Test only: target player name
 
     // ---
     // Default guidance & dynamics parameters

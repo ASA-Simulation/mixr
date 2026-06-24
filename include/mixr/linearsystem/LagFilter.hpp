@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linearsystem_LagFilter_H__
-#define __mixr_linearsystem_LagFilter_H__
+#pragma once
 
 #include "mixr/linearsystem/FirstOrderTf.hpp"
 
@@ -48,7 +46,7 @@ private:
    bool setSlotTau(std::shared_ptr<const base::Number>);
 };
 
-}
-}
+
+};
 
 #endif

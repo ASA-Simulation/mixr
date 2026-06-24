@@ -41,11 +41,9 @@ namespace linearsystem {
 //
 //------------------------------------------------------------------------------
 class Sz2 : public SecondOrderTf
-{
-    DECLARE_SUBCLASS(Sz2, SecondOrderTf)
+#pragma once
 
-public:
-   Sz2();
+#include "mixr/linearsystem/TransferFunction.hpp"
 
 private:
    // slot table helper methods
@@ -57,7 +55,7 @@ private:
    bool setSlotD3(std::shared_ptr<const base::Number>);
 };
 
-}
-}
+
+};
 
 #endif

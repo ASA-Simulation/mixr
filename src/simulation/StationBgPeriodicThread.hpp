@@ -1,13 +1,10 @@
-
-#ifndef __mixr_simulation_StationBgPeriodicThread_H__
-#define __mixr_simulation_StationBgPeriodicThread_H__
+#pragma once
 
 #include "mixr/base/threads/PeriodicThread.hpp"
 
-namespace mixr {
-namespace simulation {
+}
+}
 
-// ---
 // Background thread
 // ---
 class StationBgPeriodicThread final : public base::PeriodicThread

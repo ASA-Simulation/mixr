@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Bullseye_H__
-#define __mixr_models_Bullseye_H__
+#pragma once
 
 #include "mixr/models/navigation/Steerpoint.hpp"
 
@@ -22,6 +20,6 @@ public:
 };
 
 }
+
 }
 
-#endif

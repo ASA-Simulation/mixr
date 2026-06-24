@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Message_H__
-#define __mixr_models_Message_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
@@ -68,6 +66,6 @@ inline void Message::setLifeSpan(const double ls)                       { lifeSp
 inline void Message::setAckCode(const AckCodes a)                       { ack = a;              }
 
 }
+
 }
 
-#endif

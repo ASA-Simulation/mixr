@@ -1,11 +1,8 @@
-
-#ifndef __mixr_base_colors_Cmy_H__
-#define __mixr_base_colors_Cmy_H__
+#pragma once
 
 #include "mixr/base/colors/Color.hpp"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
 
 //------------------------------------------------------------------------------
 // Class:  Cmy
@@ -77,6 +74,3 @@ private:
 };
 
 }
-}
-
-#endif

@@ -1,6 +1,5 @@
 
-#ifndef __mixr_recorder_FileReader_H__
-#define __mixr_recorder_FileReader_H__
+#pragma once
 
 #include "mixr/recorder/InputHandler.hpp"
 
@@ -65,6 +64,6 @@ private:
 };
 
 }
+
 }
 
-#endif

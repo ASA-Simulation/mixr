@@ -29,9 +29,9 @@
 #include "mixr/base/numeric/Integer.hpp"
 #include "mixr/base/numeric/Float.hpp"
 #include "mixr/base/numeric/Boolean.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/List.hpp"
+
+
+
 #include "EdlScanner.hpp"
 
 static mixr::base::Object* result {};          // result of all our work (i.e., an Object)

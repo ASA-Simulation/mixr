@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_FStorage_H__
-#define __mixr_base_FStorage_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
@@ -22,5 +20,3 @@ public:
 
 }
 }
-
-#endif

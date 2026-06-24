@@ -1,6 +1,5 @@
 
-#ifndef __mixr_interop_rprfom_NetIO_H__
-#define __mixr_interop_rprfom_NetIO_H__
+#pragma once
 
 #include "mixr/interop/hla/NetIO.hpp"
 
@@ -221,6 +220,6 @@ protected:
 };
 
 }
+
 }
 
-#endif

@@ -4,7 +4,7 @@
 #include "mixr/simulation/Simulation.hpp"
 
 #include "mixr/base/Component.hpp"
-#include "mixr/base/PairStream.hpp"
+
 
 namespace mixr {
 namespace simulation {

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_common_NetIO_H__
-#define __mixr_interop_common_NetIO_H__
+#pragma once
 
 #include "mixr/simulation/AbstractNetIO.hpp"
 
@@ -396,11 +394,11 @@ private:
 
    // Network Model IDs
    unsigned short netID {1};                            // Network ID
-   base::safe_ptr<const base::String> federationName;   // Federation name
-   base::safe_ptr<const base::String> federateName;     // Federate name
+   std::shared_ptr<const base::String> federationName;   // Federation name
+   std::shared_ptr<const base::String> federateName;     // Federate name
 
-   base::safe_ptr<simulation::Station> station;         // Our station class
-   base::safe_ptr<simulation::Simulation> simulation;   // Our simulation class
+   std::shared_ptr<simulation::Station> station;         // Our station class
+   std::shared_ptr<simulation::Simulation> simulation;   // Our simulation class
    TSource timeline {UTC};                              // Source of our timeline
    unsigned short iffEventID {};                        // IFF event ID (as needed)
    unsigned short emEventID {};                         // Emission event ID (as needed)
@@ -436,7 +434,7 @@ private: // Nib related private
       NibKey(const unsigned short playerId, const base::String* const federateName): id(playerId), fName(federateName) {}
       // NIB IDs  -- Comparisons in this order --
       unsigned short id {};                        // Player id
-      base::safe_ptr<const base::String> fName;    // Federate name
+      std::shared_ptr<const base::String> fName;    // Federate name
    };
 
    // Search callbacks: object name compare function --
@@ -477,7 +475,7 @@ private:
 };
 
 }
+
 }
 
-#endif
 

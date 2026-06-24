@@ -21,11 +21,9 @@ namespace linearsystem {
 //
 //------------------------------------------------------------------------------
 class SecondOrderTf : public DiffEquation
-{
-   DECLARE_SUBCLASS(SecondOrderTf, DiffEquation)
+#pragma once
 
-public:
-   SecondOrderTf();
+#include "mixr/linearsystem/TransferFunction.hpp"
    SecondOrderTf(const unsigned int rate,
       const double n1, const double n2, const double n3,
       const double d1, const double d2, const double d3);
@@ -65,7 +63,7 @@ private:
    double d3 {};
 };
 
-}
-}
+
+};
 
 #endif

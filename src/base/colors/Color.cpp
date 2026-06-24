@@ -1,11 +1,4 @@
-
 #include "mixr/base/colors/Color.hpp"
-
-#include "mixr/base/osg/Vec3d"
-#include "mixr/base/osg/Vec4d"
-
-#include "mixr/base/numeric/Number.hpp"
-#include <iostream>
 
 namespace mixr {
 namespace base {
@@ -14,74 +7,57 @@ IMPLEMENT_SUBCLASS(Color, "Color")
 EMPTY_SLOTTABLE(Color)
 EMPTY_DELETEDATA(Color)
 
-double Color::defaultAlpha {1.0};
-
-Color::Color()
-{
-    STANDARD_CONSTRUCTOR()
-    color[RED]   = 0.0f;    // default to black
-    color[GREEN] = 0.0f;
-    color[BLUE]  = 0.0f;
-    color[ALPHA] = defaultAlpha;
-}
-
-void Color::copyData(const Color& org, const bool)
-{
-   BaseClass::copyData(org);
-   color = org.color; 
-}
+constinit double Color::s_default_alpha = 1.0;
 
 //------------------------------------------------------------------------------
 // data access functions
 //------------------------------------------------------------------------------
-Color::operator const Vec3d*() const
+Color::operator const t_Vec3*() const
 {
-    // Note: Color is a Vec4, which is just a four element array [ r g b a ], and
-    // we're reinterpreting it as a Vec3, which is a three element array [ r g b ].
-    return reinterpret_cast<const Vec3d*>( &color );
+    return reinterpret_cast<const t_Vec3*>( &m_values );
 }
 
-Color::operator const Vec4d*() const
+Color::operator const t_Vec4*() const
 {
-    return &color;
+    return &m_values;
 }
 
 // Return the color vector of color array index PF_RED
 double Color::red() const
 {
-    return color[RED];
+    return m_values[RED];
 }
 
 // Return the color vector of color array index PF_GREEN
 double Color::green() const
 {
-    return color[GREEN];
+    return m_values[GREEN];
 }
 
 // Return the color vector of color array index PF_BLUE
 double Color::blue() const
 {
-    return color[BLUE];
+    return m_values[BLUE];
 }
 
 // Return the color vector of color array index PF_ALPHA
 double Color::alpha() const
 {
-    return color[ALPHA];
+    return m_values[ALPHA];
 }
 
 // Get the address of the color vector array(3)
-const Vec3d* Color::getRGB() const
+const t_Vec3* Color::getRGB() const
 {
     // Note: Color is a Vec4, which is just a four element array [ r g b a ], and
     // we're reinterpreting it as a Vec3, which is a three element array [ r g b ].
-    return reinterpret_cast<const Vec3d*>( &color );
+    return reinterpret_cast<const t_Vec3*>( &m_values );
 }
 
 // Get the address of the color vector array(4)
-const Vec4d* Color::getRGBA() const
+const t_Vec4* Color::getRGBA() const
 {
-    return &color;
+    return &m_values;
 }
 
 //------------------------------------------------------------------------------
@@ -91,28 +67,28 @@ const Vec4d* Color::getRGBA() const
 bool Color::setRed(const double value)
 {
     bool ok{value >= 0 && value <= 1};
-    if (ok) color[Color::RED] = value;
+    if (ok) m_values[Color::RED] = value;
     return ok;
 }
 
 bool Color::setGreen(const double value)
 {
     bool ok{value >= 0 && value <= 1};
-    if (ok) color[Color::GREEN] = value;
+    if (ok) m_values[Color::GREEN] = value;
     return ok;
 }
 
 bool Color::setBlue(const double value)
 {
     bool ok{value >= 0 && value <= 1};
-    if (ok) color[Color::BLUE] = value;
+    if (ok) m_values[Color::BLUE] = value;
     return ok;
 }
 
 bool Color::setAlpha(const double value)
 {
     bool ok{value >= 0 && value <= 1};
-    if (ok) color[Color::ALPHA] = value;
+    if (ok) m_values[Color::ALPHA] = value;
     return ok;
 }
 
@@ -134,7 +110,7 @@ bool operator!=(const Color& c1, const Color& c2)
 //------------------------------------------------------------------------------
 double Color::getDefaultAlpha()
 {
-   return defaultAlpha;
+   return s_default_alpha;
 }
 
 //------------------------------------------------------------------------------
@@ -142,7 +118,7 @@ double Color::getDefaultAlpha()
 //------------------------------------------------------------------------------
 void Color::setDefaultAlpha(const double alpha)
 {
-    defaultAlpha = alpha;
+    s_default_alpha = alpha;
 }
 
 }

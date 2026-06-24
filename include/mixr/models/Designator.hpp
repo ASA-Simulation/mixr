@@ -1,6 +1,5 @@
 
-#ifndef __mixr_models_Designator_H__
-#define __mixr_models_Designator_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
@@ -69,6 +68,6 @@ private:
 };
 
 }
+
 }
 
-#endif

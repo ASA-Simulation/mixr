@@ -114,12 +114,12 @@ public:
    // Event handler(s)
    virtual bool onRfEmissionReturnEventAntenna(Emission* const);
 
-   bool onStartScanEvent(base::Integer* const bar) override;
-   bool onEndScanEvent(base::Integer* const bar) override;
+   bool onStartScanEvent(std::shared_ptr<base::Integer> bar) override;
+   bool onEndScanEvent(std::shared_ptr<base::Integer> bar) override;
 
    bool onRfEmissionEvent(Emission* const) override;
 
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:

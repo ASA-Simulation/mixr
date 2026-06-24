@@ -249,9 +249,9 @@ private:
    virtual void createBackgroundProcess();                   // Creates a B/G thread
 
    Simulation* sim{};                                        // Executable simulation model
-   base::safe_ptr<base::PairStream> networks;                // List of networks
-   base::safe_ptr<base::PairStream> igHosts;                 // List of Image generator (IG) host interfaces
-   base::safe_ptr<base::AbstractIoHandler> ioHandler;        // Input/Output (IO) data handler
+   std::shared_ptr<base::PairStream> networks;                // List of networks
+   std::shared_ptr<base::PairStream> igHosts;                 // List of Image generator (IG) host interfaces
+   std::shared_ptr<base::AbstractIoHandler> ioHandler;        // Input/Output (IO) data handler
    AbstractPlayer* ownship{};                                // Ownship (primary) player
    const base::String* ownshipName{};                        // Name of our ownship player
    bool tmrUpdateEnbl{};                                     // Enable base::Timers::updateTimers() call from updateTC()
@@ -260,18 +260,18 @@ private:
    double tcRate{50.0};                                      // Time-critical thread Rate (hz)
    double tcPri{DEFAULT_TC_THREAD_PRI};                      // Priority of the time-critical thread (0->lowest, 1->highest)
    unsigned int tcStackSize{};                               // Time-critical thread stack size (bytes or zero for system default size)
-   base::safe_ptr<StationTcPeriodicThread> tcThread;         // The Time-critical thread
+   std::shared_ptr<StationTcPeriodicThread> tcThread;         // The Time-critical thread
    unsigned int fastForwardRate{DEFAULT_FAST_FORWARD_RATE};  // Time-critical thread fast forward rate
 
    double netRate{};                                         // Network thread Rate (hz)
    double netPri{DEFAULT_NET_THREAD_PRI};                    // Priority of the Network thread (0->lowest, 1->highest)
    unsigned int netStackSize{};                              // Network thread stack size (bytes or zero for system default size)
-   base::safe_ptr<StationNetPeriodicThread> netThread;       // The optional network thread
+   std::shared_ptr<StationNetPeriodicThread> netThread;       // The optional network thread
 
    double bgRate{};                                          // Background thread Rate (hz)
    double bgPri{DEFAULT_BG_THREAD_PRI};                      // Priority of the Background thread (0->lowest, 1->highest)
    unsigned int bgStackSize{};                               // Background thread stack size (bytes or zero for system default size)
-   base::safe_ptr<StationBgPeriodicThread> bgThread;         // The optional background thread
+   std::shared_ptr<StationBgPeriodicThread> bgThread;         // The optional background thread
 
    double startupResetTimer{-1.0};                           // Startup RESET timer (sends a RESET_EVENT after timeout)
    const base::Time* startupResetTimer0{};                   // Init value of the startup RESET timer

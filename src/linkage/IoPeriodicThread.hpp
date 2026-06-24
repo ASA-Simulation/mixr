@@ -1,6 +1,4 @@
-
-#ifndef __mixr_linkage_IoPeriodicThread_H__
-#define __mixr_linkage_IoPeriodicThread_H__
+#pragma once
 
 #include "mixr/base/threads/PeriodicThread.hpp"
 
@@ -15,6 +13,6 @@ class IoPeriodicThread final : public base::PeriodicThread
 };
 
 }
+
 }
 
-#endif

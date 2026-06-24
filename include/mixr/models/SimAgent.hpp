@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_SimAgent_H__
-#define __mixr_models_SimAgent_H__
+#pragma once
 
 #include "mixr/base/ubf/Agent.hpp"
 
@@ -78,7 +76,7 @@ private:
 //) // Station
 
 }
+
 }
 
-#endif
 

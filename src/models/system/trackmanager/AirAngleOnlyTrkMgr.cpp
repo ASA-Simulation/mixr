@@ -11,9 +11,9 @@
 
 #include "mixr/base/numeric/Number.hpp"
 
-#include "mixr/base/List.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
+
 
 #include "mixr/base/units/Times.hpp"
 #include "mixr/base/units/Angles.hpp"

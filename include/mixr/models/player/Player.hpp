@@ -7,7 +7,7 @@
 #include "mixr/models/SynchronizedState.hpp"
 
 #include "mixr/base/String.hpp"
-#include "mixr/base/Pair.hpp"
+
 #include "mixr/base/osg/Matrixd"
 #include "mixr/base/osg/Quat"
 
@@ -890,7 +890,7 @@ public:
    void reset() override;
    void updateTC(const double dt = 0.0) override;
    void updateData(const double dt = 0.0) override;
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
 
 protected:
 
@@ -941,7 +941,7 @@ private:
    // ---
    // Player identity
    // ---
-   base::safe_ptr<base::String> type;    // Type of vehicle
+   std::shared_ptr<base::String> type;    // Type of vehicle
    Side side {GRAY};                     // Which side (see above)
 
    // ---
@@ -1013,8 +1013,8 @@ private:
    // ---
    // Appearance
    // ---
-   base::safe_ptr<RfSignature> signature;    // Player's RCS signature
-   base::safe_ptr<IrSignature> irSignature;  // Player's IR signature
+   std::shared_ptr<RfSignature> signature;    // Player's RCS signature
+   std::shared_ptr<IrSignature> irSignature;  // Player's IR signature
    unsigned int camouflage {};               // Camouflage type (0 is none)
    double      damage {};                    // Damage state from no damage(0.0) to destroyed (1.0)
    double      smoking {};                   // Smoke state from no smoke (0.0) to maximum (1.0)
@@ -1100,10 +1100,10 @@ private:
 
    bool setSlotInitRoll(std::shared_ptr<const base::Angle>);
    bool setSlotInitRoll(std::shared_ptr<const base::Number>);
-   bool setSlotInitPitch(std::shared_ptr<const base::Angle> x)         { return setInitPitch(x);   }
-   bool setSlotInitPitch(std::shared_ptr<const base::Number> x)        { return setInitPitch(x);   }
-   bool setSlotInitHeading(std::shared_ptr<const base::Angle> x)       { return setInitHeading(x); }
-   bool setSlotInitHeading(std::shared_ptr<const base::Number> x)      { return setInitHeading(x); }
+   bool setSlotInitPitch(std::shared_ptr<const base::Angle> x)         { return setInitPitch(x.get());   }
+   bool setSlotInitPitch(std::shared_ptr<const base::Number> x)        { return setInitPitch(x.get());   }
+   bool setSlotInitHeading(std::shared_ptr<const base::Angle> x)       { return setInitHeading(x.get()); }
+   bool setSlotInitHeading(std::shared_ptr<const base::Number> x)      { return setInitHeading(x.get()); }
 
    bool setSlotInitEulerAngles(std::shared_ptr<const base::List>);
    bool setSlotInitVelocity(std::shared_ptr<const base::Number>);

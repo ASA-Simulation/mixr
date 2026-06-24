@@ -1,15 +1,10 @@
+#pragma once
 
-#ifndef __mixr_base_colors_Cie_H__
-#define __mixr_base_colors_Cie_H__
-
+#include "mixr/base/types.hpp"
 #include "mixr/base/colors/Color.hpp"
-#include "mixr/base/osg/Vec3d"
+#include "mixr/base/MonitorMetrics.hpp"
 
-namespace mixr {
-namespace base {
-class Vec4d;
-class MonitorMetrics;
-class Table1;
+namespace mixr::base {
 
 //------------------------------------------------------------------------------
 // Class: Cie
@@ -55,7 +50,7 @@ class Cie : public Color
 
 public:
     // components of CIE color
-    enum { LUMINANCE, X, Y };
+    enum : t_index  { LUMINANCE, X, Y };
 
 public:
     Cie(const MonitorMetrics* m, const double l, const double x, const double y);
@@ -75,13 +70,9 @@ protected:
 private:
    // slot table helper methods
    bool setSlotMonitor(std::shared_ptr<const MonitorMetrics>);
-   bool setSlotLuminance(std::shared_ptr<const Number>);
-   bool setSlotX(std::shared_ptr<const Number>);
-   bool setSlotY(std::shared_ptr<const Number>);
+   bool setSlotLuminance(std::shared_ptr<const t_real>);
+   bool setSlotX(std::shared_ptr<const t_real>);
+   bool setSlotY(std::shared_ptr<const t_real>);
 };
 
 }
-}
-
-#endif
-

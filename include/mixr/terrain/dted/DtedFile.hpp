@@ -1,6 +1,4 @@
-
-#ifndef __mixr_terrain_DtedFile_H__
-#define __mixr_terrain_DtedFile_H__
+#pragma once
 
 #include "../DataFile.hpp"
 
@@ -45,6 +43,6 @@ private:
 
 
 }
+
 }
 
-#endif

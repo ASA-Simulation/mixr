@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Gps_H__
-#define __mixr_models_Gps_H__
+#pragma once
 
 #include "mixr/models/navigation/Navigation.hpp"
 
@@ -94,6 +92,6 @@ private:
 };
 
 }
+
 }
 
-#endif

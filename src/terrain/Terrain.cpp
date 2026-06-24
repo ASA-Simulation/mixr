@@ -5,8 +5,8 @@
 #include "mixr/base/colors/Hsva.hpp"
 #include "mixr/base/colors/Rgba.hpp"
 
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
 #include "mixr/base/String.hpp"
 
 #include "mixr/base/util/nav_utils.hpp"
@@ -27,8 +27,8 @@ BEGIN_SLOTTABLE(Terrain)
 END_SLOTTABLE(Terrain)
 
 BEGIN_SLOT_MAP(Terrain)
-   ON_SLOT(1, setSlotFilename, base::String)
-   ON_SLOT(2, setSlotPathname, base::String)
+   ON_SLOT(1, setSlotFilename, std::string)
+   ON_SLOT(2, setSlotPathname, std::string)
 END_SLOT_MAP()
 
 Terrain::Terrain()

@@ -1,16 +1,17 @@
-
-#ifndef __mixr_models_MultiActorAgent_H__
-#define __mixr_models_MultiActorAgent_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 #include <array>
 
 namespace mixr {
 namespace base {
-namespace ubf { class AbstractBehavior; class AbstractState; }
+   namespace ubf { class AbstractBehavior; class AbstractState; }
 }
+
 namespace simulation { class Station; }
+
 namespace models {
+
 class WorldModel;
 
 //------------------------------------------------------------------------------
@@ -51,12 +52,12 @@ protected:
    simulation::Station* getStation();
    WorldModel* getWorldModel();
 
-   struct AgentItem
-   {
-      base::safe_ptr<base::String> actorName;
-      base::safe_ptr<base::ubf::AbstractBehavior> behavior;
-      base::safe_ptr<base::Component> actor;
-   };
+    struct AgentItem
+    {
+       std::shared_ptr<base::String> actorName;
+       std::shared_ptr<base::ubf::AbstractBehavior> behavior;
+       std::shared_ptr<base::Component> actor;
+    };
 
    static const unsigned int MAX_AGENTS{10};
    bool clearAgentList();
@@ -107,6 +108,3 @@ inline void MultiActorAgent::setActor(base::Component* c) { actor=c; }
 //      } // players
 //   ) // simulation
 //) // Station
-
-#endif
-

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Ins_H__
-#define __mixr_models_Ins_H__
+#pragma once
 
 #include "mixr/models/navigation/Navigation.hpp"
 #include "mixr/base/osg/Vec3d"
@@ -58,6 +56,6 @@ private:
 };
 
 }
+
 }
 
-#endif

@@ -10,8 +10,8 @@
 #include "mixr/simulation/AbstractNib.hpp"
 #include "mixr/simulation/Station.hpp"
 
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
 #include "mixr/base/units/Times.hpp"
 #include "mixr/base/Statistic.hpp"
 #include "mixr/base/util/system_utils.hpp"
@@ -182,14 +182,14 @@ void Simulation::reset()
    // Something old and something new ...
    // ... We're going to create a new player list.
    // ---
-   base::safe_ptr<base::PairStream> newList( new base::PairStream() );
+   std::shared_ptr<base::PairStream> newList( new base::PairStream() );
 
    // ---
    // Copy original players to the new list
    // ---
    {
       if (origPlayers != nullptr) {
-         base::safe_ptr<base::PairStream> origPlayerList = origPlayers;
+         std::shared_ptr<base::PairStream> origPlayerList = origPlayers;
          base::List::Item* item{origPlayerList->getFirstItem()};
          while (item != nullptr) {
             base::Pair* pair {static_cast<base::Pair*>(item->getValue())};
@@ -211,7 +211,7 @@ void Simulation::reset()
    // ---
    {
       if (players != nullptr) {
-         base::safe_ptr<base::PairStream> origPlayerList = players;
+         std::shared_ptr<base::PairStream> origPlayerList = players;
          base::List::Item* item{origPlayerList->getFirstItem()};
          while (item != nullptr) {
             base::Pair* pair {static_cast<base::Pair*>(item->getValue())};
@@ -363,7 +363,7 @@ void Simulation::reset()
    // Now reset the new player list
    // ---
    if (players != nullptr) {
-      base::safe_ptr<base::PairStream> pl = players;
+      std::shared_ptr<base::PairStream> pl = players;
       base::List::Item* item{pl->getFirstItem()};
       while (item != nullptr) {
          base::Pair* pair {static_cast<base::Pair*>(item->getValue())};
@@ -531,7 +531,7 @@ void Simulation::updateTC(const double dt)
    // ---
    {
       // This locks the current player list for this time-critical frame
-      base::safe_ptr<base::PairStream> currentPlayerList = players;
+      std::shared_ptr<base::PairStream> currentPlayerList = players;
 
       for (unsigned int f = 0; f < 4; f++) {
 
@@ -620,7 +620,7 @@ void Simulation::updateData(const double dt)
 
     // Update all players
     if (players != nullptr) {
-         base::safe_ptr<base::PairStream> currentPlayerList = players;
+         std::shared_ptr<base::PairStream> currentPlayerList = players;
 
          if (reqBgThreads == 1) {
             // Our single thread
@@ -916,7 +916,7 @@ bool Simulation::setSlotPlayers(std::shared_ptr<base::PairStream> pl)
 
       // Copy original players to the new list
       if (origPlayers != nullptr) {
-         base::safe_ptr<base::PairStream> origPlayerList = origPlayers;
+         std::shared_ptr<base::PairStream> origPlayerList = origPlayers;
          base::List::Item* item {origPlayerList->getFirstItem()};
          while (item != nullptr) {
             base::Pair* pair {static_cast<base::Pair*>(item->getValue())};
@@ -949,7 +949,7 @@ void Simulation::updatePlayerList()
 
     // Second, check for delete requests
     if (!yes) {
-        base::safe_ptr<base::PairStream> pl = players;
+        std::shared_ptr<base::PairStream> pl = players;
         base::List::Item* item{pl->getFirstItem()};
         while (!yes && item != nullptr) {
             base::Pair* pair{static_cast<base::Pair*>(item->getValue())};
@@ -966,12 +966,12 @@ void Simulation::updatePlayerList()
         // ---
         // Something old and something new ...
         // ---
-        base::safe_ptr<base::PairStream> newList( new base::PairStream() );
+        std::shared_ptr<base::PairStream> newList( new base::PairStream() );
 
         // ---
         // Copy players to the new list; except 'deleteRequest' mode players
         // ---
-        base::safe_ptr<base::PairStream> oldList = players;
+        std::shared_ptr<base::PairStream> oldList = players;
         base::List::Item* item{oldList->getFirstItem()};
         while (item != nullptr) {
             base::Pair* pair{static_cast<base::Pair*>(item->getValue())};

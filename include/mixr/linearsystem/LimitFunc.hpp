@@ -13,11 +13,9 @@ namespace linearsystem {
 // Description: Generic limits function: limits X to the upper and lower boundaries.
 //------------------------------------------------------------------------------
 class LimitFunc : public ScalerFunc
-{
-   DECLARE_SUBCLASS(LimitFunc, ScalerFunc)
+#pragma once
 
-public:
-   LimitFunc();
+#include "mixr/linearsystem/TransferFunction.hpp"
    LimitFunc(const double lower, const double upper);
 
    double getLowerLimit() const  { return lower; }
@@ -41,7 +39,7 @@ private:
    double upper {};      // Upper limit
 };
 
-}
-}
+
+};
 
 #endif

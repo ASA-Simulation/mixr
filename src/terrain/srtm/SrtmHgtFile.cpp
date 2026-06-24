@@ -81,7 +81,6 @@ EMPTY_DELETEDATA(SrtmHgtFile)
 
 SrtmHgtFile::SrtmHgtFile()
 {
-   STANDARD_CONSTRUCTOR()
    voidValue = -32768; // Voids in a SRTM database are represented by this value
 }
 

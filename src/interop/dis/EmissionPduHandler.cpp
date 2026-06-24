@@ -674,7 +674,7 @@ bool EmissionPduHandler::isUpdateRequired(const double curExecTime, bool* const 
          models::TrackManager* tm = beam->getTrackManager();
          if (tm != nullptr) {
             const int max1 = MAX_TARGETS_IN_TJ_FIELD + 1; // check for one more than the max (highDensityTracks)
-            base::safe_ptr<models::Track> trackList[max1];
+            std::shared_ptr<models::Track> trackList[max1];
             int n = tm->getTrackList(trackList,max1);
             if (n <= MAX_TARGETS_IN_TJ_FIELD) {
 

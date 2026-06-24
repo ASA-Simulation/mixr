@@ -1,6 +1,5 @@
 
-#ifndef __mixr_models_WorldModel_H__
-#define __mixr_models_WorldModel_H__
+#pragma once
 
 #include "mixr/simulation/Simulation.hpp"
 
@@ -165,6 +164,6 @@ private:
 };
 
 }
+
 }
 
-#endif

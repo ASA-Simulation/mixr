@@ -18,7 +18,7 @@ BEGIN_SLOT_MAP(Density)
     ON_SLOT(2, setSlotVolume, Volume)
 END_SLOT_MAP()
 
-Density::Density(double value, const Mass* newMass, const Volume* newVolume) : Number()
+Density::Density(double value, std::shared_ptr<const Mass> newMass, std::shared_ptr<const Volume> newVolume) : Number()
 {
     STANDARD_CONSTRUCTOR()
 
@@ -45,8 +45,8 @@ Density::Density() : Number()
     STANDARD_CONSTRUCTOR()
 
     // default mass, volume and density (1 Kilogram per Cubic Meter)
-    myMass = new KiloGrams(1);
-    myVolume = new CubicMeters(1);
+    myMass = std::make_shared<KiloGrams>(1);
+    myVolume = std::make_shared<CubicMeters>(1);
     val = 1;
 }
 
@@ -78,12 +78,12 @@ void Density::set(const Density& n)
 //------------------------------------------------------------------------------
 // getMassUnits() and getVolumeUnits() -- get units of this density object
 //------------------------------------------------------------------------------
-const Mass* Density::getMass() const
+std::shared_ptr<const Mass> Density::getMass() const
 {
     return myMass;
 }
 
-const Volume* Density::getVolume() const
+std::shared_ptr<const Volume> Density::getVolume() const
 {
     return myVolume;
 }

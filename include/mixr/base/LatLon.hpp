@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_LatLon_H__
-#define __mixr_base_LatLon_H__
+#pragma once
 
 #include "mixr/base/numeric/Number.hpp"
 
@@ -103,5 +101,3 @@ private:
 
 }
 }
-
-#endif

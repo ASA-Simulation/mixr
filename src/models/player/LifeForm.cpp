@@ -10,8 +10,8 @@
 #include "mixr/models/WorldModel.hpp"
 
 #include "mixr/base/numeric/Number.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/osg/Matrixd"
 
 #include <cmath>

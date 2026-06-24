@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_hla_Ambassador_H__
-#define __mixr_interop_hla_Ambassador_H__
+#pragma once
 
 #include <RTI13/RTI.hh>
 #include <RTI13/fedtime.hh>
@@ -411,7 +409,7 @@ public:
 };
 
 }
+
 }
 
-#endif
 

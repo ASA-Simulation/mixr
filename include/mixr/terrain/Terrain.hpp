@@ -1,6 +1,6 @@
+#pragma once
 
-#ifndef __mixr_terrain_Terrain_H__
-#define __mixr_terrain_Terrain_H__
+#include <string>
 
 #include "mixr/base/Component.hpp"
 
@@ -35,10 +35,10 @@ public:
    Terrain();
 
    const char* getFilename() const;                            // Returns the name of the datafile
-   virtual bool setFilename(const base::String* const msg);    // Sets the name of the datafile
+   virtual bool setFilename(const std::string& msg);    // Sets the name of the datafile
 
    const char* getPathname() const;                            // Returns the path to the datafiles
-   virtual bool setPathname(const base::String* const msg);    // Sets the path to the datafiles
+   virtual bool setPathname(const std::string& msg);    // Sets the path to the datafiles
 
    double getMinElevation() const { return minElev; }    // Minimum elevation in this database (meters)
    double getMaxElevation() const { return maxElev; }    // Maximum elevation in this database (meters)
@@ -188,8 +188,8 @@ protected:
 private:
    virtual bool loadData() =0;      // Load the data file
 
-   const base::String* path {};     // Data path name
-   const base::String* file {};     // Data file name
+   const std::string path {};     // Data path name
+   const std::string file {};     // Data file name
    double neLat {}, neLon {};       // Northeast lat/lon (degs)
    double swLat {}, swLon {};       // Southwest lat/lon (degs)
    double minElev {};               // Minimum elevation (m)
@@ -197,11 +197,9 @@ private:
 
 private:
    // slot table helper methods
-   bool setSlotFilename(std::shared_ptr<const base::String> x)             { return setFilename(x); }
-   bool setSlotPathname(std::shared_ptr<const base::String> x)             { return setPathname(x); }
+   bool setSlotFilename(std::shared_ptr<const std::string> x)             { return setFilename(*x); }
+   bool setSlotPathname(std::shared_ptr<const std::string> x)             { return setPathname(*x); }
 };
 
 }
 }
-
-#endif

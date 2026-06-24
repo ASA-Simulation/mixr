@@ -29,9 +29,9 @@
 #include "mixr/simulation/AbstractNib.hpp"
 
 #include "mixr/base/numeric/Boolean.hpp"
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/LatLon.hpp"
-#include "mixr/base/PairStream.hpp"
+
 #include "mixr/base/Statistic.hpp"
 
 #include "mixr/base/osg/Vec3d"

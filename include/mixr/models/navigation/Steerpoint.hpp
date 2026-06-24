@@ -1,6 +1,4 @@
-
-#ifndef __mixr_models_Steerpoint_H__
-#define __mixr_models_Steerpoint_H__
+#pragma once
 
 #include "mixr/base/Component.hpp"
 #include "mixr/base/osg/Vec3d"
@@ -181,17 +179,17 @@ private:
     double      pta{};                // Planned Time of Arrival  (sec)
     double      sca{};                // Safe Clearance Alt       (ft)
     double      magvar{};             // Mag Var                  (degs)
-    base::safe_ptr<const base::String> description; // Description
+    std::shared_ptr<const base::String> description; // Description
     bool        needPosVec{true};     // Request calucaltion of 'posVec' from Lat/Lon
     bool        needLL{true};         // Request calucaltion of Lat/Lon from 'posVec'
     double      cmdAlt{};             // Commanded Altitude       (m)
     bool        haveCmdAlt{};         // Have commanded altitude
     double      cmdAirspeed{};        // Commanded Airspeed       (kts)
     bool        haveCmdAs{};          // Have commanded airspeed
-    base::safe_ptr<base::Pair> next;  // "next" Steerpoint pair [ name steerpoint ]
+    std::shared_ptr<base::Pair> next;  // "next" Steerpoint pair [ name steerpoint ]
 
     // Steerpoint action
-    base::safe_ptr<Action> action;    // Action to be performed at this steerpoint
+    std::shared_ptr<Action> action;    // Action to be performed at this steerpoint
 
     // Initial (reset) data
     double      initLatitude{};       // latitude
@@ -208,7 +206,7 @@ private:
     bool        haveInitCmdAlt{};     // Have initial cmd altitude
     double      initCmdAirspeed{};    // Initial commanded airspeed (kts)
     bool        haveInitCmdAs{};      // Have commanded airspeed
-    base::safe_ptr<const base::String> initNextStptName; // Name of the inital "next" steerpoint
+    std::shared_ptr<const base::String> initNextStptName; // Name of the inital "next" steerpoint
     int         initNextStptIdx{};    // Index of the initial "next" steerpoint
 
     // Computed data
@@ -259,6 +257,6 @@ private:
 };
 
 }
+
 }
 
-#endif

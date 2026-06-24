@@ -1,6 +1,5 @@
 
-#ifndef __mixr_linkage_MockDevice_H__
-#define __mixr_linkage_MockDevice_H__
+#pragma once
 
 #include "mixr/base/concepts/linkage/AbstractIoDevice.hpp"
 
@@ -56,7 +55,7 @@ private:
    // mock device looks like a null device, it has no output
    void processOutputsImpl(const double dt, const base::AbstractIoData* const outData) final       { }
 
-   base::safe_ptr<base::PairStream> generators;   // list of adapters used to generate values
+   std::shared_ptr<base::PairStream> generators;   // list of adapters used to generate values
 
 private:
    // slot table helper methods
@@ -64,6 +63,6 @@ private:
 };
 
 }
+
 }
 
-#endif

@@ -1,6 +1,4 @@
-
-#ifndef __mixr_terrain_SrtmHgtFile_H__
-#define __mixr_terrain_SrtmHgtFile_H__
+#pragma once
 
 #include "mixr/terrain/DataFile.hpp"
 
@@ -53,7 +51,7 @@ class SrtmHgtFile : public DataFile
     DECLARE_SUBCLASS(SrtmHgtFile, DataFile)
 
 public:
-    SrtmHgtFile();
+    SrtmHgtFile() = default;
 
 private:
     // Interpret signed-magnitude values from SRTM file
@@ -66,6 +64,6 @@ private:
 };
 
 }
+
 }
 
-#endif

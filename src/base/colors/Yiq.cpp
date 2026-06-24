@@ -1,7 +1,4 @@
-
 #include "mixr/base/colors/Yiq.hpp"
-
-#include "mixr/base/numeric/Float.hpp"
 
 namespace mixr {
 namespace base {
@@ -14,6 +11,8 @@ BEGIN_SLOTTABLE(Yiq)
     "i",  // 2: ... I component, range(-0.6 to -0.6)
     "q",  // 3: ... Q component, range(-0.52 to 0.52)
 END_SLOTTABLE(Yiq)
+
+
 
 BEGIN_SLOT_MAP(Yiq)
     ON_SLOT(1, setSlotY, Number)

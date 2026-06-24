@@ -118,7 +118,7 @@ public:
    virtual bool onTriggerSwEvent(const base::Boolean* const sw = 0);
    virtual bool onWpnReload();
 
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
 
 protected:
    void process(const double dt) override;
@@ -128,10 +128,10 @@ protected:
 private:
    void searchAndAdd(base::PairStream* const, const std::type_info&, base::PairStream*);
 
-   base::safe_ptr<base::PairStream> weaponsList;  // Weapon list; set by setSlotStores()
-   base::safe_ptr<base::PairStream> externalList; // External equipment list; set by setSlotStores()
-   base::safe_ptr<base::PairStream> fuelList;     // External fuel tank list; set by setSlotStores()
-   base::safe_ptr<Gun> gunPtr;                    // Gun model; set by setSlotStores()
+   std::shared_ptr<base::PairStream> weaponsList;  // Weapon list; set by setSlotStores()
+   std::shared_ptr<base::PairStream> externalList; // External equipment list; set by setSlotStores()
+   std::shared_ptr<base::PairStream> fuelList;     // External fuel tank list; set by setSlotStores()
+   std::shared_ptr<Gun> gunPtr;                    // Gun model; set by setSlotStores()
 
    bool gunFlg {};                   // Gun has been selected
    unsigned int mode {NAV};          // Weapon delivery mode

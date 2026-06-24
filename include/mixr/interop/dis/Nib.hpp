@@ -19,11 +19,9 @@ class Ntm;
 //
 //------------------------------------------------------------------------------
 class Nib : public interop::Nib
-{
-    DECLARE_SUBCLASS(Nib, interop::Nib)
+#pragma once
 
-public:
-    enum { MAX_EM_SYSTEMS = 16 };
+#include "mixr/interop/dis/pdu.hpp"
 
 public:
     Nib(const interop::NetIO::IoType ioType);
@@ -113,6 +111,6 @@ private:
 };
 
 }
+
 }
 
-#endif

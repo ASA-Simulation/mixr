@@ -17,8 +17,8 @@
 #include "mixr/models/Track.hpp"
 
 #include "mixr/base/numeric/Boolean.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include <cstring>
 
 namespace mixr {
@@ -480,7 +480,7 @@ Track* SimpleStoresMgr::getNextTarget()
 
          // Get the next to shoot
          int n{};
-         base::safe_ptr<Track> track;
+         std::shared_ptr<Track> track;
          n = obc->getShootList(&track,1);
          if (n > 0) trk = track;
 

@@ -7,8 +7,8 @@
 #include "mixr/base/numeric/Integer.hpp"
 
 #include "mixr/base/Statistic.hpp"
-#include "mixr/base/List.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/String.hpp"
 
 // JSBSim model headers

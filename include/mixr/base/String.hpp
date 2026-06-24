@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_String_H__
-#define __mixr_base_String_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 #include "mixr/base/util/str_utils.hpp"
@@ -456,6 +454,6 @@ inline std::istream& operator>>(std::istream& sin, String& s)
 }
 
 }
+
 }
 
-#endif

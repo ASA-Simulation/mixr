@@ -45,7 +45,7 @@ private:
    virtual void readInputs() = 0;
    virtual void writeOutputs() = 0;
 
-   base::safe_ptr<base::PairStream> adapters;     // list of adapters
+   std::shared_ptr<base::PairStream> adapters;     // list of adapters
 
 private:
    // slot table helper methods

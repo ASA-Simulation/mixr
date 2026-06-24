@@ -1,11 +1,8 @@
-
-#ifndef __mixr_base_Rgba_H__
-#define __mixr_base_Rgba_H__
+#pragma once
 
 #include "mixr/base/colors/Rgb.hpp"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
 
 //------------------------------------------------------------------------------
 // Class:  Rgba
@@ -39,6 +36,3 @@ private:
 };
 
 }
-}
-
-#endif

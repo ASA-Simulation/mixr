@@ -173,7 +173,7 @@ public:
 
    void updateTC(const double dt = 0.0) override;
    void updateData(const double dt = 0.0) override;
-   bool event(const int event, base::Object* const obj = nullptr) override;
+   bool event(const int event, std::shared_ptr<base::Object> obj = nullptr) override;
    void reset() override;
 
 protected:
@@ -198,13 +198,13 @@ private:
    void initData();
 
    // Full external stores list; set by setSlotStores()
-   base::safe_ptr<base::PairStream> storesList;
+   std::shared_ptr<base::PairStream> storesList;
 
    // Station tables
-   std::array<base::safe_ptr<AbstractWeapon>, MAX_STATIONS> weaponTbl;  // Weapons by station
+   std::array<std::shared_ptr<AbstractWeapon>, MAX_STATIONS> weaponTbl;  // Weapons by station
    unsigned int numWpn {};                                              // Number of weapons in table
 
-   std::array<base::safe_ptr<ExternalStore>, MAX_STATIONS> esTbl;  // External store by station
+   std::array<std::shared_ptr<ExternalStore>, MAX_STATIONS> esTbl;  // External store by station
    unsigned int numEs {};                                          // Number of external stores in table
 
    unsigned int ns {};         // Number of Stations

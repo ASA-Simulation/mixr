@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_FileReader_H__
-#define __mixr_base_FileReader_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
@@ -170,6 +168,6 @@ inline const char* FileReader::getFirstRecord()
 }
 
 }
+
 }
 
-#endif

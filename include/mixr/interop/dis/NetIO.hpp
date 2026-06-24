@@ -345,8 +345,8 @@ protected:
 private:
     void initData();
 
-    base::safe_ptr<base::NetHandler> netInput;    // Input network handler
-    base::safe_ptr<base::NetHandler> netOutput;   // Output network handler
+    std::shared_ptr<base::NetHandler> netInput;    // Input network handler
+    std::shared_ptr<base::NetHandler> netOutput;   // Output network handler
     unsigned char version{VERSION_1278_1A};       // Version number [ 0 .. 6 ]
 
    // Network Model IDs

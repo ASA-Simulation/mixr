@@ -44,7 +44,7 @@ public:
 
     double getSecondNumber() const              { return n2; }
 
-    virtual bool setSecondNumber(const Number* const ssnobj);
+    virtual bool setSecondNumber(std::shared_ptr<const Number> ssnobj);
     virtual void operation();
 
 protected:

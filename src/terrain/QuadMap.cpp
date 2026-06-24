@@ -3,8 +3,8 @@
 
 #include "mixr/terrain/Terrain.hpp"
 
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/network/NetHandler.hpp"
 #include "mixr/base/units/Angles.hpp"
 #include "mixr/base/units/Distances.hpp"

@@ -13,7 +13,12 @@ namespace base {
 // ---
 // Class and object metadata
 // ---
-MetaObject Object::metaObject(typeid(Object).name(), "Object", &Object::slottable, nullptr);
+const std::shared_ptr<const MetaObject> Object::metaObject = \
+   std::make_shared<const MetaObject>(
+      typeid(Object).name(),
+      "Object",
+      nullptr
+   );
 
 // ---
 // Object's SlotTable
@@ -21,39 +26,28 @@ MetaObject Object::metaObject(typeid(Object).name(), "Object", &Object::slottabl
 //    from Object (e.g., the classes for colors, numbers and units) that expect their
 //    slots to be the first slots -- starting at slot number 1.
 // ---
-const char* Object::slotnames[] = { "" };
-const int Object::nslots {};
-const SlotTable Object::slottable(nullptr, 0);
+// const std::string Object::slotnames[] = { "" };
+// const int Object::nslots {};
+const std::shared_ptr<const SlotTable> Object::slotTable = \
+   std::make_shared<const SlotTable>(
+      std::vector<std::string>(),
+      nullptr
+   );
 
 //------------------------------------------------------------------------------
 // Standard object stuff -- derived classes used macro IMPLEMENT_SUBCLASS, see macros.hpp
 //------------------------------------------------------------------------------
 
-Object::Object()
-{
-   STANDARD_CONSTRUCTOR()
-}
+// Object& Object::operator=(const Object& org)
+// {
+//    Object tmp(org);
+//    std::swap(*this, tmp);
+//    return *this;
+// }
 
-Object::Object(const Object& org)
+std::shared_ptr<Object> Object::clone() const
 {
-   STANDARD_CONSTRUCTOR()
-   copyData(org, true);
-}
-
-Object::~Object()
-{
-   STANDARD_DESTRUCTOR()
-}
-
-Object& Object::operator=(const Object& org)
-{
-    if (this != &org) copyData(org);
-    return *this;
-}
-
-Object* Object::clone() const
-{
-   return new Object(*this);
+   return std::make_shared<Object>(*this);
 }
 
 // Check class type
@@ -64,47 +58,34 @@ bool Object::isClassType(const std::type_info& type) const
 }
 
 // Check factory name
-bool Object::isFactoryName(const char name[]) const
+bool Object::isFactoryName(const std::string& name) const
 {
-    if (name == nullptr) return false;
-    if ( std::strcmp(metaObject.getFactoryName(), name) == 0 )  return true;
+    if (name.empty()) return false;
+    if ( metaObject->getFactoryName() == name )  return true;
     else return false;
 }
 
-// Copy object data -- derived classes should call
-// BaseClass::copyData() first and then copy their data.
-void Object::copyData(const Object& org, const bool cc)
-{
-    slotTable = org.slotTable;
-    enbMsgBits = org.enbMsgBits;
-    disMsgBits = org.disMsgBits;
-//    if (cc) {
-//       refCount = 1;    // (start out ref() by the creator)
-//       semaphore = 0;
-//    }
-}
-
-// Delete object data -- derived classes should delete
-// or unref() their own data
-void Object::deleteData()
-{
-}
-
 // set slots by index
-bool Object::setSlotByIndex(const int, std::shared_ptr<Object> const)
+bool Object::setSlotByIndex(const int, Element)
 {
     // We have no slots, so we shouldn't ever be here!
     return false;
 }
 
-const char* Object::getFactoryName()
+// set slot by index
+Element Object::getSlotByIndex(const int slotindex) const
 {
-    return metaObject.getFactoryName();
+   return nullptr;
 }
 
-const SlotTable& Object::getSlotTable()
+const std::string& Object::getFactoryName()
 {
-   return slottable;
+    return Object::metaObject->getFactoryName();
+}
+
+const std::shared_ptr<const SlotTable>& Object::getSlotTable() const
+{
+   return Object::slotTable;
 }
 
 //------------------------------------------------------------------------------
@@ -120,7 +101,7 @@ int Object::slotName2Index(const std::string& slotname) const
    }
 
    // How many slots do we have
-   int n {slotTable->n()};
+   int n {getSlotTable()->n()};
 
    // a) check if 'slotname' is a number (e.g., "12")
    bool isNum {true};
@@ -139,7 +120,7 @@ int Object::slotName2Index(const std::string& slotname) const
       }
    } else {
       // when the 'slotname' is a name (e.g., "some-slot")
-      slotindex = slotTable->index(slotname.data());
+      slotindex = getSlotTable()->index(slotname.data());
       if (slotindex <= 0)
          std::cerr << "slot not found: " << slotname << std::endl;
    }
@@ -151,23 +132,34 @@ int Object::slotName2Index(const std::string& slotname) const
 //                 true if the slot and object were processed; returns
 //                 false if there was an error.
 //------------------------------------------------------------------------------
-bool Object::setSlotByName(std::string slotname, std::shared_ptr<Object> obj)
+bool Object::setSlotByName(std::string slotname, Element obj)
 {
-    bool ok {};
-    if (obj == nullptr) return ok;
+    bool ok {false};
     const int slotindex {slotName2Index(slotname)};
     if (slotindex > 0) {
-        ok = setSlotByIndex(slotindex,obj);
+        ok = setSlotByIndex(slotindex,{obj});
     }
     return ok;
 }
 
 //------------------------------------------------------------------------------
+// getSlotByName() -- get the value of slot 'slotname'.
+//------------------------------------------------------------------------------
+Element Object::getSlotByName(std::string slotname) const
+{
+    const int slotindex {slotName2Index(slotname)};
+    if (slotindex > 0) {
+        return getSlotByIndex(slotindex);
+    }
+    return nullptr;
+}
+
+//------------------------------------------------------------------------------
 // slotIndex2Name() -- returns the name of the slot at 'slotindex'
 //------------------------------------------------------------------------------
-const char* Object::slotIndex2Name(const int slotindex) const
+const std::string Object::slotIndex2Name(const int slotindex) const
 {
-   return slotTable->name(slotindex);
+   return getSlotTable()->name(slotindex).value_or("");
 }
 
 //------------------------------------------------------------------------------
@@ -240,9 +232,9 @@ bool Object::disableMessageTypes(const unsigned short msgTypeBits)
 //------------------------------------------------------------------------------
 // return object and class metadata
 //------------------------------------------------------------------------------
-const MetaObject* Object::getMetaObject()
+const std::shared_ptr<const MetaObject>& Object::getMetaObject() const
 {
-   return &metaObject;
+   return Object::metaObject;
 }
 
 }

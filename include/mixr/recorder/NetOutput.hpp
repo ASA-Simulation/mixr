@@ -1,6 +1,5 @@
 
-#ifndef __mixr_recorder_NetOutput_H__
-#define __mixr_recorder_NetOutput_H__
+#pragma once
 
 #include "mixr/recorder/OutputHandler.hpp"
 
@@ -32,7 +31,7 @@ protected:
    void processRecordImp(const DataRecordHandle* const handle) override;
 
 private:
-    base::safe_ptr<base::NetHandler> netHandler; // Network handler (input/output, or just output if netInput is defined)
+    std::shared_ptr<base::NetHandler> netHandler; // Network handler (input/output, or just output if netInput is defined)
     bool networkInitialized {};    // Network has been initialized
     bool networkInitFailed {};     // Network initialization has failed
     bool noWaitFlag {};            // No wait (unblocked) I/O flag
@@ -44,6 +43,6 @@ private:
 };
 
 }
+
 }
 
-#endif

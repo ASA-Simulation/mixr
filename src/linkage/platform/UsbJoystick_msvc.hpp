@@ -1,6 +1,5 @@
 
-#ifndef __mixr_linkage_windows_UsbJoystick_msvc_H__
-#define __mixr_linkage_windows_UsbJoystick_msvc_H__
+#pragma once
 
 #include "mixr/linkage/IoDevice.hpp"
 
@@ -77,8 +76,8 @@ private:
 };
 
 }
+
 }
 
-#endif
 
 

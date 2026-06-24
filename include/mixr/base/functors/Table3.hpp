@@ -43,7 +43,7 @@ public:
    virtual double lfi(const double iv1, const double iv2, const double iv3, FStorage* const s = nullptr) const;
 
    // Loads the Z (iv3) breakpoints
-   virtual bool setZBreakpoints3(const List* const bkpts);
+   virtual bool setZBreakpoints3(std::shared_ptr<const List> szb3obj);
 
    double lfi(const double iv1, const double iv2, FStorage* const s = nullptr) const override;
    double lfi(const double iv1, FStorage* const s = nullptr) const override;

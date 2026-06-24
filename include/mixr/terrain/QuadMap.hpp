@@ -1,6 +1,4 @@
-
-#ifndef __mixr_terrain_QuadMap_H__
-#define __mixr_terrain_QuadMap_H__
+#pragma once
 
 #include "mixr/terrain/Terrain.hpp"
 #include <array>
@@ -70,6 +68,6 @@ private:
 };
 
 }
+
 }
 
-#endif

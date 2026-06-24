@@ -9,9 +9,9 @@
 #include "mixr/base/numeric/Number.hpp"
 #include "mixr/base/units/Times.hpp"
 
-#include "mixr/base/List.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
+
 
 namespace mixr {
 namespace models {
@@ -213,7 +213,7 @@ bool TrackManager::setMaxTrackAge(const double s)
 // getTrackList() -- Sets entries in 'tlist' to a maximum of 'max' target
 //                  tracks and returns the actual number of tracks.
 //------------------------------------------------------------------------------
-int TrackManager::getTrackList(base::safe_ptr<Track>* const tlist, const unsigned int max) const
+int TrackManager::getTrackList(std::shared_ptr<Track>* const tlist, const unsigned int max) const
 {
    int n{};
 
@@ -232,7 +232,7 @@ int TrackManager::getTrackList(base::safe_ptr<Track>* const tlist, const unsigne
 // getTrackList() -- Sets entries in 'tlist' to a maximum of 'max' target
 //                  tracks and returns the actual number of tracks.
 //------------------------------------------------------------------------------
-int TrackManager::getTrackList(base::safe_ptr<const Track>* const tlist, const unsigned int max) const
+int TrackManager::getTrackList(std::shared_ptr<const Track>* const tlist, const unsigned int max) const
 {
    int n{};
 

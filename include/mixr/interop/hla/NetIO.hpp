@@ -1,6 +1,4 @@
-
-#ifndef __mixr_interop_hla_NetIO_H__
-#define __mixr_interop_hla_NetIO_H__
+#pragma once
 
 #include "mixr/interop/common/NetIO.hpp"
 #include "mixr/base/String.hpp"
@@ -227,7 +225,7 @@ namespace mixr
 
             RTI::RTIambassador *rtiAmb{};             // RTI's Ambassador
             Ambassador *fedAmb{};                     // Our Fed Ambassador
-            base::safe_ptr<base::String> fedFileName; // FED filename
+            std::shared_ptr<base::String> fedFileName; // FED filename
 
             RTIfedTime lookAhead{};               // lookahead time
             RTIfedTime timeIncrement{};           // time to increment clock by
@@ -270,6 +268,6 @@ namespace mixr
         };
 
     }
+
 }
 
-#endif

@@ -1,6 +1,5 @@
 
-#ifndef __mixr_linkage_platform_UsbJoystick_linux_H__
-#define __mixr_linkage_platform_UsbJoystick_linux_H__
+#pragma once
 
 #include "mixr/linkage/IoDevice.hpp"
 
@@ -62,7 +61,7 @@ private:
 };
 
 }
+
 }
 
-#endif
 

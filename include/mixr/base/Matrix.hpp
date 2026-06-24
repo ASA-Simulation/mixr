@@ -1,6 +1,4 @@
-
-#ifndef __mixr_base_Matrix_H__
-#define __mixr_base_Matrix_H__
+#pragma once
 
 #include "mixr/base/Object.hpp"
 
@@ -390,6 +388,6 @@ inline double getTrace(const Matrix& A)
 }
 
 }
+
 }
 
-#endif

@@ -7,9 +7,9 @@
 
 #include "mixr/terrain/Terrain.hpp"
 
-#include "mixr/base/List.hpp"
-#include "mixr/base/PairStream.hpp"
-#include "mixr/base/Pair.hpp"
+
+
+
 
 #include "mixr/base/util/nav_utils.hpp"
 #include "mixr/base/util/osg_utils.hpp"

@@ -1,9 +1,6 @@
-
-#ifndef __mixr_base_Density_H__
-#define __mixr_base_Density_H__
+#pragma once
 
 #include "mixr/base/numeric/Number.hpp"
-#include "mixr/base/safe_ptr.hpp"
 #include "mixr/base/units/Masses.hpp"
 #include "mixr/base/units/Volumes.hpp"
 
@@ -46,17 +43,17 @@ class Density : public Number
     DECLARE_SUBCLASS(Density, Number)
 
 public:
-    Density(double newDensity, const Mass* newMass, const Volume* newVolume);
+    Density(double newDensity, std::shared_ptr<const Mass> newMass, std::shared_ptr<const Volume> newVolume);
     Density();
 
     double convert(const Density& n) const;
     void set(const Density& n);
-    const Mass* getMass() const;
-    const Volume* getVolume() const;
+    std::shared_ptr<const Mass> getMass() const;
+    std::shared_ptr<const Volume> getVolume() const;
 
 private:
-    safe_ptr<const Mass>   myMass;
-    safe_ptr<const Volume> myVolume;
+    std::shared_ptr<const Mass>   myMass;
+    std::shared_ptr<const Volume> myVolume;
 
 private:
     // slot table helper methods
@@ -66,8 +63,8 @@ private:
 
 inline std::ostream& operator<<(std::ostream& sout, const Density& n)
 {
-    const Mass* m {n.getMass()};
-    const Volume* v {n.getVolume()};
+    std::shared_ptr<const Mass> m {n.getMass()};
+    std::shared_ptr<const Volume> v {n.getVolume()};
 
     sout << "( " << n.getFactoryName() << " " << n.getReal();
     if ( m != nullptr ) sout << " " << *m;
@@ -78,5 +75,3 @@ inline std::ostream& operator<<(std::ostream& sout, const Density& n)
 
 }
 }
-
-#endif

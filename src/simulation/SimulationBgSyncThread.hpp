@@ -1,6 +1,5 @@
 
-#ifndef __mixr_simulation_SimulationBgSyncThread_H__
-#define __mixr_simulation_SimulationBgSyncThread_H__
+#pragma once
 
 #include "mixr/base/threads/SyncThread.hpp"
 
@@ -37,6 +36,6 @@ private:
 };
 
 }
+
 }
 
-#endif

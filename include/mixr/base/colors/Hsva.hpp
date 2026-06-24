@@ -1,11 +1,9 @@
-
-#ifndef __mixr_base_colors_Hsva_H__
-#define __mixr_base_colors_Hsva_H__
+#pragma once
 
 #include "mixr/base/colors/Hsv.hpp"
 
-namespace mixr {
-namespace base {
+namespace mixr::base {
+
 class Number;
 
 //------------------------------------------------------------------------------
@@ -66,6 +64,3 @@ private:
 };
 
 }
-}
-
-#endif

@@ -11,10 +11,10 @@
 #include "mixr/models/system/Radar.hpp"
 #include "mixr/models/WorldModel.hpp"
 
-#include "mixr/base/List.hpp"
+
 #include "mixr/base/network/NetHandler.hpp"
-#include "mixr/base/Pair.hpp"
-#include "mixr/base/PairStream.hpp"
+
+
 #include "mixr/base/String.hpp"
 
 #include "mixr/base/units/Angles.hpp"
@@ -1769,7 +1769,7 @@ void NetIO::testInputEntityTypes(const unsigned int n)
             if (foundNtm != nullptr) {
                const models::Player* foundP {origNtm->getTemplatePlayer()};
                std::cout << "; form: " << foundP->getFactoryName();
-               base::safe_ptr<const base::String> foundType( static_cast<const base::String*>( foundP->getType() ) );
+               std::shared_ptr<const base::String> foundType( static_cast<const base::String*>( foundP->getType() ) );
                if (foundType != nullptr) std::cout << "; type: " << *foundType;
             }
             if (origNtm == foundNtm) {
@@ -1809,7 +1809,7 @@ void NetIO::testOutputEntityTypes(const unsigned int n)
             models::Player* origP1 {origP->clone()};
 
             std::cout << "; form: " << origP->getFactoryName();
-            base::safe_ptr<base::String> origType( (base::String*) origP->getType() );
+            std::shared_ptr<base::String> origType( (base::String*) origP->getType() );
             if (origType != nullptr) {
 
                char cbuff[64] {};

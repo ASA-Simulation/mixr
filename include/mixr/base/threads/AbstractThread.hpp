@@ -2,7 +2,6 @@
 #ifndef __mixr_base_AbstractThread_H__
 #define __mixr_base_AbstractThread_H__
 
-#include "mixr/base/Referenced.hpp"
 #include "mixr/base/util/platform_api.hpp"
 
 #include <cstddef>
@@ -67,7 +66,7 @@ class Component;
 //              0.0           THREAD_PRIORITY_IDLE(-15)
 //
 //------------------------------------------------------------------------------
-class AbstractThread : public Referenced
+class AbstractThread
 {
 public:
    AbstractThread(Component* const parent);
