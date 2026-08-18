@@ -429,7 +429,7 @@ void Missile::weaponGuidance(const double dt)
                }
 
                BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_DETONATION )
-                  SAMPLE_3_OBJECTS( this, getLaunchVehicle(), getTargetPlayer() )
+                  SAMPLE_3_OBJECTS( this, getLaunchVehicle(), findTargetPlayer() )
                   SAMPLE_2_VALUES( DETONATE_ENTITY_IMPACT, detRange )
                END_RECORD_DATA_SAMPLE()
 
@@ -453,7 +453,7 @@ void Missile::weaponGuidance(const double dt)
             }
 
             BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_DETONATION )
-               SAMPLE_3_OBJECTS( this, getLaunchVehicle(), getTargetPlayer() )
+               SAMPLE_3_OBJECTS( this, getLaunchVehicle(), findTargetPlayer() )
                SAMPLE_2_VALUES( DETONATE_DETONATION, detRange )
             END_RECORD_DATA_SAMPLE()
 

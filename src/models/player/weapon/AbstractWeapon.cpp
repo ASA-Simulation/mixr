@@ -112,6 +112,15 @@ void AbstractWeapon::initData()
    setMaxGimbalAngle(30.0 * static_cast<double>(base::angle::D2RCC));
 }
 
+Player* AbstractWeapon::findTargetPlayer()
+{
+      auto tgtP = getTargetPlayer();
+      if (tgtP == nullptr && tgtTrack != nullptr) {
+         tgtP = tgtTrack->getTarget();
+      }
+      return tgtP;
+}
+
 void AbstractWeapon::copyData(const AbstractWeapon& org, const bool cc)
 {
    BaseClass::copyData(org);
@@ -443,7 +452,7 @@ bool AbstractWeapon::collisionNotification(Player* const other)
 
       // Log the event
       BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_DETONATION )
-         SAMPLE_3_OBJECTS( this, getLaunchVehicle(), getTargetPlayer() )
+         SAMPLE_3_OBJECTS( this, getLaunchVehicle(), findTargetPlayer() )
          SAMPLE_2_VALUES( DETONATE_ENTITY_IMPACT, getDetonationRange() )
       END_RECORD_DATA_SAMPLE()
    }
@@ -482,7 +491,7 @@ bool AbstractWeapon::crashNotification()
       // Log the event
       // ---
       BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_DETONATION )
-         SAMPLE_3_OBJECTS( this, getLaunchVehicle(), getTargetPlayer() )
+         SAMPLE_3_OBJECTS( this, getLaunchVehicle(),  findTargetPlayer() )
          SAMPLE_2_VALUES( DETONATE_GROUND_IMPACT, getDetonationRange() )
       END_RECORD_DATA_SAMPLE()
    }
@@ -629,8 +638,17 @@ AbstractWeapon* AbstractWeapon::release()
                sim->addNewPlayer(pname,flyout);
             }
 
+            std::cout << "REID_WEAPON_RELEASED: target: " << ((getTargetPlayer() != nullptr) ? getTargetPlayer()->getName()->getString() : "nullptr" )<< std::endl;
+            auto t = getTargetTrack();
+            if (t != nullptr){
+
+               std::cout << "REID_WEAPON_RELEASED: track: " << ((t->getTarget() != nullptr) ? t->getTarget()->getName()->getString() : "nullptr") << std::endl;
+            }else {
+               std::cout << "REID_WEAPON_RELEASED: track: nullptr;" << std::endl;
+            }
+
             BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_RELEASED )
-               SAMPLE_3_OBJECTS( flyout, getLaunchVehicle(), nullptr )  // weapon, shooter, target
+               SAMPLE_3_OBJECTS( flyout, getLaunchVehicle(), findTargetPlayer() )  // weapon, shooter, target
                SAMPLE_2_VALUES( 0, 0.0 )
             END_RECORD_DATA_SAMPLE()
 
@@ -641,7 +659,7 @@ AbstractWeapon* AbstractWeapon::release()
          setHung(true);
 
          BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_HUNG )
-            SAMPLE_3_OBJECTS( this, getLaunchVehicle(), nullptr )
+            SAMPLE_3_OBJECTS( this, getLaunchVehicle(), findTargetPlayer() )
          END_RECORD_DATA_SAMPLE()
 
       }
@@ -705,7 +723,7 @@ void AbstractWeapon::updateTOF(const double dt)
          setDetonationResults( DETONATE_DETONATION );
 
          BEGIN_RECORD_DATA_SAMPLE( getWorldModel()->getDataRecorder(), REID_WEAPON_DETONATION )
-            SAMPLE_3_OBJECTS( this, getLaunchVehicle(), getTargetPlayer() )
+            SAMPLE_3_OBJECTS( this, getLaunchVehicle(), findTargetPlayer() )
             SAMPLE_2_VALUES( DETONATE_DETONATION, 0.0 )
          END_RECORD_DATA_SAMPLE()
 

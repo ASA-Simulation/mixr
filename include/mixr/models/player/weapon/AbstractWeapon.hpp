@@ -318,6 +318,8 @@ protected:
 
    bool shutdownNotification() override;
 
+   Player* findTargetPlayer();                 // Gets from from getTargetPlayer or getTargetTrack()->getTarget()
+
 private:
     void initData();
 

@@ -586,6 +586,7 @@ Decoy* SimpleStoresMgr::releaseOneDecoy()
 //------------------------------------------------------------------------------
 bool SimpleStoresMgr::onWpnRelEvent(const base::Boolean* const sw)
 {
+   std::cout << "SimpleStoresMgr::onWpnRelEvent: "<< std::endl;
    // Weapon release follows the switch or by default is true
    bool wpnRel{true};
    if (sw != nullptr) wpnRel = sw->getBoolean();
@@ -620,11 +621,11 @@ bool SimpleStoresMgr::onWpnRelEvent(const base::Boolean* const sw)
                      Track* newTrk{trk->clone()};
                      tm->clearTracksAndQueues();
                      tm->addTrack(newTrk);
-                     flyout->setTargetTrack(newTrk,true);
+                     flyout->setTargetTrack(newTrk, true);
                   }
                   else if (tgt != nullptr) {
                      // No sensor -- fake it and just track the target
-                     flyout->setTargetPlayer(tgt,true);
+                     flyout->setTargetPlayer(tgt, true);
                   }
                   else {
                      // no target track
