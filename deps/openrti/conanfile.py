@@ -20,7 +20,7 @@ class Recipe(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("expat/2.5.0")
+        self.requires("expat/2.8.3")
 
     def source(self):
         git = Git(self)
@@ -36,6 +36,10 @@ class Recipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+        
+        # In Ubuntu 26.04, CMake no longer supports cmake 3.5 (required by expat)
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
+
         tc.variables["OPENRTI_ENABLE_PYTHON_BINDINGS"] = False
         tc.variables["OPENRTI_ENABLE_RTI13"] = True
         tc.variables["OPENRTI_ENABLE_RTI1516"] = False

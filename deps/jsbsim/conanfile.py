@@ -33,6 +33,10 @@ class Recipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
+
+        # In Ubuntu 26.04, CMake no longer supports cmake 3.5
+        tc.cache_variables["CMAKE_POLICY_VERSION_MINIMUM"] = "3.5"
+
         tc.generate()
 
     def build(self):
