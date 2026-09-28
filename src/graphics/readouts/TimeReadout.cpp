@@ -1,0 +1,250 @@
+
+#include "mixr/graphics/readouts/TimeReadout.hpp"
+
+#include "mixr/base/util/str_utils.hpp"
+
+#include "ReformatScanner.hpp"
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+
+namespace mixr {
+namespace graphics {
+
+IMPLEMENT_SUBCLASS(TimeReadout, "TimeReadout")
+EMPTY_SLOTTABLE(TimeReadout)
+EMPTY_DELETEDATA(TimeReadout)
+
+TimeReadout::TimeReadout()
+{
+   STANDARD_CONSTRUCTOR()
+
+   base::utStrcpy(format, FORMAT_LENGTH, "%02d:%02d:%04.1f");
+}
+
+void TimeReadout::copyData(const TimeReadout& org, const bool)
+{
+   BaseClass::copyData(org);
+   tmode = org.tmode;
+}
+
+//------------------------------------------------------------------------------
+// input mode function --
+//   filterInputEvent() -- Filter input events using a template character (tc)
+//------------------------------------------------------------------------------
+char TimeReadout::filterInputEvent(const int event, const int tc)
+{
+   if (tc == '0' || tc == 'H' || tc == 'M' || tc == 'S') {
+      // Default numeric keys
+      if ( event >= '0' && event <= '9' )
+         return char(event);
+      else
+         return '\0';
+   }
+   else {
+      return BaseClass::filterInputEvent(event,tc);
+   }
+}
+
+
+//------------------------------------------------------------------------------
+// getInputValue() -- returns the readout as a numeric value
+//------------------------------------------------------------------------------
+double TimeReadout::getInputValue() const
+{
+   double value = 0.0;
+
+   // copy string to buffer with correct sign character
+   const std::size_t CBUFLOCAL_LEN {100};
+   char cbuf[CBUFLOCAL_LEN] {};
+   const char* p {*this};
+   base::utStrcpy(cbuf,CBUFLOCAL_LEN,p);
+   if (cbuf[0] == plusChar)  cbuf[0] = '+';
+   if (cbuf[0] == minusChar) cbuf[0] = '-';
+
+   // Modify the output format statement for use with the sscanf
+   char format1[32] {};
+   int i {};
+   int j {};
+   bool skipIt {};
+   for (i = 0;  i < 31 && format[i] != '\0'; i++) {
+      if (skipIt && format[i] == 'f') skipIt = false;
+      if (format[i] == '.') {
+         skipIt = true;
+      }
+      else if ((format[i] != '+' && format[i] != '-' && format[i] != '0')
+         && !skipIt) {
+            format1[j++] = format[i];
+      }
+   }
+   format1[j] = '\0';
+
+   switch (tmode) {
+
+      case TimeMode::hhmmss : {        // Hours, Minutes, and seconds
+         int   hrs = 0;
+         int   min = 0;
+         float sec = 0.0f;
+         std::sscanf(cbuf, format1, &hrs, &min, &sec);
+         value = hrs*60.0f;
+         if (value >= 0.0) value += min;
+         else value -= min;
+         value *= 60.0;
+         if (value >= 0.0) value += sec;
+         else value -= sec;
+      }
+      break;
+
+      case TimeMode::hhmm : { // Hours and minutes
+         int   hrs = 0;
+         float min = 0.0f;
+         std::sscanf(cbuf, format1, &hrs, &min);
+         value = hrs*60.0f;
+         if (value >= 0.0) value += min;
+         else value -= min;
+         value *= 60.0;
+      }
+      break;
+
+      case TimeMode::hh : {   // Hours only
+         float hrs = 0.0f;
+         std::sscanf(cbuf, format1, &hrs);
+         value = hrs*3600.0f;
+      }
+      break;
+
+      case TimeMode::mmss : { // Minutes and seconds
+         int   min = 0;
+         float sec = 0.0f;
+         std::sscanf(cbuf, format1, &min, &sec);
+         value = min*60.0f;
+         if (value >= 0.0) value += sec;
+         else value -= sec;
+      }
+      break;
+
+      case TimeMode::mm : {   // Minutes only
+         float min = 0.0;
+         std::sscanf(cbuf, format1, &min);
+         value = min*60.0f;
+      }
+      break;
+
+      case TimeMode::ss : {   // Seconds only
+         float sec = 0.0;
+         std::sscanf(cbuf, format1, &sec);
+         value = sec;
+      }
+      break;
+
+      case TimeMode::invalid: {     // not handled
+      }
+      break;
+   }
+   return static_cast<double>(value);
+}
+
+//------------------------------------------------------------------------------
+//  makeText() -- make the text string use the current value and formats
+//------------------------------------------------------------------------------
+void TimeReadout::makeText()
+{
+   bool neg {};
+   double seconds {getFloat()};
+   if (seconds < 0.0) {
+      seconds = -seconds;
+      neg = true;
+   }
+
+   switch (tmode) {
+
+      case TimeMode::hhmmss : { // Hours, Minutes, and seconds
+         double minutes = seconds/60.0f;
+         const auto ihrs = static_cast<int>(minutes/60.0f);
+         const auto min = minutes - static_cast<double>(ihrs*60);
+         const auto imin = static_cast<int>(min);
+         double sec = (min - static_cast<double>(imin))*60.0f;
+         std::sprintf(cbuf, format, ihrs, imin, sec);
+         if (neg) { /* if it was negative, swap the possible + sign to the - sign */
+            bool done = false;
+            for (unsigned int i = 0; !done && i < CBUF_LENGTH; i++) {
+               if (cbuf[i] == '+') { cbuf[i] = '-'; done = true; }
+               else if (cbuf[i] == '\0') { done = true; }
+            }
+         }
+      }
+      break;
+
+      case TimeMode::hhmm : {   // Hours and minutes
+         double minutes = seconds/60.0f;
+         const auto ihrs = static_cast<int>(minutes/60.0f);
+         double min = minutes - static_cast<double>(ihrs*60);
+         std::sprintf(cbuf, format, ihrs, min);
+         if (neg) { /* if it was negative, swap the possible + sign to the - sign */
+            bool done = false;
+            for (unsigned int i = 0; !done && i < CBUF_LENGTH; i++) {
+               if (cbuf[i] == '+') { cbuf[i] = '-'; done = true; }
+               else if (cbuf[i] == '\0') { done = true; }
+            }
+         }
+      }
+      break;
+
+      case TimeMode::hh : { // Hours only
+         double hrs = getFloat()/3600.0f;
+         if (neg) hrs = -hrs;
+         std::sprintf(cbuf, format, hrs);
+      }
+      break;
+
+      case TimeMode::mmss : {   // Minutes and seconds
+         int  imin = static_cast<int>(seconds/60.0f);
+         double sec = seconds - static_cast<double>(imin*60);
+         std::sprintf(cbuf, format, imin, sec);
+         if (neg) { /* if it was negative, swap the possible + sign to the - sign */
+            bool done = false;
+            for (unsigned int i = 0; !done && i < CBUF_LENGTH; i++) {
+               if (cbuf[i] == '+') { cbuf[i] = '-'; done = true; }
+               else if (cbuf[i] == '\0') { done = true; }
+            }
+         }
+      }
+      break;
+
+      case TimeMode::mm : { // Minutes only
+         double min = seconds/60.0f;
+         if (neg) min = -min;
+         std::sprintf(cbuf, format, min);
+      }
+      break;
+
+      case TimeMode::ss : { // Seconds only
+         if (neg) seconds = -seconds;
+         std::sprintf(cbuf, format, seconds);
+      }
+      break;
+
+      case TimeMode::invalid: {     // not handled
+      }
+      break;
+   }
+}
+
+//------------------------------------------------------------------------------
+// reformat() -- convert the numerical value into an ascii character string
+//------------------------------------------------------------------------------
+void TimeReadout::reformat(const char* const example)
+{
+   TimeMode results = reformatter->convertTime(example);
+   if (results != TimeMode::invalid) {
+      setExample(example);
+      base::utStrcpy(format, FORMAT_LENGTH, reformatter->getFormat());
+      tmode = results;
+      postSign = reformatter->isPostSign();
+      redisplay();
+   }
+}
+
+}
+}

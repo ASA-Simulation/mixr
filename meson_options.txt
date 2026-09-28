@@ -1,0 +1,2 @@
+option('with_graphics', type: 'boolean', value: false,
+    description: 'Build graphics and ui/glut modules (requires GL, GLU, GLUT, FreeType2, FTGL)')
