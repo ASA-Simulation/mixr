@@ -34,6 +34,14 @@ jsbsim_dep = dependency('jsbsim')
 openrti_dep = dependency('openrti')
 zlib_dep = dependency('zlib')
 
+if get_option('with_graphics')
+    gl_dep = dependency('gl')
+    glu_dep = dependency('glu')
+    freetype_dep = dependency('freetype2')
+    ftgl_dep = dependency('ftgl')
+    glut_dep = dependency('glut')
+endif
+
 protoc = '@0@/bin/protoc'.format(protobuf_dep.get_variable('prefix'))
 
 public_headers = include_directories('include')
@@ -48,20 +56,29 @@ subdir('./src')
 # Installation
 #
 
+mixr_libraries = [
+    mixr_base,
+    mixr_interop_common,
+    mixr_interop_dis,
+    mixr_linearsystem,
+    mixr_linkage,
+    mixr_models,
+    mixr_recorder,
+    mixr_simulation,
+    mixr_terrain,
+]
+
+if get_option('with_graphics')
+    mixr_libraries += [
+        mixr_graphics,
+        mixr_ui_glut,
+    ]
+endif
+
 pkg.generate(
     description : 'A fork of MIXR focused on meson/conan integration.',
     filebase : 'mixr',
-    libraries : [
-        mixr_base,
-        mixr_interop_common,
-        mixr_interop_dis,
-        mixr_linearsystem,
-        mixr_linkage,
-        mixr_models,
-        mixr_recorder,
-        mixr_simulation,
-        mixr_terrain,
-    ],
+    libraries : mixr_libraries,
     name : 'mixr',
 )
 

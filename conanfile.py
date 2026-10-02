@@ -12,10 +12,10 @@ class Recipe(ConanFile):
     description = "A fork of MIXR focused on meson/conan integration."
 
     settings = "arch", "build_type", "compiler", "os"
-    options = {"fPIC": [True, False]}
-    default_options = {"fPIC": True}
+    options = {"fPIC": [True, False], "with_graphics": [True, False]}
+    default_options = {"fPIC": True, "with_graphics": False}
 
-    exports_sources = "meson.build*", "include/*", "scripts/*", "src/*", "subprojects/*"
+    exports_sources = "meson.build*", "meson_options.txt", "include/*", "scripts/*", "src/*", "subprojects/*"
 
     def requirements(self):
         self.requires("jsbsim/1.1.11", transitive_headers=True)
@@ -56,3 +56,10 @@ class Recipe(ConanFile):
         self.cpp_info.components["recorder"].libs = ["mixr_recorder"]
         self.cpp_info.components["simulation"].libs = ["mixr_simulation"]
         self.cpp_info.components["terrain"].libs = ["mixr_terrain"]
+        
+        if self.options.with_graphics:
+            self.cpp_info.components["graphics"].libs = ["mixr_graphics"]
+            self.cpp_info.components["graphics"].system_libs = ["GL", "GLU", "freetype", "ftgl"]
+            self.cpp_info.components["ui_glut"].libs = ["mixr_ui_glut"]
+            self.cpp_info.components["ui_glut"].system_libs = ["glut"]
+
